@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Ondas do Conhecimento — Projeto de extensão UTFPR e ARPA que conecta jovens escoteiros ao universo das comunicações via rádio, radioamadorismo e tecnologia.">
+  <meta name="keywords" content="escoteiros, radioamadorismo, UTFPR, ARPA, comunicação via rádio, extensão universitária, Paraná">
+  <meta name="author" content="UTFPR & ARPA">
+  <meta name="theme-color" content="#1B5E20">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Ondas do Conhecimento — UTFPR & ARPA">
+  <meta property="og:description" content="Conectando jovens escoteiros ao universo das comunicações e da tecnologia.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="assets/img/hero.png">
+
+  <title>Ondas do Conhecimento — UTFPR & ARPA</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- HEADER FIXO                                -->
+  <!-- ═══════════════════════════════════════════ -->
+  <header class="header" id="header">
+    <div class="container header__inner">
+      <a href="#inicio" class="header__logo" aria-label="Ondas do Conhecimento — Início">
+        <!-- SVG Logo: Onda + Antena -->
+        <svg class="header__logo-icon" viewBox="0 0 48 48" width="42" height="42" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="24" cy="24" r="23" stroke="currentColor" stroke-width="2"/>
+          <path d="M12 30c2-6 4-12 6-6s4 12 6 6 4-12 6-6 4 12 6 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+          <line x1="24" y1="10" x2="24" y2="22" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+          <circle cx="24" cy="8" r="2" fill="currentColor"/>
+        </svg>
+        <span class="header__logo-text">Ondas do<br><strong>Conhecimento</strong></span>
+      </a>
+
+      <!-- Hamburger Mobile -->
+      <button class="header__hamburger" id="hamburger" aria-label="Abrir menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+
+      <nav class="header__nav" id="nav" aria-label="Menu principal">
+        <ul class="header__nav-list">
+          <li><a href="#inicio" class="header__nav-link">Início</a></li>
+          <li><a href="#sobre" class="header__nav-link">Sobre</a></li>
+          <li><a href="#objetivos" class="header__nav-link">Objetivos</a></li>
+          <li><a href="#inscricao" class="header__nav-link header__nav-link--cta">Inscrição</a></li>
+          <li><a href="#contato" class="header__nav-link">Contato</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- HERO SECTION                               -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section class="hero" id="inicio">
+    <div class="hero__bg">
+      <img src="assets/img/hero.png" alt="" class="hero__bg-img" loading="eager">
+      <div class="hero__bg-overlay"></div>
+    </div>
+
+    <!-- Animated Radio Waves SVG -->
+    <div class="hero__waves" aria-hidden="true">
+      <svg viewBox="0 0 1440 320" preserveAspectRatio="none">
+        <path class="hero__wave hero__wave--1" d="M0,192 C360,96,720,288,1080,192 C1260,144,1380,220,1440,192 L1440,320 L0,320 Z"/>
+        <path class="hero__wave hero__wave--2" d="M0,224 C360,128,720,320,1080,224 C1260,176,1380,250,1440,224 L1440,320 L0,320 Z"/>
+        <path class="hero__wave hero__wave--3" d="M0,256 C360,192,720,320,1080,256 C1260,224,1380,280,1440,256 L1440,320 L0,320 Z"/>
+      </svg>
+    </div>
+
+    <div class="container hero__content">
+      <div class="hero__badge" data-animate="fade-down">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
+        </svg>
+        Projeto de Extensão — UTFPR & ARPA
+      </div>
+      <h1 class="hero__title" data-animate="fade-up">
+        Ondas do<br><span class="hero__title-accent">Conhecimento</span>
+      </h1>
+      <p class="hero__subtitle" data-animate="fade-up" data-delay="200">
+        Conectando jovens escoteiros ao universo das comunicações e da tecnologia
+      </p>
+      <div class="hero__actions" data-animate="fade-up" data-delay="400">
+        <a href="#inscricao" class="btn btn--primary btn--lg">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/>
+          </svg>
+          Inscreva seu grupo
+        </a>
+        <a href="#sobre" class="btn btn--ghost btn--lg">
+          Saiba mais
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/>
+          </svg>
+        </a>
+      </div>
+
+      <!-- Stats bar -->
+      <div class="hero__stats" data-animate="fade-up" data-delay="600">
+        <div class="hero__stat">
+          <span class="hero__stat-value" data-count="2">0</span>
+          <span class="hero__stat-label">Instituições Parceiras</span>
+        </div>
+        <div class="hero__stat">
+          <span class="hero__stat-value" data-count="50">0</span>
+          <span class="hero__stat-label">Grupos Escoteiros Alvo</span>
+        </div>
+        <div class="hero__stat">
+          <span class="hero__stat-value" data-count="100">0</span>
+          <span class="hero__stat-label">% Gratuito</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SOBRE O PROJETO                            -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section class="sobre" id="sobre">
+    <div class="container">
+      <div class="section-header" data-animate="fade-up">
+        <span class="section-header__tag">Quem somos</span>
+        <h2 class="section-header__title">Sobre o Projeto</h2>
+        <p class="section-header__desc">Uma parceria entre educação e tradição que leva tecnologia às trilhas</p>
+      </div>
+
+      <div class="sobre__grid">
+        <div class="sobre__image" data-animate="fade-right">
+          <img src="assets/img/activity.png" alt="Jovens escoteiros aprendendo sobre rádio amador" loading="lazy">
+          <div class="sobre__image-badge">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+            </svg>
+            Desde 2025
+          </div>
+        </div>
+
+        <div class="sobre__text" data-animate="fade-left">
+          <h3 class="sobre__subtitle">
+            Conectando a <span class="text-gradient">UTFPR</span> e a <span class="text-gradient">ARPA</span> aos grupos escoteiros do Paraná
+          </h3>
+          <p>
+            O <strong>Ondas do Conhecimento</strong> é um projeto de extensão universitária que nasce da parceria entre a 
+            <strong>Universidade Tecnológica Federal do Paraná (UTFPR)</strong> e a <strong>Associação de Radioamadores do Paraná (ARPA)</strong>.
+          </p>
+          <p>
+            Nosso objetivo é levar educação em comunicação via rádio, radioamadorismo e tecnologia diretamente aos jovens 
+            escoteiros, unindo o espírito aventureiro do escotismo à descoberta científica e técnica.
+          </p>
+
+          <ul class="sobre__highlights">
+            <li>
+              <div class="sobre__highlight-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              </div>
+              <div>
+                <strong>Educação Tecnológica</strong>
+                <span>Introdução a conceitos de telecomunicação, eletrônica e propagação de ondas</span>
+              </div>
+            </li>
+            <li>
+              <div class="sobre__highlight-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              </div>
+              <div>
+                <strong>Radioamadorismo na prática</strong>
+                <span>Operação de estações de rádio, contatos em HF/VHF e uso de equipamentos reais</span>
+              </div>
+            </li>
+            <li>
+              <div class="sobre__highlight-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              </div>
+              <div>
+                <strong>Atividades práticas & acampamentos</strong>
+                <span>Oficinas ao ar livre, montagem de antenas e exercícios de comunicação em campo</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Wave Divider -->
+  <div class="wave-divider wave-divider--green-to-dark" aria-hidden="true">
+    <svg viewBox="0 0 1440 100" preserveAspectRatio="none">
+      <path d="M0,40 C480,100,960,0,1440,40 L1440,100 L0,100 Z"/>
+    </svg>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- OBJETIVOS — BENTO GRID                     -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section class="objetivos" id="objetivos">
+    <div class="container">
+      <div class="section-header section-header--light" data-animate="fade-up">
+        <span class="section-header__tag">Nossos pilares</span>
+        <h2 class="section-header__title">Objetivos</h2>
+        <p class="section-header__desc">Quatro pilares que sustentam o projeto e guiam nossas ações educativas</p>
+      </div>
+
+      <div class="objetivos__bento">
+        <!-- Card 1 — Grande -->
+        <article class="bento-card bento-card--featured" data-animate="fade-up">
+          <div class="bento-card__icon">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/>
+              <circle cx="12" cy="12" r="3"/>
+              <path d="M12 5V3"/><path d="M12 21v-2"/>
+              <path d="M4.22 10.22l-1.42-1.42"/><path d="M21.2 15.2l-1.42-1.42"/>
+              <path d="M1 12H3"/><path d="M21 12h2"/>
+            </svg>
+          </div>
+          <span class="bento-card__number">01</span>
+          <h3 class="bento-card__title">Comunicação via Rádio</h3>
+          <p class="bento-card__desc">
+            Ensinar os fundamentos da comunicação por ondas eletromagnéticas, 
+            incluindo operação em HF, VHF e UHF, procedimentos de chamada, 
+            código fonético internacional e protocolos de emergência.
+          </p>
+          <div class="bento-card__wave" aria-hidden="true">
+            <svg viewBox="0 0 200 60" preserveAspectRatio="none">
+              <path d="M0,30 Q25,10 50,30 T100,30 T150,30 T200,30" stroke="currentColor" stroke-width="1.5" fill="none" opacity="0.3"/>
+              <path d="M0,35 Q25,15 50,35 T100,35 T150,35 T200,35" stroke="currentColor" stroke-width="1" fill="none" opacity="0.2"/>
+            </svg>
+          </div>
+        </article>
+
+        <!-- Card 2 -->
+        <article class="bento-card" data-animate="fade-up" data-delay="100">
+          <div class="bento-card__icon">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M12 2a10 10 0 1 0 10 10"/><path d="M12 8v4l3 3"/>
+              <path d="M16 2h6v6"/><path d="M22 2L13 11"/>
+            </svg>
+          </div>
+          <span class="bento-card__number">02</span>
+          <h3 class="bento-card__title">Aprendizado Técnico</h3>
+          <p class="bento-card__desc">
+            Desenvolver competências em eletrônica básica, propagação de sinais 
+            e montagem de antenas improvisadas.
+          </p>
+        </article>
+
+        <!-- Card 3 -->
+        <article class="bento-card" data-animate="fade-up" data-delay="200">
+          <div class="bento-card__icon">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/>
+              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+            </svg>
+          </div>
+          <span class="bento-card__number">03</span>
+          <h3 class="bento-card__title">Integração Social</h3>
+          <p class="bento-card__desc">
+            Promover conexão entre grupos de diferentes cidades, 
+            estimulando cidadania, cooperação e trabalho em equipe.
+          </p>
+        </article>
+
+        <!-- Card 4 -->
+        <article class="bento-card bento-card--wide" data-animate="fade-up" data-delay="300">
+          <div class="bento-card__icon">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+              <path d="M9 22V12h6v10"/>
+              <circle cx="12" cy="6" r="1" fill="currentColor"/>
+            </svg>
+          </div>
+          <span class="bento-card__number">04</span>
+          <h3 class="bento-card__title">Vivência Escoteira Aplicada à Tecnologia</h3>
+          <p class="bento-card__desc">
+            Integrar as atividades tradicionais do escotismo — acampamentos, caminhadas e vida ao ar livre — com 
+            desafios de comunicação, operação de rádio em campo e resolução de problemas tecnológicos em ambientes reais.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Wave Divider -->
+  <div class="wave-divider wave-divider--dark-to-light" aria-hidden="true">
+    <svg viewBox="0 0 1440 100" preserveAspectRatio="none">
+      <path d="M0,60 C480,0,960,100,1440,60 L1440,100 L0,100 Z"/>
+    </svg>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- PÚBLICO-ALVO                               -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section class="publico" id="publico">
+    <div class="container">
+      <div class="publico__inner" data-animate="fade-up">
+        <div class="publico__text">
+          <span class="section-header__tag">Para quem é</span>
+          <h2 class="section-header__title">Público-Alvo</h2>
+          <p>
+            O projeto é voltado para <strong>grupos escoteiros do estado do Paraná</strong>, 
+            atendendo jovens de todas as faixas etárias dentro do escotismo, bem como 
+            <strong>líderes e chefes escoteiros</strong> interessados em incorporar tecnologia 
+            e comunicação via rádio às suas atividades educativas.
+          </p>
+          <div class="publico__tags">
+            <span class="tag">Lobinhos & Lobinhas</span>
+            <span class="tag">Escoteiros & Escoteiras</span>
+            <span class="tag">Seniores & Guias</span>
+            <span class="tag">Pioneiros</span>
+            <span class="tag">Chefes & Dirigentes</span>
+            <span class="tag">Interessados em Tecnologia</span>
+          </div>
+        </div>
+        <div class="publico__graphic" aria-hidden="true">
+          <!-- Animated Signal Graphic -->
+          <div class="signal-graphic">
+            <div class="signal-graphic__tower">
+              <svg width="80" height="120" viewBox="0 0 80 120" fill="none">
+                <line x1="40" y1="0" x2="40" y2="120" stroke="currentColor" stroke-width="3"/>
+                <line x1="40" y1="20" x2="20" y2="60" stroke="currentColor" stroke-width="2"/>
+                <line x1="40" y1="20" x2="60" y2="60" stroke="currentColor" stroke-width="2"/>
+                <line x1="40" y1="40" x2="25" y2="80" stroke="currentColor" stroke-width="2"/>
+                <line x1="40" y1="40" x2="55" y2="80" stroke="currentColor" stroke-width="2"/>
+                <circle cx="40" cy="0" r="4" fill="currentColor"/>
+              </svg>
+            </div>
+            <div class="signal-graphic__rings">
+              <div class="signal-ring signal-ring--1"></div>
+              <div class="signal-ring signal-ring--2"></div>
+              <div class="signal-ring signal-ring--3"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- FORMULÁRIO DE INSCRIÇÃO                    -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section class="inscricao" id="inscricao">
+    <div class="inscricao__bg" aria-hidden="true">
+      <img src="assets/img/texture.png" alt="" loading="lazy">
+    </div>
+    <div class="container">
+      <div class="section-header section-header--light" data-animate="fade-up">
+        <span class="section-header__tag">Participe</span>
+        <h2 class="section-header__title">Inscreva seu Grupo</h2>
+        <p class="section-header__desc">Preencha o formulário abaixo e leve a experiência das Ondas do Conhecimento para o seu grupo escoteiro</p>
+      </div>
+
+      <form class="form" id="form-inscricao" novalidate data-animate="fade-up" data-delay="200">
+        <div class="form__grid">
+          <!-- Nome do Grupo -->
+          <div class="form__group form__group--full">
+            <label for="grupo" class="form__label">Nome do Grupo Escoteiro <span class="form__required">*</span></label>
+            <input type="text" id="grupo" name="grupo" class="form__input" placeholder="Ex: Grupo Escoteiro Duque de Caxias" required>
+            <span class="form__error" id="grupo-error"></span>
+          </div>
+
+          <!-- Cidade -->
+          <div class="form__group">
+            <label for="cidade" class="form__label">Cidade <span class="form__required">*</span></label>
+            <input type="text" id="cidade" name="cidade" class="form__input" placeholder="Ex: Curitiba" required>
+            <span class="form__error" id="cidade-error"></span>
+          </div>
+
+          <!-- Nº de Participantes -->
+          <div class="form__group">
+            <label for="participantes" class="form__label">Nº de Participantes <span class="form__required">*</span></label>
+            <input type="number" id="participantes" name="participantes" class="form__input" placeholder="Ex: 25" min="1" required>
+            <span class="form__error" id="participantes-error"></span>
+          </div>
+
+          <!-- Nome do Responsável -->
+          <div class="form__group">
+            <label for="responsavel" class="form__label">Nome do Responsável <span class="form__required">*</span></label>
+            <input type="text" id="responsavel" name="responsavel" class="form__input" placeholder="Nome completo" required>
+            <span class="form__error" id="responsavel-error"></span>
+          </div>
+
+          <!-- Email -->
+          <div class="form__group">
+            <label for="email" class="form__label">E-mail <span class="form__required">*</span></label>
+            <input type="email" id="email" name="email" class="form__input" placeholder="email@exemplo.com" required>
+            <span class="form__error" id="email-error"></span>
+          </div>
+
+          <!-- Telefone -->
+          <div class="form__group">
+            <label for="telefone" class="form__label">Telefone / WhatsApp <span class="form__required">*</span></label>
+            <input type="tel" id="telefone" name="telefone" class="form__input" placeholder="(41) 99999-9999" required>
+            <span class="form__error" id="telefone-error"></span>
+          </div>
+
+          <!-- Observações -->
+          <div class="form__group form__group--full">
+            <label for="observacoes" class="form__label">Observações</label>
+            <textarea id="observacoes" name="observacoes" class="form__input form__textarea" placeholder="Algo que gostaria de compartilhar? (opcional)" rows="4"></textarea>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn--primary btn--lg form__submit" id="btn-enviar">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
+          </svg>
+          Enviar Inscrição
+        </button>
+      </form>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- PARCEIROS                                  -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section class="parceiros" id="parceiros">
+    <div class="container">
+      <div class="section-header" data-animate="fade-up">
+        <span class="section-header__tag">Quem apoia</span>
+        <h2 class="section-header__title">Parceiros</h2>
+      </div>
+
+      <div class="parceiros__grid" data-animate="fade-up" data-delay="100">
+        <!-- UTFPR -->
+        <div class="parceiro-card">
+          <div class="parceiro-card__logo">
+            <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+              <rect width="64" height="64" rx="12" fill="currentColor" opacity="0.1"/>
+              <text x="32" y="36" text-anchor="middle" font-size="11" font-weight="700" fill="currentColor">UTFPR</text>
+            </svg>
+          </div>
+          <h3 class="parceiro-card__name">UTFPR</h3>
+          <p class="parceiro-card__desc">Universidade Tecnológica Federal do Paraná</p>
+        </div>
+
+        <!-- ARPA -->
+        <div class="parceiro-card">
+          <div class="parceiro-card__logo">
+            <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+              <rect width="64" height="64" rx="12" fill="currentColor" opacity="0.1"/>
+              <text x="32" y="36" text-anchor="middle" font-size="11" font-weight="700" fill="currentColor">ARPA</text>
+            </svg>
+          </div>
+          <h3 class="parceiro-card__name">ARPA</h3>
+          <p class="parceiro-card__desc">Associação de Radioamadores do Paraná</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- RODAPÉ                                     -->
+  <!-- ═══════════════════════════════════════════ -->
+  <footer class="footer" id="contato">
+    <div class="footer__wave" aria-hidden="true">
+      <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+        <path d="M0,80 C360,20,720,100,1080,60 C1260,40,1380,80,1440,60 L1440,0 L0,0 Z"/>
+      </svg>
+    </div>
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <div class="footer__logo">
+          <svg viewBox="0 0 48 48" width="36" height="36" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="24" cy="24" r="23"/>
+            <path d="M12 30c2-6 4-12 6-6s4 12 6 6 4-12 6-6 4 12 6 6" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+            <line x1="24" y1="10" x2="24" y2="22" stroke-width="2.5" stroke-linecap="round"/>
+            <circle cx="24" cy="8" r="2" fill="currentColor"/>
+          </svg>
+          <span>Ondas do Conhecimento</span>
+        </div>
+        <p class="footer__desc">
+          Um projeto de extensão universitária que integra escotismo, radioamadorismo e tecnologia 
+          para formar jovens conectados com o futuro.
+        </p>
+      </div>
+
+      <div class="footer__links">
+        <h4>Navegação</h4>
+        <ul>
+          <li><a href="#inicio">Início</a></li>
+          <li><a href="#sobre">Sobre</a></li>
+          <li><a href="#objetivos">Objetivos</a></li>
+          <li><a href="#inscricao">Inscrição</a></li>
+        </ul>
+      </div>
+
+      <div class="footer__contact">
+        <h4>Contato</h4>
+        <ul>
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>
+            </svg>
+            ondas@utfpr.edu.br
+          </li>
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+            </svg>
+            Curitiba, Paraná — Brasil
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer__bottom">
+      <div class="container footer__bottom-inner">
+        <p>&copy; <span id="current-year"></span> Ondas do Conhecimento — UTFPR & ARPA. Todos os direitos reservados.</p>
+        <p class="footer__credits">Desenvolvido com ☀ para a educação brasileira</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Toast Notification -->
+  <div class="toast" id="toast" role="alert" aria-live="polite">
+    <div class="toast__icon">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+      </svg>
+    </div>
+    <div class="toast__content">
+      <strong>Inscrição enviada!</strong>
+      <span>Entraremos em contato em breve.</span>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
