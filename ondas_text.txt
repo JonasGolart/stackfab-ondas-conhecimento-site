@@ -1,0 +1,555 @@
+Projeto de Extensão: 
+ Ondas do Conhecimento: Radioamadorismo para o Desenvolvimento Jovem 
+1. Introdução 
+A extensão universitária, pilar fundamental da atuação acadêmica, transcende os muros 
+da instituição, promovendo a interação transformadora entre a universidade e a sociedade. Ao 
+se dedicar ao ensino, pesquisa e extensão, a Universidade Tecnológica Federal do Paraná 
+(UTFPR) consolida seu papel de agente de mudança social, disseminando conhecimento e 
+contribuindo para o desenvolvimento regional. Este projeto, em particular, busca estabelecer 
+uma conexão sinérgica com os Grupos Escoteiros de Curitiba e Região  Metropolitana, uma 
+organização reconhecida por sua metodologia de educação não formal, focada no 
+desenvolvimento integral de crianças, adolescentes e jovens. 
+O radioamadorismo, atividade que combina técnica, ciência e comunicação, surge 
+como o elo central desta proposta, demonstrando uma relevância tecnológica, social e 
+educacional ímpar para a comunidade. Mais do que um hobby, o radioamadorismo é uma 
+ferramenta pedagógica multifacetada, capaz de estimular a curiosidade científica, o 
+pensamento crítico e a resolução de problemas. Ao oferecer uma plataforma para a aplicação 
+prática de conceitos de física (propagação de ondas, eletrônica), química (materiais, baterias), 
+matemática (cálculos, medidas), história (evolução das comunicações), geografia (localização, 
+fusos horários), português (comunicação eficaz), inglês (terminologia internacional) e 
+cidadania (ética, trabalho em equipe, serviço à comunidade), o radio amadorismo se alinha 
+perfeitamente com a proposta educacional do escotismo. 
+A educação de jovens por meio de projetos de extensão, como o proposto, oferece uma 
+abordagem lúdica e engajante, transformando o aprendizado em uma experiência significativa. 
+Ao participar ativamente da construção e operação de equipamentos, da comunicaçã o com 
+outros radioamadores e da resolução de desafios práticos, os escoteiros não apenas adquirem 
+conhecimentos técnicos, mas também desenvolvem habilidades socioemocionais essenciais, 
+como liderança, resiliência, autonomia e senso de responsabilidade, alinhando-se diretamente 
+aos princípios escoteiros de "aprender fazendo" e "servir à comunidade" . Este projeto aborda 
+diretamente problemas como a lacuna na educação STEM (Ciência, Tecnologia, Engenharia e 
+Matemática) e a necessidade de incentivar o pensamento crítico e a inovação desde cedo na 
+comunidade. 
+2. Objetivos 
+a) Objetivos Gerais da Atividade 
+• Promover a integração entre a UTFPR e os Grupos Escoteiros de Curitiba e Região 
+Metropolitana por meio de atividades de radioamadorismo. 
+• Utilizar o radioamadorismo como ferramenta pedagógica para o ensino de diversas 
+disciplinas, como física, química, matemática, história, geografia, português, inglês e 
+cidadania, de forma interdisciplinar e prática. 
+• Estimular o interesse dos jovens pelo conhecimento científico e tecnológico, 
+incentivando a inovação e o aprendizado contínuo. 
+• Desenvolver habilidades técnicas, de comunicação e socioemocionais nos 
+participantes, contribuindo para sua formação integral. 
+b) Objetivos Específicos 
+• Capacitar os escoteiros nos fundamentos teóricos e práticos da eletrônica básica e da 
+radiotécnica. 
+• Desenvolver a habilidade de montagem de circuitos eletrônicos simples e de antenas de 
+rádio. 
+• Ensinar os protocolos e a ética da comunicação em radioamadorismo, incluindo o uso 
+de códigos e fonia. 
+• Promover a compreensão da legislação brasileira pertinente ao radioamadorismo 
+(ANATEL). 
+• Estimular a aplicação dos conhecimentos de física e matemática na compreensão da 
+propagação de ondas e na construção de equipamentos. 
+• Fomentar a capacidade de comunicação em português e inglês através da prática de 
+contatos de rádio. 
+• Sensibilizar os participantes sobre o papel do radioamadorismo em situações de 
+emergência e defesa civil. 
+• Incentivar o desenvolvimento de projetos práticos de radioamadorismo que integrem 
+conhecimentos de diversas áreas do saber. 
+• Contribuir para a formação de uma nova geração de radioamadores e profissionais nas 
+áreas de ciência e tecnologia. 
+c) Objetivos de Desenvolvimento Sustentável (ODS) 
+Este projeto de extensão contribui diretamente para os seguintes Objetivos de 
+Desenvolvimento Sustentável (ODS) da Agenda 2030 da ONU, demonstrando como o projeto 
+irá atendê-los de forma concreta: 
+• ODS 4: Educação de Qualidade: O projeto, ao oferecer oportunidades de aprendizado 
+não formal e engajador, com foco em habilidades do século XXI (pensamento crítico, 
+resolução de problemas, colaboração, comunicação), complementa a educação 
+formal. Através de atividades práticas de radi oamadorismo, promove o acesso ao 
+conhecimento técnico-científico e à cultura da inovação para jovens, que podem ter 
+limitado contato com essas áreas em seu currículo regular. Isso se traduz em maior 
+equidade educacional e no desenvolvimento de competências para a vida. 
+• ODS 9: Indústria, Inovação e Infraestrutura:  Ao introduzir os jovens aos princípios da 
+eletrônica, telecomunicações e operação de rádio, o projeto estimula o interesse pela 
+inovação tecnológica e pelo desenvolvimento de infraestrutura de comunicação . 
+Fomenta a curiosidade por carreiras nas áreas STEM (Ciência, Tecnologia, Engenharia e 
+Matemática), capacitando futuros profissionais para o desenvolvimento de tecnologias 
+resilientes e sustentáveis, e promovendo a inclusão digital ao demonstrar a 
+infraestrutura de comunicação subjacente. 
+• ODS 11: Cidades e Comunidades Sustentáveis:  O radioamadorismo, especialmente 
+em seu papel de comunicação em situações de emergência e defesa civil, promove o 
+senso de comunidade, resiliência e participação cidadã . Os jovens aprenderão a 
+valorizar e potencialmente contribuir para a segurança de suas comunidades através de 
+redes de comunicação alternativas, tornando-as mais seguras e adaptáveis a desastres. 
+• ODS 17: Parcerias e Meios de Implementação:  O projeto é um exemplo claro de 
+fortalecimento das parcerias entre a universidade (UTFPR), a sociedade civil 
+organizada (grupos escoteiros e ARPA)  e potenciais financiadores. Essa colaboração 
+demonstra o poder da sinergia entre diferentes atores para alcançar os objetivos de 
+desenvolvimento sustentável, compartilhando recursos, conhecimentos e 
+responsabilidades para o sucesso da iniciativa. 
+d) Possíveis Parceiros para Recursos Financeiros, Humanos ou Físicos 
+• Recursos Financeiros: 
+o UTFPR: Editais de fomento à extensão universitária e projetos de pesquisa e 
+desenvolvimento. 
+o Fundações de Apoio à Pesquisa (Ex: Fundação Araucária no PR):  Editais 
+específicos para projetos de ciência e tecnologia. 
+o Rotary Clube de Curitiba: Patrocínio e/ou doação de equipamentos 
+• Recursos Humanos: 
+o Professores e Alunos da UTFPR (Engenharia Eletrônica, Engenharia da 
+Computação, Física, Química, Licenciaturas):  Mentoria, desenvolvimento de 
+material didático, aulas práticas. 
+o Radioamadores Licenciados (Comunidade de Radioamadorismo):  
+Compartilhamento de experiência, instrução prática, mentoria. 
+o Chefes Escoteiros e Dirigentes:  Organização logística, apoio na dinâmica dos 
+grupos, engajamento dos jovens. 
+ 
+• Recursos Físicos: 
+o Laboratórios da UTFPR (Eletrônica, Telecomunicações, Física):  Espaço para 
+montagem de circuitos, testes, aulas teóricas. 
+o Estrutura da sede Neoville: estrutura física (campos ao ar livre, bosque e sala de 
+radiotécnica) e Museu de Tecnologia. 
+o Salas de Aula e Anfiteatros da UTFPR: Para módulos teóricos e apresentações. 
+o Sedes de Grupos Escoteiros: Locais para atividades práticas, estações de rádio 
+improvisadas. 
+o Associação de Radioamadores do Paraná (ARPA):  Apoio técnico em 
+radioamadorismo, construção de repetidora piloto na sede Neoville. 
+o Estações de Radioamadorismo Locais: Visitas técnicas, demonstrações. 
+d) Contrapartida a ser feita com o Parceiro 
+A contrapartida é fundamental para a sustentabilidade e o reconhecimento do projeto junto 
+aos parceiros: 
+• Para a UTFPR: 
+o Fortalecimento da imagem institucional como promotora da inovação e do 
+desenvolvimento social. 
+o Oportunidade para professores e alunos aplicarem conhecimentos teóricos em 
+projetos práticos. 
+o Geração de produção científica (artigos, relatórios) a partir da experiência do 
+projeto. 
+o Atração de futuros alunos para cursos da área tecnológica. 
+• Para os Grupos Escoteiros: 
+o Oferta de atividades inovadoras e de alto valor pedagógico para seus membros. 
+o Qualificação e formação de chefes e escotistas em novas áreas de 
+conhecimento. 
+o Acesso a infraestrutura e expertise universitária. 
+o Visibilidade e reconhecimento da atuação do movimento escoteiro na promoção 
+da ciência e tecnologia. 
+• Para a Associação de Radioamadores do Paraná – ARPA 
+o o Divulgação do radioamadorismo na comunidade 
+o o Aproximação pública com futuros interessados em se tornarem radioamadores, 
+o principalmente junto ao público-alvo deste projeto. 
+• Para os Parceiros Financiadores/Apoiadores: 
+o Divulgação da marca do parceiro em todos os materiais do projeto (banners, 
+apresentações, relatórios, mídias sociais). 
+o Participação em eventos de encerramento e demonstrações. 
+o Relatórios de impacto e resultados das atividades realizadas. 
+o Possibilidade de associação da marca a um projeto de educação e tecnologia 
+com impacto social. 
+e) Cronograma (Total de 36 meses, 20 módulos) 
+O cronograma será distribuído ao longo de 36 meses, com 20 módulos temáticos e 
+práticos, sendo os demais períodos dedicados a planejamento, avaliação e atividades 
+complementares. Cada módulo terá uma duração média de 4 horas, podendo ser flexível de 
+acordo com a atividade.  
+A avaliação do projeto será um processo contínuo, com monitoramento do engajamento 
+dos participantes e do progresso das atividades em cada etapa.  Em tendo a possibilidade ou 
+necessidade didática dois ou mais módulos poderão acontecer conjuntamente. 
+Etapa de 
+aprendizagem 
+Início Término Módulos Descrição Detalhada e 
+Processos de 
+Avaliação 
+Etapa 1: 
+Planejamento e 
+Mobilização 
+Agosto/2025 Outubro/2025 0 Reuniões de equipe, 
+definição de currículo 
+detalhado, captação de 
+recursos, divulgação do 
+projeto, seleção de 
+participantes e 
+formação de grupos, 
+treinamento inicial de 
+instrutores 
+(professores/alunos 
+UTFPR e Chefes 
+Escoteiros).  
+Avaliação: Definição de 
+indicadores de sucesso 
+do projeto e metas 
+iniciais. Reuniões de 
+alinhamento com 
+parceiros. 
+Etapa 2: 
+Fundamentos do 
+Radioamadorismo 
+e Eletrônica Básica 
+Novembro/2025 Março/2026 5 Módulo 1: O que é 
+radioamadorismo? 
+História e ética.  
+Módulo 2: Eletricidade 
+e magnetismo básicos. 
+Módulo 3: 
+Componentes 
+eletrônicos passivos 
+(resistores, capacitores, 
+indutores).  
+Módulo 4: Circuitos 
+elétricos básicos (série 
+e paralelo).  
+Módulo 5: Montagem 
+de circuitos simples 
+(LED, buzina). 
+Avaliação: 
+Questionários de pré e 
+pós-teste para avaliar o 
+conhecimento inicial e 
+adquirido. Observação 
+da participação e 
+engajamento nas 
+atividades práticas. 
+Feedback informal dos 
+participantes e chefes 
+escoteiros. 
+Etapa 3: 
+Transmissão e 
+Recepção de 
+Sinais 
+Abril/2026 Agosto/2026 5 Módulo 6: O que são 
+ondas 
+eletromagnéticas? 
+Propagação.  
+Módulo 7: Antenas e 
+suas características. 
+Módulo 8: Princípios de 
+transmissão 
+(modulação, 
+frequências).  
+Módulo 9: Princípios de 
+recepção e de 
+modulação.  
+Módulo 10: Construção 
+de uma antena simples 
+ou rádio de cristal. 
+Avaliação: Verificação 
+da capacidade dos 
+participantes em 
+identificar 
+componentes, entender 
+diagramas e realizar 
+montagens básicas. 
+Testes práticos com as 
+antenas construídas. 
+Registro de dúvidas e 
+dificuldades para 
+adaptação do conteúdo. 
+Etapa 4: Operação 
+e Legislação 
+Setembro/2026 Janeiro/2027 5 Módulo 11: Códigos e 
+procedimentos de 
+comunicação (código Q, 
+fonia, CW).  
+Módulo 12: Legislação e 
+regulamentação do 
+radioamadorismo no 
+Brasil (ANATEL).  
+Módulo 13: Operação 
+de rádios (VHF/UHF) - 
+prática.  
+Módulo 14: Simulações 
+de comunicação em 
+situações diversas. 
+Módulo 15: Preparação 
+para a prova de 
+licenciamento 
+(opcional).  
+Avaliação: Avaliação da 
+fluência na utilização de 
+códigos e 
+procedimentos de 
+comunicação. 
+Simulações avaliativas 
+de comunicação. 
+Sessões de perguntas e 
+respostas sobre a 
+legislação. Coleta de 
+dados sobre o interesse 
+em buscar a licença de 
+radioamador. 
+Etapa 5: 
+Aplicações 
+Interdisciplinares 
+e Projetos Finais 
+Fevereiro/2027 Junho/2027 5 Módulo 16: 
+Radioamadorismo em 
+emergências e defesa 
+civil.  
+Módulo 17: 
+Radioamadorismo e 
+ciência (satélites, 
+meteorologia).  
+Módulo 18: 
+Desenvolvimento de 
+pequenos projetos (ex: 
+estação de 
+monitoramento 
+meteorológico com 
+rádio).  
+Módulo 19: Integração 
+de conteúdos (física, 
+matemática, geografia 
+na prática).  
+Módulo 20: 
+Apresentação dos 
+projetos finais e 
+confraternização. 
+Avaliação: 
+Apresentação e defesa 
+dos projetos finais pelos 
+grupos, com avaliação 
+da originalidade, 
+aplicação dos 
+conhecimentos e 
+trabalho em equipe. 
+Feedback dos 
+participantes sobre a 
+relevância e 
+aprendizado das 
+atividades. 
+Etapa 6: Avaliação 
+e Divulgação 
+Julho/2027 Julho/2028 0 Coleta de feedback final 
+(questionários, 
+entrevistas) de todos os 
+escoteiros, chefes, 
+alunos e professores da 
+UTFPR e radioamadores 
+participantes.  
+Análise dos resultados 
+alcançados em relação 
+aos objetivos propostos 
+e ODS.  
+Produção de relatórios 
+técnicos, artigos 
+científicos e materiais 
+de divulgação (vídeos, 
+folders, posts em redes 
+sociais).  
+Divulgação dos 
+resultados em eventos 
+acadêmicos, seminários 
+e para a comunidade 
+escoteira. Planejamento 
+de continuidade ou 
+novas edições do 
+projeto com base nas 
+lições aprendidas. 
+ 
+3. Justificativa 
+A relação entre a universidade e o público externo, especialmente organizações como os 
+Grupos Escoteiros, é de importância capital para o desenvolvimento mútuo e para a construção 
+de uma sociedade mais capacitada e engajada. No contexto deste projeto, essa  parceria se 
+justifica por diversas razões, abordando problemas relevantes na comunidade e demonstrando 
+seu impacto social: 
+• Democratização e Inovação do Conhecimento (Impacto Educacional e 
+Tecnológico): A universidade, como centro de produção e disseminação de 
+conhecimento, tem a responsabilidade de levar seus saberes para além dos limites do 
+campus. Ao interagir com os escoteiros, o projeto democratiza o acesso a conceitos 
+científicos e tecnológicos rel acionados à eletrônica e telecomunicações que, de outra 
+forma, poderiam ser distantes para esse público, contribuindo para a redução da 
+exclusão digital e tecnológica na comunidade. 
+• Formação de Novas Gerações para o Futuro (Impacto Social e Educacional):  Os 
+jovens escoteiros representam o futuro. Ao oferecer a eles uma experiência prática e 
+estimulante com o radioamadorismo e suas ramificações em diversas ciências, a UTFPR 
+contribui diretamente para a formação de cidadãos mais críticos, curiosos e aptos a lidar 
+com os desafios do mundo moderno, talvez até mesmo influenciando suas escolhas de 
+carreira em áreas tecnológicas. Isso é crucial para o desenvolvimento de capital 
+humano qualificado para as necessidades futuras do mercado e da sociedade. 
+• Fortalecimento da Extensão Universitária e Inovação Pedagógica (Impacto 
+Educacional e Institucional):  O projeto exemplifica a aplicação prática do tripé 
+universitário (ensino, pesquisa e extensão), fortalecendo o papel da UTFPR na 
+sociedade. Permite que alunos e professores apliquem seus conhecimentos, 
+desenvolvam novas metodologias de ensino e gerem pesquisa a partir das interações e 
+resultados obtidos com os escoteiros. A abordagem do radioamadorismo como 
+ferramenta interdisciplinar de ensino é inovadora, rompendo com o ensino tradicional e 
+oferecendo uma plataforma lúdica e concreta para o aprendizado de disciplinas que, 
+muitas vezes, são vistas como abstratas. 
+• Desenvolvimento de Habilidades para o Século XXI (Impacto Social):  Além dos 
+conhecimentos específicos, o projeto promove o desenvolvimento de habilidades 
+socioemocionais (soft skills)  essenciais, como trabalho em equipe, comunicação 
+eficaz (oral e escrita), resolução de problemas (práticos e teóricos), liderança, 
+adaptabilidade e senso de responsabilidade social e ambiental. Todas essas habilidades 
+são cruciais para o sucesso pessoal, profissional e para a construção de uma cidadania 
+ativa e engajada na comunidade. 
+• Reconhecimento Social e Integração Comunitária (Impacto Social e Cultural):  A 
+UTFPR, ao se associar a uma instituição respeitada como o movimento escoteiro e à 
+ARPA, reforça seu compromisso com a comunidade e sua relevância social, 
+consolidando-se como uma universidade atuante e engajada na resolução de desafios 
+locais e na promoção de uma cultura de inovação e cooperação. 
+4. Métodos e Procedimentos 
+O projeto será desenvolvido em um formato híbrido, combinando atividades presenciais 
+na UTFPR (preferencialmente na sede Neoville, dada a sua infraestrutura) e nas sedes dos 
+grupos escoteiros, com suporte online para materiais e comunicação. A metodologia será ativa 
+e participativa, com ênfase no "aprender fazendo" , buscando engajar os escoteiros na 
+construção e aplicação prática do conhecimento. 
+O público externo de Escoteiros será dividido em grupos, entre 10 e 25 escoteiros, de 
+acordo com a faixa etária e escolaridade. Os escoteiros participantes serão cadastrados e 
+comporão os grupos de aprendizagem. Cada grupo de aprendizagem participará de qu atro 
+Etapas de aprendizagem (Etapas 2 a 5), que serão executadas de acordo com os prazos 
+indicados na tabela anterior. Durante cada etapa poderão ser formados um ou mais grupos,  
+assim garante -se a entrada do projeto de forma contínua . A formação de novos g rupos irá 
+depender da agenda do grupo executor da UTFPR e dos Chefes Escoteiros. 
+Ao final da Etapa 5, todos os grupos de aprendizagem farão uma apresentação do 
+conteúdo aprendido na forma de evento a ser realizado na sede Neoville. Os participantes do 
+projeto receberão certificados de participação com base na sua participação e atuação. 
+Sugestão de Atividades a Serem Desenvolvidas: 
+• Módulos Teórico-práticos: aplicados por discentes , professores  da UTFPR e/ou 
+radioamadores convidados. 
+o Introdução ao Radioamadorismo:  História, códigos, ética de comunicação  
+(linguagem, Código Q), tipos de emissões (fonia, CW, digital). 
+o Eletrônica Básica:  Conceitos de corrente, tensão, resistência, componentes 
+eletrônicos (resistores, capacitores, diodos, transistores), montagem de circuitos 
+simples em protoboards. 
+o Ondas Eletromagnéticas e Propagação:  Tipos de ondas, espectro 
+eletromagnético, camadas da atmosfera, fenômenos de propagação. 
+o Antenas: Tipos de antenas (dipolo, yagi, vertical), princípios de funcionamento, 
+montagem e ajuste prático. 
+o Equipamentos de Rádio:  Transceptores, fontes de alimentação, medidores de 
+ROE, softwares de operação e suas interfaces. 
+o Legislação: Normas da ANATEL, classes de licença, procedimentos de operação 
+(com foco na regulamentação para o radioamador). 
+o Radioamadorismo e Serviço:  Papel do radioamadorismo em situações de 
+emergência e defesa civil, apoio a eventos, comunicação em desastres 
+(relevância social). 
+• Oficinas Práticas: aplicados por discentes, professores da UTFPR e/ou radioamadores 
+convidados. 
+o Montagem de Rádios de Cristal:  Construção de receptores simples sem fonte 
+de energia externa, explorando conceitos de ressonância e aproveitamento de 
+energia. 
+o Construção de Antenas: Montagem e teste de antenas simples (ex: dipolo para 
+40m) com medição e ajuste, aplicando conceitos de física e matemática. 
+o Operação de Estações de Rádio:  Prática supervisionada de comunicação em 
+VHF/UHF , utilizando indicativos de chamada fictícios ou licenciados, com foco 
+em comunicação clara e eficaz. 
+o Simulados de Comunicação: Exercícios práticos de comunicação em cenários 
+de emergência, com mensagens codificadas e relatórios, desenvolvendo 
+habilidades de resposta rápida. 
+o Eletrônica Criativa: Montagem de pequenos projetos eletrônicos relacionados 
+ao radioamadorismo (ex: oscilador de áudio, medidor de campo, projetos com 
+microcontroladores). 
+• Visitas Técnicas: aplicados por discentes , professores da UTFPR e/ou radioamadores 
+convidados. 
+o Estações de Radioamadores Licenciados:  Para observar e participar da 
+operação em campo, compreendendo a aplicação real do conhecimento. 
+o Laboratórios da UTFPR:  Para conhecer equipamentos avançados e aplicações 
+de telecomunicações, conectando a teoria à infraestrutura universitária. 
+o Centros de Operação de Defesa Civil: Para entender o papel das comunicações 
+em emergências e a contribuição do radioamadorismo. 
+• Projetos Aplicados (Interdisciplinares): 
+o Construção de um Rádio de Comunicação Simples: Aplicando conhecimentos 
+de eletrônica e RF , culminando em um produto funcional. 
+o Sistema de Monitoramento Ambiental com Rádio:  Coleta de dados 
+(temperatura, umidade) e transmissão via rádio, abordando aspectos ambientais 
+e tecnológicos. 
+o Jornalismo via Rádio:  Criação de um "boletim" de rádio amador, trabalhando 
+português e inglês, com foco na comunicação de notícias e informações 
+relevantes. 
+o Mapeamento de Cobertura de Rádio:  Utilizando GPS e conceitos de geografia 
+para identificar áreas de cobertura de sinais, com aplicação prática de 
+geolocalização. 
+• Eventos e Confraternizações: 
+o Field Day: Evento de operação de rádio em campo, promovendo o trabalho em 
+equipe, a prática da comunicação e a resiliência. 
+o Dia Mundial do Escoteiro Radioamador (JOTA-JOTI): Participação em um evento 
+global de comunicação entre escoteiros, fomentando a comunicação 
+intercultural. 
+o Apresentação Final dos Projetos:  Os escoteiros apresentarão seus projetos e 
+aprendizados à comunidade, reforçando a comunicação e a liderança. 
+5. Resultados Esperados 
+A concretização deste projeto de extensão gerará uma série de resultados e impactos 
+positivos para todas as partes envolvidas, com alinhamento direto aos objetivos propostos e 
+demonstrando como a comunidade se apropriará do conhecimento. 
+• Para os Escoteiros (Comunidade Atendida): 
+o Conhecimento e Habilidades Consolidadas:  Aquisição de conhecimentos 
+sólidos em radioamadorismo, eletrônica, física, matemática, história, geografia, 
+português, inglês e cidadania, de forma prática e contextualizada. Isso se 
+traduzirá em habilidades técnicas aplicáveis , como a montagem de circuitos 
+básicos e a operação de estações de rádio, e habilidades transversais, como o 
+pensamento crítico e a comunicação eficaz. 
+o Apropriação e Reprodução do Conhecimento:  Os escoteiros não apenas 
+aprenderão, mas serão incentivados a replicar e compartilhar o conhecimento 
+adquirido em seus próprios grupos escoteiros, tornando -se multiplicadores da 
+informação. Eles estarão aptos a utilizar o radioamadorismo em atividades 
+escoteiras (acampamentos, jogos de aventura) e, eventualmente, a buscar suas 
+próprias licenças de radioamador, garantindo a sustentabilidade e a continuidade 
+do aprendizado além do projeto. 
+o Estímulo à Carreira e Cidadania Ativa:  Despertar o interesse por áreas da 
+ciência e tecnologia, potencialmente influenciando a escolha de cursos 
+universitários e futuras profissões em STEM. A compreensão do papel do 
+radioamadorismo na sociedade, especialmente em situações de emergência, 
+fomentará o senso de serviço à comunidade e de cidadania ativa, preparando-
+os para serem agentes de apoio em suas localidades. 
+o Experiência Formativa Enriquecedora:  Proporcionar uma experiência 
+educacional única e enriquecedora, complementando a formação escoteira com 
+um viés prático e tecnológico. 
+• Para os Estudantes da UTFPR (Impacto na Formação do Estudante Envolvido): 
+o Desenvolvimento de Competências Pedagógicas e de Liderança: Os alunos da 
+UTFPR (graduação e pós -graduação) envolvidos como monitores e instrutores 
+terão a oportunidade ímpar de desenvolver habilidades de ensino, planejamento 
+de atividades, comunicação didática e gestão de grupos. 
+o Aplicação Prática do Conhecimento Acadêmico:  O projeto oferece um 
+ambiente real para a aplicação dos conhecimentos teóricos adquiridos em sala 
+de aula nas áreas de engenharia, física e outras, consolidando o aprendizado e 
+desenvolvendo a capacidade de resolver problemas práticos. 
+o Experiência em Gestão de Projetos e Engajamento Comunitário:  Os 
+estudantes vivenciarão o ciclo completo de um projeto de extensão, desde o 
+planejamento até a avaliação, e desenvolverão uma consciência sobre a 
+importância da universidade na interação com a comunidade e na promoção do 
+desenvolvimento social. 
+o Interdisciplinaridade e Trabalho em Equipe: O trabalho com diferentes áreas do 
+conhecimento e com membros da comunidade escoteira (Chefes e jovens) 
+promoverá o desenvolvimento da capacidade de trabalhar em equipes 
+multidisciplinares, essencial para suas futuras carreiras. 
+o Senso de Responsabilidade Social:  A participação no projeto cultivará nos 
+estudantes um forte senso de responsabilidade social e um compromisso com a 
+utilização do conhecimento para o bem-estar da sociedade. 
+• Para a UTFPR: 
+o Fortalecimento da Extensão:  Consolidação do papel da universidade na 
+interação com a sociedade, com um projeto de extensão de alto impacto e 
+relevância social. 
+o Produção Acadêmica:  Geração de artigos científicos, relatórios e estudos de 
+caso a partir da metodologia e resultados do projeto, enriquecendo a pesquisa 
+universitária. 
+o Engajamento da Comunidade Acadêmica:  Oportunidade para professores e 
+alunos de graduação e pós -graduação aplicarem seus conhecimentos e 
+desenvolverem novas competências. 
+o Visibilidade e Reconhecimento:  Aumento da visibilidade da UTFPR na 
+comunidade e reconhecimento como instituição que promove a educação e a 
+inovação. 
+o Atração de Talentos:  Despertar o interesse de jovens do ensino médio pelas 
+áreas de engenharia e tecnologia, facilitando o ingresso na universidade. 
+• Para os Parceiros (ARPA e Escoteiros do Brasil – PR): 
+o Retorno Social e Fortalecimento da Imagem:  Demonstrar o impacto social de 
+seus investimentos ou apoio e associar a marca do parceiro a um projeto 
+educacional inovador e de relevância. 
+o Oportunidade de Colaboração: Abrir portas para futuras parcerias e iniciativas 
+conjuntas. 
+Referências Bibliográficas (em conformidade com ABNT) 
+BRASIL. Constituição da República Federativa do Brasil de 1988. Brasília, DF: Senado 
+Federal, 1988. 
+BRASIL. Lei nº 9.394, de 20 de dezembro de 1996. Estabelece as Diretrizes e Bases da 
+Educação Nacional. Diário Oficial da União, Brasília, DF , 23 dez. 1996. 
+ESCOTEIROS DO BRASIL. Princípios, promessa e lei escoteira . Disponível em: 
+https://www.escoteiros.org.br/quem-somos/principios-promessa-e-lei-escoteira/. 
+Acesso em: 10 jun. 2025. 
+FELDMAN, Isaac. Manual de Radioamadorismo. 2. ed. São Paulo: Érica, 2012. 
+GOMES, Elisabeth L. Extensão universitária: teoria e prática. 2. ed. São Paulo: Cortez, 
+2018. 
+LABRE – LIGA DE AMADORES BRASILEIROS DE RÁDIO EMISSÃO. O que é 
+radioamadorismo?. Disponível em: https://www.labre.org.br/o-que-e-
+radioamadorismo/. Acesso em: 10 jun. 2025. 
+MORAN, José Manuel. Metodologias ativas e modelos híbridos na educação . In: 
+Coleção Convergências. São Paulo: Saraiva Educação, 2015. 
+ORGANIZAÇÃO DAS NAÇÕES UNIDAS (ONU). Objetivos de Desenvolvimento 
+Sustentável. Disponível em: https://brasil.un.org/pt-br/sdgs. Acesso em: 10 jun. 2025. 
+UTFPR – UNIVERSIDADE TECNOLÓGICA FEDERAL DO PARANÁ. Resolução COUNI nº 
+61/2018. Regulamento da Extensão da UTFPR. Curitiba, 2018. 
+ 
