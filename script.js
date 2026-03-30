@@ -226,7 +226,7 @@ function initForm() {
       return;
     }
 
-    // Simulate submission
+    // Envio real para a planilha via Google Apps Script
     const btn = document.getElementById('btn-enviar');
     btn.disabled = true;
     btn.innerHTML = `
@@ -236,17 +236,24 @@ function initForm() {
       Enviando...
     `;
 
-    setTimeout(() => {
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw1T5CmnUChGtbLyfRcxCkMU23pgEwoFLoreA2YDrbHbEag4uHKep14fOnpy4FNtLav/exec';
+    
+    // Converte os dados do formulário para o formato que o Apps Script entende
+    const formData = new FormData(form);
+    const formDataEncoded = new URLSearchParams(formData).toString();
+
+    fetch(SCRIPT_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: formDataEncoded,
+    })
+    .then(response => {
       showToast();
       form.reset();
-      btn.disabled = false;
-      btn.innerHTML = `
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-          <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
-        </svg>
-        Enviar Inscrição
-      `;
-
+      
       // Remove validation classes
       form.querySelectorAll('.form__input').forEach(input => {
         input.classList.remove('success', 'error');
@@ -254,7 +261,20 @@ function initForm() {
       form.querySelectorAll('.form__error').forEach(el => {
         el.textContent = '';
       });
-    }, 1800);
+    })
+    .catch(error => {
+      console.error('Erro ao enviar:', error);
+      alert('Ocorreu um problema de conexão com a planilha. Tente novamente mais tarde.');
+    })
+    .finally(() => {
+      btn.disabled = false;
+      btn.innerHTML = `
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
+        </svg>
+        Enviar Inscrição
+      `;
+    });
   });
 }
 
