@@ -1023,11 +1023,16 @@ button {
   background: var(--c-sand-50);
 }
 
-.parceiros__grid {
+.parceiros__grid,
+.apoiadores__grid {
   display: flex;
   justify-content: center;
   gap: var(--sp-lg);
   flex-wrap: wrap;
+}
+
+.apoiadores__grid {
+  gap: var(--sp-md);
 }
 
 .parceiro-card {
@@ -1037,8 +1042,18 @@ button {
   border: 1px solid var(--c-green-100);
   border-radius: var(--radius-lg);
   min-width: 220px;
+  flex: 1 1 220px;
+  max-width: 320px;
   transition: all var(--tr-smooth);
   box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+}
+
+.parceiro-card--sm {
+  min-width: 180px;
+  flex: 1 1 180px;
+  padding: var(--sp-md);
 }
 
 .parceiro-card:hover {
@@ -1050,8 +1065,14 @@ button {
 .parceiro-card__logo {
   display: flex;
   justify-content: center;
+  align-items: center;
   margin-bottom: var(--sp-sm);
   color: var(--c-green-800);
+  min-height: 100px;
+}
+
+.parceiro-card--sm .parceiro-card__logo {
+  min-height: 80px;
 }
 
 .parceiro-card__name {
@@ -1060,6 +1081,10 @@ button {
   font-weight: var(--fw-bold);
   color: var(--c-dark-800);
   margin-bottom: 0.25rem;
+}
+
+.parceiro-card--sm .parceiro-card__name {
+  font-size: 1.05rem;
 }
 
 .parceiro-card__desc {
