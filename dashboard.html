@@ -383,7 +383,7 @@
 
     async function loadInscriptions() {
       try {
-        const response = await fetch('/api/inscriptions', {
+        const response = await fetch('/api/admin/inscriptions', {
           headers: {
             'Authorization': `Bearer ${token}`
           }
@@ -406,13 +406,13 @@
         inscriptions.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
 
         inscriptions.forEach(ins => {
-          totalParticipants += parseInt(ins.participantes || 0);
+          totalParticipants += parseInt(ins.participants_count || 0);
           const row = document.createElement('tr');
           row.innerHTML = `
-            <td><span class="group-name">${ins.grupo}</span></td>
-            <td>${ins.responsavel}</td>
+            <td><span class="group-name">${ins.group_name}</span></td>
+            <td>${ins.responsible_name}</td>
             <td>${ins.email}</td>
-            <td><span class="badge badge--success">${ins.participantes}</span></td>
+            <td><span class="badge badge--success">${ins.participants_count}</span></td>
             <td>${new Date(ins.created_at).toLocaleDateString('pt-BR')}</td>
           `;
           list.appendChild(row);
