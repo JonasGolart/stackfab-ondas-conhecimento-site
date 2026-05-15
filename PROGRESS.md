@@ -17,8 +17,9 @@
 - [x] Criação de scripts de semente (seed) e Dockerfile Node.js
 
 ### 🚧 Em Andamento
-- [ ] Validação de conexão com o banco de dados de produção no Coolify
-- [ ] Sincronização com repositório GitHub oficial
+- [x] Sincronização com repositório GitHub oficial
+- [x] Deploy disparado via API do Coolify (Deployment UUID: `e14fx5tmxzisikvnn3vso971`)
+- [x] Atualização do servidor local para Node.js (Porta 3000)
 
 ### 📋 Próximos Passos
 1. Realizar deploy no Coolify.

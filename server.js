@@ -8,11 +8,6 @@ const pool = require('./src/config/db');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middlewares
-app.use(cors());
-app.use(express.json());
-app.use(express.static(path.join(__dirname, '.')));
-
 // Database initialization
 const initDb = async () => {
   try {
@@ -31,8 +26,20 @@ const initDb = async () => {
 
       CREATE TABLE IF NOT EXISTS users (
         id SERIAL PRIMARY KEY,
+        name TEXT,
         email TEXT UNIQUE NOT NULL,
         password TEXT NOT NULL,
+        role TEXT DEFAULT 'participant',
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      );
+
+      CREATE TABLE IF NOT EXISTS materials (
+        id SERIAL PRIMARY KEY,
+        title TEXT NOT NULL,
+        description TEXT,
+        file_path TEXT NOT NULL,
+        category TEXT,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       );
     `);
@@ -43,6 +50,12 @@ const initDb = async () => {
 };
 
 initDb();
+
+// Middlewares
+app.use(cors());
+app.use(express.json());
+app.use(express.static(path.join(__dirname, '.')));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Routes
 app.use('/api', apiRoutes);

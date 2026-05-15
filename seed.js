@@ -1,42 +1,25 @@
-require('dotenv').config();
-const { Pool } = require('pg');
+const pool = require('./src/config/db');
 const bcrypt = require('bcryptjs');
-
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-});
+require('dotenv').config();
 
 const seed = async () => {
-  const email = 'admin@projeto.com';
-  const password = 'admin'; // O usuário deve trocar isso depois
+  // Usuário admin padrão extraído do Armazém StackFAB
+  const name = 'Jonas';
+  const email = 'jonas@gmail.com';
+  const password = 'jonas260778';
   const hashedPassword = await bcrypt.hash(password, 10);
 
   try {
-    // Garantir que a tabela existe
-    await pool.query(`
-      CREATE TABLE IF NOT EXISTS users (
-        id SERIAL PRIMARY KEY,
-        email TEXT UNIQUE NOT NULL,
-        password TEXT NOT NULL,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-      );
-    `);
-
-    // Inserir usuário se não existir
-    const result = await pool.query(
-      'INSERT INTO users (email, password) VALUES ($1, $2) ON CONFLICT (email) DO NOTHING RETURNING id, email',
-      [email, hashedPassword]
+    // Inserir ou atualizar o usuário admin, incluindo o campo 'name' exigido pelo schema do banco compartilhado
+    await pool.query(
+      'INSERT INTO users (name, email, password) VALUES ($1, $2, $3) ON CONFLICT (email) DO UPDATE SET name = $1, password = $3',
+      [name, email, hashedPassword]
     );
 
-    if (result.rows.length > 0) {
-      console.log('Usuário admin criado com sucesso!');
-      console.log('Email:', email);
-      console.log('Senha:', password);
-    } else {
-      console.log('O usuário admin já existe ou não pôde ser criado.');
-    }
+    console.log(`✅ Admin padrão criado/atualizado com sucesso: ${email}`);
+    console.log('⚠️  Lembre-se de alterar a senha no primeiro acesso em produção.');
   } catch (err) {
-    console.error('Erro ao seedar banco:', err);
+    console.error('❌ Erro ao criar admin padrão:', err);
   } finally {
     await pool.end();
   }

@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard — Ondas do Conhecimento</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <title>Admin Dashboard — Ondas do Conhecimento</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
       --primary: #4CAF50;
@@ -17,423 +17,182 @@
       --border: rgba(255, 255, 255, 0.1);
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background-color: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; overflow: hidden; }
 
-    body {
-      background-color: var(--bg);
-      color: var(--text);
-      font-family: 'Inter', sans-serif;
-      overflow: hidden; /* O body não rola, o main sim */
-    }
-
-    .dashboard {
-      display: flex;
-      height: 100vh;
-      width: 100vw;
-    }
+    .dashboard { display: flex; height: 100vh; width: 100vw; }
 
     /* Sidebar */
-    .sidebar {
-      width: 280px;
-      background: var(--sidebar);
-      border-right: 1px solid var(--border);
-      padding: 2rem 1.5rem;
-      display: flex;
-      flex-direction: column;
-      z-index: 10;
-    }
+    .sidebar { width: 280px; background: var(--sidebar); border-right: 1px solid var(--border); padding: 2rem 1.5rem; display: flex; flex-direction: column; z-index: 10; }
+    .sidebar-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 3rem; padding: 0 0.5rem; }
+    .sidebar-header img { width: 40px; height: 40px; object-fit: contain; }
+    .sidebar-header span { font-weight: 700; font-size: 1.1rem; letter-spacing: -0.02em; }
+    .nav-item { display: flex; align-items: center; gap: 0.75rem; padding: 0.875rem 1rem; border-radius: 12px; color: var(--text-muted); text-decoration: none; transition: all 0.2s; margin-bottom: 0.5rem; font-weight: 500; cursor: pointer; }
+    .nav-item:hover, .nav-item.active { background: rgba(76, 175, 80, 0.1); color: var(--primary); }
 
-    .sidebar-header {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      margin-bottom: 3rem;
-      padding: 0 0.5rem;
-    }
-
-    .sidebar-header img {
-      width: 40px;
-      height: 40px;
-      object-fit: contain;
-    }
-
-    .sidebar-header span {
-      font-weight: 700;
-      font-size: 1.1rem;
-      letter-spacing: -0.02em;
-    }
-
-    .sidebar-nav {
-      flex: 1;
-    }
-
-    .nav-item {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      padding: 0.875rem 1rem;
-      border-radius: 12px;
-      color: var(--text-muted);
-      text-decoration: none;
-      transition: all 0.2s;
-      margin-bottom: 0.5rem;
-      font-weight: 500;
-    }
-
-    .nav-item:hover, .nav-item.active {
-      background: rgba(76, 175, 80, 0.1);
-      color: var(--primary);
-    }
-
-    .logout-btn {
-      margin-top: auto;
-      background: rgba(239, 68, 68, 0.1);
-      color: #f87171;
-      border: 1px solid rgba(239, 68, 68, 0.2);
-      padding: 0.875rem;
-      border-radius: 12px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-      font-weight: 600;
-      transition: all 0.2s;
-    }
-
-    .logout-btn:hover {
-      background: rgba(239, 68, 68, 0.2);
-    }
+    .logout-btn { margin-top: auto; background: rgba(239, 68, 68, 0.1); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.2); padding: 0.875rem; border-radius: 12px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.5rem; font-weight: 600; transition: all 0.2s; }
+    .logout-btn:hover { background: rgba(239, 68, 68, 0.2); }
 
     /* Main Content */
-    .main {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      background: radial-gradient(circle at top right, rgba(76, 175, 80, 0.05), transparent);
-      overflow-y: auto;
-      padding: 2rem 3rem;
-    }
+    .main { flex: 1; display: flex; flex-direction: column; background: radial-gradient(circle at top right, rgba(76, 175, 80, 0.05), transparent); overflow-y: auto; padding: 2rem 3rem; }
+    .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2.5rem; }
+    .header h1 { font-size: 1.75rem; font-weight: 800; }
 
-    .header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 2.5rem;
-    }
+    .content-section { display: none; }
+    .content-section.active { display: block; }
 
-    .header h1 {
-      font-size: 1.75rem;
-      font-weight: 800;
-      letter-spacing: -0.03em;
-    }
+    /* Stats */
+    .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; margin-bottom: 2.5rem; }
+    .stat-card { background: var(--card); backdrop-filter: blur(10px); border: 1px solid var(--border); padding: 1.75rem; border-radius: 24px; }
+    .stat-card span { display: block; color: var(--text-muted); font-size: 0.875rem; margin-bottom: 0.75rem; }
+    .stat-card h2 { font-size: 2.5rem; font-weight: 800; color: var(--primary); }
 
-    .user-pill {
-      background: var(--card);
-      padding: 0.5rem 1rem;
-      border-radius: 100px;
-      border: 1px solid var(--border);
-      font-size: 0.875rem;
-      color: var(--text-muted);
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
+    /* Tables */
+    .card-box { background: var(--card); backdrop-filter: blur(10px); border: 1px solid var(--border); border-radius: 24px; overflow: hidden; margin-bottom: 2rem; }
+    .card-header { padding: 1.5rem; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+    table { width: 100%; border-collapse: collapse; text-align: left; }
+    th { padding: 1rem 1.5rem; background: rgba(255, 255, 255, 0.03); font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; }
+    td { padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--border); font-size: 0.9rem; }
 
-    .user-pill::before {
-      content: '';
-      width: 8px;
-      height: 8px;
-      background: var(--primary);
-      border-radius: 50%;
-      box-shadow: 0 0 10px var(--primary);
-    }
+    /* Form */
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; padding: 1.5rem; }
+    .input-group { display: flex; flex-direction: column; gap: 0.5rem; }
+    input, select, textarea { background: rgba(255,255,255,0.05); border: 1px solid var(--border); padding: 0.75rem; border-radius: 8px; color: white; }
+    .btn-submit { background: var(--primary); color: white; border: none; padding: 0.75rem; border-radius: 8px; font-weight: 700; cursor: pointer; }
 
-    /* Stats Cards */
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 1.5rem;
-      margin-bottom: 2.5rem;
-    }
-
-    .stat-card {
-      background: var(--card);
-      backdrop-filter: blur(10px);
-      border: 1px solid var(--border);
-      padding: 1.75rem;
-      border-radius: 24px;
-      transition: transform 0.2s;
-    }
-
-    .stat-card:hover {
-      transform: translateY(-5px);
-      border-color: rgba(76, 175, 80, 0.3);
-    }
-
-    .stat-card span {
-      display: block;
-      color: var(--text-muted);
-      font-size: 0.875rem;
-      font-weight: 500;
-      margin-bottom: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-
-    .stat-card h2 {
-      font-size: 2.5rem;
-      font-weight: 800;
-      margin: 0;
-      color: var(--primary);
-    }
-
-    /* Table */
-    .table-section {
-      background: var(--card);
-      backdrop-filter: blur(10px);
-      border: 1px solid var(--border);
-      border-radius: 24px;
-      overflow: hidden;
-      flex: 1;
-    }
-
-    .table-header {
-      padding: 1.5rem;
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .table-header h3 {
-      font-size: 1.1rem;
-      font-weight: 600;
-    }
-
-    .table-wrapper {
-      overflow-x: auto;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      text-align: left;
-    }
-
-    th {
-      padding: 1rem 1.5rem;
-      background: rgba(255, 255, 255, 0.03);
-      font-size: 0.75rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: var(--text-muted);
-    }
-
-    td {
-      padding: 1.25rem 1.5rem;
-      border-bottom: 1px solid var(--border);
-      font-size: 0.925rem;
-    }
-
-    tr:hover td {
-      background: rgba(255, 255, 255, 0.02);
-    }
-
-    tr:last-child td {
-      border-bottom: none;
-    }
-
-    .badge {
-      padding: 0.35rem 0.85rem;
-      border-radius: 8px;
-      font-size: 0.75rem;
-      font-weight: 700;
-    }
-
-    .badge--success { 
-      background: rgba(34, 197, 94, 0.1); 
-      color: #4ade80;
-      border: 1px solid rgba(34, 197, 94, 0.2);
-    }
-
-    .group-name {
-      font-weight: 600;
-      color: white;
-    }
-
-    #loading {
-      text-align: center;
-      padding: 4rem;
-      color: var(--text-muted);
-    }
-
-    .spin {
-      animation: rotate 2s linear infinite;
-    }
-
-    @keyframes rotate {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
-    }
-
-    @media (max-width: 1024px) {
-      .sidebar { width: 80px; padding: 2rem 0.75rem; }
-      .sidebar-header span, .nav-item span { display: none; }
-      .main { padding: 1.5rem; }
-    }
+    .delete-btn { color: #f87171; cursor: pointer; background: none; border: none; font-weight: 600; }
   </style>
 </head>
 <body>
   <div class="dashboard">
-    <!-- BARRA LATERAL -->
     <aside class="sidebar">
       <div class="sidebar-header">
         <img src="assets/img/logo-projeto.png" alt="Logo">
         <span>Ondas Admin</span>
       </div>
-
       <nav class="sidebar-nav">
-        <a href="#" class="nav-item active">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <rect x="3" y="3" width="7" height="7"></rect>
-            <rect x="14" y="3" width="7" height="7"></rect>
-            <rect x="14" y="14" width="7" height="7"></rect>
-            <rect x="3" y="14" width="7" height="7"></rect>
-          </svg>
+        <div class="nav-item active" onclick="showSection('inscriptions')">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
           <span>Inscrições</span>
-        </a>
+        </div>
+        <div class="nav-item" onclick="showSection('materials')">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+          <span>Materiais</span>
+        </div>
       </nav>
-
-      <button onclick="logout()" class="logout-btn">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
-          <polyline points="16 17 21 12 16 7"></polyline>
-          <line x1="21" y1="12" x2="9" y2="12"></line>
-        </svg>
-        <span>Sair do Painel</span>
-      </button>
+      <button onclick="logout()" class="logout-btn">Sair do Painel</button>
     </aside>
 
-    <!-- CONTEÚDO PRINCIPAL -->
     <main class="main">
-      <header class="header">
-        <h1>Inscrições Recebidas</h1>
-        <div id="user-info" class="user-pill">Carregando...</div>
-      </header>
-
-      <!-- CARDS DE ESTATÍSTICA -->
-      <div class="stats">
-        <div class="stat-card">
-          <span>Total de Grupos</span>
-          <h2 id="total-count">0</h2>
+      <!-- SEÇÃO INSCRIÇÕES -->
+      <div id="section-inscriptions" class="content-section active">
+        <header class="header">
+          <h1>Inscrições Recebidas</h1>
+          <div class="user-pill" id="user-info-1">Admin</div>
+        </header>
+        <div class="stats">
+          <div class="stat-card"><span>Total de Grupos</span><h2 id="total-count">0</h2></div>
+          <div class="stat-card"><span>Participantes Totais</span><h2 id="total-participants">0</h2></div>
         </div>
-        <div class="stat-card">
-          <span>Participantes Totais</span>
-          <h2 id="total-participants">0</h2>
+        <div class="card-box">
+          <div class="card-header"><h3>Lista de Candidatos</h3></div>
+          <table>
+            <thead><tr><th>Grupo</th><th>Responsável</th><th>E-mail</th><th>Participantes</th><th>Data</th></tr></thead>
+            <tbody id="inscriptions-list"></tbody>
+          </table>
         </div>
       </div>
 
-      <!-- TABELA DE DADOS -->
-      <section class="table-section">
-        <div class="table-header">
-          <h3>Lista de Candidatos</h3>
+      <!-- SEÇÃO MATERIAIS -->
+      <div id="section-materials" class="content-section">
+        <header class="header">
+          <h1>Gerenciar Materiais</h1>
+          <div class="user-pill" id="user-info-2">Admin</div>
+        </header>
+        
+        <div class="card-box">
+          <div class="card-header"><h3>Adicionar Novo PDF</h3></div>
+          <form id="material-form" class="form-grid">
+            <div class="input-group"><label>Título</label><input type="text" name="title" required></div>
+            <div class="input-group"><label>Categoria</label><select name="category"><option value="apostila">Apostila</option><option value="legislacao">Legislação</option><option value="tecnica">Técnica</option></select></div>
+            <div class="input-group" style="grid-column: span 2;"><label>Descrição</label><textarea name="description" rows="2"></textarea></div>
+            <div class="input-group" style="grid-column: span 2;"><label>Arquivo PDF</label><input type="file" name="file" accept=".pdf" required></div>
+            <button type="submit" class="btn-submit" style="grid-column: span 2;">Salvar Material</button>
+          </form>
         </div>
-        <div class="table-wrapper">
+
+        <div class="card-box">
+          <div class="card-header"><h3>Materiais Publicados</h3></div>
           <table>
-            <thead>
-              <tr>
-                <th>Grupo / Instituição</th>
-                <th>Responsável</th>
-                <th>E-mail</th>
-                <th>Participantes</th>
-                <th>Data</th>
-              </tr>
-            </thead>
-            <tbody id="inscriptions-list">
-              <!-- Inserido via JS -->
-            </tbody>
+            <thead><tr><th>Título</th><th>Categoria</th><th>Data</th><th>Ações</th></tr></thead>
+            <tbody id="materials-list"></tbody>
           </table>
-          <div id="loading">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="spin">
-              <path d="M21 12a9 9 0 1 1-6.219-8.56"/>
-            </svg>
-            <p style="margin-top: 1rem;">Buscando dados no Coolify...</p>
-          </div>
         </div>
-      </section>
+      </div>
     </main>
   </div>
 
   <script>
-    // Verificação de Segurança
     const token = localStorage.getItem('token');
     const user = JSON.parse(localStorage.getItem('user') || '{}');
 
-    // Se não tem token ou não é admin/developer, volta pro login
-    const userRole = String(user.role).toLowerCase();
-    if (!token || (userRole !== 'admin' && userRole !== 'developer')) {
-      window.location.href = 'login.html';
+    if (!token || (user.role !== 'admin' && user.role !== 'developer')) window.location.href = 'login.html';
+
+    document.getElementById('user-info-1').innerText = user.name;
+    document.getElementById('user-info-2').innerText = user.name;
+
+    function showSection(id) {
+      document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+      document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+      document.getElementById(`section-${id}`).classList.add('active');
+      event.currentTarget.classList.add('active');
+      if(id === 'inscriptions') loadInscriptions();
+      if(id === 'materials') loadMaterials();
     }
 
-    document.getElementById('user-info').innerText = user.name || 'Administrador';
-
     async function loadInscriptions() {
-      try {
-        const response = await fetch('/api/admin/inscriptions', {
-          headers: {
-            'Authorization': `Bearer ${token}`
-          }
-        });
+      const res = await fetch('/api/admin/inscriptions', { headers: { 'Authorization': `Bearer ${token}` } });
+      const data = await res.json();
+      const list = document.getElementById('inscriptions-list');
+      list.innerHTML = '';
+      let parts = 0;
+      data.forEach(ins => {
+        parts += parseInt(ins.participants_count || 0);
+        list.innerHTML += `<tr><td>${ins.group_name}</td><td>${ins.responsible_name}</td><td>${ins.email}</td><td>${ins.participants_count}</td><td>${new Date(ins.created_at).toLocaleDateString()}</td></tr>`;
+      });
+      document.getElementById('total-count').innerText = data.length;
+      document.getElementById('total-participants').innerText = parts;
+    }
 
-        if (response.status === 401 || response.status === 403) {
-          logout();
-          return;
-        }
+    async function loadMaterials() {
+      const res = await fetch('/api/materials');
+      const data = await res.json();
+      const list = document.getElementById('materials-list');
+      list.innerHTML = '';
+      data.forEach(m => {
+        list.innerHTML += `<tr><td>${m.title}</td><td>${m.category}</td><td>${new Date(m.created_at).toLocaleDateString()}</td><td><button class="delete-btn" onclick="deleteMaterial(${m.id})">Remover</button></td></tr>`;
+      });
+    }
 
-        const inscriptions = await response.json();
-        const list = document.getElementById('inscriptions-list');
-        const loading = document.getElementById('loading');
-        
-        loading.style.display = 'none';
-        list.innerHTML = '';
+    document.getElementById('material-form').onsubmit = async (e) => {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const res = await fetch('/api/admin/materials', {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${token}` },
+        body: formData
+      });
+      if(res.ok) { alert('Sucesso!'); e.target.reset(); loadMaterials(); }
+    };
 
-        let totalParticipants = 0;
-
-        inscriptions.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
-
-        inscriptions.forEach(ins => {
-          totalParticipants += parseInt(ins.participants_count || 0);
-          const row = document.createElement('tr');
-          row.innerHTML = `
-            <td><span class="group-name">${ins.group_name}</span></td>
-            <td>${ins.responsible_name}</td>
-            <td>${ins.email}</td>
-            <td><span class="badge badge--success">${ins.participants_count}</span></td>
-            <td>${new Date(ins.created_at).toLocaleDateString('pt-BR')}</td>
-          `;
-          list.appendChild(row);
-        });
-
-        document.getElementById('total-count').innerText = inscriptions.length;
-        document.getElementById('total-participants').innerText = totalParticipants;
-
-      } catch (err) {
-        console.error('Erro ao carregar inscrições:', err);
-        document.getElementById('loading').innerHTML = '<p style="color: #ef4444;">Erro ao conectar com o banco de dados.</p>';
+    async function deleteMaterial(id) {
+      if(confirm('Deseja remover este material?')) {
+        await fetch(`/api/admin/materials/${id}`, { method: 'DELETE', headers: { 'Authorization': `Bearer ${token}` } });
+        loadMaterials();
       }
     }
 
-    function logout() {
-      localStorage.removeItem('token');
-      localStorage.removeItem('user');
-      window.location.href = '/login.html';
-    }
+    function logout() { localStorage.removeItem('token'); window.location.href = 'login.html'; }
 
     loadInscriptions();
   </script>
