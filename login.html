@@ -178,7 +178,13 @@
         if (response.ok) {
           localStorage.setItem('token', data.token);
           localStorage.setItem('user', JSON.stringify(data.user));
-          window.location.href = '/dashboard.html';
+          
+          // Redirecionamento baseado no papel (role)
+          if (data.user.role === 'admin') {
+            window.location.href = '/dashboard.html';
+          } else {
+            window.location.href = '/portal.html';
+          }
         } else {
           errorMsg.style.display = 'block';
           btnEntrar.innerText = 'Entrar no Painel';

@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simulado de Radioamador — Ondas do Conhecimento</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #4CAF50;
+      --bg: #0f172a;
+      --card: rgba(30, 41, 59, 0.7);
+      --text: #f1f5f9;
+      --text-muted: #94a3b8;
+      --border: rgba(255, 255, 255, 0.1);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      padding: 2rem;
+    }
+
+    .container { max-width: 800px; margin: 0 auto; }
+
+    .quiz-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+
+    .back-btn {
+      color: var(--text-muted);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 600;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 8px;
+      background: var(--border);
+      border-radius: 4px;
+      margin-bottom: 3rem;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--primary);
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+
+    .question-card {
+      background: var(--card);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--border);
+      padding: 2.5rem;
+      border-radius: 32px;
+      margin-bottom: 2rem;
+    }
+
+    .question-category {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--primary);
+      font-weight: 700;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .question-text { font-size: 1.5rem; font-weight: 700; line-height: 1.4; margin-bottom: 2rem; }
+
+    .options { display: flex; flex-direction: column; gap: 1rem; }
+
+    .option {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      padding: 1.25rem 1.5rem;
+      border-radius: 16px;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-weight: 500;
+    }
+
+    .option:hover { background: rgba(255, 255, 255, 0.07); border-color: rgba(255, 255, 255, 0.2); }
+    .option.selected { border-color: var(--primary); background: rgba(76, 175, 80, 0.1); color: var(--primary); }
+
+    .option-letter {
+      width: 32px;
+      height: 32px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.875rem;
+    }
+
+    .nav-btns { display: flex; justify-content: space-between; margin-top: 2rem; }
+
+    .btn {
+      padding: 1rem 2rem;
+      border-radius: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s;
+    }
+
+    .btn--primary { background: var(--primary); color: white; }
+    .btn--outline { background: transparent; color: var(--text-muted); border: 1px solid var(--border); }
+
+    /* Results */
+    #results { text-align: center; display: none; }
+    .score-circle {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      border: 8px solid var(--primary);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 2rem auto;
+    }
+    .score-circle span:first-child { font-size: 3rem; font-weight: 800; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="quiz-header">
+      <a href="portal.html" class="back-btn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="19" y1="12" x2="5" y2="12"></line>
+          <polyline points="12 19 5 12 12 5"></polyline>
+        </svg>
+        Sair do Simulado
+      </a>
+      <div id="counter">Questão 1 de 5</div>
+    </div>
+
+    <div class="progress-bar">
+      <div class="progress-fill" id="progress"></div>
+    </div>
+
+    <div id="quiz-content">
+      <div class="question-card">
+        <span class="question-category" id="category">Legislação</span>
+        <h2 class="question-text" id="question">Qual é a sigla da agência reguladora que fiscaliza o radioamadorismo no Brasil?</h2>
+        
+        <div class="options" id="options">
+          <!-- Opções aqui -->
+        </div>
+      </div>
+
+      <div class="nav-btns">
+        <button class="btn btn--outline" id="prev-btn" style="visibility: hidden;">Anterior</button>
+        <button class="btn btn--primary" id="next-btn">Próxima</button>
+      </div>
+    </div>
+
+    <div id="results">
+      <div class="question-card">
+        <h2>Simulado Concluído!</h2>
+        <div class="score-circle">
+          <span id="score">0</span>
+          <span>Acertos</span>
+        </div>
+        <p id="feedback">Bom trabalho! Continue estudando para garantir sua licença.</p>
+        <button onclick="location.reload()" class="btn btn--primary" style="margin-top: 2rem;">Tentar Novamente</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const questions = [
+      {
+        category: "Legislação",
+        text: "Qual é a sigla da agência reguladora que fiscaliza o radioamadorismo no Brasil?",
+        options: ["IBAMA", "ANATEL", "CONATEL", "ABR"],
+        answer: 1
+      },
+      {
+        category: "Ética e Operação",
+        text: "No código Q, qual sigla significa 'Estou com interferência'?",
+        options: ["QRM", "QRN", "QSB", "QTH"],
+        answer: 0
+      },
+      {
+        category: "Técnica",
+        text: "Qual componente é utilizado para armazenar energia em um campo elétrico?",
+        options: ["Resistor", "Indutor", "Capacitor", "Diodo"],
+        answer: 2
+      },
+      {
+        category: "Ética e Operação",
+        text: "O que significa a sigla CQ no radioamadorismo?",
+        options: ["Chamada Geral", "Cessar Transmissão", "Código de Qualidade", "Câmbio e Desligo"],
+        answer: 0
+      },
+      {
+        category: "Legislação",
+        text: "Qual a idade mínima para ingressar no Serviço de Radioamador na Classe C?",
+        options: ["10 anos", "12 anos", "Não há idade mínima", "18 anos"],
+        answer: 2
+      }
+    ];
+
+    let currentIdx = 0;
+    let userAnswers = new Array(questions.length).fill(null);
+
+    function loadQuestion() {
+      const q = questions[currentIdx];
+      document.getElementById('category').innerText = q.category;
+      document.getElementById('question').innerText = q.text;
+      document.getElementById('counter').innerText = `Questão ${currentIdx + 1} de ${questions.length}`;
+      document.getElementById('progress').style.width = `${((currentIdx) / questions.length) * 100}%`;
+
+      const optionsContainer = document.getElementById('options');
+      optionsContainer.innerHTML = '';
+
+      q.options.forEach((opt, i) => {
+        const div = document.createElement('div');
+        div.className = `option ${userAnswers[currentIdx] === i ? 'selected' : ''}`;
+        div.innerHTML = `<span class="option-letter">${String.fromCharCode(65 + i)}</span> ${opt}`;
+        div.onclick = () => selectOption(i);
+        optionsContainer.appendChild(div);
+      });
+
+      document.getElementById('prev-btn').style.visibility = currentIdx === 0 ? 'hidden' : 'visible';
+      document.getElementById('next-btn').innerText = currentIdx === questions.length - 1 ? 'Finalizar' : 'Próxima';
+    }
+
+    function selectOption(idx) {
+      userAnswers[currentIdx] = idx;
+      loadQuestion();
+    }
+
+    document.getElementById('next-btn').onclick = () => {
+      if (userAnswers[currentIdx] === null) {
+        alert('Por favor, selecione uma opção.');
+        return;
+      }
+
+      if (currentIdx < questions.length - 1) {
+        currentIdx++;
+        loadQuestion();
+      } else {
+        showResults();
+      }
+    };
+
+    document.getElementById('prev-btn').onclick = () => {
+      if (currentIdx > 0) {
+        currentIdx--;
+        loadQuestion();
+      }
+    };
+
+    function showResults() {
+      let score = 0;
+      userAnswers.forEach((ans, i) => {
+        if (ans === questions[i].answer) score++;
+      });
+
+      document.getElementById('quiz-content').style.display = 'none';
+      document.getElementById('results').style.display = 'block';
+      document.getElementById('score').innerText = score;
+      document.getElementById('progress').style.width = '100%';
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>
