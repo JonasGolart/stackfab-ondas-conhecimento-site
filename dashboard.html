@@ -4,39 +4,47 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dashboard — Ondas do Conhecimento</title>
-  <link rel="stylesheet" href="styles.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
       --primary: #4CAF50;
+      --primary-dark: #388E3C;
       --bg: #0f172a;
+      --sidebar: #1e293b;
       --card: rgba(30, 41, 59, 0.7);
-      --text: #f8fafc;
+      --text: #f1f5f9;
+      --text-muted: #94a3b8;
       --border: rgba(255, 255, 255, 0.1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
 
     body {
       background-color: var(--bg);
       color: var(--text);
       font-family: 'Inter', sans-serif;
-      margin: 0;
-      padding: 0;
+      overflow: hidden; /* O body não rola, o main sim */
     }
 
     .dashboard {
       display: flex;
-      min-height: 100vh;
+      height: 100vh;
+      width: 100vw;
     }
 
     /* Sidebar */
     .sidebar {
-      width: 260px;
-      background: var(--card);
-      backdrop-filter: blur(10px);
+      width: 280px;
+      background: var(--sidebar);
       border-right: 1px solid var(--border);
       padding: 2rem 1.5rem;
       display: flex;
       flex-direction: column;
+      z-index: 10;
     }
 
     .sidebar-header {
@@ -44,10 +52,19 @@
       align-items: center;
       gap: 1rem;
       margin-bottom: 3rem;
+      padding: 0 0.5rem;
     }
 
     .sidebar-header img {
       width: 40px;
+      height: 40px;
+      object-fit: contain;
+    }
+
+    .sidebar-header span {
+      font-weight: 700;
+      font-size: 1.1rem;
+      letter-spacing: -0.02em;
     }
 
     .sidebar-nav {
@@ -58,12 +75,13 @@
       display: flex;
       align-items: center;
       gap: 0.75rem;
-      padding: 0.75rem 1rem;
+      padding: 0.875rem 1rem;
       border-radius: 12px;
-      color: rgba(255, 255, 255, 0.7);
+      color: var(--text-muted);
       text-decoration: none;
       transition: all 0.2s;
       margin-bottom: 0.5rem;
+      font-weight: 500;
     }
 
     .nav-item:hover, .nav-item.active {
@@ -74,9 +92,9 @@
     .logout-btn {
       margin-top: auto;
       background: rgba(239, 68, 68, 0.1);
-      color: #ef4444;
-      border: none;
-      padding: 0.75rem;
+      color: #f87171;
+      border: 1px solid rgba(239, 68, 68, 0.2);
+      padding: 0.875rem;
       border-radius: 12px;
       cursor: pointer;
       display: flex;
@@ -84,81 +102,147 @@
       justify-content: center;
       gap: 0.5rem;
       font-weight: 600;
+      transition: all 0.2s;
+    }
+
+    .logout-btn:hover {
+      background: rgba(239, 68, 68, 0.2);
     }
 
     /* Main Content */
     .main {
       flex: 1;
-      padding: 2rem 3rem;
+      display: flex;
+      flex-direction: column;
+      background: radial-gradient(circle at top right, rgba(76, 175, 80, 0.05), transparent);
       overflow-y: auto;
+      padding: 2rem 3rem;
     }
 
     .header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 2rem;
+      margin-bottom: 2.5rem;
     }
 
     .header h1 {
-      font-size: 1.875rem;
-      font-weight: 700;
-      margin: 0;
+      font-size: 1.75rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
     }
 
+    .user-pill {
+      background: var(--card);
+      padding: 0.5rem 1rem;
+      border-radius: 100px;
+      border: 1px solid var(--border);
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .user-pill::before {
+      content: '';
+      width: 8px;
+      height: 8px;
+      background: var(--primary);
+      border-radius: 50%;
+      box-shadow: 0 0 10px var(--primary);
+    }
+
+    /* Stats Cards */
     .stats {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
       gap: 1.5rem;
-      margin-bottom: 3rem;
+      margin-bottom: 2.5rem;
     }
 
     .stat-card {
       background: var(--card);
+      backdrop-filter: blur(10px);
       border: 1px solid var(--border);
-      padding: 1.5rem;
-      border-radius: 20px;
+      padding: 1.75rem;
+      border-radius: 24px;
+      transition: transform 0.2s;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(76, 175, 80, 0.3);
     }
 
     .stat-card span {
       display: block;
-      color: rgba(255, 255, 255, 0.5);
+      color: var(--text-muted);
       font-size: 0.875rem;
-      margin-bottom: 0.5rem;
+      font-weight: 500;
+      margin-bottom: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
     }
 
     .stat-card h2 {
-      font-size: 2rem;
+      font-size: 2.5rem;
+      font-weight: 800;
       margin: 0;
       color: var(--primary);
     }
 
     /* Table */
-    .table-container {
+    .table-section {
       background: var(--card);
+      backdrop-filter: blur(10px);
       border: 1px solid var(--border);
-      border-radius: 20px;
+      border-radius: 24px;
       overflow: hidden;
+      flex: 1;
+    }
+
+    .table-header {
+      padding: 1.5rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .table-header h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+
+    .table-wrapper {
+      overflow-x: auto;
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
+      text-align: left;
     }
 
     th {
-      text-align: left;
       padding: 1rem 1.5rem;
-      background: rgba(255, 255, 255, 0.05);
-      font-size: 0.875rem;
-      font-weight: 600;
-      color: rgba(255, 255, 255, 0.6);
+      background: rgba(255, 255, 255, 0.03);
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
     }
 
     td {
-      padding: 1rem 1.5rem;
+      padding: 1.25rem 1.5rem;
       border-bottom: 1px solid var(--border);
-      font-size: 0.875rem;
+      font-size: 0.925rem;
+    }
+
+    tr:hover td {
+      background: rgba(255, 255, 255, 0.02);
     }
 
     tr:last-child td {
@@ -166,27 +250,52 @@
     }
 
     .badge {
-      padding: 0.25rem 0.75rem;
-      border-radius: 100px;
+      padding: 0.35rem 0.85rem;
+      border-radius: 8px;
       font-size: 0.75rem;
-      font-weight: 600;
+      font-weight: 700;
     }
 
-    .badge--success { background: rgba(34, 197, 94, 0.1); color: #22c55e; }
+    .badge--success { 
+      background: rgba(34, 197, 94, 0.1); 
+      color: #4ade80;
+      border: 1px solid rgba(34, 197, 94, 0.2);
+    }
+
+    .group-name {
+      font-weight: 600;
+      color: white;
+    }
 
     #loading {
       text-align: center;
-      padding: 3rem;
-      color: rgba(255, 255, 255, 0.5);
+      padding: 4rem;
+      color: var(--text-muted);
+    }
+
+    .spin {
+      animation: rotate 2s linear infinite;
+    }
+
+    @keyframes rotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    @media (max-width: 1024px) {
+      .sidebar { width: 80px; padding: 2rem 0.75rem; }
+      .sidebar-header span, .nav-item span { display: none; }
+      .main { padding: 1.5rem; }
     }
   </style>
 </head>
 <body>
   <div class="dashboard">
+    <!-- BARRA LATERAL -->
     <aside class="sidebar">
       <div class="sidebar-header">
         <img src="assets/img/logo-projeto.png" alt="Logo">
-        <span style="font-weight: 700;">Ondas Admin</span>
+        <span>Ondas Admin</span>
       </div>
 
       <nav class="sidebar-nav">
@@ -197,7 +306,7 @@
             <rect x="14" y="14" width="7" height="7"></rect>
             <rect x="3" y="14" width="7" height="7"></rect>
           </svg>
-          Inscrições
+          <span>Inscrições</span>
         </a>
       </nav>
 
@@ -207,49 +316,62 @@
           <polyline points="16 17 21 12 16 7"></polyline>
           <line x1="21" y1="12" x2="9" y2="12"></line>
         </svg>
-        Sair
+        <span>Sair do Painel</span>
       </button>
     </aside>
 
+    <!-- CONTEÚDO PRINCIPAL -->
     <main class="main">
       <header class="header">
         <h1>Inscrições Recebidas</h1>
-        <div id="user-info" style="font-size: 0.875rem; color: rgba(255, 255, 255, 0.6);"></div>
+        <div id="user-info" class="user-pill">Carregando...</div>
       </header>
 
+      <!-- CARDS DE ESTATÍSTICA -->
       <div class="stats">
         <div class="stat-card">
-          <span>Total de Inscritos</span>
+          <span>Total de Grupos</span>
           <h2 id="total-count">0</h2>
         </div>
         <div class="stat-card">
-          <span>Total de Participantes</span>
+          <span>Participantes Totais</span>
           <h2 id="total-participants">0</h2>
         </div>
       </div>
 
-      <div class="table-container">
-        <table>
-          <thead>
-            <tr>
-              <th>Grupo / Instituição</th>
-              <th>Responsável</th>
-              <th>E-mail</th>
-              <th>Participantes</th>
-              <th>Data</th>
-            </tr>
-          </thead>
-          <tbody id="inscriptions-list">
-            <!-- Data will be injected here -->
-          </tbody>
-        </table>
-        <div id="loading">Carregando dados...</div>
-      </div>
+      <!-- TABELA DE DADOS -->
+      <section class="table-section">
+        <div class="table-header">
+          <h3>Lista de Candidatos</h3>
+        </div>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Grupo / Instituição</th>
+                <th>Responsável</th>
+                <th>E-mail</th>
+                <th>Participantes</th>
+                <th>Data</th>
+              </tr>
+            </thead>
+            <tbody id="inscriptions-list">
+              <!-- Inserido via JS -->
+            </tbody>
+          </table>
+          <div id="loading">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="spin">
+              <path d="M21 12a9 9 0 1 1-6.219-8.56"/>
+            </svg>
+            <p style="margin-top: 1rem;">Buscando dados no Coolify...</p>
+          </div>
+        </div>
+      </section>
     </main>
   </div>
 
   <script>
-    // Security check
+    // Verificação de Segurança
     const token = localStorage.getItem('token');
     const user = JSON.parse(localStorage.getItem('user') || '{}');
 
@@ -257,7 +379,7 @@
       window.location.href = '/login.html';
     }
 
-    document.getElementById('user-info').innerText = `Bem-vindo, ${user.name || 'Admin'}`;
+    document.getElementById('user-info').innerText = user.name || 'Administrador';
 
     async function loadInscriptions() {
       try {
@@ -281,11 +403,13 @@
 
         let totalParticipants = 0;
 
+        inscriptions.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+
         inscriptions.forEach(ins => {
           totalParticipants += parseInt(ins.participantes || 0);
           const row = document.createElement('tr');
           row.innerHTML = `
-            <td><strong>${ins.grupo}</strong></td>
+            <td><span class="group-name">${ins.grupo}</span></td>
             <td>${ins.responsavel}</td>
             <td>${ins.email}</td>
             <td><span class="badge badge--success">${ins.participantes}</span></td>
@@ -299,6 +423,7 @@
 
       } catch (err) {
         console.error('Erro ao carregar inscrições:', err);
+        document.getElementById('loading').innerHTML = '<p style="color: #ef4444;">Erro ao conectar com o banco de dados.</p>';
       }
     }
 
