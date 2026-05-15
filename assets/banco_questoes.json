@@ -1,0 +1,3544 @@
+{
+  "questions": [
+    {
+      "enunciado": "Qual dos documentos abaixo relacionados autoriza o radioamador a instalar sua estação:",
+      "alternativas": {
+        "a": "certificado de operador de estação radioamador",
+        "b": "comprovante de pagamento das taxas de fiscalização das telecomunicações",
+        "c": "certificado de operador de estação de radioamador e comprovante de pagamento das taxas de fiscalização das telecomunicações",
+        "d": "comprovante de filiação a uma associação de radioamadores reconhecida pela Anatel",
+        "e": "licença de estação de radioamador"
+      },
+      "resposta_correta": "e",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "Qual das abreviaturas do código Q, abaixo relacionadas, você deverá utilizar para perguntar ou responder, informar ou avisar: devo cessar a transmissão? Cesse a transmissão",
+      "alternativas": {
+        "a": "QRT",
+        "b": "QSU",
+        "c": "QTA",
+        "d": "QUD",
+        "e": "QRQ"
+      },
+      "resposta_correta": "a",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "O radioamador pode:",
+      "alternativas": {
+        "a": "deixar que terceiros (não radioamadores), em sua presença, utilizem estação sob sua responsabilidade",
+        "b": "aceitar remuneração por serviços prestados",
+        "c": "transmitir, com alterações, o indicativo de chamada de estação",
+        "d": "utilizar-se de qualquer linguagem codificada em seus comunicados",
+        "e": "utilizar equipamentos não certificados"
+      },
+      "resposta_correta": "a",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "A idade mínima para habilitação a classe C de radioamadorismo é:",
+      "alternativas": {
+        "a": "10 anos",
+        "b": "12 anos",
+        "c": "14 anos",
+        "d": "08 anos",
+        "e": "11 anos"
+      },
+      "resposta_correta": "a",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "O prefixo PY3 corresponde ao estado do:",
+      "alternativas": {
+        "a": "Rio Grande do Sul",
+        "b": "Paraná",
+        "c": "Pará",
+        "d": "Amazonas",
+        "e": "Acre"
+      },
+      "resposta_correta": "a",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "No caso de a estação de radioamador pertencer a uma pessoa jurídica, o responsável pelas atividades deverá ser obrigatoriamente:",
+      "alternativas": {
+        "a": "classe A",
+        "b": "classe B",
+        "c": "classe C",
+        "d": "militar do Exército",
+        "e": "militar da Aeronáutica"
+      },
+      "resposta_correta": "a",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "Para receber o certificado de habilitação como radioamador classe A, é necessário que o candidato comprove atividade na classe B, por:",
+      "alternativas": {
+        "a": "um ano",
+        "b": "dois anos",
+        "c": "três anos",
+        "d": "quatro anos",
+        "e": "cinco anos"
+      },
+      "resposta_correta": "a",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "O certificado de habilitação de radioamador classe B será substituído quando",
+      "alternativas": {
+        "a": "houver mudança de classe",
+        "b": "houver calamidade pública",
+        "c": "o interessado assim o desejar",
+        "d": "o interessado concluir o 2o grau",
+        "e": "o interessado terminar o curso superior"
+      },
+      "resposta_correta": "a",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "Confirmada a interferência prejudicial, o radioamador responsável pela estação interferente é obrigado a:",
+      "alternativas": {
+        "a": "interromper, imediatamente, a transmissão da estação",
+        "b": "pagar uma multa de 10 salários-mínimos",
+        "c": "comunicar o fato às outras estações",
+        "d": "comunicar o fato à delegacia da polícia local",
+        "e": "apresentar-se imediatamente às autoridades policiais"
+      },
+      "resposta_correta": "a",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "A faixa de freqüência em que o radioamador poderá operar será aquela correspondente à classe:",
+      "alternativas": {
+        "a": "para a qual esteja habilitado e licenciado",
+        "b": "dominante em sua localidade",
+        "c": "dominante em sua região",
+        "d": "de potência mínima",
+        "e": "superior à sua"
+      },
+      "resposta_correta": "a",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "O código QTH, código Q, significa:",
+      "alternativas": {
+        "a": "minha posição é latitude ... longitude",
+        "b": "saí de ... (lugar) às ... horas",
+        "c": "vou entrar na baía",
+        "d": "a hora certa é ... horas",
+        "e": "meu rumo verdadeiro é ... graus"
+      },
+      "resposta_correta": "a",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "A palavra hotel representa, no código fonético internacional, a letra:",
+      "alternativas": {
+        "a": "h",
+        "b": "o",
+        "c": "t",
+        "d": "e",
+        "e": "l"
+      },
+      "resposta_correta": "a",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "A palavra papa, representa, no código fonético internacional, a letra:",
+      "alternativas": {
+        "a": "p",
+        "b": "q",
+        "c": "r",
+        "d": "s",
+        "e": "t"
+      },
+      "resposta_correta": "a",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "A palavra november, representa, no código fonético internacional, a letra:",
+      "alternativas": {
+        "a": "n",
+        "b": "o",
+        "c": "p",
+        "d": "q",
+        "e": "r"
+      },
+      "resposta_correta": "a",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "A palavra uniform, representa, no código fonético internacional, a letra:",
+      "alternativas": {
+        "a": "u",
+        "b": "v",
+        "c": "w",
+        "d": "x",
+        "e": "y"
+      },
+      "resposta_correta": "a",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "A transmissão do indicativo de chamada da estação em sua constituição integral é obrigatória",
+      "alternativas": {
+        "a": "somente quando a comunicação é internacional",
+        "b": "em todos os comunicados realizados",
+        "c": "somente quando a estação for operada em situação de emergência",
+        "d": "somente quando o radioamador ou titular de certificado de operador de estação estiver fora de seu domicílio",
+        "e": "somente quando o radioamador ou titular de certificado de operador de estação estiver operando estação fixa"
+      },
+      "resposta_correta": "b",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "Para obter o certificado de operador de estação de radioamador classe B o candidato deverá ser aprovado:",
+      "alternativas": {
+        "a": "no teste de legislação de telecomunicações",
+        "b": "nos testes de legislação de telecomunicações, conhecimentos técnicos, transmissão e recepção auditiva de sinais em código Morse e técnica e ética operacional",
+        "c": "nos testes de legislação de telecomunicações, conhecimentos técnicos e ética operacional",
+        "d": "no teste de conhecimentos técnicos",
+        "e": "nos testes de transmissão e recepção auditiva de sinais em código Morse"
+      },
+      "resposta_correta": "b",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "A modalidade de emergência é realizada em casos de:",
+      "alternativas": {
+        "a": "intercâmbio social",
+        "b": "calamidade pública",
+        "c": "pequena importância",
+        "d": "investigação técnica",
+        "e": "mensagens pessoais"
+      },
+      "resposta_correta": "b",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "Uma das características do certificado de habilitação de radioamador é ser:",
+      "alternativas": {
+        "a": "transferível aos filhos",
+        "b": "Intransferível",
+        "c": "renovado mensalmente",
+        "d": "renovado de 2 em 2 meses",
+        "e": "renovado de 3 em 3 meses"
+      },
+      "resposta_correta": "b",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "Havendo mudança de indicativo de chamada, por causa da mudança de endereço, a operação da estação:",
+      "alternativas": {
+        "a": "continua sem interrupções",
+        "b": "só é reiniciada depois do recebimento do novo indicativo",
+        "c": "só é reiniciada após 6 meses da mudança",
+        "d": "só é reiniciada após 1 ano da mudança",
+        "e": "só é reiniciada depois que o radioamador trocar de classe"
+      },
+      "resposta_correta": "b",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "No caso de o radioamador estrangeiro ter permissão de operar estação de radioamador brasileiro, deve-se observar que:",
+      "alternativas": {
+        "a": "o radioamador estrangeiro transmita seu nome, classe e endereço",
+        "b": "o radioamador estrangeiro transmita o seu próprio indicativo e o do operador da estação que estiver operando",
+        "c": "o radioamador estrangeiro pertença à classe A",
+        "d": "ocorra essa situação apenas em caso de Guerra",
+        "e": "seja no máximo a terceira transmissão do radioamador estrangeiro em estação brasileira"
+      },
+      "resposta_correta": "b",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "O radioamador, entre suas obrigações, deve:",
+      "alternativas": {
+        "a": "renovar a sua licença no dia 31 de dezembro de cada ano",
+        "b": "efetuar o pagamento das taxas a que estiver sujeito, dentro dos prazos estabelecidos",
+        "c": "fazer propaganda de Guerra, de acordo com sua posição política",
+        "d": "manter segredo absoluto sobre a utilização da autorização de funcionamento de sua estação",
+        "e": "filiar-se pelo menos três associações de radioamadores reconhecidas pelo Ministério das Comunicações"
+      },
+      "resposta_correta": "b",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "O estado de Goiás pertence à seguinte região:",
+      "alternativas": {
+        "a": "1a",
+        "b": "2a",
+        "c": "3a",
+        "d": "4a",
+        "e": "5a"
+      },
+      "resposta_correta": "b",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "A emissão do código QRV, em código Q, significa:",
+      "alternativas": {
+        "a": "transmita mais depressa",
+        "b": "estou preparado",
+        "c": "nada tenho para você",
+        "d": "diminua a potência",
+        "e": "transmita mais depressa"
+      },
+      "resposta_correta": "b",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "A palavra bravo representa, no código fonético internacional, a letra:",
+      "alternativas": {
+        "a": "A",
+        "b": "B",
+        "c": "C",
+        "d": "D",
+        "e": "E"
+      },
+      "resposta_correta": "b",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "A palavra echo, representa, no código fonético internacional, a letra:",
+      "alternativas": {
+        "a": "A",
+        "b": "E",
+        "c": "I",
+        "d": "O",
+        "e": "J"
+      },
+      "resposta_correta": "b",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "A palavra whiskey, representa, no código fonético internacional, a letra:",
+      "alternativas": {
+        "a": "V",
+        "b": "W",
+        "c": "X",
+        "d": "Y",
+        "e": "Z"
+      },
+      "resposta_correta": "b",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "Estação móvel é aquela:",
+      "alternativas": {
+        "a": "destinada a retransmitir automaticamente sinais de rádio entre estações de radioamadores",
+        "b": "que pode ser transportada e operada em diferentes locais",
+        "c": "capaz de ser operada em movimento",
+        "d": "instalada em local determinado",
+        "e": "capaz de ser operada durante paradas eventuais"
+      },
+      "resposta_correta": "c",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "Para efeito de fiscalização, deve o radioamador ter à disposição os seguintes documentos:",
+      "alternativas": {
+        "a": "carteira de identidade e CPF",
+        "b": "certificado de operador de estação de radioamador e registro de comunicados",
+        "c": "certificado de operador de estação de radioamador, licença de estação de radioamador e comprovante de recolhimento da taxa de fiscalização das telecomunicações",
+        "d": "licença de estação de radioamador e prova de quitação com a justiça eleitoral",
+        "e": "registro de comunicados e carteira de identidade"
+      },
+      "resposta_correta": "c",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "A letra C, no código fonético internacional, é identificada pela palavra:",
+      "alternativas": {
+        "a": "Carlos",
+        "b": "chaves",
+        "c": "Charlie",
+        "d": "chame",
+        "e": "Cláudio"
+      },
+      "resposta_correta": "c",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "A renovação do prazo de validade do certificado de operador de estação de radioamador expedida ao radioamador estrangeiro dependerá, entre outros, de;",
+      "alternativas": {
+        "a": "estar em dia com as obrigações militares",
+        "b": "ser naturalizado brasileiro",
+        "c": "estar em vigência a licença do país de origem e o visto de permanência no Brasil",
+        "d": "estar com permanência regular no Brasil",
+        "e": "ter filhos brasileiros"
+      },
+      "resposta_correta": "c",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "O código QRO significa;",
+      "alternativas": {
+        "a": "está ocupado?",
+        "b": "devo parar de transmitir?",
+        "c": "devo aumentar a potência do transmissor?",
+        "d": "devo mudar de freqüência?",
+        "e": "devo diminuir a potência?"
+      },
+      "resposta_correta": "c",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "Os radioamadores ou titulares de certificado de operador de estação de radioamador podem operar:",
+      "alternativas": {
+        "a": "em qualquer freqüência",
+        "b": "em qualquer freqüência atribuída ao serviço de radioamador",
+        "c": "nas faixas de freqüência e tipos de emissão correspondente à classe a que pertencerem",
+        "d": "somente na faixa de 50mhz a 54mhz",
+        "e": "somente em telegrafia"
+      },
+      "resposta_correta": "c",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "Os radioamadores com certificado de operador de estação de radioamador podem operar:",
+      "alternativas": {
+        "a": "em qualquer freqüência",
+        "b": "em qualquer freqüência atribuída ao serviço de radioamador",
+        "c": "nas faixas de freqüência e tipos de emissão correspondente à classe a que pertencerem",
+        "d": "somente na faixa de 50mhz a 54mhz",
+        "e": "somente em telegrafia"
+      },
+      "resposta_correta": "c",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "A licença de estação de radioamador poderá ser expedida:",
+      "alternativas": {
+        "a": "a qualquer pessoa jurídica que deseje executar o serviço de radioamador",
+        "b": "a qualquer estrangeiro residente no Brasil a mais de 05 (cinco) anos",
+        "c": "aos titulares de certificado de operador de estação de radioamador",
+        "d": "a qualquer funcionário de organismo internacional",
+        "e": "a qualquer pessoa natural, desde que ela seja filiada a associação de radioamadores"
+      },
+      "resposta_correta": "c",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "O prefixo PP7 pertence ao estado de:",
+      "alternativas": {
+        "a": "Tocantins",
+        "b": "Amazonas",
+        "c": "Alagoas",
+        "d": "Acre",
+        "e": "nenhum estado citado"
+      },
+      "resposta_correta": "c",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "O Brasil mantém acordo de reciprocidade com:",
+      "alternativas": {
+        "a": "Venezuela, Chile e São Paulo",
+        "b": "São Salvador, Paraguai e Suriname",
+        "c": "Peru, Haiti e Suíça",
+        "d": "Colômbia, Cuiabá e Estados Unidos da América",
+        "e": "nenhuma das respostas"
+      },
+      "resposta_correta": "c",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "O serviço de radioamador tem entre seus objetivos:",
+      "alternativas": {
+        "a": "obtenção de lucros",
+        "b": "divulgação de sucessos musicais",
+        "c": "comunicação técnica",
+        "d": "treinamento de empresas",
+        "e": "promoção de comércio"
+      },
+      "resposta_correta": "c",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "A fiscalização do serviço de radioamador compete:",
+      "alternativas": {
+        "a": "ao município, por intermédio do prefeito",
+        "b": "ao estado, por intermédio da secretaria de transportes",
+        "c": "à união, por intermédio do Ministério das Comunicações (Anatel)",
+        "d": "à união, por intermédio do Ministério da Aeronáutica",
+        "e": "à união, por intermédio do Ministério da Marinha"
+      },
+      "resposta_correta": "c",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "Poderão prestar exame em banca especial, desde que comprovem seu estado físico, os candidatos ao radioamadorismo portadores de moléstias contagiosas e também os:",
+      "alternativas": {
+        "a": "analfabetos e não eleitores",
+        "b": "portadores de diploma de 2o grau e os religiosos",
+        "c": "cegos, e os acometidos de males que lhes impeçam a livre locomoção",
+        "d": "estrangeiros e médicos",
+        "e": "agricultores e portadores de diploma de curso superior"
+      },
+      "resposta_correta": "c",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "Uma das obrigações do radioamador, durante a vigência da licença de funcionamento de sua estação, é:",
+      "alternativas": {
+        "a": "cobrar aluguel de seu equipamento",
+        "b": "cobrar pelas notícias que comunica",
+        "c": "pagar as taxas ou emolumentos aplicáveis ao serviço",
+        "d": "divulgar discursos políticos",
+        "e": "filiar-se a uma associação atlética"
+      },
+      "resposta_correta": "c",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "Em suas comunicações, é obrigatório ao radioamador declarar:",
+      "alternativas": {
+        "a": "seu estado civil",
+        "b": "seu grau de instrução",
+        "c": "seu indicativo de chamada",
+        "d": "sua classe",
+        "e": "sua idade"
+      },
+      "resposta_correta": "c",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "A estação destinada a retransmitir automaticamente sinais de rádio entre estações de radioamadores, nas faixas especificadas na respectivas licença, é a:",
+      "alternativas": {
+        "a": "Móvel",
+        "b": "Portátil",
+        "c": "Repetidora",
+        "d": "de domicílio principal",
+        "e": "de domicílio secundário"
+      },
+      "resposta_correta": "c",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "O código QRA, significa, no código Q:",
+      "alternativas": {
+        "a": "onde vai e de onde vem?",
+        "b": "está sendo interferido?",
+        "c": "qual é o nome da sua estação?",
+        "d": "devo aumentar a potência?",
+        "e": "tem algo para mim?"
+      },
+      "resposta_correta": "c",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "A mensagem QUG em código Q significa:",
+      "alternativas": {
+        "a": "envio as informações pedidas",
+        "b": "envio noticias de... (indicativo de chamada)",
+        "c": "minhas luzes de navegação estão acesas",
+        "d": "será forçado a pousar",
+        "e": "a hora certa é .....horas"
+      },
+      "resposta_correta": "d",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "Para ingresso na classe C de radioamadorismo, o candidato se submetera a exame de:",
+      "alternativas": {
+        "a": "reabilitação",
+        "b": "promoção",
+        "c": "merecimento",
+        "d": "habilitação",
+        "e": "títulos"
+      },
+      "resposta_correta": "d",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "Para ajustes de transmissor, as estações deverão usar, obrigatoriamente:",
+      "alternativas": {
+        "a": "faixa singular",
+        "b": "faixa lateral dupla",
+        "c": "sistema de computação",
+        "d": "antena fantasma",
+        "e": "carga irradiante"
+      },
+      "resposta_correta": "d",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "A modulação em freqüência é representada pelo símbolo:",
+      "alternativas": {
+        "a": "a",
+        "b": "am",
+        "c": "e",
+        "d": "f",
+        "e": "p"
+      },
+      "resposta_correta": "d",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "O radioamador emprega o símbolo f1 para representar:",
+      "alternativas": {
+        "a": "amplitude de telefonia",
+        "b": "amplitude de televisão",
+        "c": "freqüência de telefonia",
+        "d": "freqüência de telegrafia sem modulação por audiofreqüência",
+        "e": "freqüência de telegrafia mediante manipulação por interrupção de um audiofreqüência"
+      },
+      "resposta_correta": "d",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "Os estados que compõem a 1a região do Brasil são os seguintes:",
+      "alternativas": {
+        "a": "Paraná e Rio Grande do Sul",
+        "b": "Paraná e Santa Catarina",
+        "c": "Bahia e Sergipe",
+        "d": "Rio de Janeiro e Espírito Santo",
+        "e": "Rio Grande do Sul e São Paulo"
+      },
+      "resposta_correta": "d",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "Os indicativos de chamada considerados vagos, por qualquer motivo, poderão ser concedidos a outros radioamadores após um período mínimo de vacância de:",
+      "alternativas": {
+        "a": "60 (sessenta) dias",
+        "b": "90 (noventa) dias",
+        "c": "120 (cento e vinte) dias",
+        "d": "1 (um) ano",
+        "e": "2 (dois) anos"
+      },
+      "resposta_correta": "d",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "A palavra mike, representa, no código fonético internacional,a letra:",
+      "alternativas": {
+        "a": "j",
+        "b": "k",
+        "c": "l",
+        "d": "m",
+        "e": "n"
+      },
+      "resposta_correta": "d",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "A palavra oscar, representa, no código fonético internacional, a letra:",
+      "alternativas": {
+        "a": "a",
+        "b": "e",
+        "c": "i",
+        "d": "o",
+        "e": "u"
+      },
+      "resposta_correta": "d",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "O radioamador pode permitir que terceiros utilizem sua estação:",
+      "alternativas": {
+        "a": "em qualquer situação, desde que na presença de um radioamador classe A",
+        "b": "para transmitir qualquer tipo de notícia",
+        "c": "para tratar de assunto comercial",
+        "d": "para transmitir comunicados internacionais",
+        "e": "para transmissão de noticias urgentes e de caráter pessoal"
+      },
+      "resposta_correta": "e",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "Quais são os tipos de estação de radioamador?",
+      "alternativas": {
+        "a": "fixa, móvel ou portátil",
+        "b": "fixa tipo 01, portátil e repetidora",
+        "c": "móvel, fixa tipo 02, portátil",
+        "d": "repetidora tipo 04, móvel",
+        "e": "fixa, móvel ou portátil e repetidora"
+      },
+      "resposta_correta": "e",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "O prazo para requerer o certificado será:",
+      "alternativas": {
+        "a": "30 dias",
+        "b": "90 dias",
+        "c": "120 dias",
+        "d": "06 meses",
+        "e": "nenhuma das respostas"
+      },
+      "resposta_correta": "e",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "A vacância ocorrera por:",
+      "alternativas": {
+        "a": "por desistência",
+        "b": "morte",
+        "c": "perda definitiva",
+        "d": "mudança de classe",
+        "e": "todas as respostas"
+      },
+      "resposta_correta": "e",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "Para que o candidato menor de idade se habilite como radioamador classe C é indispensável que apresente:",
+      "alternativas": {
+        "a": "Para que o candidato menor de idade se habilite como radioamador classe C é indispensável que apresente:",
+        "b": "comprovante de maioridade",
+        "c": "atestado de residência",
+        "d": "título de eleitor",
+        "e": "declaração de seu responsável autorizando-o a requerer a habilitação"
+      },
+      "resposta_correta": "e",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "Os radioamadores, sob sua responsabilidade, permitirão que pessoas não habilitadas utilizem suas estações em casos de:",
+      "alternativas": {
+        "a": "excursões turísticas e outras localidade",
+        "b": "propagandas eleitorais",
+        "c": "transmissão de discursos políticos",
+        "d": "divulgação de telecomunicações eventualmente interceptadas",
+        "e": "notícias urgentes e de caráter pessoal"
+      },
+      "resposta_correta": "e",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "A autoridade competente para a aplicação das penas por infração ao regulamento do serviço de radioamador é:",
+      "alternativas": {
+        "a": "a delegacia da polícia local e federal",
+        "b": "o Tribunal de Justiça do Estado",
+        "c": "o Ministério da Guerra",
+        "d": "o Ministério do Exército",
+        "e": "o Ministério das Comunicações (Anatel)"
+      },
+      "resposta_correta": "e",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "O radioamador classe C que quiser passar para a classe B fará exame de:",
+      "alternativas": {
+        "a": "conhecimentos gerais",
+        "b": "Títulos",
+        "c": "Habilitação",
+        "d": "Reabilitação",
+        "e": "Promoção"
+      },
+      "resposta_correta": "e",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "A modulação em amplitude é representada pelo símbolo:",
+      "alternativas": {
+        "a": "t",
+        "b": "s",
+        "c": "p",
+        "d": "f",
+        "e": "a"
+      },
+      "resposta_correta": "e",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "Os códigos de deletreação e abreviaturas usados pelo radioamador são:",
+      "alternativas": {
+        "a": "locais",
+        "b": "regionais",
+        "c": "estaduais",
+        "d": "nacionais",
+        "e": "internacionais"
+      },
+      "resposta_correta": "e",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "A palavra juliett, representa, no código fonético internacional, a letra:",
+      "alternativas": {
+        "a": "f",
+        "b": "g",
+        "c": "h",
+        "d": "i",
+        "e": "j"
+      },
+      "resposta_correta": "e",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "A palavra kilo, representa, no código fonético internacional, a letra:",
+      "alternativas": {
+        "a": "g",
+        "b": "h",
+        "c": "i",
+        "d": "j",
+        "e": "k"
+      },
+      "resposta_correta": "e",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "A palavra x-ray, representada, no código fonético internacional, a letra:",
+      "alternativas": {
+        "a": "l",
+        "b": "r",
+        "c": "t",
+        "d": "v",
+        "e": "x"
+      },
+      "resposta_correta": "e",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "A palavra yankee, representa, no código fonético internacional, a letra:",
+      "alternativas": {
+        "a": "u",
+        "b": "v",
+        "c": "w",
+        "d": "x",
+        "e": "y"
+      },
+      "resposta_correta": "e",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "Para formar a palavra eu, através do código fonético internacional, o radioamador deverá emitir as palavras:",
+      "alternativas": {
+        "a": "alfa – bravo",
+        "b": "bravo – uniform",
+        "c": "charlie – alfa",
+        "d": "delta – echo",
+        "e": "echo – uniform"
+      },
+      "resposta_correta": "e",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "A estação repetidora poderá transmitir unilateralmente, sem restrições de tempo no seguinte caso:",
+      "alternativas": {
+        "a": "comunicados de interesse particular",
+        "b": "comunicação de emergência",
+        "c": "divulgação de boletins informativos do governo",
+        "d": "comunicado de interesse das escolas",
+        "e": "nenhuma das respostas"
+      },
+      "resposta_correta": "b",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "A habilitação ou promoção ao radioamadorismo na classe B dependerá da aprovação em exames de:",
+      "alternativas": {
+        "a": "recepção de mensagens em código Q, rádio técnica, e transmissão e recepção auditiva de sinais em código Morse",
+        "b": "telegrafia, elementos de rádio técnica e mensagens em código Q",
+        "c": "legislação de radioamadorismo, rádio técnica e transmissão de mensagens em código Q",
+        "d": "legislação de radioamadorismo, ética  e técnica  operacional, conhecimento básicos de eletrônica e eletricidade e transmissão e recepção auditiva de sinais em código Morse(CW)",
+        "e": "legislação de radioamadorismo, elementos de rádio técnica e transmissão de mensagens em código Q"
+      },
+      "resposta_correta": "d",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "A idade mínima para ingresso na classe B de radioamadorismo é:",
+      "alternativas": {
+        "a": "12 (doze) anos",
+        "b": "19 (dezenove) anos",
+        "c": "20 (vinte) anos",
+        "d": "21 (vinte e um) anos",
+        "e": "22 (vinte e dois) anos"
+      },
+      "resposta_correta": "a",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "A letra A, no código fonético internacional, é representada pela palavra:",
+      "alternativas": {
+        "a": "alfa",
+        "b": "arma",
+        "c": "aluno",
+        "d": "apache",
+        "e": "areão"
+      },
+      "resposta_correta": "a",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "A letra D, no código fonético internacional, é representado pela palavra:",
+      "alternativas": {
+        "a": "Davi",
+        "b": "Damião",
+        "c": "Delia",
+        "d": "Débora",
+        "e": "delta"
+      },
+      "resposta_correta": "e",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "A letra F, código fonético internacional, é representada pela palavra:",
+      "alternativas": {
+        "a": "face",
+        "b": "felicidade",
+        "c": "foxtrot",
+        "d": "fogo",
+        "e": "futebol"
+      },
+      "resposta_correta": "c",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "A letra G, no código fonético internacional, é representada pela palavra:",
+      "alternativas": {
+        "a": "galo",
+        "b": "gelo",
+        "c": "gola",
+        "d": "golf",
+        "e": "gota"
+      },
+      "resposta_correta": "d",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "A letra I, no código fonético internacional, é representada pela palavra:",
+      "alternativas": {
+        "a": "bere",
+        "b": "gare",
+        "c": "Índia",
+        "d": "Ivone",
+        "e": "Itauba"
+      },
+      "resposta_correta": "c",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "A letra L, no código fonético internacional, é representada pela palavra:",
+      "alternativas": {
+        "a": "lar",
+        "b": "lei",
+        "c": "lembrança",
+        "d": "lima",
+        "e": "lua"
+      },
+      "resposta_correta": "d",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "A letra Q, no código fonético internacional, é representada pela palavra:",
+      "alternativas": {
+        "a": "quase",
+        "b": "quando",
+        "c": "Quebec",
+        "d": "quero",
+        "e": "quermesse"
+      },
+      "resposta_correta": "c",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "A letra R, no código fonético internacional, é representada pela palavra:",
+      "alternativas": {
+        "a": "rato",
+        "b": "riviera",
+        "c": "Roma",
+        "d": "Romeo",
+        "e": "Rússia"
+      },
+      "resposta_correta": "d",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "A letra S, no código fonético internacional, é representada pela palavra:",
+      "alternativas": {
+        "a": "santo",
+        "b": "serena",
+        "c": "sierra",
+        "d": "siesta",
+        "e": "silencio"
+      },
+      "resposta_correta": "c",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "A letra T, no código fonético internacional, é representada pela palavra:",
+      "alternativas": {
+        "a": "tampa",
+        "b": "Tango",
+        "c": "Tibet",
+        "d": "tina",
+        "e": "túnel"
+      },
+      "resposta_correta": "b",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "A letra V, no código fonético internacional, é representada pela palavra:",
+      "alternativas": {
+        "a": "Valter",
+        "b": "Valério",
+        "c": "vivente",
+        "d": "Victor",
+        "e": "Vitório"
+      },
+      "resposta_correta": "d",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "A letra Z, no código fonético internacional, é representada pela palavra:",
+      "alternativas": {
+        "a": "Zulma",
+        "b": "zulu",
+        "c": "Zuleika",
+        "d": "Zulmira",
+        "e": "Zumbi"
+      },
+      "resposta_correta": "b",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "A licença da estação de radioamador é:",
+      "alternativas": {
+        "a": "o documento  que autoriza a instalação e o funcionamento da estação no serviço de radioamador",
+        "b": "a estação utilizada no serviço de radioamador",
+        "c": "sinais de rádio entre estações de radioamadores",
+        "d": "boletins informativos de associações de radioamadores",
+        "e": "o documento que a LABRE expede ao radioamador"
+      },
+      "resposta_correta": "a",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "A licença de funcionamento da estação perderá sua validade quando for julgado inconveniente pela Anatel seu funcionamento é:",
+      "alternativas": {
+        "a": "o radioamador responsável mudar de residência",
+        "b": "a emissora de rádio local assim o desejar",
+        "c": "houver operação de busca de salvamento",
+        "d": "for trocada a classe do radioamador responsável",
+        "e": "for cassado o certificado de habilitação do radioamador do responsável"
+      },
+      "resposta_correta": "e",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "A licença de funcionamento de estação de radioamador poderá ser requerida:",
+      "alternativas": {
+        "a": "pelas universidades e escolas e pelas associações de radioamadores",
+        "b": "pelos titulares de certificado de operador de estação de radioamador",
+        "c": "pelas associações de radioamadores",
+        "d": "pelos titulares de certificado de operador de estação de radioamador, pelas associações de radioamadores, pelas universidades e escolas, pelas associações do Movimento Escoteiro e do Movimento Bandeirante e pelas entidades de defesa civil",
+        "e": "todas as respostas estão erradas"
+      },
+      "resposta_correta": "d",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "A obtenção do certificado de operador de estação de radioamador classe C dependerá da aprovação do candidato:",
+      "alternativas": {
+        "a": "nos testes de legislação de telecomunicações e conhecimentos técnicos",
+        "b": "nos testes de transmissão e recepção auditiva de sinais em código Morse",
+        "c": "nos testes de legislação de telecomunicações, técnica e ética operacional",
+        "d": "no teste de transmissão de sinais em código Morse",
+        "e": "no teste de recepção de sinais em código Morse"
+      },
+      "resposta_correta": "c",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "A outorga de permissão para execução do serviço de radioamador é competência exclusiva:",
+      "alternativas": {
+        "a": "das associações de radioamadores reconhecidas pelo Ministério das Comunicações",
+        "b": "da união, através da Anatel",
+        "c": "do Ministério da Justiça",
+        "d": "do Ministério da Aeronáutica",
+        "e": "da Liga de Amadores Brasileiros de Rádio Emissão - LABRE"
+      },
+      "resposta_correta": "b",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "A autorização para execução dos serviço de radioamador será outorgada com a expedição do",
+      "alternativas": {
+        "a": "diploma da classe A",
+        "b": "diploma da classe C",
+        "c": "certificado de rádio técnico",
+        "d": "certificado de operador de estação de radioamador (COER)",
+        "e": "certificado de reservista"
+      },
+      "resposta_correta": "d",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "A potência RMSmáx. de entrada no estágio final de radiofreqüência alimentadora do circuito do sistema irradiante, para as estações licenciadas para radioamadores classe A e B, não poderá ser superior a:",
+      "alternativas": {
+        "a": "100 (cem) watts",
+        "b": "200 (duzentos) watts",
+        "c": "300 (trezentos) watts",
+        "d": "500 (quinhentos) watts",
+        "e": "1.000 (mil) watts"
+      },
+      "resposta_correta": "e",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "A potência RMSmáx. de saída atribuída às estações licenciadas de radioamador classe B e A é:",
+      "alternativas": {
+        "a": "igual a1000 watts",
+        "b": "superior a 1000 watts",
+        "c": "inferior a 1000 watts",
+        "d": "igual a 1000 kHz",
+        "e": "inferior a 100 watts"
+      },
+      "resposta_correta": "a",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "A potência RMSmáx. de saída dos equipamentos das estações licenciadas para radioamadores classe C não poderá ser superior a:",
+      "alternativas": {
+        "a": "1000 watts",
+        "b": "100 watts",
+        "c": "50 watts",
+        "d": "100 MHz",
+        "e": "200 watts"
+      },
+      "resposta_correta": "b",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "A promoção à classe A dependerá do candidato radioamador classe B",
+      "alternativas": {
+        "a": "Solicitar da ANATEL após decorrido 1 (um) ano de expedição do COER classe B",
+        "b": "realizar provas de legislação de radioamadorismos, língua inglesa e elementos de rádio técnica",
+        "c": "realizar provas de legislação de radioamadorismos, língua inglesa e e transmissão de mensagens em código Q",
+        "d": "realizar provas de elementos de rádio técnica, recepção auditiva de sinais em código Morse e língua inglesa",
+        "e": "realizar provas de telegrafia, elementos de rádio técnica e língua portuguesa"
+      },
+      "resposta_correta": "a",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "A união autoriza a execução de serviço de radioamador por intermédio:",
+      "alternativas": {
+        "a": "Ministério da Defesa",
+        "b": "Ministério da Marinha",
+        "c": "Ministério da Aeronáutica",
+        "d": "das Comunicações (Anatel)",
+        "e": "Ministério do Exército"
+      },
+      "resposta_correta": "d",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "As condições de habilitação ao radioamadorismo, assim como as de execução do serviço de radioamador, são estabelecidas:",
+      "alternativas": {
+        "a": "no regulamento do serviço de radioamador",
+        "b": "no código Q",
+        "c": "no Código Civil Brasileiro",
+        "d": "no Código de Processo Civil",
+        "e": "no regulamento do funcionário público"
+      },
+      "resposta_correta": "a",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "As duas primeiras letras da primeira parte do grupo de letras que compõem o indicativo de chamada do radioamador caracterizam:",
+      "alternativas": {
+        "a": "a classe do radioamador",
+        "b": "a cidade do radioamador",
+        "c": "o nome do radioamador",
+        "d": "o Brasil, por unidade federativa",
+        "e": "a Anatel"
+      },
+      "resposta_correta": "d",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "As estações licenciadas para radioamadores classes A, B, C terão potência RMSmáx. de saída de:",
+      "alternativas": {
+        "a": "classes A = 100 e B = 1000 watts RMS",
+        "b": "classes B = 1000 e C = 1000 watts RMS",
+        "c": "classes A = 100 e C = 100 watts RMS",
+        "d": "classes C = 100 e A = 1000 watts RMS",
+        "e": "classes A = 1000 e C = 50 watts RMS"
+      },
+      "resposta_correta": "d",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "As estações que podem ter potência média de entrada superior a 100 (cem) watts no estágio de radiofreqüência alimentadora do circuito do sistema irradiante, são as licenciadas para os radioamadores:",
+      "alternativas": {
+        "a": "Somente a classe A",
+        "b": "Somente a classe B",
+        "c": "Somente a classe C",
+        "d": "Somente a classe A e classe B",
+        "e": "Somente a classe B e classe C"
+      },
+      "resposta_correta": "d",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "Os regulamentos baixados pela Anatel, regulando o ingresso de radioamadores nas classes, serão:",
+      "alternativas": {
+        "a": "definitivas",
+        "b": "revistas anualmente",
+        "c": "revistas de 2 em 2 anos",
+        "d": "revistas de 5 em 5 anos",
+        "e": "revistas quando for necessária sua adaptação a atos nacionais"
+      },
+      "resposta_correta": "e",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "As questões objetivas sobre regulamento do serviço de radioamador farão parte do exame de habilitação de radioamadorismo na prova de:",
+      "alternativas": {
+        "a": "elementos de radioeletricidade",
+        "b": "legislação de radioamadorismo",
+        "c": "transmissão de sinais em código Morse",
+        "d": "recepção de sinais em código Morse",
+        "e": "conhecimentos gerais"
+      },
+      "resposta_correta": "b",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "É considerada infração na execução do serviço de radioamador:",
+      "alternativas": {
+        "a": "a utilização de equipamentos de forma artesanal",
+        "b": "a comunicação com estações de outros serviços, em situações de emergência",
+        "c": "utilizar linguagem codificada desconhecida pela Anatel",
+        "d": "utilizar carga não irradiante para ajustes dos equipamentos da estação de radioamador",
+        "e": "transmitir, simultaneamente, em mais de uma freqüência nas experimentações que envolvam estações repetidoras"
+      },
+      "resposta_correta": "c",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "É permitido ao radioamador transmitir simultaneamente em mais de uma faixa em caso de:",
+      "alternativas": {
+        "a": "divulgação de boletins informativos de associações de radioamadores, reconhecidas Anatel",
+        "b": "divulgação de telecomunicações eventualmente interceptadas assim como segredos de estado",
+        "c": "divulgação de segredos de estado e utilização de outro código que não seja o código Q",
+        "d": "promoção de campanhas discriminatórias de classes e campanhas políticas",
+        "e": "utilização de outro código que não seja o código Q e campanhas com fins lucrativos"
+      },
+      "resposta_correta": "a",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "É proibido ao radioamador:",
+      "alternativas": {
+        "a": "utilizar-se do código Q e do código Morse",
+        "b": "emitir propaganda política e discriminação racial",
+        "c": "manter comunicações com radioamadores de outros países, com os quais o Brasil mantenha relações diplomáticas",
+        "d": "transmitir simultaneamente em mais de um canal, mesmo que o caso esteja previsto em regulamento da Anatel",
+        "e": "prestar serviços gratuitos e auxiliar em calamidade pública"
+      },
+      "resposta_correta": "b",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "Em caso de extravio do certificado de habilitação de radioamador, ocorrerá com seu titular o seguinte:",
+      "alternativas": {
+        "a": "sofrerá a pena de suspensão por 15 (quinze) dias",
+        "b": "deverá solicitar emissão de segunda via",
+        "c": "o Ministério das Comunicações (Anatel) lhe exigirá novo exame de habilitação",
+        "d": "o Ministério das Comunicações lhe aplicará multa de 1/2 salário mínimo",
+        "e": "o dentel lhe aplicará a pena de cassação"
+      },
+      "resposta_correta": "b",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "Enquanto durar a licença de funcionamento da estação for válida, o radioamador responsável deve, entre outras obrigações:",
+      "alternativas": {
+        "a": "enviar relatório ao Ministério das Comunicações",
+        "b": "submeter-se ao regime de fiscalização estabelecido pela Anatel",
+        "c": "renovar a licença de 60 em 60 dias",
+        "d": "manter mais dois radioamadores responsáveis pela estação para ficarem de plantão",
+        "e": "realizar testes de atualização de ano em anos"
+      },
+      "resposta_correta": "b",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "Entre as faixas de freqüência permitidas à operação das estações repetidoras, está a de:",
+      "alternativas": {
+        "a": "52 a 54 MHz",
+        "b": "60 a 80 MHz",
+        "c": "150 a 200 MHz",
+        "d": "1.800 a 1.850 kHz",
+        "e": "3.500 a 3.525 kHz"
+      },
+      "resposta_correta": "a",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "Indicativos efetivos são:",
+      "alternativas": {
+        "a": "os que constam no COER",
+        "b": "os que constam da licença e são usados cotidianamente",
+        "c": "os que forem outorgados somente a radioamadores classes C e A",
+        "d": "os que forem outorgados somente a radioamadores classe B e A",
+        "e": "nenhuma das respostas"
+      },
+      "resposta_correta": "b",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "Indicativos especiais são:",
+      "alternativas": {
+        "a": "os que forem outorgados somente a radioamadores classe C",
+        "b": "os que constam da licença",
+        "c": "os usados em competições nacionais e nos eventos comemorativos",
+        "d": "os que forem outorgados somente a radioamadores classe A e B",
+        "e": "nenhuma das respostas"
+      },
+      "resposta_correta": "c",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "Na execução do serviço de radioamador é permitido: i - manter comunicados com radioamadores de países estrangeiros; ii - transmitir simultaneamente em mais de uma faixa de freqüências nas experimentações que envolvam estações repetidoras; iii - atender convocação para prestar serviços de utilidade pública, em casos de emergência; iv - divulgar telecomunicações eventualmente interceptadas;",
+      "alternativas": {
+        "a": "as alternativas iii e iv estão corretas",
+        "b": "as afirmativas i, ii e iii estão corretas",
+        "c": "apenas a afirmativa ii esta correta",
+        "d": "todas as afirmativas estão corretas",
+        "e": "nenhuma das afirmativas esta correta"
+      },
+      "resposta_correta": "b",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "O candidato ao serviço de radioamador, sendo aprovado no exame deverá solicitar:",
+      "alternativas": {
+        "a": "uma autorização de funcionamento",
+        "b": "um atestado",
+        "c": "um diploma",
+        "d": "um certificado de freqüência",
+        "e": "um certificado de operador de estação de radioamador (COER)"
+      },
+      "resposta_correta": "e",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "O certificado de habilitação de radioamador será:",
+      "alternativas": {
+        "a": "igual para todas as classes",
+        "b": "igual para as classes A e B",
+        "c": "igual para as classes B e C",
+        "d": "igual para as classes A e C",
+        "e": "diferente para cada classe"
+      },
+      "resposta_correta": "e",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "O código Q, pelo qual os radioamadores se comunicam, divide-se em seções, em séries de quantas letras?",
+      "alternativas": {
+        "a": "2 (duas)",
+        "b": "3 (três)",
+        "c": "4 (quatro)",
+        "d": "5 (cinco)",
+        "e": "6 (seis)"
+      },
+      "resposta_correta": "b",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "O documento expedido pela Anatel, que autoriza a instalação e a entrada em serviço da estação de radioamador, dentro dos limites de freqüência e potência impostos à classe do responsável pela estação, é:",
+      "alternativas": {
+        "a": "a licença de funcionamento de estação de radioamador",
+        "b": "o atestado de residência",
+        "c": "o alvará de localização",
+        "d": "o certificado de operador de estação de radioamador",
+        "e": "o certificado de registro"
+      },
+      "resposta_correta": "a",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "O programa para a prova de Conhecimentos Básicos de Eletrônica a que o candidato ao radioamadorismo deve se submeter vem relacionado:",
+      "alternativas": {
+        "a": "na constituição da república federativa do Brasil",
+        "b": "No procedimento disponível no site da Anatel",
+        "c": "no código Q",
+        "d": "no código fonético internacional",
+        "e": "no código brasileiro de telecomunicações"
+      },
+      "resposta_correta": "b",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "O radioamador que descobrir interferências prejudiciais às telecomunicações deverá:",
+      "alternativas": {
+        "a": "comunicar a denúncia a Anatel",
+        "b": "comunicar a denúncia por telefone ao Ministério da Guerra",
+        "c": "advertir o responsável pela estação interferente",
+        "d": "fechar a estação do responsável pela interferência",
+        "e": "cobrar uma multa do responsável pela estação interferente"
+      },
+      "resposta_correta": "a",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "O radioamador responsável por estação denunciada como interferente é obrigado a:",
+      "alternativas": {
+        "a": "fechar imediatamente sua estação, mesmo antes de confirmada a denúncia",
+        "b": "apresentar-se dentro de 10 dias a Anatel",
+        "c": "facilitar as inspeções promovidas pela a Anatel",
+        "d": "trocar seu certificado de habilitação de radioamador",
+        "e": "prestar novas provas de habilitação"
+      },
+      "resposta_correta": "c",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "O símbolo E representa o tipo de emissão relativo a:",
+      "alternativas": {
+        "a": "fac-simile",
+        "b": "televisão",
+        "c": "telefonia",
+        "d": "telegrafia sem modulação por audiofreqüência",
+        "e": "telegrafia com modulação por audiofreqüência"
+      },
+      "resposta_correta": "c",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "O símbolo “F” empregado para o tipo de emissão corresponde a:",
+      "alternativas": {
+        "a": "amplitude",
+        "b": "pulso",
+        "c": "freqüência",
+        "d": "longitude",
+        "e": "latitude"
+      },
+      "resposta_correta": "c",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "Os indicativos especiais serão outorgados somente a radioamadores classe:",
+      "alternativas": {
+        "a": "classes A e B",
+        "b": "classes B e A",
+        "c": "classes C e B",
+        "d": "classes A, B, C",
+        "e": "classes A"
+      },
+      "resposta_correta": "e",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "Os autorizados do serviço de radioamador e os titulares de certificado de operador de estação de radioamador são obrigados a:",
+      "alternativas": {
+        "a": "remeter, mensalmente, relatórios de suas atividades ao Ministério das Comunicações (Anatel)",
+        "b": "estabelecer, diariamente, comunicação com outros radioamadores",
+        "c": "participar de grupos de escuta permanente (QAP)",
+        "d": "atender convocação para prestar serviços de utilidade pública, em casos de emergência",
+        "e": "filiar-se a uma associação de radioamadores"
+      },
+      "resposta_correta": "d",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "Os radioamadores das classes B e C poderão requerer licença de funcionamento de 4 (quatro) tipos de estação, sendo- lhes negada a licença de funcionamento para:",
+      "alternativas": {
+        "a": "repetidora",
+        "b": "móvel",
+        "c": "portátil",
+        "d": "de domicílio principal",
+        "e": "de domicílio adicional"
+      },
+      "resposta_correta": "a",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "Os radioamadores estrangeiros com autorização para operar no Brasil terão os indicativos de chamada formados de maneira seguinte:",
+      "alternativas": {
+        "a": "três algarismos dispostos em seqüência",
+        "b": "quatro algarismos dispostos em seqüência",
+        "c": "prefixo da unidade federativa do país de origem, seguido do agrupamento 2 a 2 (dois a dois) das letras do alfabeto",
+        "d": "prefixo da unidade federativa de sua estação, seguido do agrupamento 3 (três) letras do alfabeto e iniciado pela letra z",
+        "e": "prefixo da unidade federativa do seu domicílio, seguido do agrupamento de 4 a 4 (quatro a quatro) das letras do alfabeto, e iniciado pela letra q"
+      },
+      "resposta_correta": "d",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "Os radioamadores são classificados nas classes A, B e C de acordo com:",
+      "alternativas": {
+        "a": "seu país de origem",
+        "b": "seu grau de escolaridade",
+        "c": "sua cidade natal",
+        "d": "seus conhecimentos de língua estrangeira",
+        "e": "suas habilitações técnicas e operacionais"
+      },
+      "resposta_correta": "e",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "Os tipos de estações de serviço de radioamador são em número de:",
+      "alternativas": {
+        "a": "3 (três)",
+        "b": "4 (quatro)",
+        "c": "6 (seis)",
+        "d": "5 (cinco)",
+        "e": "7 (sete)"
+      },
+      "resposta_correta": "a",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "Para o funcionamento das estações de radioamador, é necessário, além da habilitação dos responsáveis:",
+      "alternativas": {
+        "a": "apresentação de certificado de reservista",
+        "b": "apresentação de título de propriedade do prédio",
+        "c": "licença expedida pelo Ministério do Exterior",
+        "d": "licença expedida pela delegacia de polícia local",
+        "e": "licença expedida pela Anatel"
+      },
+      "resposta_correta": "e",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "Para obter a autorização legal para o funcionamento da estação de radioamador, o interessado, além de estar habilitado, deverá comprovar que:",
+      "alternativas": {
+        "a": "está filiado a uma associação",
+        "b": "pagou a taxa de fiscalização TFI / PPDUR / PPDESS",
+        "c": "possui o 1o grau de escolaridade",
+        "d": "possui o 2o grau de escolaridade",
+        "e": "reside há mais de 2 anos no mesmo local"
+      },
+      "resposta_correta": "b",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "Para se habilitar na classe C, é necessário que o candidato a radioamador seja aprovado em exame de:",
+      "alternativas": {
+        "a": "transmissão de sinais em código Morse",
+        "b": "recepção auditiva de sinais em código Morse",
+        "c": "elementos de radioeletricidade",
+        "d": "legislação de radioamadorismo, técnica e ética operacional",
+        "e": "emissão de mensagens em código Q"
+      },
+      "resposta_correta": "d",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "Poderão também requerer licença para instalação de estação de radioamador, além das universidades e escolas devidamente regularizadas:",
+      "alternativas": {
+        "a": "os radioamadores habilitados e as associações de radioamadorismo",
+        "b": "os candidatos ao radioamadorismo e as associações atléticas",
+        "c": "os candidatos ao radioamadorismo e as associações recreativas",
+        "d": "os turistas estrangeiros e as associações desportivas",
+        "e": "os turistas estrangeiros e as associações científicas"
+      },
+      "resposta_correta": "a",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "Poderão se inscrever para exames de habilitação ou promoção ao serviço de radioamador, além dos brasileiros, os:",
+      "alternativas": {
+        "a": "espanhóis que provem ter sido radioamadores no seu país",
+        "b": "argentinos que provem ter sido engenheiros eletrônicos em seu país de origem",
+        "c": "franceses que provem ter concluído curso superior em seu país de origem",
+        "d": "portugueses que provem haver cumprido com suas obrigações civis no país de origem",
+        "e": "qualquer pessoa física residente no país"
+      },
+      "resposta_correta": "e",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "Quais são os tipos de estações de radioamador ?",
+      "alternativas": {
+        "a": "fixa, móvel ou portátil",
+        "b": "fixa tipo 01, portátil e repetidora",
+        "c": "móvel, fixa tipo 02, portátil",
+        "d": "repetidora tipo 04, móvel",
+        "e": "fixa, móvel ou portátil e repetidora"
+      },
+      "resposta_correta": "e",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "Qual das abreviaturas do código Q, abaixo relacionadas, deverá ser utilizada para perguntar ou responder: nome da estação:",
+      "alternativas": {
+        "a": "QRQ",
+        "b": "QSA",
+        "c": "QRA",
+        "d": "QRZ",
+        "e": "QRI"
+      },
+      "resposta_correta": "c",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "Qual das abreviaturas do código Q, abaixo relacionadas, você deverá utilizar para perguntar ou responder, informar ou avisar: devo diminuir a potência? Diminuir a potência.",
+      "alternativas": {
+        "a": "QSB",
+        "b": "QRP",
+        "c": "QRN",
+        "d": "QRZ",
+        "e": "QSQ"
+      },
+      "resposta_correta": "b",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "Quando da realização de testes de avaliação da capacidade operacional e técnica para obtenção do certificado de operador de estação de radioamador, os radiotelegrafistas diplomados, mediante apresentação de prova de qualidade e de acordo com as normas estabelecidas pela Anatel, podem:",
+      "alternativas": {
+        "a": "ser dispensados do teste de transmissão e fazer apenas o teste de recepção auditiva de sinais em código Morse",
+        "b": "ser dispensados dos testes de conhecimentos técnicos e de transmissão e recepção auditiva de sinais em código Morse",
+        "c": "ser dispensados do teste de conhecimentos técnicos",
+        "d": "ser dispensados do teste de legislação",
+        "e": "ser dispensados de todos os testes"
+      },
+      "resposta_correta": "b",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "Um dos documentos que pode servir e é exigido para dispensa de provas de Conhecimentos Básicos de Eletrônica e Eletricidade, para radiotelegrafistas formados por escolas oficiais é:",
+      "alternativas": {
+        "a": "certificado de radiotelegrafista fornecido pelo Ministério das Comunicações (Anatel):",
+        "b": "certificado de reservista",
+        "c": "CPF - cartão de identificação do contribuinte",
+        "d": "carteira do CREA",
+        "e": "carteira de identidade"
+      },
+      "resposta_correta": "a",
+      "nivel": "Legislação"
+    },
+    {
+      "enunciado": "Antes de fazer um CQ, o que se deve fazer?",
+      "alternativas": {
+        "a": "aumentar o volume do transmissor",
+        "b": "identificar-se por três vezes",
+        "c": "certificar-se que a QRG está desocupada",
+        "d": "esperar por 5 minutos",
+        "e": "avisar que vai ocupar a freqüência"
+      },
+      "resposta_correta": "c",
+      "nivel": "Operacional"
+    },
+    {
+      "enunciado": "Como proceder ao contestar um CQ?",
+      "alternativas": {
+        "a": "acusar o recebimento do CQ por várias vezes",
+        "b": "sintonizar o equipamento 'beat zero' na QRG do colega",
+        "c": "perguntar se está sendo ouvido",
+        "d": "dar sua classe de radioamador",
+        "e": "perguntar qual a sua classe?"
+      },
+      "resposta_correta": "b",
+      "nivel": "Operacional"
+    },
+    {
+      "enunciado": "Quando você pode interromper uma conversação?",
+      "alternativas": {
+        "a": "quando você conhece um dos ocupantes da freqüência",
+        "b": "quando você tem que sair e não pode esperar mais",
+        "c": "para avisar que um dos participantes está sendo chamado",
+        "d": "usando o break em casos de comprovada emergência",
+        "e": "para pedir uma reportagem de sinais"
+      },
+      "resposta_correta": "d",
+      "nivel": "Operacional"
+    },
+    {
+      "enunciado": "Como se identificar com os colegas?",
+      "alternativas": {
+        "a": "sempre nos intervalos dos QSO com um simples 'bom dia' ou 'boa tarde'",
+        "b": "citando indicativo - nome e QTH por várias vezes",
+        "c": "aguardando intervalo e dando 'bom dia de py1... na escuta'",
+        "d": "respondendo às perguntas feitas ao outro e então dando bom dia",
+        "e": "elevando a potência da transmissão e falando"
+      },
+      "resposta_correta": "c",
+      "nivel": "Operacional"
+    },
+    {
+      "enunciado": "Ouvindo um amigo na faixa, como proceder?",
+      "alternativas": {
+        "a": "cumprimente-o passando seu nome",
+        "b": "convide-o para vir à outra freqüência",
+        "c": "avise aos demais que quer falar com ele",
+        "d": "espere sua oportunidade de falar dentro da seqüência natural",
+        "e": "aumente a potência e chame por ele"
+      },
+      "resposta_correta": "d",
+      "nivel": "Operacional"
+    },
+    {
+      "enunciado": "Assinale o correto:",
+      "alternativas": {
+        "a": "mantenha sua conversação com um amigo, pois os outros na rodada compreenderão",
+        "b": "não se preocupe com os demais na rodada, pois você tem tanto direito à freqüência quanto eles",
+        "c": "se a rodada estiver grande, pode tomar a palavra quando quiser",
+        "d": "é extremamente desagradável desenvolver conversação bilateral em uma rodada, com os demais à parte",
+        "e": "se você tem estação mais forte, imponha-se à rodada"
+      },
+      "resposta_correta": "d",
+      "nivel": "Operacional"
+    },
+    {
+      "enunciado": "Quando houver um grupo em rodada:",
+      "alternativas": {
+        "a": "é normal falar sobre o outro quando se tem maior potência",
+        "b": "se não lhe derem oportunidade após três câmbios, fale à vontade com seu colega, é normal",
+        "c": "nunca tente transmitir 'sobre' outra estação. é ilegal e prejudicial a todos",
+        "d": "pode falar sobre outro colega, pois os novos equipamentos tem filtros próprios para isso",
+        "e": "se você tiver assunto a tratar com vários deles, use da palavra a cada vez que eles falarem"
+      },
+      "resposta_correta": "c",
+      "nivel": "Operacional"
+    },
+    {
+      "enunciado": "Marque o correto:",
+      "alternativas": {
+        "a": "quando seu amigo atender a seu chamado numa rodada, fale à vontade",
+        "b": "desde que sua estação seja mais forte, está garantido seu cãmbio com um colega numa rodada",
+        "c": "a estação que atende ao seu chamado deve ser breve, ou passarem os dois para outra freqüência para seus câmbios",
+        "d": "as rodadas são apenas encontros, ninguém tendo direito sobre a freqüência - você tem tanto direito como qualquer outro",
+        "e": "as rodadas servem para testes de potência, tendo preferência as mais possantes, que podem falar à vontade"
+      },
+      "resposta_correta": "c",
+      "nivel": "Operacional"
+    },
+    {
+      "enunciado": "Assinale a resposta correta:",
+      "alternativas": {
+        "a": "o radioamadorismo é cheio de palavras características que devem ser usadas nas conversações a pouca distância",
+        "b": "dê vezes à sua conversação, pois poucas são as pessoas que estarão naquela freqüência que você está ocupando",
+        "c": "lembre-se que sua transmissão está sendo ouvida por muitos radio- escutas e do que disser nas faixas dependerá o nosso conceito",
+        "d": "você será tanto mais radioamador quanto mais usar os termos conhecidos como de seu vocabulário esdrúxulo",
+        "e": "é norma de gentileza usarem-se sempre os termos do radioamadorismo nas conversas pelas faixas"
+      },
+      "resposta_correta": "c",
+      "nivel": "Operacional"
+    },
+    {
+      "enunciado": "Não interrompa quem estiver falando:",
+      "alternativas": {
+        "a": "salvo se for um grande amigo",
+        "b": "a não ser que queira alguma informação",
+        "c": "se sua estação é possante, você pode interromper sim",
+        "d": "no rádio não são observadas as normas de educação, em virtude das variações da propagação",
+        "e": "salvo se você tiver algo muito importante a acrescentar"
+      },
+      "resposta_correta": "e",
+      "nivel": "Operacional"
+    },
+    {
+      "enunciado": "Qual a palavra usada para tráfego de emergência?",
+      "alternativas": {
+        "a": "atenção! atenção!",
+        "b": "emergência! emergência!",
+        "c": "break! break!",
+        "d": "silêncio! silêncio!",
+        "e": "licença! licença!"
+      },
+      "resposta_correta": "c",
+      "nivel": "Operacional"
+    },
+    {
+      "enunciado": "Como se referir aos órgãos diretivos se deles discordar?",
+      "alternativas": {
+        "a": "pelas faixas, um direito seu",
+        "b": "opinando pela freqüência e criticando o que achar errado",
+        "c": "não extravasando sentimentos negativos pelas faixas quanto à atitude que não lhe agradem. procure diálogo",
+        "d": "pode comentar como achar melhor, mas só em rodadas de amigos",
+        "e": "estamos numa democracia, você pode falar o que quiser"
+      },
+      "resposta_correta": "c",
+      "nivel": "Operacional"
+    },
+    {
+      "enunciado": "Em que freqüências você pode operar?",
+      "alternativas": {
+        "a": "conforme a propagação o permitir",
+        "b": "nas que lhe forem mais confortáveis",
+        "c": "onde encontrar maior número de amigos",
+        "d": "nunca nas que não lhe forem permitidas",
+        "e": "onde você marcar com os colegas"
+      },
+      "resposta_correta": "d",
+      "nivel": "Operacional"
+    },
+    {
+      "enunciado": "Como deve ser o relacionamento entre os radioamadores?",
+      "alternativas": {
+        "a": "geralmente agrupam-se por classes",
+        "b": "os radioamadores ajudam-se mutuamente, de forma elegante, desinteressada e paciente, principalmente para com os principiantes",
+        "c": "cada radioamador já sabe o que quer e vai em frente sozinho",
+        "d": "os novos não precisam de ajuda, pois estudaram muito",
+        "e": "por suas categorias profissionais"
+      },
+      "resposta_correta": "b",
+      "nivel": "Operacional"
+    },
+    {
+      "enunciado": "Que cuidados precisa ter um radioamador consciente?",
+      "alternativas": {
+        "a": "estar atualizada com os assuntos divulgados pela imprensa falada e escrita",
+        "b": "manter-se atualizado com a legislação radioamadorística e ter sempre presente os termos em que lhe foi conferido ser radioamador",
+        "c": "conhecer perfeitamente as capitais de todos os países do mundo",
+        "d": "ter sempre a mão a relação com os nomes de todos os ministros do presidente e do vice-presidente em exercício",
+        "e": "conhecer as marcas dos principais equipamentos industriais de radioamadorismo"
+      },
+      "resposta_correta": "b",
+      "nivel": "Operacional"
+    },
+    {
+      "enunciado": "Com referência aos vários modos de transmissão:",
+      "alternativas": {
+        "a": "descubra o que mais lhe interessa e largue os demais",
+        "b": "defenda sua modalidade preferida e pratique-a em todas as faixas",
+        "c": "evite fazer críticas a outros modos de transmissão, pelo fato de não se dedicar a esta ou aquela modalidade operacional",
+        "d": "não responda aos QSL das modalidades que não são de sua preferência",
+        "e": "nas reuniões de radioamadores demonstre a superioridade da modalidade de seu agrado, não acatando opiniões em contrário"
+      },
+      "resposta_correta": "c",
+      "nivel": "Operacional"
+    },
+    {
+      "enunciado": "Como operar nas faixas?",
+      "alternativas": {
+        "a": "se você foi prefixado pode operar em qualquer parte das faixas",
+        "b": "há divisões nas faixas para os vários tipos de operação. respeite os acordos que subdividem as faixas, para convivência harmoniosa",
+        "c": "a freqüência é de quem estiver ocupando, seja onde for",
+        "d": "se seu aparelho é possante, você pode ocupar qualquer freqüência",
+        "e": "se a estação for DX, pode passar por cima, pois estamos no nosso país e ele não"
+      },
+      "resposta_correta": "b",
+      "nivel": "Operacional"
+    },
+    {
+      "enunciado": "Como distribuir seus bate-papos:",
+      "alternativas": {
+        "a": "bate-papos locais devem dar preferência aos 40 ou 80 m ou então VHF ou UHF",
+        "b": "a propagação para longa distância melhora os bate-papos locais, e você pode aproveitar as faixas altas para tal",
+        "c": "os melhores locais para bate-papos são logo no início das faixas, junto com os DX",
+        "d": "estações mais fortes são o ideal para bate-papos em qualquer ponto das faixas",
+        "e": "bater papo nas freqüências altas é muito interessante, pois ainda permite marcar pontos com os DX se eles aparecerem"
+      },
+      "resposta_correta": "a",
+      "nivel": "Operacional"
+    },
+    {
+      "enunciado": "Se houver necessidade de um QSO mais demorado, será demonstração de camaradagem aos demais colegas:",
+      "alternativas": {
+        "a": "continuar na mesma QRG",
+        "b": "fazer QSY para CW",
+        "c": "procurar uma janela fora dos segmentos de DX",
+        "d": "chamar o colega para o telefone",
+        "e": "pedir silêncio aos demais colegas"
+      },
+      "resposta_correta": "c",
+      "nivel": "Operacional"
+    },
+    {
+      "enunciado": "O trote pelas QRG:",
+      "alternativas": {
+        "a": "deverá sempre ser praticado por ser gozado para quem pratica",
+        "b": "é uma demonstração de alegria por ser radioamador",
+        "c": "não deve ser praticado, pois em situações emergenciais a outra parte não acreditar naquilo que esteja ouvindo",
+        "d": "é um hábito comum no radioamadorismo e deverá ser sempre praticado",
+        "e": "é uma prática radioamadorística bastante confraternizante"
+      },
+      "resposta_correta": "c",
+      "nivel": "Operacional"
+    },
+    {
+      "enunciado": "Como proceder se sua estação é poderosa?",
+      "alternativas": {
+        "a": "azar dos menores. entre em cima até ser atendido",
+        "b": "se sua estação é forte, aguarde, deixe o colega 'marcar' a figurinha, e quando ele terminar faça sua contestação. consideração é bom",
+        "c": "se sua estação é forte, coloque-se em boa posição e chame seguidamente, até ser contestado. é a lei da vida",
+        "d": "uma estação forte 'espanta' os demais, e, portanto suas chances são maiores",
+        "e": "escolha um local sobre estação fraca e que esteja sozinha, e chame várias vezes, que será atendido logo"
+      },
+      "resposta_correta": "b",
+      "nivel": "Operacional"
+    },
+    {
+      "enunciado": "Ouvir que este ou aquele colega impediu ou dificultou o outro com QRM ou sinais de sua estação é:",
+      "alternativas": {
+        "a": "muito agradável",
+        "b": "extremamente desagradável",
+        "c": "break! break!",
+        "d": "problema das autoridades competentes",
+        "e": "uma prática normal no radioamadorismo"
+      },
+      "resposta_correta": "b",
+      "nivel": "Operacional"
+    },
+    {
+      "enunciado": "Evite criticar pela faixa, ou então comentar sobre assunto que não tem real conhecimento. A crítica pela faixa:",
+      "alternativas": {
+        "a": "é normal e faz parte da prática do bom radioamadorismo",
+        "b": "pode ser o início de um excelente e proveitoso QSO",
+        "c": "pode assumir graves proporções e causar males irreparáveis",
+        "d": "ajuda aos radioamadores iniciantes",
+        "e": "deve sempre ser praticada, pois ajuda a normalizar a QRG"
+      },
+      "resposta_correta": "c",
+      "nivel": "Operacional"
+    },
+    {
+      "enunciado": "CQ 'dirigido' a determinada área ou estação:",
+      "alternativas": {
+        "a": "se você ouvir alguém chamando por determinado continente ou país conteste assim mesmo para o prazer do QSL",
+        "b": "seja qual for o país mencionado no CQ, entre assim mesmo e conteste, pois o colega pode querer seu país também e não sabe de sua presença",
+        "c": "finja que não compreendeu um CQ 'determinado com quem' e faça seu pontinho com o colega",
+        "d": "se o CQ indica continente - país. estação com quem quer falar, só conteste se você estiver nesses locais ou for a estação chamada, que são os pontos de interesse daquele colega",
+        "e": "você sendo radioamador também pode contestar e fazer um câmbio, pois para isso você estudou e foi prefixado, como ele"
+      },
+      "resposta_correta": "d",
+      "nivel": "Operacional"
+    },
+    {
+      "enunciado": "Contatos com dxpedições:",
+      "alternativas": {
+        "a": "marque seu ponto e peça informações de como é o local clima e etc",
+        "b": "seja brevíssimo: nos 'pile ups' passe indicativo - reportagem... só!",
+        "c": "se não escutou o QTH insista e chame até ele passar o local para você",
+        "d": "marque o ponto, mas peça que lhe passe o QTR que é importantíssimo!",
+        "e": "pergunte se tem maneger - ou se tem endereço especial"
+      },
+      "resposta_correta": "b",
+      "nivel": "Operacional"
+    },
+    {
+      "enunciado": "Velocidade no CW:",
+      "alternativas": {
+        "a": "conteste sempre na sua velocidade em CW: quem souber marca",
+        "b": "se o colega é iniciante, vá passando adiante para não perder tempo",
+        "c": "para chamar a atenção para seu QRA, faça chamadas bem demoradas de CQ... e bem rápidas",
+        "d": "mantenha a cadência com a qual foi contestado, e nunca opere mais rápido, pois isto é, básico no CW!",
+        "e": "comece aumentar gradativamente a velocidade para ver até onde o colega 'aguenta' o tranco"
+      },
+      "resposta_correta": "d",
+      "nivel": "Operacional"
+    },
+    {
+      "enunciado": "Tempo das chamadas:",
+      "alternativas": {
+        "a": "faça seu CQ por muitas vezes para chamar a atenção dos colegas",
+        "b": "fique repetindo seus CQ bastante tempo, pois assim você pega os que passarem pela QRG",
+        "c": "não faça QSO intermináveis! faça chamadas curtas para que os colegas possam contestá-lo... ou então, caso contrário, irem embora, chateados",
+        "d": "CQ bem prolongados dão ciência de sua vontade de papear em CW",
+        "e": "faça QSO bem demorado, caprichando na QSD, para mostrar que você sabe telegrafia"
+      },
+      "resposta_correta": "c",
+      "nivel": "Operacional"
+    },
+    {
+      "enunciado": "A 'caligrafia' do CW:",
+      "alternativas": {
+        "a": "CW é tudo uma coisa só! trate de correr mostrando ser 'cobra...'",
+        "b": "bata sua mensagem como você achar melhor... os outros que tratem de decifrá-la",
+        "c": "respeite os espaços - não emende as letras - não emende as palavras. ritmo é muito mais importante que velocidade - faça sua transmissão agradável e gostosa",
+        "d": "engane os colegas, transmitindo mais rápido do que pode receber",
+        "e": "uma vez aprendido, ninguém esquece mais o CW, não precisando treinos nem aperfeiçoamentos"
+      },
+      "resposta_correta": "c",
+      "nivel": "Operacional"
+    },
+    {
+      "enunciado": "Funcionamento de uma repetidora:",
+      "alternativas": {
+        "a": "é muito fácil e é só ir entrando até se adaptar ao sistema",
+        "b": "como tudo no radioamadorismo, ninguém é dono da freqüência, e você tem todo o direito de usá-la também",
+        "c": "quem passou nos exames sabe perfeitamente como operar numa repetidora, que não tem segredo algum",
+        "d": "antes de entrar numa repetidora, escute, para familiarizar-se com o seu funcionamento, após o que, na hora certa dê seu indicativo para informar que está na freqüência",
+        "e": "as repetidoras são sempre muito robustas e resistentes, e uma vez instalada quase que dispensam manutenção"
+      },
+      "resposta_correta": "d",
+      "nivel": "Operacional"
+    },
+    {
+      "enunciado": "Operação em repetidora:",
+      "alternativas": {
+        "a": "é bom sempre ficar 'disparando' a repetidora para saber se seu vhf chega bem por lá",
+        "b": "para que nenhum colega 'entre' na repetidora, fale rápido e não dê oportunidade a que ele a use também",
+        "c": "faça uma pausa entre as transmissões: isto permitirá que outros radioamadores comuniquem suas presenças na freqüência",
+        "d": "fique falando bastante, até que a repetidora 'corte' com seu temporizador",
+        "e": "as 'rodadas' pela repetidora são muito fáceis e reúnem gente de vários locais distantes"
+      },
+      "resposta_correta": "c",
+      "nivel": "Operacional"
+    },
+    {
+      "enunciado": "Custos de uma repetidora:",
+      "alternativas": {
+        "a": "procure saber quem mantém a repetidora no ar, para reclamar em caso de defeito ou sair ela do ar",
+        "b": "convide seus amigos para ocuparem a repetidora, pois assim será mais fácil o papo com todos",
+        "c": "mantenha seu equipamento sempre no máximo de potência para 'firmar' a repetidora sem perigo de corte",
+        "d": "geralmente um grupo de pessoas é responsável pelas despesas de uma repetidora, com cabos, antenas, reparos etc... se você tem prazer em usá-la, procure colaborar, pois nada cai do céu, de graça",
+        "e": "se você usar bastante potência no seu equipamento, eventualmente poderá até acionar duas repetidoras com idênticas freqüências"
+      },
+      "resposta_correta": "d",
+      "nivel": "Operacional"
+    },
+    {
+      "enunciado": "Antes de se fazer uma chamada geral, o radioamador deve:",
+      "alternativas": {
+        "a": "certificar-se de que a freqüência está livre",
+        "b": "existe propriedade para chamada geral",
+        "c": "aguardar um espaço de câmbio",
+        "d": "mencionar seu indicativo de chamada",
+        "e": "cumprimentar a rodada"
+      },
+      "resposta_correta": "a",
+      "nivel": "Operacional"
+    },
+    {
+      "enunciado": "Em telecomunicações, freqüência é:",
+      "alternativas": {
+        "a": "o número de vezes que por exemplo o valor Máximo do sinal ocorre por segundo",
+        "b": "o número de vezes que o semiperÍodo ocorre por segundo",
+        "c": "a razão entre a velocidade da onda e o período",
+        "d": "a razão entre o período e a velocidade da onda",
+        "e": "o produto do período pela velocidade da onda"
+      },
+      "resposta_correta": "a",
+      "nivel": "Operacional"
+    },
+    {
+      "enunciado": "Para evitar interferência em outros equipamentos, o radioamador deve:",
+      "alternativas": {
+        "a": "trabalhar com a menor potência possível efetuar um bom sistema de aterramento trabalhar com filtro passa-baixas na saída de seu transmissor e operar com antenas e linhas balanceadas",
+        "b": "operar sempre em freqüência baixa, trabalhar com filtro passa-altas a saída de seu transmissor, operar com potência abaixo e 1 kw médios e com acoplador de antenas",
+        "c": "operar com alta potência porem com balun, ligar o fio terra no neutro da alimentação, operar sempre com cabos coaxiais grossos e ROE baixa",
+        "d": "trabalhar com filtros passa-baixas na entrada do equipamento interferido, trabalhar com filtro passa-altas na saída do transmissor, operar sem balun e efetuar o aterramento no neutro da alimentação",
+        "e": "trabalhar com antenas de baixa altura, operar somente acima de 20 mhz, conectar o balun ao neutro da alimentação e balancear a conexão de terra"
+      },
+      "resposta_correta": "a",
+      "nivel": "Operacional"
+    },
+    {
+      "enunciado": "Conhecer o código *q* é vital no serviço de radioamadorismo ao aplicá-lo é que se observa as dificuldades. *QTH* quer dizer exatamente...:",
+      "alternativas": {
+        "a": "endereço do operador",
+        "b": "local onde o operador de rádio se encontra no momento, independente de seu endereço residencial",
+        "c": "local da estação adicional",
+        "d": "nome do operador",
+        "e": "nenhuma das anteriores esta correta"
+      },
+      "resposta_correta": "b",
+      "nivel": "Operacional"
+    },
+    {
+      "enunciado": "Muitas vezes é possível detectar que há interferência conduzida através da fonte de alimentação operando-se:",
+      "alternativas": {
+        "a": "com filtro passa-baixas",
+        "b": "a bateria",
+        "c": "com filtro passa-altas",
+        "d": "com balun",
+        "e": "com antenas verticais"
+      },
+      "resposta_correta": "b",
+      "nivel": "Operacional"
+    },
+    {
+      "enunciado": "Quando seu melhor amigo estiver modulando com dois colegas você...:",
+      "alternativas": {
+        "a": "pede oportunidade e já fala",
+        "b": "não o cumprimenta e não lhe dirige a palavra ate chegar a sua vez",
+        "c": "se estão em um grupo de amigos conversando assunto de seu interesse, lhe e facultada a palavra",
+        "d": "não existe vez de chegada quando se está entre amigos",
+        "e": "todas estão corretas"
+      },
+      "resposta_correta": "b",
+      "nivel": "Operacional"
+    },
+    {
+      "enunciado": "São medidas comumente numa estação de radioamador as potências:",
+      "alternativas": {
+        "a": "direta e refletida no receptor",
+        "b": "direta e refletida na linha de transmissão e a gerada pelo transmissor",
+        "c": "rms gerada pelo transmissor",
+        "d": "rms entregue a antena",
+        "e": "rms direta no cabo"
+      },
+      "resposta_correta": "b",
+      "nivel": "Operacional"
+    },
+    {
+      "enunciado": "Um procedimento 'aceitável' para participar de uma rodada é:",
+      "alternativas": {
+        "a": "o cumprimentar com 'bom dia' ou 'boa tarde' etc",
+        "b": "informar o QRA e aguardar",
+        "c": "solicitar 'break'",
+        "d": "pedir 'oportunidade'",
+        "e": "aproveitar um espaço de câmbio e iniciar a conversa"
+      },
+      "resposta_correta": "b",
+      "nivel": "Operacional"
+    },
+    {
+      "enunciado": "Um transceptor é um equipamento:",
+      "alternativas": {
+        "a": "transistorizado para se acoplar uma antena",
+        "b": "composto por um receptor e um transmissor em uma mesma caixa",
+        "c": "que serve somente para receber as ondas de rádio",
+        "d": "que serve somente para transmitir as ondas de rádio",
+        "e": "que transmite e recebe sempre simultaneamente em modo full- duplex"
+      },
+      "resposta_correta": "b",
+      "nivel": "Operacional"
+    },
+    {
+      "enunciado": "Uma antena artificial é :",
+      "alternativas": {
+        "a": "uma antena feita artificialmente feita pelo radioamador",
+        "b": "uma carga resistiva pura não irradiante que serve para se efetuar experimentos que não necessitem da radiação",
+        "c": "é um irradiador invisível e, por isso, também chamado de antena fantasma",
+        "d": "uma antena usada somente para recepção e que possui baixo fluido",
+        "e": "uma antena que irradia igualmente em todas as direções e também chamada de irradiador isotrópico"
+      },
+      "resposta_correta": "b",
+      "nivel": "Operacional"
+    },
+    {
+      "enunciado": "Batimento de freqüências é o fenômeno que ocorre:",
+      "alternativas": {
+        "a": "num circuito linear não produzindo freqüências novas além das de entrada",
+        "b": "num circuito linear, produzindo freqüência da ordem do dobro das de entrada ",
+        "c": "num circuito não-linear produzindo a soma e as diferenças das freqüências de entrada",
+        "d": "num circuito não-linear não produzindo freqüências novas além das entradas",
+        "e": "num circuito linear, produzindo freqüências da ordem do triplo das de entrada"
+      },
+      "resposta_correta": "c",
+      "nivel": "Operacional"
+    },
+    {
+      "enunciado": "Entende-se por conteste:",
+      "alternativas": {
+        "a": "termo em espanhol para dizer que a mensagem foi ouvida",
+        "b": "comunicação a longa distância",
+        "c": "concurso de contato entre radioamadores cujo objetivo e obter o maior número de comunicados em um menor tempo possível",
+        "d": "quando em uma chamada geral somos atendidos por muitos colegas",
+        "e": "nenhuma das anteriores"
+      },
+      "resposta_correta": "c",
+      "nivel": "Operacional"
+    },
+    {
+      "enunciado": "Numa operação com o auxílio de repetidora, a transmissão e a recepção são efetuadas:",
+      "alternativas": {
+        "a": "na mesma freqüência e simultaneamente",
+        "b": "em freqüências diferentes e simultaneamente no caso de comunicação digital",
+        "c": "em freqüências diferentes e uma a cada vez no caso de comunicação de voz",
+        "d": "na mesma freqüência e uma de cada vez no caso de voz",
+        "e": "na mesma freqüência e uma de cada vez no caso CW"
+      },
+      "resposta_correta": "c",
+      "nivel": "Operacional"
+    },
+    {
+      "enunciado": "Direitos exclusivos a uma freqüência são somente para:",
+      "alternativas": {
+        "a": "rodadas",
+        "b": "concurso",
+        "c": "contestes",
+        "d": "só para tráfego de mensagens de emergência",
+        "e": "não existe direito exclusivo em hipótese alguma"
+      },
+      "resposta_correta": "d",
+      "nivel": "Operacional"
+    },
+    {
+      "enunciado": "O instrumento que serve para medir freqüência é o:",
+      "alternativas": {
+        "a": "amperímetro",
+        "b": "ohmímetro",
+        "c": "multímetro",
+        "d": "frequencímetro",
+        "e": "medidor de ROE"
+      },
+      "resposta_correta": "d",
+      "nivel": "Operacional"
+    },
+    {
+      "enunciado": "Quando em uma rodada é solicitado a oportunidade, deverá atender o radioamador que:",
+      "alternativas": {
+        "a": "tiver o sinal mais forte",
+        "b": "for o mais amigo daquele que chamou",
+        "c": "aquele que terá a oportunidade do primeiro QSO com aquele que solicitou",
+        "d": "estiver na 'vez' com a palavra",
+        "e": "nenhuma das alternativas esta correta"
+      },
+      "resposta_correta": "d",
+      "nivel": "Operacional"
+    },
+    {
+      "enunciado": "Quando você ouvir em CW um colega emitir as letras CL em final de QSO significa que:",
+      "alternativas": {
+        "a": "estou na escuta",
+        "b": "emergência! emergência!",
+        "c": "estou na escuta e posso responder",
+        "d": "a partir de agora estou em QRT",
+        "e": "somente as alternativas: a), c) e d) estão corretas"
+      },
+      "resposta_correta": "d",
+      "nivel": "Operacional"
+    },
+    {
+      "enunciado": "Uma linha de transmissão é:",
+      "alternativas": {
+        "a": "a parte da antena responsável pela radiação",
+        "b": "um fio vertical que serve para gerar as ondas eletromagnéticas",
+        "c": "um fio que acopla a energia do transmissor ao espaço",
+        "d": "um cabo que leva a energia do transmissor para a antena",
+        "e": "um cabo, sempre corretamente casado, que carrega a energia do transmissor"
+      },
+      "resposta_correta": "d",
+      "nivel": "Operacional"
+    },
+    {
+      "enunciado": "No VHF é comum o uso de repetidoras; diz a legislação que depois de instalada, a mesma é de uso publico. O procedimento adequado será:",
+      "alternativas": {
+        "a": "procurar informar-se quem são os mantenedores da repetidora que você usa normalmente e contribuir com sua manutenção",
+        "b": "respeitar o timer da repetidora",
+        "c": "fazer câmbios curtos e objetivos",
+        "d": "nunca falar mal de uma repetidora quando estiver operando em outra, mesmo que esta não esteja de acordo com suas necessidades",
+        "e": "todas estão corretas"
+      },
+      "resposta_correta": "e",
+      "nivel": "Operacional"
+    },
+    {
+      "enunciado": "Onda estacionária de uma linha de transmissão é:",
+      "alternativas": {
+        "a": "uma onda que irradia da linha quando esta desbalanceada",
+        "b": "uma onda unidirecional que vai do transmissor para a antena",
+        "c": "uma onda que carrega a potência do transmissor deste para a antena",
+        "d": "uma onda resultante do casamento correto da linha",
+        "e": "o resultado da presença de duas ondas na linha, uma direta e a outra refletida"
+      },
+      "resposta_correta": "e",
+      "nivel": "Operacional"
+    },
+    {
+      "enunciado": "Quando uma estação faz um CQ dirigido a um país ou região geográfica, ouvindo mas não estando no local mencionado você deve:",
+      "alternativas": {
+        "a": "atender assim mesmo, pois o colega pode querer falar com você",
+        "b": "avisar a ele que não tem ninguém na freqüência",
+        "c": "avisar que a região solicitada não se faz presente",
+        "d": "aproveitando a oportunidade, você pedirá um QSL",
+        "e": "você não deverá se manifestar"
+      },
+      "resposta_correta": "e",
+      "nivel": "Operacional"
+    },
+    {
+      "enunciado": "Um transmissor é um equipamento:",
+      "alternativas": {
+        "a": "que recebe a energia proveniente de uma antena",
+        "b": "para transmissão somente de sinais digitais",
+        "c": "sempre construído com válvulas que serve para transmitir os sinais de rádio",
+        "d": "para transmissão de sinais analógicos",
+        "e": "que transforma o sinal básico de informação em sinais de radiofreqüência a ser entregue a uma antena"
+      },
+      "resposta_correta": "e",
+      "nivel": "Operacional"
+    },
+    {
+      "enunciado": "Uma estação repetidora de radioamador é um equipamento:",
+      "alternativas": {
+        "a": "para se receber e transmitir simultaneamente áudio e vídeo",
+        "b": "que transmite e recebe simultaneamente na mesma freqüência",
+        "c": "que efetua somente transmissão de ATV em lugares de difícil acesso",
+        "d": "exclusivamente para transmissão de sinais de voz",
+        "e": "para intermediar o contato entre duas estações que normal mente não conseguem comunicação entre si"
+      },
+      "resposta_correta": "e",
+      "nivel": "Operacional"
+    },
+    {
+      "enunciado": "A quem pertence o uso da freqüência em rede ou em operação individual?",
+      "alternativas": {
+        "a": "pertence a quem estiver ocupando no momento",
+        "b": "pertence a quem tiver estação mais forte",
+        "c": "ao radioamador com mais anos de prefixo",
+        "d": "as radioamadoras, caso estejam na freqüência",
+        "e": "à Anatel"
+      },
+      "resposta_correta": "a",
+      "nivel": "Operacional"
+    },
+    {
+      "enunciado": "Como 'entrar' na freqüência:",
+      "alternativas": {
+        "a": "sintonize seu equipamento e pode chamar seu CQ, pois sua estação sendo forte deve abafar quem estiver na freqüência",
+        "b": "se alguém contestou seu amigo, entre também com maior potência e fale com seu amigo, pois os direitos são iguais",
+        "c": "espere o resultado da contestação, e só depois de verificar que não houve resposta que você deve contestar. quem fez o CQ não deve ter ouvido a contestação inicial",
+        "d": "se alguém contesta o CQ de um colega e você contestou também, seja rápido e conteste novamente sem esperar nada",
+        "e": "CQ é chamada geral e, portanto você também pode contestar, mesmo que outro colega já o esteja fazendo"
+      },
+      "resposta_correta": "c",
+      "nivel": "Operacional"
+    },
+    {
+      "enunciado": "Num 'pile-up' o radioamador deve:",
+      "alternativas": {
+        "a": "manter QSO com uma só estação",
+        "b": "informar somente o QSA",
+        "c": "registrar por ordem de chegada e confirmar o QSO",
+        "d": "sendo várias estações de um só local, deve-se atender apenas uma e confirmar a região ou país",
+        "e": "atender somente um radioamador de cada região e informar que o seu endereço está no guia"
+      },
+      "resposta_correta": "c",
+      "nivel": "Operacional"
+    },
+    {
+      "enunciado": "O termo 'break' é utilizado para:",
+      "alternativas": {
+        "a": "solicitar oportunidade",
+        "b": "para informar comprovada emergência",
+        "c": "para cumprimentar os presentes",
+        "d": "para solicitar um QSA;para participar de um QSO",
+        "e": "para participar de um QSO"
+      },
+      "resposta_correta": "b",
+      "nivel": "Operacional"
+    },
+    {
+      "enunciado": "Para efeito de DX, quantos países há no território brasileiro?",
+      "alternativas": {
+        "a": "o Brasil é um país e assim é considerado",
+        "b": "tantos quanto desejar, basta haver um contes",
+        "c": "somente a ilha de Guaratuba pode ser considerada como mais um país dentro do Brasil",
+        "d": "somente Santos por sua posição bem definida pode ser considerada, para efeito de DX, um país",
+        "e": "quatro países: o Brasil, a ilha de Fernando de Noronha, as ilhas de São Pedro e São Paulo e ilha de trindade são consideradas como países para efeito de DX"
+      },
+      "resposta_correta": "e",
+      "nivel": "Operacional"
+    },
+    {
+      "enunciado": "Quando uma estação operar em 'split' o radioamador deve:",
+      "alternativas": {
+        "a": "ter um equipamento com VFO remoto para acompanhar o QSO em transmissão e recepção",
+        "b": "ter um equipamento com a mesma marca",
+        "c": "pertencer a mesma classe do radioamador que estiver operando",
+        "d": "tentar um QSO de qualquer maneira para faturar a figurinha",
+        "e": "não vale a pena tentar, este tipo de antena e de fabricação artesanal e poucos a possuem"
+      },
+      "resposta_correta": "a",
+      "nivel": "Operacional"
+    },
+    {
+      "enunciado": "Que assuntos devem ser evitados pelas faixas?",
+      "alternativas": {
+        "a": "assuntos relacionados com órgãos do governo",
+        "b": "assuntos que impliquem em consultas a documentos especificados",
+        "c": "assuntos referentes ao currículo das academias militares",
+        "d": "qualquer propaganda política, e atos que caracterizariam mercantilização do radioamadorismo, ou atividades comerciais",
+        "e": "assuntos relativos a clubes de futebol, por serem polêmicos"
+      },
+      "resposta_correta": "d",
+      "nivel": "Operacional"
+    },
+    {
+      "enunciado": "Um receptor é um equipamento:",
+      "alternativas": {
+        "a": "que produz energia enviada a uma antena",
+        "b": "que transforma um sinal enviado de radiofreqüência entregue pela antena em sinal básico de informação",
+        "c": "sempre transistorizado que serve para receber os sinais de rádio",
+        "d": "para recepção somente de sinais digitais",
+        "e": "para recepção somente de sinais analógicos"
+      },
+      "resposta_correta": "b",
+      "nivel": "Operacional"
+    },
+    {
+      "enunciado": "A maior intensidade do campo magnético produzido por um imã localiza-se:",
+      "alternativas": {
+        "a": "na direção norte",
+        "b": "na extremidade direita",
+        "c": "na extremidade esquerda",
+        "d": "na superfície exterior",
+        "e": "no centro da parte interior"
+      },
+      "resposta_correta": "e",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "Artificialmente, o campo magnético é criado pelo:",
+      "alternativas": {
+        "a": "resistor",
+        "b": "capacitor",
+        "c": "indutor",
+        "d": "transistor",
+        "e": "diodo"
+      },
+      "resposta_correta": "c",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "O único elemento não-eletromagnético da relação abaixo é:",
+      "alternativas": {
+        "a": "o transformador",
+        "b": "o capacitor",
+        "c": "o solenóide",
+        "d": "o relé",
+        "e": "a bobina"
+      },
+      "resposta_correta": "b",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "Fazendo-se variar alternadamente o campo magnético que atravessa uma bobina conectada em um circuito fechado, podemos afirmar que:",
+      "alternativas": {
+        "a": "circula uma corrente contínua na mesma",
+        "b": "circula uma corrente alternada na mesma",
+        "c": "não circula corrente na mesma",
+        "d": "a intensidade do campo será aumentada",
+        "e": "o período de alternância do campo depende do comprimento da bobina"
+      },
+      "resposta_correta": "b",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "A variação da corrente em uma bobina induz uma tensão na mesma. Este fenômeno chama-se:",
+      "alternativas": {
+        "a": "capacitância",
+        "b": "indutância",
+        "c": "reatância indutiva",
+        "d": "indutância mútua",
+        "e": "auto-indutância"
+      },
+      "resposta_correta": "e",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "A corrente elétrica é medida em:",
+      "alternativas": {
+        "a": "Coulomb",
+        "b": "volt",
+        "c": "Joule",
+        "d": "Henry",
+        "e": "Ampère"
+      },
+      "resposta_correta": "e",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "A resistência elétrica é medida em:",
+      "alternativas": {
+        "a": "joule",
+        "b": "henry",
+        "c": "farad",
+        "d": "coulomb",
+        "e": "ohm"
+      },
+      "resposta_correta": "e",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "Num resistor, a cor da quarta faixa representa:",
+      "alternativas": {
+        "a": "o coeficiente de temperatura",
+        "b": "a dissipação máxima de potência",
+        "c": "a tensão de ruptura",
+        "d": "o tempo de vida útil",
+        "e": "a tolerância"
+      },
+      "resposta_correta": "e",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "Para que uma fonte de tensão de 20 V gere uma corrente de 0,4 A a mesma deve ser aplicada sobre uma resistência de:",
+      "alternativas": {
+        "a": "0,02 ohm",
+        "b": "8 ohm",
+        "c": "19,6 ohm",
+        "d": "20,4 ohm",
+        "e": "50 ohm"
+      },
+      "resposta_correta": "e",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "Pode-se afirmar que a intensidade de campo elétrico gerado por um corpo eletricamente carregado:",
+      "alternativas": {
+        "a": "não varia com a distância",
+        "b": "é diretamente proporcional à distância",
+        "c": "é inversamente proporcional à distância",
+        "d": "é diretamente proporcional ao quadrado da distância",
+        "e": "é inversamente proporcional ao quadrado da distância"
+      },
+      "resposta_correta": "e",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "A associação série de 3 resistores de 20 ohm cada um equivale a uma resistência de:",
+      "alternativas": {
+        "a": "6,67 ohm",
+        "b": "10 ohm",
+        "c": "15 ohm",
+        "d": "20 ohm",
+        "e": "60 ohm"
+      },
+      "resposta_correta": "e",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "A capacitância de um capacitor é especificada pela:",
+      "alternativas": {
+        "a": "freqüência",
+        "b": "tensão",
+        "c": "corrente",
+        "d": "reatância",
+        "e": "especificação do fabricante"
+      },
+      "resposta_correta": "e",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "Um campo magnético é produzido por:",
+      "alternativas": {
+        "a": "aquecimento de um condutor",
+        "b": "campos elétricos",
+        "c": "uma diferença de potencial entre dois pontos",
+        "d": "cargas elétricas em repouso",
+        "e": "cargas elétricas em movimento"
+      },
+      "resposta_correta": "e",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "A indutância é medida em:",
+      "alternativas": {
+        "a": "farad",
+        "b": "coulomb",
+        "c": "ohm",
+        "d": "hertz",
+        "e": "henry"
+      },
+      "resposta_correta": "e",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "Para que o valor eficaz de uma tensão senoidal seja de 5 V, a mesma deve ter um valor máximo de aproximadamente:",
+      "alternativas": {
+        "a": "3 V",
+        "b": "4 V",
+        "c": "5 V",
+        "d": "6 V",
+        "e": "7 V"
+      },
+      "resposta_correta": "e",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "Em um circuito de C A RC-Paralelo a corrente no capacitor, em relação à tensão, fica:",
+      "alternativas": {
+        "a": "atrasada de 45°",
+        "b": "atrasada de 90°",
+        "c": "adiantada de 45°",
+        "d": "adiantada de 90°",
+        "e": "em fase"
+      },
+      "resposta_correta": "d",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "Uma das funções desempenhadas pelo capacitor é:",
+      "alternativas": {
+        "a": "transformar C.A em C.C",
+        "b": "transformar C.C em CA",
+        "c": "bloquear a passagem de C.A",
+        "d": "bloquear a passagem de C.C",
+        "e": "permitir a passagem de CC"
+      },
+      "resposta_correta": "d",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "Reduzindo-se a metade a indutância de um circuito de C.A a reatância indutiva do mesmo fica:",
+      "alternativas": {
+        "a": "quatro vezes maior",
+        "b": "quatro vezes menor",
+        "c": "duas vezes maior",
+        "d": "duas vezes menor",
+        "e": "constante"
+      },
+      "resposta_correta": "d",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "O valor RMS de uma corrente senoidal é 5 mA. O valor máximo desta corrente é aproximadamente:",
+      "alternativas": {
+        "a": "2,5 mA",
+        "b": "3,5 mA",
+        "c": "5 mA",
+        "d": "7 mA",
+        "e": "10 mA"
+      },
+      "resposta_correta": "d",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "O valor da amplitude de uma tensão senoidal é 10 V. O valor eficaz desta tensão é aproximadamente:",
+      "alternativas": {
+        "a": "1 V",
+        "b": "3 V",
+        "c": "5 V",
+        "d": "7 V",
+        "e": "9 V"
+      },
+      "resposta_correta": "d",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "A força elétrica que provoca o movimento de cargas em um condutor é:",
+      "alternativas": {
+        "a": "a condutância",
+        "b": "a temperatura",
+        "c": "o campo magnético",
+        "d": "a tensão elétrica",
+        "e": "a freqüência"
+      },
+      "resposta_correta": "d",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "Dependendo do local, a tensão elétrica da rede domiciliar é:",
+      "alternativas": {
+        "a": "50 V ou 60 V",
+        "b": "60 V ou 110 V",
+        "c": "110 V ou 50 V",
+        "d": "110 V ou 220 V",
+        "e": "220 V ou 60 V"
+      },
+      "resposta_correta": "d",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "Por convenção considera-se a corrente elétrica fruindo do potencial:",
+      "alternativas": {
+        "a": "positivo para o potencial neutro",
+        "b": "negativo para o potencial neutro",
+        "c": "neutro para o potencial positivo",
+        "d": "positivo para o potencial negativo",
+        "e": "negativo para o potencial positivo"
+      },
+      "resposta_correta": "d",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "O volt é a unidade de medida da:",
+      "alternativas": {
+        "a": "potência elétrica",
+        "b": "capacitância",
+        "c": "freqüência",
+        "d": "tensão elétrica",
+        "e": "reatância"
+      },
+      "resposta_correta": "d",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "A corrente que flui por um circuito é diretamente proporcional à tensão e inversamente proporcional à resistência Esta definição é da Lei de:",
+      "alternativas": {
+        "a": "Lens",
+        "b": "Coulomb",
+        "c": "Newton ohm",
+        "d": "Ohm",
+        "e": "Kirchhof"
+      },
+      "resposta_correta": "d",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "Determinado circuito precisa ser alimentado com 60 V e 0,2 A. Dispondo-se de uma fonte de 300 V, deve-se colocar em série com o circuito uma resistência de:",
+      "alternativas": {
+        "a": "12 ohm",
+        "b": "60 ohm",
+        "c": "300 ohm",
+        "d": "1K2 ohm",
+        "e": "1K5 ohm"
+      },
+      "resposta_correta": "d",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "Uma fonte de 50 V alimenta um circuito de 20 ohm. Constatou-se que a corrente que circula pelo circuito é de 0,5 A. Então existe em série com o circuito uma resistência de:",
+      "alternativas": {
+        "a": "10 ohm",
+        "b": "25 ohm",
+        "c": "35 ohm",
+        "d": "80 ohm",
+        "e": "100 ohm"
+      },
+      "resposta_correta": "d",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "Convencionalmente o fluxo elétrico em um condutor metálico é constituído de:",
+      "alternativas": {
+        "a": "mesons",
+        "b": "positrons",
+        "c": "prótons",
+        "d": "elétrons",
+        "e": "nêutrons"
+      },
+      "resposta_correta": "d",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "Para obter uma resistência equivalente de 1 K ohm é necessário associar:",
+      "alternativas": {
+        "a": "3 resistores de 10 ohm em paralelo",
+        "b": "3 resistores de 10 ohm em série",
+        "c": "4 resistores de 250 ohm em paralelo",
+        "d": "5 resistores de 200 ohm em série",
+        "e": "10 resistores de 100 ohm em paralelo"
+      },
+      "resposta_correta": "d",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "A capacitância é determinada pela relação entre:",
+      "alternativas": {
+        "a": "tensão e corrente",
+        "b": "tensão e reatância",
+        "c": "reatância e corrente",
+        "d": "carga e tensão",
+        "e": "carga e reatância"
+      },
+      "resposta_correta": "d",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "Num circuito RC o capacitor é de 1000 μF. Para a constante de tempo do circuito seja de 1 segundo, o valor do resistor deve ser de:",
+      "alternativas": {
+        "a": "1 ohm",
+        "b": "10 ohm",
+        "c": "100 ohm",
+        "d": "1K ohm",
+        "e": "10K ohm"
+      },
+      "resposta_correta": "d",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "A força eletromotriz nos condutores elétricos gera uma corrente de:",
+      "alternativas": {
+        "a": "núcleos atômicos",
+        "b": "nêutrons",
+        "c": "fótons",
+        "d": "elétrons",
+        "e": "moléculas"
+      },
+      "resposta_correta": "d",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "O período de uma onda senoidal é:",
+      "alternativas": {
+        "a": "proporcional a amplitude",
+        "b": "proporcional à freqüência",
+        "c": "inversamente proporcional à amplitude",
+        "d": "inversamente proporcional à freqüência",
+        "e": "independente da freqüência"
+      },
+      "resposta_correta": "d",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "O valor eficaz de uma tensão senoidal é 100 V. O valor máximo desta tensão é aproximadamente:",
+      "alternativas": {
+        "a": "50 V",
+        "b": "110 V",
+        "c": "121 V",
+        "d": "141 V",
+        "e": "180 V"
+      },
+      "resposta_correta": "d",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "Em um circuito de C.A RL-série a tensão no indutor, em relação à corrente, fica:",
+      "alternativas": {
+        "a": "atrasada de 45°",
+        "b": "atrasada de 90°",
+        "c": "adiantada de 45°",
+        "d": "adiantada de 90°",
+        "e": "em fase"
+      },
+      "resposta_correta": "d",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "A potência elétrica é medida em:",
+      "alternativas": {
+        "a": "newton",
+        "b": "coulomb",
+        "c": "watt",
+        "d": "volt",
+        "e": "hertz"
+      },
+      "resposta_correta": "c",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "Densidade de fluxo magnético é definida como sendo:",
+      "alternativas": {
+        "a": "campo magnético gerado por uma carga em repouso",
+        "b": "o campo elétrico gerado por uma carga em movimento",
+        "c": "o número de linhas de força por unidade de área",
+        "d": "a carga de um ohm capacitor",
+        "e": "a reatância de um indutor"
+      },
+      "resposta_correta": "c",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "A variação de corrente em uma bobina induz corrente em uma bobina próxima. Este fenômeno chama-se:",
+      "alternativas": {
+        "a": "capacitância",
+        "b": "indutância",
+        "c": "indutância mutua",
+        "d": "auto-indutância",
+        "e": "reatância indutiva"
+      },
+      "resposta_correta": "c",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "Por convenção o potencial da terra é:",
+      "alternativas": {
+        "a": "energizado",
+        "b": "polarizado",
+        "c": "nulo",
+        "d": "negativo",
+        "e": "positivo"
+      },
+      "resposta_correta": "c",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "Um resistor com as cores vermelha, verde, marrom apresenta uma resistência de:",
+      "alternativas": {
+        "a": "25 ohm",
+        "b": "25,1 ohm",
+        "c": "250 ohm",
+        "d": "251 ohm",
+        "e": "270 ohm"
+      },
+      "resposta_correta": "c",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "As unidades relacionadas na Lei de ohm são:",
+      "alternativas": {
+        "a": "volt, coulomb, ohm",
+        "b": "ohm., tensão, hertz 1",
+        "c": "ampère, ohm , volt",
+        "d": "ampère, resistência, hertz",
+        "e": "volt, corrente, coulomb"
+      },
+      "resposta_correta": "c",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "Por uma resistência de 100 ohm circula uma corrente de 0,1 A. A tensão aplicada sobre o resistor ê:",
+      "alternativas": {
+        "a": "0,1 V",
+        "b": "1 V",
+        "c": "10 V",
+        "d": "100 V",
+        "e": "1000 V"
+      },
+      "resposta_correta": "c",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "Uma fonte de 15 V é aplicada sobre uma resistência de 10 K ohm. Diminuindo o valor da resistência pode-se afirmar que a corrente:",
+      "alternativas": {
+        "a": "diminui logaritmicamente",
+        "b": "aumenta logaritmicamente",
+        "c": "aumenta linearmente",
+        "d": "diminui linearmente",
+        "e": "permanece constante"
+      },
+      "resposta_correta": "c",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "O fenômeno pelo qual a corrente elétrica produz calor ao atravessar um material resistivo é conhecido como:",
+      "alternativas": {
+        "a": "resistividade",
+        "b": "permissividade",
+        "c": "efeito Joule",
+        "d": "auto-indução",
+        "e": "capacidade do condutor"
+      },
+      "resposta_correta": "c",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "Uma resistência de 100 ohm submetida a uma tensão de 100 V dissipa:",
+      "alternativas": {
+        "a": "0 W",
+        "b": "1 W",
+        "c": "100 W",
+        "d": "200 W",
+        "e": "10 kW"
+      },
+      "resposta_correta": "c",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "A reação de um corpo neutro localizado no interior do campo elétrico produzido por carga positiva é:",
+      "alternativas": {
+        "a": "aproximar-se mais da carga positiva",
+        "b": "afastar-se do campo",
+        "c": "manter-se indiferente ao campo",
+        "d": "positivar-se",
+        "e": "negativar-se"
+      },
+      "resposta_correta": "c",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "O capacitor é um elemento que:",
+      "alternativas": {
+        "a": "gera energia",
+        "b": "consome energia",
+        "c": "armazena energia",
+        "d": "transforma energia",
+        "e": "gera calor"
+      },
+      "resposta_correta": "c",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "Henry é a unidade de medida de:",
+      "alternativas": {
+        "a": "freqüência",
+        "b": "capacitância",
+        "c": "indutância",
+        "d": "reatância",
+        "e": "impedância"
+      },
+      "resposta_correta": "c",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "Campos magnéticos variáveis:",
+      "alternativas": {
+        "a": "são gerados por imãs naturais",
+        "b": "são gerados por corrente contínua",
+        "c": "induzem corrente elétrica em condutores próximos",
+        "d": "induzem corrente elétrica somente em isolantes elétricos",
+        "e": "não existem"
+      },
+      "resposta_correta": "c",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "A freqüência de uma onda senoidal é:",
+      "alternativas": {
+        "a": "proporcional ao período",
+        "b": "proporcional a amplitude",
+        "c": "inversamente proporcional ao período",
+        "d": "inversamente proporcional à amplitude",
+        "e": "independente do período"
+      },
+      "resposta_correta": "c",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "O valor pico-a-pico de uma onda senoidal é igual:",
+      "alternativas": {
+        "a": "a 0,707 vezes o valor da amplitude",
+        "b": "ao valor da amplitude",
+        "c": "a duas vezes o valor da amplitude",
+        "d": "a três vezes o valor da amplitude",
+        "e": "a quatro vezes o valor da amplitude"
+      },
+      "resposta_correta": "c",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "O valor eficaz ou RMS de uma onda senoidal é aproximadamente igual a:",
+      "alternativas": {
+        "a": "0,5 vezes o valor máximo",
+        "b": "0,637 vezes o valor máximo",
+        "c": "0,707 vezes o valor máximo",
+        "d": "1,41 vezes o valor máximo",
+        "e": "2 vezes o valor máximo"
+      },
+      "resposta_correta": "c",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "Em um circuito, o somatório das tensões em uma malha fechada é igual a zero. Este enunciado é da Lei de:",
+      "alternativas": {
+        "a": "Ohm",
+        "b": "Lens",
+        "c": "Kirchhof",
+        "d": "Joule",
+        "e": "Newton"
+      },
+      "resposta_correta": "c",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "Por um circuito resistivo de 120 ohm circula uma corrente de 0,15 A, quando alimentado por uma tensão de 18 V. Quando alimentado com uma tensão de 36 V a corrente:",
+      "alternativas": {
+        "a": "diminui para 0,075 A",
+        "b": "aumenta para 0,300 A",
+        "c": "diminui 4 vezes",
+        "d": "aumenta 4 vezes",
+        "e": "aumenta infinitamente"
+      },
+      "resposta_correta": "b",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "A indutância mútua entre duas bobinas depende do coeficiente de acoplamento entre elas. Este coeficiente é sempre:",
+      "alternativas": {
+        "a": "menor que zero",
+        "b": "menor que 1",
+        "c": "igual a 1",
+        "d": "maior que 1",
+        "e": "maior que 10"
+      },
+      "resposta_correta": "b",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "Uma diferença de potencial elétrico estabelecida entre os extremos de um condutor provoca:",
+      "alternativas": {
+        "a": "indutância mútua",
+        "b": "corrente elétrica",
+        "c": "amplificação",
+        "d": "reatância capacitiva",
+        "e": "resistência"
+      },
+      "resposta_correta": "b",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "A corrente elétrica é continua quando:",
+      "alternativas": {
+        "a": "tem a forma de uma senóide",
+        "b": "não muda a polaridade no tempo",
+        "c": "não é retificada",
+        "d": "ora é positiva e ora e negativa",
+        "e": "é alternada"
+      },
+      "resposta_correta": "b",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "O gerador de corrente alternada é conhecido como:",
+      "alternativas": {
+        "a": "acumulador",
+        "b": "alternador",
+        "c": "bateria",
+        "d": "pilha",
+        "e": "dínamo de c.c"
+      },
+      "resposta_correta": "b",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "Um resistor de 6.400 ohm apresenta as cores:",
+      "alternativas": {
+        "a": "verde, amarelo, vermelho",
+        "b": "azul, amarelo, vermelho",
+        "c": "azul, laranja, vermelho",
+        "d": "azul, amarelo, laranja",
+        "e": "verde, laranja, laranja"
+      },
+      "resposta_correta": "b",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "A grandeza que define a quantidade de energia consumida por unidade de tempo é a:",
+      "alternativas": {
+        "a": "tensão",
+        "b": "potência",
+        "c": "freqüência",
+        "d": "capacitância",
+        "e": "corrente"
+      },
+      "resposta_correta": "b",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "Um chuveiro que dissipa 2 kW quando ligado com tensão de 200 V tem uma resistência igual a:",
+      "alternativas": {
+        "a": "10 ohm",
+        "b": "20 ohm",
+        "c": "100 ohm",
+        "d": "400 ohm",
+        "e": "2k2 ohm"
+      },
+      "resposta_correta": "b",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "A resistência equivalente a uma associação de 10 resistores de 100 ohm cada um, em paralelo, é de:",
+      "alternativas": {
+        "a": "1 ohm",
+        "b": "10 ohm",
+        "c": "12,5 ohm",
+        "d": "25 ohm",
+        "e": "50 ohm"
+      },
+      "resposta_correta": "b",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "A carga de um capacitor é medida em:",
+      "alternativas": {
+        "a": "henry",
+        "b": "coulomb",
+        "c": "volt",
+        "d": "ampère",
+        "e": "ohm"
+      },
+      "resposta_correta": "b",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "O fluxo magnético que passa por uma dada seção transversal é chamado de:",
+      "alternativas": {
+        "a": "campo magnético",
+        "b": "densidade de fluxo magnético",
+        "c": "indução magnética",
+        "d": "intensidade de campo",
+        "e": "linhas de força"
+      },
+      "resposta_correta": "b",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "Um gerador que transforma energia química em elétrica:",
+      "alternativas": {
+        "a": "a válvula eletrônica",
+        "b": "a pilha",
+        "c": "o alternador",
+        "d": "o transistor",
+        "e": "o dínamo"
+      },
+      "resposta_correta": "b",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "O valor de pico de uma onda senoidal é igual ao valor:",
+      "alternativas": {
+        "a": "pico-a-pico",
+        "b": "máximo",
+        "c": "eficaz",
+        "d": "médio",
+        "e": "RMS"
+      },
+      "resposta_correta": "b",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "A corrente alternada medida por um amperímetro é a corrente:",
+      "alternativas": {
+        "a": "média",
+        "b": "eficaz",
+        "c": "máxima",
+        "d": "de pico",
+        "e": "pico-a-pico"
+      },
+      "resposta_correta": "b",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "Aplicando-se uma tensão alternada a um indutor, a corrente que circula por ele ficará, em relação à tensão:",
+      "alternativas": {
+        "a": "atrasada de 45°",
+        "b": "atrasada de 90°",
+        "c": "adiantada de 45°",
+        "d": "adiantada de 90°",
+        "e": "em fase"
+      },
+      "resposta_correta": "b",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "Quando aumenta a freqüência da tensão aplicada a um indutor sua reatância:",
+      "alternativas": {
+        "a": "diminui",
+        "b": "aumenta",
+        "c": "permanece constante",
+        "d": "evita que a freqüência aumente f",
+        "e": "torna-se nula"
+      },
+      "resposta_correta": "b",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "A potência aparente de um circuito de C.A depende:",
+      "alternativas": {
+        "a": "da tensão e da corrente",
+        "b": "da tensão e do fator de potência",
+        "c": "da corrente e do fator de potência",
+        "d": "da tensão, da corrente e do fator de potência",
+        "e": "somente do fator de potência"
+      },
+      "resposta_correta": "a",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "Em um circuito de C A RC-série a tensão no capacitor, em relação à corrente, fica:",
+      "alternativas": {
+        "a": "atrasada de 90°",
+        "b": "atrasada de 180°",
+        "c": "adiantada de 90°",
+        "d": "adiantada de 180°",
+        "e": "ênfase"
+      },
+      "resposta_correta": "a",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "O movimento das cargas elétricas através de um condutor denomina-se:",
+      "alternativas": {
+        "a": "corrente elétrica",
+        "b": "linhas de força",
+        "c": "tensão elétrica",
+        "d": "fenômeno de histerese",
+        "e": "força eletromotriz"
+      },
+      "resposta_correta": "a",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "O eixo central em forma de bastão das pilhas e feito de carvão e constitui o:",
+      "alternativas": {
+        "a": "pólo positivo",
+        "b": "pólo negativo",
+        "c": "pólo neutro",
+        "d": "eletrólito",
+        "e": "potencial de terra"
+      },
+      "resposta_correta": "a",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "São grandezas relacionadas na Lei de Ohm:",
+      "alternativas": {
+        "a": "resistência, corrente, tensão",
+        "b": "tensão, ampère, ohm",
+        "c": "corrente, resistência, volt",
+        "d": "potência, volt, corrente",
+        "e": "volt, ohm, watt"
+      },
+      "resposta_correta": "a",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "Uma tensão de 10 V sobre uma resistência de 20 ohm gera uma corrente de:",
+      "alternativas": {
+        "a": "0,5 A",
+        "b": "0,08333333",
+        "c": "0,41666666",
+        "d": "30 A",
+        "e": "200 A"
+      },
+      "resposta_correta": "a",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "A passagem de corrente elétrica através de uma resistência produz um efeito:",
+      "alternativas": {
+        "a": "térmico",
+        "b": "luminoso",
+        "c": "químico",
+        "d": "magnético",
+        "e": "radioativo"
+      },
+      "resposta_correta": "a",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "Dois corpos carregados eletricamente com cargas, respectivamente, positiva e negativa exercem entre si uma força que tende a:",
+      "alternativas": {
+        "a": "aproximá-los",
+        "b": "afastá-los",
+        "c": "mantê-los imóveis",
+        "d": "deslocá-los para a direita",
+        "e": "deslocá-los para a esquerda"
+      },
+      "resposta_correta": "a",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "Um corpo carregado eletricamente e em repouso gera:",
+      "alternativas": {
+        "a": "campo elétrico",
+        "b": "campo magnético",
+        "c": "fluxo de prótons",
+        "d": "nêutrons",
+        "e": "radiação gama"
+      },
+      "resposta_correta": "a",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "A associação que resulta em uma resistência equivalente de 200 ohm é a série dos seguintes resistores:",
+      "alternativas": {
+        "a": "100 ohm, 80 ohm, 20 ohm",
+        "b": "200 ohm, 150 ohm, 50 ohm",
+        "c": "200 ohm, 200 ohm, 200 ohm",
+        "d": "600 ohm, 600 ohm, 600 ohm",
+        "e": "800 ohm, 800 ohm, 400 ohm"
+      },
+      "resposta_correta": "a",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "Um dos fatores que influem na capacitância é:",
+      "alternativas": {
+        "a": "o material dielétrico",
+        "b": "a tensão de isolação",
+        "c": "a freqüência",
+        "d": "a temperatura",
+        "e": "a tensão aplicada"
+      },
+      "resposta_correta": "a",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "Farad é a unidade de medida de:",
+      "alternativas": {
+        "a": "capacitância",
+        "b": "indutância",
+        "c": "reatância",
+        "d": "impedância",
+        "e": "admitância"
+      },
+      "resposta_correta": "a",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "Em relação a tensão, a corrente num capacitor está:",
+      "alternativas": {
+        "a": "adiantada de 90°",
+        "b": "adiantada de 180°",
+        "c": "atrasada de 90°",
+        "d": "atrasada de 180°",
+        "e": "em fase"
+      },
+      "resposta_correta": "a",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "Aumentando o número de espiras de um indutor ocorre:",
+      "alternativas": {
+        "a": "aumento da indutância",
+        "b": "diminuição da indutância",
+        "c": "diminuição da reatância indutiva",
+        "d": "diminuição da defasagem entre tensão e corrente",
+        "e": "aumento da defasagem entre tensão e corrente"
+      },
+      "resposta_correta": "a",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "A indutância mútua entre duas bobinas não depende:",
+      "alternativas": {
+        "a": "da temperatura ambiente",
+        "b": "da distância entre as bobinas",
+        "c": "da indutância entre uma das bobinas",
+        "d": "da indutância entre uma das bobinas",
+        "e": "da indutância entre uma das bobinas"
+      },
+      "resposta_correta": "a",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "Analisando-se uma onda senoidal, deduz-se que:",
+      "alternativas": {
+        "a": "a tensão eficaz é maior do que a tensão média",
+        "b": "a tensão eficaz é maior do que a tensão de pico",
+        "c": "a tensão média é maior do que a tensão de pico",
+        "d": "a tensão máxima é maior do que a tensão pico-a-pico",
+        "e": "a tensão máxima é diferente da tensão de pico"
+      },
+      "resposta_correta": "a",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "Quando aumenta a freqüência da tensão aplicada a um capacitor sua reatância:",
+      "alternativas": {
+        "a": "diminui",
+        "b": "aumenta",
+        "c": "permanece constante",
+        "d": "toma-se nula",
+        "e": "evita que a freqüência aumente"
+      },
+      "resposta_correta": "a",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "A impedância de saída de um amplificador é de 8 ohm. A maior transferência de sinal ocorre com a ligação de:",
+      "alternativas": {
+        "a": "8 falantes de l6 ohm em paralelo",
+        "b": "8 falantes de 8 ohm em série",
+        "c": "4 falantes de l6 ohm em paralelo",
+        "d": "2 falantes de l6 ohm em paralelo",
+        "e": "2 falantes de l6 ohm em série"
+      },
+      "resposta_correta": "d",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "A potência em C.A. é dada pela fórmula P=V.I.Cos ?. Os valores de 'V' e 'I' são, respectivamente:",
+      "alternativas": {
+        "a": "eficaz e máximo",
+        "b": "eficaz e eficaz",
+        "c": "máximo e máximo",
+        "d": "máximo e RMS",
+        "e": "médio e médio"
+      },
+      "resposta_correta": "b",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "A reatância capacitiva é medida em:",
+      "alternativas": {
+        "a": "ampères",
+        "b": "volts",
+        "c": "henries",
+        "d": "farads",
+        "e": "ohm s"
+      },
+      "resposta_correta": "e",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "Dois corpos carregados eletricamente com cargas negativas geram uma força que tende a:",
+      "alternativas": {
+        "a": "aproximá-los",
+        "b": "afastá-los",
+        "c": "mantê-los imóveis",
+        "d": "positivá-los",
+        "e": "neutralizá-los"
+      },
+      "resposta_correta": "b",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "Num transformador, o fenômeno pelo qual a energia é transferida de um enrolamento para outro é conhecido como:",
+      "alternativas": {
+        "a": "Indutância mútua",
+        "b": "reatância indutiva",
+        "c": "indutância",
+        "d": "condutância",
+        "e": "admitância"
+      },
+      "resposta_correta": "a",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "O campo magnético criado por uma corrente induzida:",
+      "alternativas": {
+        "a": "opõe-se à variação do campo magnético induziu a corrente",
+        "b": "aumenta o campo magnético que induziu a corrente",
+        "c": "anula o campo magnético que induziu a corrente",
+        "d": "não afeta o campo magnético que induziu a corrente",
+        "e": "não existe"
+      },
+      "resposta_correta": "a",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "O valor eficaz de uma onda senoidal é aproximadamente igual a:",
+      "alternativas": {
+        "a": "0,5 vezes o valor máximo",
+        "b": "0,637 vezes o valor máximo",
+        "c": "0,707 vezes o valor máximo",
+        "d": "1,41 vezes o valor máximo",
+        "e": "2 vezes o valor máximo"
+      },
+      "resposta_correta": "c",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "O valor pico-a-pico de uma onda senoidal é de 32 V. O valor médio desta tensão é aproximadamente:",
+      "alternativas": {
+        "a": "10 V",
+        "b": "16 V",
+        "c": "24 V",
+        "d": "30 V",
+        "e": "32 V"
+      },
+      "resposta_correta": "a",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "Para aumentar a intensidade do campo magnético de um eletro-imã deve-se:",
+      "alternativas": {
+        "a": "diminuir o número de espiras",
+        "b": "aumentar o comprimento da bobina",
+        "c": "aumentar o comprimento da bobina",
+        "d": "ligar um resistor em paralelo com a bobina",
+        "e": "ligar um resistor em série com a bobina"
+      },
+      "resposta_correta": "c",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "Para obter-se uma resistência equivalente de 4 ohm devem ser associados:",
+      "alternativas": {
+        "a": "4 resistores de 8 ohm em paralelo",
+        "b": "4 resistores de 16 ohm em paralelo",
+        "c": "4 resistores de 8 ohm em série",
+        "d": "4 resistores de 16 ohm em série",
+        "e": "1 resistor de 8 ohm em paralelo com um de 2 n-"
+      },
+      "resposta_correta": "b",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "A reatância indutiva é medida em:",
+      "alternativas": {
+        "a": "ampères",
+        "b": "volts",
+        "c": "henries",
+        "d": "farads",
+        "e": "ohms"
+      },
+      "resposta_correta": "e",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "Por uma lâmpada circula 2,5 A quando alimentada com 110 V. A potência elétrica dissipada é de:",
+      "alternativas": {
+        "a": "275 mW",
+        "b": "44 W",
+        "c": "112,5 W",
+        "d": "275 W",
+        "e": "44 kW"
+      },
+      "resposta_correta": "d",
+      "nivel": "Técnica/Elétrica"
+    },
+    {
+      "enunciado": "Um chuveiro ligado à rede elétrica de 110 V durante 2 segundos dissipa 550 J. A corrente no circuito é de",
+      "alternativas": {
+        "a": "0,1 A",
+        "b": "0,4 A",
+        "c": "2,5 A",
+        "d": "0,20833333",
+        "e": "0,41666666"
+      },
+      "resposta_correta": "c",
+      "nivel": "Técnica/Elétrica"
+    }
+  ]
+}

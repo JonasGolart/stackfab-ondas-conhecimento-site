@@ -187,43 +187,45 @@
   </div>
 
   <script>
-    const questions = [
-      {
-        category: "Legislação",
-        text: "Qual é a sigla da agência reguladora que fiscaliza o radioamadorismo no Brasil?",
-        options: ["IBAMA", "ANATEL", "CONATEL", "ABR"],
-        answer: 1
-      },
-      {
-        category: "Ética e Operação",
-        text: "No código Q, qual sigla significa 'Estou com interferência'?",
-        options: ["QRM", "QRN", "QSB", "QTH"],
-        answer: 0
-      },
-      {
-        category: "Técnica",
-        text: "Qual componente é utilizado para armazenar energia em um campo elétrico?",
-        options: ["Resistor", "Indutor", "Capacitor", "Diodo"],
-        answer: 2
-      },
-      {
-        category: "Ética e Operação",
-        text: "O que significa a sigla CQ no radioamadorismo?",
-        options: ["Chamada Geral", "Cessar Transmissão", "Código de Qualidade", "Câmbio e Desligo"],
-        answer: 0
-      },
-      {
-        category: "Legislação",
-        text: "Qual a idade mínima para ingressar no Serviço de Radioamador na Classe C?",
-        options: ["10 anos", "12 anos", "Não há idade mínima", "18 anos"],
-        answer: 2
-      }
-    ];
-
+    let questions = [];
     let currentIdx = 0;
-    let userAnswers = new Array(questions.length).fill(null);
+    let userAnswers = [];
+
+    // Carregar o banco de dados dinamicamente
+    async function initQuiz() {
+      try {
+        const response = await fetch('assets/banco_questoes.json');
+        if (!response.ok) throw new Error('Falha ao carregar banco de dados');
+        const data = await response.json();
+        
+        // Selecionar 20 questões aleatórias do banco total (295 questões)
+        questions = data.questions
+          .sort(() => Math.random() - 0.5)
+          .slice(0, 20)
+          .map(q => {
+            // Mapear alternativas do formato objeto {a:.., b:..} para array
+            const options = Object.keys(q.alternativas).sort().map(key => q.alternativas[key]);
+            const answerMap = { 'a': 0, 'b': 1, 'c': 2, 'd': 3, 'e': 4 };
+            
+            return {
+              category: q.nivel,
+              text: q.enunciado,
+              options: options,
+              answer: answerMap[q.resposta_correta]
+            };
+          });
+
+        userAnswers = new Array(questions.length).fill(null);
+        loadQuestion();
+      } catch (error) {
+        console.error('Erro:', error);
+        document.getElementById('question').innerText = 'Erro ao carregar o banco de questões. Verifique a conexão.';
+      }
+    }
 
     function loadQuestion() {
+      if (questions.length === 0) return;
+      
       const q = questions[currentIdx];
       document.getElementById('category').innerText = q.category;
       document.getElementById('question').innerText = q.text;
@@ -281,9 +283,20 @@
       document.getElementById('results').style.display = 'block';
       document.getElementById('score').innerText = score;
       document.getElementById('progress').style.width = '100%';
+
+      // Feedback baseado na aprovação ANATEL (70%)
+      const percent = (score / questions.length) * 100;
+      const feedback = document.getElementById('feedback');
+      if (percent >= 70) {
+        feedback.innerText = "Parabéns! Você atingiu a pontuação mínima para aprovação (70%). Continue assim!";
+        feedback.style.color = "var(--primary)";
+      } else {
+        feedback.innerText = "Você não atingiu os 70% necessários. Revise o material e tente novamente!";
+        feedback.style.color = "#ff4444";
+      }
     }
 
-    loadQuestion();
+    initQuiz();
   </script>
 </body>
 </html>
