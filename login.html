@@ -180,10 +180,11 @@
           localStorage.setItem('user', JSON.stringify(data.user));
           
           // Redirecionamento baseado no papel (role)
-          if (data.user.role === 'admin') {
-            window.location.href = '/dashboard.html';
+          const userRole = String(data.user.role).toLowerCase();
+          if (userRole === 'admin' || userRole === 'developer') {
+            window.location.href = 'dashboard.html';
           } else {
-            window.location.href = '/portal.html';
+            window.location.href = 'portal.html';
           }
         } else {
           errorMsg.style.display = 'block';

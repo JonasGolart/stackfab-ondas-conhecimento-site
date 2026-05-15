@@ -375,8 +375,10 @@
     const token = localStorage.getItem('token');
     const user = JSON.parse(localStorage.getItem('user') || '{}');
 
-    if (!token) {
-      window.location.href = '/login.html';
+    // Se não tem token ou não é admin/developer, volta pro login
+    const userRole = String(user.role).toLowerCase();
+    if (!token || (userRole !== 'admin' && userRole !== 'developer')) {
+      window.location.href = 'login.html';
     }
 
     document.getElementById('user-info').innerText = user.name || 'Administrador';
