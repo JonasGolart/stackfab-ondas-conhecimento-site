@@ -24,12 +24,15 @@
 - [x] Sistema de Categorias Dinâmicas (Tabela no DB, API routes, Controllers e Gestão CRUD no Dashboard)
 - [x] Filtros interativos de categorias com efeitos de transição fluida no Portal do Participante
 
-### 🚧 Em Andamento
 - [x] Sincronização com repositório GitHub oficial e Git push automatizado
+- [x] Refatoração completa do layout da Área de Membros (dashboard, login, portal, reset-password) para tema claro premium (areia, bege linho e marrom terroso), removendo as cores escuras/azuis
+- [x] Correção de contraste e legibilidade do botão "Ver PDF" do Portal do Participante
+- [x] Correção definitiva do upload de arquivos de materiais com caminhos absolutos do Multer, criação de pastas e resiliência de banco
+- [x] Correção do seed administrativo garantindo a role 'admin' de jonas@gmail.com para controle de acesso
 
 ### 📋 Próximos Passos
-1. Validar deploy contínuo em produção no Coolify.
-2. Monitoramento de novos materiais e logs de upload.
+1. Acompanhar a sincronização do deploy contínuo automático no painel do Coolify.
+2. Monitorar logs de produção e novos uploads.
 
 ---
 *Log gerado automaticamente conforme padrões StackFAB.*
