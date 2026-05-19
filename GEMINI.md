@@ -23,4 +23,4 @@
 *Última atualização: 2026-05-15 por Antigravity AI.*
 
 [CURRENT_LOCKS]: NONE
-[MESSAGES / HANDOVER]: O sistema foi refatorado para o padrão Node.js/Express. O banco de dados está conectado à produção do Coolify.
+[MESSAGES / HANDOVER]: Implementada a exportação CSV de inscritos no Painel Admin com suporte a UTF-8 BOM e o sistema de recuperação de senha por e-mail integrado ao Resend (com fallback local seguro). O banco foi migrado dinamicamente e os arquivos foram pushados para a branch main.

@@ -1,6 +1,6 @@
 # 📝 Progresso do Projeto: Ondas do Conhecimento
 
-## 🗓️ Última Atualização: 2026-05-15
+## 🗓️ Última Atualização: 2026-05-19
 **Responsável**: Antigravity AI
 
 ---
@@ -15,17 +15,17 @@
 - [x] Dashboard funcional para listagem de inscrições
 - [x] Refatoração para Padrões de Projeto StackFAB (src/ structure)
 - [x] Criação de scripts de semente (seed) e Dockerfile Node.js
+- [x] Adicionar funcionalidade de exportação de inscrições em CSV com suporte a acentuação em português (UTF-8 BOM)
+- [x] Implementar sistema completo de recuperação de senha por e-mail integrado ao Resend (com fallback local seguro)
 
 ### 🚧 Em Andamento
-- [x] Sincronização com repositório GitHub oficial
+- [x] Sincronização com repositório GitHub oficial e Git push automatizado
 - [x] Deploy disparado via API do Coolify (Deployment UUID: `e14fx5tmxzisikvnn3vso971`)
 - [x] Atualização do servidor local para Node.js (Porta 3000)
 
 ### 📋 Próximos Passos
 1. Realizar deploy no Coolify.
-2. Adicionar funcionalidade de exportação de dados (CSV/Excel).
-3. Implementar recuperação de senha por e-mail.
-4. Configurar logs de monitoramento via GlitchTip (se necessário).
+2. Configurar logs de monitoramento via GlitchTip (se necessário).
 
 ---
 *Log gerado automaticamente conforme padrões StackFAB.*
