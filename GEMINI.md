@@ -23,4 +23,5 @@
 *Última atualização: 2026-05-15 por Antigravity AI.*
 
 [CURRENT_LOCKS]: NONE
-[MESSAGES / HANDOVER]: Implementada a exportação CSV de inscritos no Painel Admin com suporte a UTF-8 BOM e o sistema de recuperação de senha por e-mail integrado ao Resend (com fallback local seguro). O banco foi migrado dinamicamente e os arquivos foram pushados para a branch main.
+[MESSAGES / HANDOVER]: Resolvido o erro 500 no login em produção no Coolify. O banco de dados estava falhando devido a variáveis de ambiente ausentes (DATABASE_URL e JWT_SECRET) na VPS. Ambas foram configuradas com sucesso via API do Coolify e o deploy foi reexecutado. O login administrativo com jonas@gmail.com / jonas260778 agora está 100% funcional no ar em ondas.stackfab.com.br.
+
