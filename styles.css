@@ -29,25 +29,25 @@
   --c-brown-500: #6D4C41;
   --c-brown-100: #D7CCC8;
 
-  --c-blue-900: #0A2E6E;
-  --c-blue-800: #0D47A1;
-  --c-blue-700: #1565C0;
-  --c-blue-500: #2196F3;
-  --c-blue-100: #BBDEFB;
+  --c-blue-900: #3D2C1E; /* Marrom terroso profundo */
+  --c-blue-800: #4D3A2B; /* Marrom terroso quente */
+  --c-blue-700: #664E3B; /* Bronze terroso */
+  --c-blue-500: #8C6F56; /* Bronze terroso claro / areia escura */
+  --c-blue-100: #E6DBCE; /* Areia/Bege linho suave */
 
-  --c-dark-900: #0A1A0C;
-  --c-dark-800: #0F2412;
-  --c-dark-700: #152E18;
+  --c-dark-900: #1C120C; /* Marrom escuro quase preto */
+  --c-dark-800: #251B12; /* Argila/Terra escura */
+  --c-dark-700: #33251B; /* Terra escura média */
 
   --c-white: #FFFFFF;
-  --c-text:  #2C2C2C;
-  --c-text-muted: #5A6B5C;
-  --c-text-light: rgba(255,255,255,0.85);
+  --c-text:  #2E2720; /* Marrom escuro legível em vez de cinza puro */
+  --c-text-muted: #7D7060; /* Bege terroso fosco */
+  --c-text-light: rgba(255,255,255,0.9);
 
   /* ── Gradients ── */
   --grad-hero: linear-gradient(160deg, var(--c-green-900) 0%, var(--c-dark-900) 50%, var(--c-blue-900) 100%);
   --grad-card: linear-gradient(145deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 100%);
-  --grad-text: linear-gradient(135deg, var(--c-green-500) 0%, var(--c-blue-500) 100%);
+  --grad-text: linear-gradient(135deg, var(--c-green-600) 0%, var(--c-blue-700) 100%);
   --grad-btn:  linear-gradient(135deg, var(--c-green-600) 0%, var(--c-green-800) 100%);
 
   /* ── Typography ── */
@@ -84,11 +84,11 @@
   --radius-full: 999px;
 
   /* ── Shadows ── */
-  --shadow-sm:  0 2px 8px rgba(0,0,0,0.08);
-  --shadow-md:  0 4px 20px rgba(0,0,0,0.12);
-  --shadow-lg:  0 8px 40px rgba(0,0,0,0.16);
-  --shadow-glow-green: 0 0 30px rgba(67,160,71,0.3);
-  --shadow-glow-blue:  0 0 30px rgba(33,150,243,0.3);
+  --shadow-sm:  0 2px 8px rgba(46,39,32,0.08);
+  --shadow-md:  0 4px 20px rgba(46,39,32,0.12);
+  --shadow-lg:  0 8px 40px rgba(46,39,32,0.16);
+  --shadow-glow-green: 0 0 30px rgba(46,125,50,0.3);
+  --shadow-glow-blue:  0 0 30px rgba(140,111,86,0.3);
 
   /* ── Transitions ── */
   --tr-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
@@ -714,7 +714,7 @@ button {
 
 .bento-card--featured {
   grid-column: 1 / -1;
-  background: linear-gradient(145deg, rgba(27,94,32,0.2) 0%, rgba(13,71,161,0.15) 100%);
+  background: linear-gradient(145deg, rgba(27,94,32,0.2) 0%, rgba(102, 78, 59, 0.15) 100%);
   border-color: rgba(67,160,71,0.2);
 }
 

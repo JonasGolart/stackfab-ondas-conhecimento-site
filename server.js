@@ -3,6 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const fs = require('fs');
+const multer = require('multer');
 const apiRoutes = require('./src/routes/api');
 const pool = require('./src/config/db');
 
@@ -90,6 +91,15 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Routes
 app.use('/api', apiRoutes);
+
+// Global Error Handler for Multer & generic exceptions
+app.use((err, req, res, next) => {
+  console.error('❌ Global error handler caught:', err);
+  if (err instanceof multer.MulterError) {
+    return res.status(400).json({ error: `Erro no upload do arquivo: ${err.message}` });
+  }
+  res.status(500).json({ error: err.message || 'Erro interno do servidor' });
+});
 
 // Serve frontend
 app.get('*', (req, res) => {

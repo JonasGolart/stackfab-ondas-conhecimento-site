@@ -8,6 +8,9 @@ RUN npm install --production
 
 COPY . .
 
+# Garantir a criação da pasta de uploads e permissões totais para o Multer
+RUN mkdir -p uploads && chmod 777 uploads
+
 EXPOSE 3000
 
 CMD ["node", "server.js"]
