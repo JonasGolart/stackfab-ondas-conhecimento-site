@@ -23,5 +23,5 @@
 *Última atualização: 2026-05-15 por Antigravity AI.*
 
 [CURRENT_LOCKS]: NONE
-[MESSAGES / HANDOVER]: Resolvido o erro 500 no login em produção no Coolify. O banco de dados estava falhando devido a variáveis de ambiente ausentes (DATABASE_URL e JWT_SECRET) na VPS. Ambas foram configuradas com sucesso via API do Coolify e o deploy foi reexecutado. O login administrativo com jonas@gmail.com / jonas260778 agora está 100% funcional no ar em ondas.stackfab.com.br.
+[MESSAGES / HANDOVER]: Implementado o gerenciamento dinâmico de categorias e refinamento no upload de materiais de estudo. O banco de dados agora possui a tabela "categories" que é populada automaticamente com itens padrão ("Apostila", "Legislação", "Técnica") em server.js. O painel administrativo (dashboard.html) conta com Bento Grid, suporte completo a CRUD de categorias inline e botões de salvar material com animações de carregamento (spinner/loader) e desativação temporária de envio. Foram adicionados Toasts e Modais de Confirmação customizados de altíssima qualidade visual (Glassmorphism e HSL) para substituir caixas de diálogo nativas. No portal (portal.html), as pílulas de filtros de categoria funcionam de forma interativa e com animações stagger. Tudo testado e pronto para deploy!
 

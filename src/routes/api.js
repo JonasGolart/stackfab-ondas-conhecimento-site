@@ -5,6 +5,7 @@ const path = require('path');
 const inscriptionController = require('../controllers/inscriptionController');
 const authController = require('../controllers/authController');
 const materialController = require('../controllers/materialController');
+const categoryController = require('../controllers/categoryController');
 const authMiddleware = require('../middlewares/authMiddleware');
 
 // Configuração do Multer para Uploads
@@ -27,10 +28,13 @@ router.post('/auth/register', authController.register);
 router.post('/auth/forgot-password', authController.forgotPassword);
 router.post('/auth/reset-password', authController.resetPassword);
 router.get('/materials', materialController.getAllMaterials); // Público para participantes
+router.get('/categories', categoryController.getAllCategories); // Público para participantes/filtros
 
 // Protected routes (Admin only)
 router.get('/admin/inscriptions', authMiddleware, inscriptionController.getAllInscriptions);
 router.post('/admin/materials', authMiddleware, upload.single('file'), materialController.createMaterial);
 router.delete('/admin/materials/:id', authMiddleware, materialController.deleteMaterial);
+router.post('/admin/categories', authMiddleware, categoryController.createCategory);
+router.delete('/admin/categories/:id', authMiddleware, categoryController.deleteCategory);
 
 module.exports = router;

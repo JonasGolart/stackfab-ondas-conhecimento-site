@@ -84,6 +84,298 @@
     .btn-export:active {
       transform: translateY(0);
     }
+
+    /* Materials Bento Grid Layout */
+    .materials-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    @media (max-width: 1024px) {
+      .materials-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Category Manager List */
+    .category-manager-container {
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      max-height: 230px;
+      overflow-y: auto;
+      flex: 1;
+    }
+    .category-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border);
+      padding: 0.6rem 0.875rem;
+      border-radius: 12px;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .category-item:hover {
+      background: rgba(76, 175, 80, 0.05);
+      border-color: rgba(76, 175, 80, 0.25);
+      transform: translateX(4px);
+    }
+    .category-name {
+      font-weight: 500;
+      font-size: 0.875rem;
+      color: var(--text);
+    }
+    .category-action {
+      background: none;
+      border: none;
+      color: #ef4444;
+      cursor: pointer;
+      opacity: 0.6;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.25rem;
+      border-radius: 6px;
+    }
+    .category-action:hover {
+      opacity: 1;
+      background: rgba(239, 68, 68, 0.1);
+      transform: scale(1.1);
+    }
+    .category-add-form {
+      display: flex;
+      gap: 0.5rem;
+      padding: 1.25rem 1.5rem;
+      border-top: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.01);
+    }
+    .category-add-input {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border);
+      padding: 0.6rem 0.875rem;
+      border-radius: 10px;
+      color: white;
+      font-size: 0.85rem;
+      transition: border-color 0.2s;
+    }
+    .category-add-input:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+    .category-add-btn {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 0.6rem 1.25rem;
+      border-radius: 10px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 0.85rem;
+      transition: all 0.2s ease;
+    }
+    .category-add-btn:hover {
+      background: var(--primary-dark);
+      transform: translateY(-1px);
+    }
+
+    /* Loader Spin Animation */
+    .btn-submit {
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .btn-submit:disabled {
+      background: rgba(76, 175, 80, 0.35);
+      cursor: not-allowed;
+    }
+    .spinner {
+      width: 18px;
+      height: 18px;
+      border: 2.5px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      border-top-color: white;
+      animation: spin 0.8s linear infinite;
+      display: none;
+    }
+    .btn-submit.loading .spinner {
+      display: block;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Elegant Toast System */
+    #toast-container {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      z-index: 9999;
+    }
+    .toast {
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border);
+      padding: 1rem 1.25rem;
+      border-radius: 16px;
+      color: white;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.875rem;
+      box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.6);
+      transform: translateX(120%);
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      min-width: 320px;
+      max-width: 400px;
+      position: relative;
+      overflow: hidden;
+    }
+    .toast.show {
+      transform: translateX(0);
+    }
+    .toast-success {
+      border-left: 4px solid var(--primary);
+    }
+    .toast-error {
+      border-left: 4px solid #ef4444;
+    }
+    .toast-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      margin-top: 0.1rem;
+      flex-shrink: 0;
+    }
+    .toast-success .toast-icon {
+      background: rgba(76, 175, 80, 0.15);
+      color: var(--primary);
+    }
+    .toast-error .toast-icon {
+      background: rgba(239, 68, 68, 0.15);
+      color: #ef4444;
+    }
+    .toast-content {
+      flex: 1;
+    }
+    .toast-title {
+      font-weight: 700;
+      font-size: 0.9rem;
+      margin-bottom: 0.2rem;
+      color: #f8fafc;
+    }
+    .toast-message {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+    .toast-progress {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 3px;
+      background: var(--primary);
+      width: 100%;
+    }
+    .toast-error .toast-progress {
+      background: #ef4444;
+    }
+
+    /* Custom Confirm Modal System */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9998;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .modal-card {
+      background: var(--sidebar);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 2rem;
+      width: 90%;
+      max-width: 440px;
+      box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.7);
+      transform: scale(0.9);
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+    .modal-overlay.active .modal-card {
+      transform: scale(1);
+    }
+    .modal-title {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: #f1f5f9;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .modal-desc {
+      font-size: 0.925rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+    .modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.75rem;
+      margin-top: 0.5rem;
+    }
+    .modal-btn {
+      padding: 0.65rem 1.25rem;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 0.875rem;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s ease;
+    }
+    .modal-btn-cancel {
+      background: rgba(255, 255, 255, 0.05);
+      color: #f1f5f9;
+      border: 1px solid var(--border);
+    }
+    .modal-btn-cancel:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+    .modal-btn-confirm {
+      background: #ef4444;
+      color: white;
+    }
+    .modal-btn-confirm:hover {
+      background: #dc2626;
+      transform: translateY(-1px);
+    }
   </style>
 </head>
 <body>
@@ -139,20 +431,38 @@
           <div class="user-pill" id="user-info-2">Admin</div>
         </header>
         
-        <div class="card-box">
-          <div class="card-header"><h3>Adicionar Novo PDF</h3></div>
-          <form id="material-form" class="form-grid">
-            <div class="input-group"><label>Título</label><input type="text" name="title" required></div>
-            <div class="input-group"><label>Categoria</label><select name="category"><option value="apostila">Apostila</option><option value="legislacao">Legislação</option><option value="tecnica">Técnica</option></select></div>
-            <div class="input-group" style="grid-column: span 2;"><label>Descrição</label><textarea name="description" rows="2"></textarea></div>
-            <div class="input-group" style="grid-column: span 2;"><label>Arquivo PDF</label><input type="file" name="file" accept=".pdf" required></div>
-            <button type="submit" class="btn-submit" style="grid-column: span 2;">Salvar Material</button>
-          </form>
+        <div class="materials-grid">
+          <!-- Card de Adicionar PDF -->
+          <div class="card-box" style="margin-bottom: 0;">
+            <div class="card-header"><h3>Adicionar Novo PDF</h3></div>
+            <form id="material-form" class="form-grid">
+              <div class="input-group"><label>Título</label><input type="text" name="title" required placeholder="Ex: Manual de Radiotransmissão"></div>
+              <div class="input-group"><label>Categoria</label><select name="category" id="material-category-select" required><option value="" disabled selected>Carregando categorias...</option></select></div>
+              <div class="input-group" style="grid-column: span 2;"><label>Descrição</label><textarea name="description" rows="2" placeholder="Digite uma breve descrição deste conteúdo de estudo..."></textarea></div>
+              <div class="input-group" style="grid-column: span 2;"><label>Arquivo PDF</label><input type="file" name="file" accept=".pdf" required></div>
+              <button type="submit" id="material-submit-btn" class="btn-submit" style="grid-column: span 2;">
+                <div class="spinner"></div>
+                <span>Salvar Material</span>
+              </button>
+            </form>
+          </div>
+
+          <!-- Card de Gerenciar Categorias -->
+          <div class="card-box" style="margin-bottom: 0; display: flex; flex-direction: column;">
+            <div class="card-header"><h3>Categorias Disponíveis</h3></div>
+            <div class="category-manager-container" id="category-manager-list">
+              <!-- Inserido dinamicamente via JS -->
+            </div>
+            <form id="category-add-form" class="category-add-form">
+              <input type="text" id="category-add-input" class="category-add-input" required placeholder="Nova categoria (ex: Simulados)...">
+              <button type="submit" class="category-add-btn">Adicionar</button>
+            </form>
+          </div>
         </div>
 
         <div class="card-box">
           <div class="card-header"><h3>Materiais Publicados</h3></div>
-          <table>
+          <table style="min-width: 100%;">
             <thead><tr><th>Título</th><th>Categoria</th><th>Data</th><th>Ações</th></tr></thead>
             <tbody id="materials-list"></tbody>
           </table>
@@ -167,8 +477,69 @@
 
     if (!token || (user.role !== 'admin' && user.role !== 'developer')) window.location.href = 'login.html';
 
-    document.getElementById('user-info-1').innerText = user.name;
-    document.getElementById('user-info-2').innerText = user.name;
+    document.getElementById('user-info-1').innerText = user.name || 'Admin';
+    document.getElementById('user-info-2').innerText = user.name || 'Admin';
+
+    // Toast Notification helper
+    function showToast(title, message, type = 'success') {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      toast.className = `toast toast-${type}`;
+      
+      const iconSvg = type === 'success' 
+        ? `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>`
+        : `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>`;
+
+      toast.innerHTML = `
+        <div class="toast-icon">${iconSvg}</div>
+        <div class="toast-content">
+          <div class="toast-title">${title}</div>
+          <div class="toast-message">${message}</div>
+        </div>
+        <div class="toast-progress"></div>
+      `;
+      
+      container.appendChild(toast);
+      
+      // Trigger reflow/animation
+      setTimeout(() => toast.classList.add('show'), 10);
+      
+      // Progress bar animation
+      const progressBar = toast.querySelector('.toast-progress');
+      progressBar.style.transition = 'width 4000ms linear';
+      setTimeout(() => progressBar.style.width = '0%', 20);
+
+      setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 400);
+      }, 4000);
+    }
+
+    // Custom Confirm Modal Helper
+    let confirmResolve = null;
+    function showConfirm(title, desc) {
+      document.getElementById('confirm-modal-title').innerHTML = `
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+        ${title}
+      `;
+      document.getElementById('confirm-modal-desc').innerText = desc;
+      const modal = document.getElementById('confirm-modal');
+      modal.classList.add('active');
+      
+      return new Promise((resolve) => {
+        confirmResolve = resolve;
+      });
+    }
+    
+    document.getElementById('confirm-modal-cancel').onclick = () => {
+      document.getElementById('confirm-modal').classList.remove('active');
+      if (confirmResolve) confirmResolve(false);
+    };
+    
+    document.getElementById('confirm-modal-confirm').onclick = () => {
+      document.getElementById('confirm-modal').classList.remove('active');
+      if (confirmResolve) confirmResolve(true);
+    };
 
     function showSection(id) {
       document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
@@ -176,29 +547,38 @@
       document.getElementById(`section-${id}`).classList.add('active');
       event.currentTarget.classList.add('active');
       if(id === 'inscriptions') loadInscriptions();
-      if(id === 'materials') loadMaterials();
+      if(id === 'materials') {
+        loadMaterials();
+        loadCategories();
+      }
     }
 
     let inscriptionsData = [];
 
     async function loadInscriptions() {
-      const res = await fetch('/api/admin/inscriptions', { headers: { 'Authorization': `Bearer ${token}` } });
-      const data = await res.json();
-      inscriptionsData = data;
-      const list = document.getElementById('inscriptions-list');
-      list.innerHTML = '';
-      let parts = 0;
-      data.forEach(ins => {
-        parts += parseInt(ins.participants_count || 0);
-        list.innerHTML += `<tr><td>${ins.group_name}</td><td>${ins.responsible_name}</td><td>${ins.email}</td><td>${ins.participants_count}</td><td>${new Date(ins.created_at).toLocaleDateString()}</td></tr>`;
-      });
-      document.getElementById('total-count').innerText = data.length;
-      document.getElementById('total-participants').innerText = parts;
+      try {
+        const res = await fetch('/api/admin/inscriptions', { headers: { 'Authorization': `Bearer ${token}` } });
+        if (!res.ok) throw new Error('Não autorizado');
+        const data = await res.json();
+        inscriptionsData = data;
+        const list = document.getElementById('inscriptions-list');
+        list.innerHTML = '';
+        let parts = 0;
+        data.forEach(ins => {
+          parts += parseInt(ins.participants_count || 0);
+          list.innerHTML += `<tr><td>${ins.group_name}</td><td>${ins.responsible_name}</td><td>${ins.email}</td><td>${ins.participants_count}</td><td>${new Date(ins.created_at).toLocaleDateString('pt-BR')}</td></tr>`;
+        });
+        document.getElementById('total-count').innerText = data.length;
+        document.getElementById('total-participants').innerText = parts;
+      } catch (err) {
+        console.error(err);
+        showToast('Erro', 'Não foi possível carregar a lista de inscrições.', 'error');
+      }
     }
 
     function exportToCSV() {
       if (!inscriptionsData || inscriptionsData.length === 0) {
-        alert('Nenhuma inscrição para exportar!');
+        showToast('Erro', 'Nenhuma inscrição para exportar!', 'error');
         return;
       }
 
@@ -244,39 +624,200 @@
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
+      showToast('Exportação concluída', 'O arquivo CSV foi gerado com sucesso.', 'success');
     }
 
     async function loadMaterials() {
-      const res = await fetch('/api/materials');
-      const data = await res.json();
-      const list = document.getElementById('materials-list');
-      list.innerHTML = '';
-      data.forEach(m => {
-        list.innerHTML += `<tr><td>${m.title}</td><td>${m.category}</td><td>${new Date(m.created_at).toLocaleDateString()}</td><td><button class="delete-btn" onclick="deleteMaterial(${m.id})">Remover</button></td></tr>`;
-      });
+      try {
+        const res = await fetch('/api/materials');
+        const data = await res.json();
+        const list = document.getElementById('materials-list');
+        list.innerHTML = '';
+        
+        if (data.length === 0) {
+          list.innerHTML = '<tr><td colspan="4" style="text-align: center; color: var(--text-muted); padding: 1.5rem 0;">Nenhum material publicado.</td></tr>';
+          return;
+        }
+
+        data.forEach(m => {
+          list.innerHTML += `<tr><td>${m.title}</td><td><span class="user-pill" style="font-size: 0.75rem; background: rgba(76, 175, 80, 0.15); color: var(--primary); padding: 0.25rem 0.5rem; border-radius: 8px;">${m.category}</span></td><td>${new Date(m.created_at).toLocaleDateString('pt-BR')}</td><td><button class="delete-btn" onclick="deleteMaterial(${m.id})">Remover</button></td></tr>`;
+        });
+      } catch (err) {
+        console.error(err);
+        showToast('Erro', 'Não foi possível carregar os materiais.', 'error');
+      }
+    }
+
+    async function loadCategories() {
+      try {
+        const res = await fetch('/api/categories');
+        const categories = await res.json();
+        
+        // Populate Form Select dropdown
+        const select = document.getElementById('material-category-select');
+        select.innerHTML = '<option value="" disabled selected>Selecione uma categoria...</option>';
+        categories.forEach(cat => {
+          select.innerHTML += `<option value="${cat.name}">${cat.name}</option>`;
+        });
+        
+        // Populate Category Manager List
+        const listContainer = document.getElementById('category-manager-list');
+        listContainer.innerHTML = '';
+        
+        if (categories.length === 0) {
+          listContainer.innerHTML = '<div style="color: var(--text-muted); font-size: 0.85rem; text-align: center; padding: 1.5rem 0;">Nenhuma categoria disponível.</div>';
+          return;
+        }
+        
+        categories.forEach(cat => {
+          listContainer.innerHTML += `
+            <div class="category-item">
+              <span class="category-name">${cat.name}</span>
+              <button class="category-action" onclick="deleteCategory(${cat.id}, '${cat.name}')">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+              </button>
+            </div>
+          `;
+        });
+      } catch (err) {
+        console.error('Erro ao carregar categorias:', err);
+        showToast('Erro', 'Não foi possível carregar as categorias.', 'error');
+      }
+    }
+
+    // Inline category creation
+    document.getElementById('category-add-form').onsubmit = async (e) => {
+      e.preventDefault();
+      const input = document.getElementById('category-add-input');
+      const name = input.value;
+      
+      try {
+        const res = await fetch('/api/admin/categories', {
+          method: 'POST',
+          headers: { 
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}` 
+          },
+          body: JSON.stringify({ name })
+        });
+        
+        if (res.ok) {
+          showToast('Categoria Criada', `Categoria "${name}" criada com sucesso!`, 'success');
+          input.value = '';
+          await loadCategories();
+        } else {
+          const data = await res.json();
+          showToast('Erro ao Criar', data.error || 'Erro desconhecido', 'error');
+        }
+      } catch (err) {
+        console.error(err);
+        showToast('Erro', 'Erro de conexão com o servidor', 'error');
+      }
+    };
+
+    async function deleteCategory(id, name) {
+      const confirmed = await showConfirm('Remover Categoria', `Deseja realmente remover a categoria "${name}"? Os materiais sob ela não serão removidos.`);
+      if (!confirmed) return;
+      
+      try {
+        const res = await fetch(`/api/admin/categories/${id}`, {
+          method: 'DELETE',
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        
+        if (res.ok) {
+          showToast('Categoria Removida', 'Categoria excluída com sucesso!', 'success');
+          await loadCategories();
+        } else {
+          showToast('Erro', 'Não foi possível remover a categoria', 'error');
+        }
+      } catch (err) {
+        console.error(err);
+        showToast('Erro', 'Erro de conexão com o servidor', 'error');
+      }
     }
 
     document.getElementById('material-form').onsubmit = async (e) => {
       e.preventDefault();
+      
+      const btn = document.getElementById('material-submit-btn');
+      btn.classList.add('loading');
+      btn.disabled = true;
+      
       const formData = new FormData(e.target);
-      const res = await fetch('/api/admin/materials', {
-        method: 'POST',
-        headers: { 'Authorization': `Bearer ${token}` },
-        body: formData
-      });
-      if(res.ok) { alert('Sucesso!'); e.target.reset(); loadMaterials(); }
+      
+      try {
+        const res = await fetch('/api/admin/materials', {
+          method: 'POST',
+          headers: { 'Authorization': `Bearer ${token}` },
+          body: formData
+        });
+        
+        if (res.ok) {
+          showToast('Material Salvo', 'O arquivo PDF foi publicado com sucesso!', 'success');
+          e.target.reset();
+          // Reset dropdown
+          document.getElementById('material-category-select').selectedIndex = 0;
+          await loadMaterials();
+        } else {
+          const data = await res.json();
+          showToast('Falha no Upload', data.error || 'Não foi possível salvar o material.', 'error');
+        }
+      } catch (err) {
+        console.error(err);
+        showToast('Erro', 'Ocorreu um erro de rede durante o envio.', 'error');
+      } finally {
+        btn.classList.remove('loading');
+        btn.disabled = false;
+      }
     };
 
     async function deleteMaterial(id) {
-      if(confirm('Deseja remover este material?')) {
-        await fetch(`/api/admin/materials/${id}`, { method: 'DELETE', headers: { 'Authorization': `Bearer ${token}` } });
-        loadMaterials();
+      const confirmed = await showConfirm('Excluir Material', 'Deseja realmente remover este material? Esta ação não pode ser desfeita.');
+      if (!confirmed) return;
+      
+      try {
+        const res = await fetch(`/api/admin/materials/${id}`, { 
+          method: 'DELETE', 
+          headers: { 'Authorization': `Bearer ${token}` } 
+        });
+        
+        if (res.ok) {
+          showToast('Material Excluído', 'O material foi removido com sucesso!', 'success');
+          await loadMaterials();
+        } else {
+          showToast('Erro', 'Não foi possível excluir o material.', 'error');
+        }
+      } catch (err) {
+        console.error(err);
+        showToast('Erro', 'Erro de conexão com o servidor', 'error');
       }
     }
 
-    function logout() { localStorage.removeItem('token'); window.location.href = 'login.html'; }
+    function logout() { 
+      localStorage.removeItem('token'); 
+      localStorage.removeItem('user');
+      window.location.href = 'login.html'; 
+    }
 
     loadInscriptions();
   </script>
+
+  <!-- Toast Container -->
+  <div id="toast-container"></div>
+
+  <!-- Custom Confirm Modal -->
+  <div id="confirm-modal" class="modal-overlay">
+    <div class="modal-card">
+      <h3 class="modal-title" id="confirm-modal-title">
+        <!-- SVG dynamic -->
+      </h3>
+      <p class="modal-desc" id="confirm-modal-desc"></p>
+      <div class="modal-actions">
+        <button class="modal-btn modal-btn-cancel" id="confirm-modal-cancel">Cancelar</button>
+        <button class="modal-btn modal-btn-confirm" id="confirm-modal-confirm">Confirmar</button>
+      </div>
+    </div>
+  </div>
 </body>
 </html>

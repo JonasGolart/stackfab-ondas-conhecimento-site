@@ -19,16 +19,17 @@
 - [x] Implementar sistema completo de recuperação de senha por e-mail integrado ao Resend (com fallback local seguro)
 - [x] Configuração de variáveis de ambiente de produção (DATABASE_URL, JWT_SECRET) na VPS do Coolify
 - [x] Resolução do bug de conexão com o banco de dados (erro 500 no login de produção)
+- [x] Habilitar salvamento de materiais (PDFs) no Dashboard com loader e bloqueio de submissão duplicada
+- [x] Sistema de Toast Notifications nativo e Modais de Confirmação estilizados no Dashboard
+- [x] Sistema de Categorias Dinâmicas (Tabela no DB, API routes, Controllers e Gestão CRUD no Dashboard)
+- [x] Filtros interativos de categorias com efeitos de transição fluida no Portal do Participante
 
 ### 🚧 Em Andamento
 - [x] Sincronização com repositório GitHub oficial e Git push automatizado
-- [x] Deploy disparado via API do Coolify (Deployment UUID: `e14fx5tmxzisikvnn3vso971`)
-- [x] Atualização do servidor local para Node.js (Porta 3000)
-
 
 ### 📋 Próximos Passos
-1. Realizar deploy no Coolify.
-2. Configurar logs de monitoramento via GlitchTip (se necessário).
+1. Validar deploy contínuo em produção no Coolify.
+2. Monitoramento de novos materiais e logs de upload.
 
 ---
 *Log gerado automaticamente conforme padrões StackFAB.*

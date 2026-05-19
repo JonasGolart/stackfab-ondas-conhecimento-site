@@ -37,6 +37,12 @@ const initDb = async () => {
       ALTER TABLE users ADD COLUMN IF NOT EXISTS reset_token TEXT;
       ALTER TABLE users ADD COLUMN IF NOT EXISTS reset_token_expires TIMESTAMP;
 
+      CREATE TABLE IF NOT EXISTS categories (
+        id SERIAL PRIMARY KEY,
+        name TEXT UNIQUE NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      );
+
       CREATE TABLE IF NOT EXISTS materials (
         id SERIAL PRIMARY KEY,
         title TEXT NOT NULL,
@@ -46,6 +52,19 @@ const initDb = async () => {
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       );
     `);
+    
+    // Seed default categories if table is empty
+    const categoriesCheck = await pool.query('SELECT COUNT(*) FROM categories');
+    if (parseInt(categoriesCheck.rows[0].count) === 0) {
+      await pool.query(`
+        INSERT INTO categories (name) VALUES 
+        ('Apostila'), 
+        ('Legislação'), 
+        ('Técnica')
+      `);
+      console.log('Default categories seeded');
+    }
+
     console.log('Database tables initialized');
   } catch (err) {
     console.error('Error initializing database:', err);

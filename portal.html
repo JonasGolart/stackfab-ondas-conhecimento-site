@@ -125,6 +125,41 @@
     .module-info span { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; }
 
     .badge-locked { background: rgba(255, 255, 255, 0.1); color: var(--text-muted); font-size: 0.75rem; padding: 0.25rem 0.5rem; border-radius: 4px; }
+
+    /* Filter Bar and Category Pills */
+    .filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 2rem;
+      padding: 0.25rem 0;
+    }
+    .filter-pill {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 0.5rem 1.25rem;
+      border-radius: 99px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .filter-pill:hover {
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--text);
+      transform: translateY(-1px);
+    }
+    .filter-pill.active {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: white;
+      box-shadow: 0 4px 15px rgba(76, 175, 80, 0.35);
+    }
+    
+    .module-item {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
   </style>
 </head>
 <body>
@@ -174,7 +209,14 @@
     </div>
 
     <section class="modules-list" id="modulos">
-      <h3>Conteúdos Liberados</h3>
+      <h3 style="margin-bottom: 0.5rem;">Conteúdos Liberados</h3>
+      <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">Filtre os materiais por categoria para focar nos seus estudos:</p>
+      
+      <!-- Filtro de Categorias -->
+      <div id="category-filters-container" class="filter-bar">
+        <!-- Inserido via JS -->
+      </div>
+
       <div id="materials-container">
         <!-- Inserido via JS -->
       </div>
@@ -192,33 +234,90 @@
     document.getElementById('user-name').innerText = user.name || 'Participante';
     document.getElementById('welcome-name').innerText = (user.name || 'Participante').split(' ')[0];
 
+    let allMaterialsData = [];
+    let currentCategoryFilter = 'all';
+
+    async function loadCategories() {
+      try {
+        const response = await fetch('/api/categories');
+        const categories = await response.json();
+        const container = document.getElementById('category-filters-container');
+        container.innerHTML = '';
+
+        // Add "All" pill
+        const allPill = document.createElement('button');
+        allPill.className = 'filter-pill active';
+        allPill.innerText = 'Todos os Conteúdos';
+        allPill.onclick = () => selectCategoryFilter('all', allPill);
+        container.appendChild(allPill);
+
+        categories.forEach(cat => {
+          const pill = document.createElement('button');
+          pill.className = 'filter-pill';
+          pill.innerText = cat.name;
+          pill.onclick = () => selectCategoryFilter(cat.name, pill);
+          container.appendChild(pill);
+        });
+      } catch (err) {
+        console.error('Erro ao carregar categorias:', err);
+      }
+    }
+
+    function selectCategoryFilter(category, pillElement) {
+      currentCategoryFilter = category;
+      
+      // Update active class
+      document.querySelectorAll('.filter-pill').forEach(btn => btn.classList.remove('active'));
+      pillElement.classList.add('active');
+
+      renderMaterials();
+    }
+
+    function renderMaterials() {
+      const container = document.getElementById('materials-container');
+      container.innerHTML = '';
+
+      const filtered = currentCategoryFilter === 'all'
+        ? allMaterialsData
+        : allMaterialsData.filter(m => String(m.category).toLowerCase() === String(currentCategoryFilter).toLowerCase());
+
+      if (filtered.length === 0) {
+        container.innerHTML = '<p style="color: var(--text-muted); text-align: center; padding: 2.5rem 0; font-size: 0.95rem;">Nenhum material disponível para esta categoria no momento.</p>';
+        return;
+      }
+
+      filtered.forEach((m, index) => {
+        const div = document.createElement('div');
+        div.className = 'module-item';
+        div.style.opacity = '0';
+        div.style.transform = 'translateY(12px)';
+        div.innerHTML = `
+          <div class="module-info">
+            <span style="font-size: 0.72rem; color: var(--primary); font-weight: 700; background: rgba(76, 175, 80, 0.12); padding: 0.25rem 0.5rem; border-radius: 6px; margin-bottom: 0.5rem; display: inline-block;">${m.category}</span>
+            <h4>${m.title}</h4>
+            <p style="font-size: 0.85rem; color: var(--text-muted);">${m.description || ''}</p>
+          </div>
+          <a href="${m.file_path}" target="_blank" class="btn" style="background: rgba(255,255,255,0.05); color: white;">Ver PDF</a>
+        `;
+        container.appendChild(div);
+        
+        // Staggered fade in animation
+        setTimeout(() => {
+          div.style.opacity = '1';
+          div.style.transform = 'translateY(0)';
+        }, 50 * index);
+      });
+    }
+
     async function loadMaterials() {
       try {
         const response = await fetch('/api/materials');
-        const materials = await response.json();
-        const container = document.getElementById('materials-container');
-        container.innerHTML = '';
-
-        if (materials.length === 0) {
-          container.innerHTML = '<p style="color: var(--text-muted);">Nenhum material disponível no momento.</p>';
-          return;
-        }
-
-        materials.forEach(m => {
-          const div = document.createElement('div');
-          div.className = 'module-item';
-          div.innerHTML = `
-            <div class="module-info">
-              <span>${m.category}</span>
-              <h4>${m.title}</h4>
-              <p style="font-size: 0.85rem; color: var(--text-muted);">${m.description || ''}</p>
-            </div>
-            <a href="${m.file_path}" target="_blank" class="btn" style="background: rgba(255,255,255,0.05); color: white;">Ver PDF</a>
-          `;
-          container.appendChild(div);
-        });
+        allMaterialsData = await response.json();
+        renderMaterials();
       } catch (err) {
         console.error('Erro ao carregar materiais:', err);
+        const container = document.getElementById('materials-container');
+        container.innerHTML = '<p style="color: var(--text-muted);">Erro ao carregar os materiais do servidor.</p>';
       }
     }
 
@@ -228,7 +327,10 @@
       window.location.href = 'login.html';
     }
 
-    loadMaterials();
+    // Initialize
+    loadCategories().then(() => {
+      loadMaterials();
+    });
   </script>
 </body>
 </html>
