@@ -40,10 +40,28 @@ exports.getAllMaterials = async (req, res) => {
 exports.deleteMaterial = async (req, res) => {
   const { id } = req.params;
   try {
+    // 1. Busca o caminho do arquivo no banco para excluir fisicamente
+    const fileRes = await pool.query('SELECT file_path FROM materials WHERE id = $1', [id]);
+    
+    // 2. Apaga o registro do banco de dados
     await pool.query('DELETE FROM materials WHERE id = $1', [id]);
-    res.json({ message: 'Material removido com sucesso' });
+    
+    // 3. Tenta apagar o arquivo do sistema (sem travar se não encontrar)
+    if (fileRes.rows.length > 0 && fileRes.rows[0].file_path) {
+      const fs = require('fs');
+      const path = require('path');
+      const fullPath = path.join(__dirname, '../../', fileRes.rows[0].file_path);
+      if (fs.existsSync(fullPath)) {
+        fs.unlinkSync(fullPath);
+        console.log(`✅ [MaterialController] Arquivo físico removido: ${fullPath}`);
+      } else {
+        console.warn(`⚠️ [MaterialController] Arquivo não encontrado para remoção física: ${fullPath}`);
+      }
+    }
+
+    res.json({ message: 'Material e arquivo removidos com sucesso' });
   } catch (err) {
-    console.error(err);
+    console.error('❌ [MaterialController] Erro ao remover material:', err);
     res.status(500).json({ error: 'Erro ao remover material' });
   }
 };
