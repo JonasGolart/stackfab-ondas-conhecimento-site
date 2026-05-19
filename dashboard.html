@@ -473,6 +473,23 @@
     </main>
   </div>
 
+  <!-- Toast Container -->
+  <div id="toast-container"></div>
+
+  <!-- Custom Confirm Modal -->
+  <div id="confirm-modal" class="modal-overlay">
+    <div class="modal-card">
+      <h3 class="modal-title" id="confirm-modal-title">
+        <!-- SVG dynamic -->
+      </h3>
+      <p class="modal-desc" id="confirm-modal-desc"></p>
+      <div class="modal-actions">
+        <button class="modal-btn modal-btn-cancel" id="confirm-modal-cancel">Cancelar</button>
+        <button class="modal-btn modal-btn-confirm" id="confirm-modal-confirm">Confirmar</button>
+      </div>
+    </div>
+  </div>
+
   <script>
     const token = localStorage.getItem('token');
     const user = JSON.parse(localStorage.getItem('user') || '{}');
@@ -817,21 +834,5 @@
     loadInscriptions();
   </script>
 
-  <!-- Toast Container -->
-  <div id="toast-container"></div>
-
-  <!-- Custom Confirm Modal -->
-  <div id="confirm-modal" class="modal-overlay">
-    <div class="modal-card">
-      <h3 class="modal-title" id="confirm-modal-title">
-        <!-- SVG dynamic -->
-      </h3>
-      <p class="modal-desc" id="confirm-modal-desc"></p>
-      <div class="modal-actions">
-        <button class="modal-btn modal-btn-cancel" id="confirm-modal-cancel">Cancelar</button>
-        <button class="modal-btn modal-btn-confirm" id="confirm-modal-confirm">Confirmar</button>
-      </div>
-    </div>
-  </div>
 </body>
 </html>
