@@ -168,8 +168,13 @@
       </div>
 
       <div class="nav-btns">
-        <button class="btn btn--outline" id="prev-btn" style="visibility: hidden;">Anterior</button>
-        <button class="btn btn--primary" id="next-btn">Próxima</button>
+        <div>
+          <a href="portal.html" class="btn btn--outline" style="text-decoration: none;">Desistir / Voltar</a>
+        </div>
+        <div style="display: flex; gap: 1rem;">
+          <button class="btn btn--outline" id="prev-btn" style="visibility: hidden;">Anterior</button>
+          <button class="btn btn--primary" id="next-btn">Próxima</button>
+        </div>
       </div>
     </div>
 
@@ -181,7 +186,10 @@
           <span>Acertos</span>
         </div>
         <p id="feedback">Bom trabalho! Continue estudando para garantir sua licença.</p>
-        <button onclick="location.reload()" class="btn btn--primary" style="margin-top: 2rem;">Tentar Novamente</button>
+        <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 2rem;">
+          <a href="portal.html" class="btn btn--outline" style="text-decoration: none;">Voltar ao Portal</a>
+          <button onclick="location.reload()" class="btn btn--primary">Tentar Novamente</button>
+        </div>
       </div>
     </div>
   </div>
