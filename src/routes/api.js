@@ -24,6 +24,8 @@ const upload = multer({ storage: storage });
 router.post('/inscriptions', inscriptionController.createInscription);
 router.post('/auth/login', authController.login);
 router.post('/auth/register', authController.register);
+router.post('/auth/forgot-password', authController.forgotPassword);
+router.post('/auth/reset-password', authController.resetPassword);
 router.get('/materials', materialController.getAllMaterials); // Público para participantes
 
 // Protected routes (Admin only)

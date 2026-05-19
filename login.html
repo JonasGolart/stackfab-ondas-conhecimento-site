@@ -21,12 +21,13 @@
     .login-container {
       width: 100%;
       max-width: 400px;
-      padding: 2rem;
+      padding: 2.5rem 2rem;
       background: rgba(255, 255, 255, 0.05);
       backdrop-filter: blur(10px);
       border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 24px;
       box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      transition: all 0.3s ease;
     }
 
     .login-header {
@@ -72,6 +73,7 @@
       color: white;
       font-size: 1rem;
       transition: all 0.2s;
+      box-sizing: border-box;
     }
 
     .form-input:focus {
@@ -109,12 +111,29 @@
       text-align: center;
       margin-top: 1rem;
       display: none;
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid rgba(239, 68, 68, 0.2);
+      padding: 0.75rem;
+      border-radius: 12px;
+    }
+
+    .success-msg {
+      color: #4caf50;
+      font-size: 0.875rem;
+      text-align: center;
+      margin-top: 1rem;
+      display: none;
+      background: rgba(76, 175, 80, 0.1);
+      border: 1px solid rgba(76, 175, 80, 0.2);
+      padding: 0.75rem;
+      border-radius: 12px;
+      line-height: 1.4;
     }
 
     .back-to-site {
       display: block;
       text-align: center;
-      margin-top: 2rem;
+      margin-top: 1.5rem;
       color: rgba(255, 255, 255, 0.4);
       text-decoration: none;
       font-size: 0.875rem;
@@ -128,28 +147,58 @@
 </head>
 <body>
   <div class="login-container">
-    <div class="login-header">
-      <img src="assets/img/logo-projeto.png" alt="Ondas do Conhecimento">
-      <h1>Área de Membros</h1>
-      <p>Acesso restrito para administradores</p>
+    
+    <!-- TELA DE LOGIN PADRÃO -->
+    <div id="login-view">
+      <div class="login-header">
+        <img src="assets/img/logo-projeto.png" alt="Ondas do Conhecimento">
+        <h1>Área de Membros</h1>
+        <p>Acesso restrito para administradores</p>
+      </div>
+
+      <form id="login-form">
+        <div class="form-group">
+          <label for="email" class="form-label">E-mail</label>
+          <input type="email" id="email" name="email" class="form-input" placeholder="admin@exemplo.com" required>
+        </div>
+
+        <div class="form-group">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+            <label for="password" class="form-label" style="margin-bottom: 0;">Senha</label>
+            <a href="#" onclick="toggleView(true)" style="color: #4CAF50; text-decoration: none; font-size: 0.8rem; font-weight: 500; transition: color 0.2s;">Esqueceu sua senha?</a>
+          </div>
+          <input type="password" id="password" name="password" class="form-input" placeholder="••••••••" required>
+        </div>
+
+        <button type="submit" class="btn-login" id="btn-entrar">Entrar no Painel</button>
+        <div id="error-msg" class="error-msg">Usuário ou senha inválidos.</div>
+      </form>
+
+      <a href="/" class="back-to-site">← Voltar para o site</a>
     </div>
 
-    <form id="login-form">
-      <div class="form-group">
-        <label for="email" class="form-label">E-mail</label>
-        <input type="email" id="email" name="email" class="form-input" placeholder="admin@exemplo.com" required>
+    <!-- TELA DE RECUPERAÇÃO DE SENHA -->
+    <div id="recovery-view" style="display: none; opacity: 0;">
+      <div class="login-header">
+        <img src="assets/img/logo-projeto.png" alt="Ondas do Conhecimento">
+        <h1>Recuperar Senha</h1>
+        <p>Insira seu e-mail para receber um link de redefinição de senha</p>
       </div>
 
-      <div class="form-group">
-        <label for="password" class="form-label">Senha</label>
-        <input type="password" id="password" name="password" class="form-input" placeholder="••••••••" required>
-      </div>
+      <form id="recovery-form">
+        <div class="form-group">
+          <label for="recovery-email" class="form-label">E-mail Cadastrado</label>
+          <input type="email" id="recovery-email" name="email" class="form-input" placeholder="seu-email@exemplo.com" required>
+        </div>
 
-      <button type="submit" class="btn-login" id="btn-entrar">Entrar no Painel</button>
-      <div id="error-msg" class="error-msg">Usuário ou senha inválidos.</div>
-    </form>
+        <button type="submit" class="btn-login" id="btn-recuperar">Enviar Link de Recuperação</button>
+        <div id="recovery-success-msg" class="success-msg">Link de redefinição de senha enviado com sucesso! Verifique sua caixa de entrada.</div>
+        <div id="recovery-error-msg" class="error-msg">Erro ao solicitar recuperação. Tente novamente.</div>
+      </form>
 
-    <a href="/" class="back-to-site">← Voltar para o site</a>
+      <a href="#" onclick="toggleView(false)" class="back-to-site">← Voltar para o login</a>
+    </div>
+
   </div>
 
   <script>
@@ -157,6 +206,46 @@
     const errorMsg = document.getElementById('error-msg');
     const btnEntrar = document.getElementById('btn-entrar');
 
+    const recoveryForm = document.getElementById('recovery-form');
+    const recoverySuccessMsg = document.getElementById('recovery-success-msg');
+    const recoveryErrorMsg = document.getElementById('recovery-error-msg');
+    const btnRecuperar = document.getElementById('btn-recuperar');
+
+    // Transição suave entre Login e Recuperação
+    function toggleView(showRecovery) {
+      const loginView = document.getElementById('login-view');
+      const recoveryView = document.getElementById('recovery-view');
+      
+      errorMsg.style.display = 'none';
+      recoverySuccessMsg.style.display = 'none';
+      recoveryErrorMsg.style.display = 'none';
+
+      if (showRecovery) {
+        loginView.style.opacity = '0';
+        loginView.style.transition = 'opacity 0.2s ease';
+        setTimeout(() => {
+          loginView.style.display = 'none';
+          recoveryView.style.display = 'block';
+          setTimeout(() => {
+            recoveryView.style.opacity = '1';
+            recoveryView.style.transition = 'opacity 0.2s ease';
+          }, 20);
+        }, 200);
+      } else {
+        recoveryView.style.opacity = '0';
+        recoveryView.style.transition = 'opacity 0.2s ease';
+        setTimeout(() => {
+          recoveryView.style.display = 'none';
+          loginView.style.display = 'block';
+          setTimeout(() => {
+            loginView.style.opacity = '1';
+            loginView.style.transition = 'opacity 0.2s ease';
+          }, 20);
+        }, 200);
+      }
+    }
+
+    // Fluxo de Login
     loginForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       errorMsg.style.display = 'none';
@@ -179,7 +268,6 @@
           localStorage.setItem('token', data.token);
           localStorage.setItem('user', JSON.stringify(data.user));
           
-          // Redirecionamento baseado no papel (role)
           const userRole = String(data.user.role).toLowerCase();
           if (userRole === 'admin' || userRole === 'developer') {
             window.location.href = 'dashboard.html';
@@ -187,6 +275,7 @@
             window.location.href = 'portal.html';
           }
         } else {
+          errorMsg.innerText = data.error || 'Usuário ou senha inválidos.';
           errorMsg.style.display = 'block';
           btnEntrar.innerText = 'Entrar no Painel';
           btnEntrar.disabled = false;
@@ -197,6 +286,43 @@
         errorMsg.style.display = 'block';
         btnEntrar.innerText = 'Entrar no Painel';
         btnEntrar.disabled = false;
+      }
+    });
+
+    // Fluxo de Recuperação
+    recoveryForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      recoverySuccessMsg.style.display = 'none';
+      recoveryErrorMsg.style.display = 'none';
+      btnRecuperar.innerText = 'Enviando...';
+      btnRecuperar.disabled = true;
+
+      const email = document.getElementById('recovery-email').value;
+
+      try {
+        const response = await fetch('/api/auth/forgot-password', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email })
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          recoverySuccessMsg.innerText = data.message || 'Se o e-mail estiver cadastrado, um link de recuperação será enviado.';
+          recoverySuccessMsg.style.display = 'block';
+          recoveryForm.reset();
+        } else {
+          recoveryErrorMsg.innerText = data.error || 'Erro ao processar recuperação.';
+          recoveryErrorMsg.style.display = 'block';
+        }
+      } catch (err) {
+        console.error('Erro na recuperação:', err);
+        recoveryErrorMsg.innerText = 'Erro de conexão com o servidor.';
+        recoveryErrorMsg.style.display = 'block';
+      } finally {
+        btnRecuperar.innerText = 'Enviar Link de Recuperação';
+        btnRecuperar.disabled = false;
       }
     });
   </script>

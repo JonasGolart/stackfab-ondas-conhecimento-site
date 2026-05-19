@@ -34,6 +34,9 @@ const initDb = async () => {
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       );
 
+      ALTER TABLE users ADD COLUMN IF NOT EXISTS reset_token TEXT;
+      ALTER TABLE users ADD COLUMN IF NOT EXISTS reset_token_expires TIMESTAMP;
+
       CREATE TABLE IF NOT EXISTS materials (
         id SERIAL PRIMARY KEY,
         title TEXT NOT NULL,

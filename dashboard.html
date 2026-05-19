@@ -61,6 +61,29 @@
     .btn-submit { background: var(--primary); color: white; border: none; padding: 0.75rem; border-radius: 8px; font-weight: 700; cursor: pointer; }
 
     .delete-btn { color: #f87171; cursor: pointer; background: none; border: none; font-weight: 600; }
+
+    .btn-export {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: white;
+      border: none;
+      padding: 0.5rem 1.25rem;
+      border-radius: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 0.85rem;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      box-shadow: 0 4px 12px rgba(76, 175, 80, 0.2);
+    }
+    .btn-export:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(76, 175, 80, 0.4);
+    }
+    .btn-export:active {
+      transform: translateY(0);
+    }
   </style>
 </head>
 <body>
@@ -95,7 +118,13 @@
           <div class="stat-card"><span>Participantes Totais</span><h2 id="total-participants">0</h2></div>
         </div>
         <div class="card-box">
-          <div class="card-header"><h3>Lista de Candidatos</h3></div>
+          <div class="card-header">
+            <h3>Lista de Candidatos</h3>
+            <button onclick="exportToCSV()" class="btn-export">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+              Exportar CSV
+            </button>
+          </div>
           <table>
             <thead><tr><th>Grupo</th><th>Responsável</th><th>E-mail</th><th>Participantes</th><th>Data</th></tr></thead>
             <tbody id="inscriptions-list"></tbody>
@@ -150,9 +179,12 @@
       if(id === 'materials') loadMaterials();
     }
 
+    let inscriptionsData = [];
+
     async function loadInscriptions() {
       const res = await fetch('/api/admin/inscriptions', { headers: { 'Authorization': `Bearer ${token}` } });
       const data = await res.json();
+      inscriptionsData = data;
       const list = document.getElementById('inscriptions-list');
       list.innerHTML = '';
       let parts = 0;
@@ -162,6 +194,56 @@
       });
       document.getElementById('total-count').innerText = data.length;
       document.getElementById('total-participants').innerText = parts;
+    }
+
+    function exportToCSV() {
+      if (!inscriptionsData || inscriptionsData.length === 0) {
+        alert('Nenhuma inscrição para exportar!');
+        return;
+      }
+
+      // Definir as colunas em português
+      const headers = ['Grupo', 'Cidade', 'Participantes', 'Responsável', 'E-mail', 'Telefone', 'Observações', 'Data de Inscrição'];
+      
+      const csvRows = [];
+      // Adicionar o cabeçalho
+      csvRows.push(headers.join(';'));
+
+      // Adicionar as linhas de dados
+      inscriptionsData.forEach(ins => {
+        const values = [
+          ins.group_name || '',
+          ins.city || '',
+          ins.participants_count || '0',
+          ins.responsible_name || '',
+          ins.email || '',
+          ins.phone || '',
+          (ins.observations || '').replace(/[\r\n]+/g, ' '),
+          new Date(ins.created_at).toLocaleDateString('pt-BR')
+        ];
+        
+        const escapedValues = values.map(val => {
+          const formatted = String(val).replace(/"/g, '""');
+          return `"${formatted}"`;
+        });
+        
+        csvRows.push(escapedValues.join(';'));
+      });
+
+      // Gerar o arquivo CSV com o BOM de UTF-8 (essencial para acentuação correta no Excel em português)
+      const csvContent = '\uFEFF' + csvRows.join('\n');
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      
+      const link = document.createElement('a');
+      const url = URL.createObjectURL(blob);
+      link.setAttribute('href', url);
+      
+      const dateStr = new Date().toISOString().slice(0, 10);
+      link.setAttribute('download', `inscricoes_ondas_conhecimento_${dateStr}.csv`);
+      link.style.visibility = 'hidden';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
     }
 
     async function loadMaterials() {
