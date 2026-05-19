@@ -383,12 +383,48 @@
     <div class="container">
       <div class="section-header section-header--light" data-animate="fade-up">
         <span class="section-header__tag">Participe</span>
-        <h2 class="section-header__title">Inscreva seu Grupo</h2>
-        <p class="section-header__desc">Preencha o formulário abaixo e leve a experiência das Ondas do Conhecimento para
-          o seu grupo escoteiro</p>
+        <h2 class="section-header__title">Faça sua Inscrição</h2>
+        <p class="section-header__desc">Escolha sua modalidade abaixo e junte-se ao Ondas do Conhecimento</p>
       </div>
 
-      <form class="form" id="form-inscricao" novalidate data-animate="fade-up" data-delay="200">
+      <div class="tabs-container" data-animate="fade-up" style="display: flex; justify-content: center; gap: 1rem; margin-bottom: 2rem;">
+        <button class="btn btn--primary" id="tab-individual" onclick="showTab('individual')" style="flex: 1; max-width: 250px;">Inscrição Individual</button>
+        <button class="btn btn--outline" id="tab-grupo" onclick="showTab('grupo')" style="flex: 1; max-width: 250px; background: white;">Inscrever Grupo</button>
+      </div>
+
+      <!-- FORMULÁRIO INDIVIDUAL -->
+      <form class="form" id="form-inscricao-individual" novalidate data-delay="200">
+        <div class="form__grid">
+          <div class="form__group form__group--full">
+            <label for="ind-nome" class="form__label">Nome Completo <span class="form__required">*</span></label>
+            <input type="text" id="ind-nome" name="nome" class="form__input" placeholder="Seu nome completo" required>
+            <span class="form__error" id="ind-nome-error"></span>
+          </div>
+
+          <div class="form__group">
+            <label for="ind-email" class="form__label">E-mail <span class="form__required">*</span></label>
+            <input type="email" id="ind-email" name="email" class="form__input" placeholder="email@exemplo.com" required>
+            <span class="form__error" id="ind-email-error"></span>
+          </div>
+
+          <div class="form__group">
+            <label for="ind-telefone" class="form__label">WhatsApp <span class="form__required">*</span></label>
+            <input type="tel" id="ind-telefone" name="telefone" class="form__input" placeholder="(41) 99999-9999" required>
+            <span class="form__error" id="ind-telefone-error"></span>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn--primary btn--lg form__submit" id="btn-enviar-individual">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <line x1="22" y1="2" x2="11" y2="13" />
+            <polygon points="22 2 15 22 11 13 2 9 22 2" />
+          </svg>
+          Garantir Acesso Imediato
+        </button>
+      </form>
+
+      <!-- FORMULÁRIO DE GRUPO (Oculto por Padrão) -->
+      <form class="form" id="form-inscricao-grupo" novalidate data-delay="200" style="display: none;">
         <div class="form__grid">
           <!-- Nome do Grupo -->
           <div class="form__group form__group--full">
@@ -619,6 +655,29 @@
     </div>
   </div>
 
+  <script>
+    function showTab(tabName) {
+      const formInd = document.getElementById('form-inscricao-individual');
+      const formGrp = document.getElementById('form-inscricao-grupo');
+      const btnInd = document.getElementById('tab-individual');
+      const btnGrp = document.getElementById('tab-grupo');
+
+      if (tabName === 'individual') {
+        formInd.style.display = 'block';
+        formGrp.style.display = 'none';
+        btnInd.className = 'btn btn--primary';
+        btnGrp.className = 'btn btn--outline';
+        btnGrp.style.background = 'white';
+      } else {
+        formInd.style.display = 'none';
+        formGrp.style.display = 'block';
+        btnGrp.className = 'btn btn--primary';
+        btnGrp.style.background = '';
+        btnInd.className = 'btn btn--outline';
+        btnInd.style.background = 'white';
+      }
+    }
+  </script>
   <script src="script.js"></script>
 </body>
 

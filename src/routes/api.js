@@ -24,6 +24,7 @@ const upload = multer({ storage: storage });
 
 // Public routes
 router.post('/inscriptions', inscriptionController.createInscription);
+router.post('/inscriptions/individual', inscriptionController.createIndividualInscription);
 router.post('/auth/login', authController.login);
 router.post('/auth/register', authController.register);
 router.post('/auth/forgot-password', authController.forgotPassword);

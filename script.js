@@ -133,7 +133,12 @@ function animateCounter(el) {
    FORM VALIDATION
    ══════════════════════════════════════════════════ */
 function initForm() {
-  const form = document.getElementById('form-inscricao');
+  initGroupForm();
+  initIndividualForm();
+}
+
+function initGroupForm() {
+  const form = document.getElementById('form-inscricao-grupo');
   if (!form) return;
 
   const fields = {
@@ -271,6 +276,85 @@ function initForm() {
           <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
         </svg>
         Enviar Inscrição
+      `;
+    });
+  });
+}
+
+function initIndividualForm() {
+  const form = document.getElementById('form-inscricao-individual');
+  if (!form) return;
+
+  const fields = {
+    'ind-nome': { required: true, minLength: 3, errorMsg: 'Nome é obrigatório.' },
+    'ind-email': { required: true, pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, errorMsg: 'E-mail inválido.' },
+    'ind-telefone': { required: true, pattern: /^\(?\d{2}\)?\s?\d{4,5}-?\d{4}$/, errorMsg: 'Telefone inválido.' }
+  };
+
+  Object.keys(fields).forEach(name => {
+    const input = document.getElementById(name);
+    if (!input) return;
+
+    input.addEventListener('blur', () => validateField(name, input, fields[name]));
+    input.addEventListener('input', () => {
+      if (input.classList.contains('error')) validateField(name, input, fields[name]);
+    });
+  });
+
+  const phoneInput = document.getElementById('ind-telefone');
+  if (phoneInput) {
+    phoneInput.addEventListener('input', (e) => {
+      let v = e.target.value.replace(/\D/g, '');
+      if (v.length > 11) v = v.slice(0, 11);
+      if (v.length > 6) v = `(${v.slice(0,2)}) ${v.slice(2,7)}-${v.slice(7)}`;
+      else if (v.length > 2) v = `(${v.slice(0,2)}) ${v.slice(2)}`;
+      else if (v.length > 0) v = `(${v}`;
+      e.target.value = v;
+    });
+  }
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    let isValid = true;
+    Object.keys(fields).forEach(name => {
+      const input = document.getElementById(name);
+      if (!validateField(name, input, fields[name])) isValid = false;
+    });
+
+    if (!isValid) return;
+
+    const btn = document.getElementById('btn-enviar-individual');
+    btn.disabled = true;
+    btn.innerHTML = `Enviando...`;
+
+    const data = {
+      nome: document.getElementById('ind-nome').value,
+      email: document.getElementById('ind-email').value,
+      telefone: document.getElementById('ind-telefone').value
+    };
+
+    fetch('/api/inscriptions/individual', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    })
+    .then(async response => {
+      const resData = await response.json();
+      if (!response.ok) throw new Error(resData.error || 'Erro ao enviar');
+      
+      form.reset();
+      form.querySelectorAll('.form__input').forEach(i => i.classList.remove('success', 'error'));
+      
+      alert(resData.message);
+    })
+    .catch(error => alert(error.message))
+    .finally(() => {
+      btn.disabled = false;
+      btn.innerHTML = `
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
+        </svg>
+        Garantir Acesso Imediato
       `;
     });
   });
