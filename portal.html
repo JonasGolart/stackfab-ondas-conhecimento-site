@@ -7,13 +7,13 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary: #4CAF50;
-      --secondary: #1B5E20;
-      --bg: #0f172a;
-      --card: rgba(30, 41, 59, 0.7);
-      --text: #f1f5f9;
-      --text-muted: #94a3b8;
-      --border: rgba(255, 255, 255, 0.1);
+      --primary: #2e7d32;
+      --secondary: #1b5e20;
+      --bg: #faf6ee; /* Areia bem claro e acolhedor */
+      --card: rgba(255, 255, 255, 0.85); /* Vidro claro translúcido */
+      --text: #2e2720; /* Marrom terroso bem escuro e legível */
+      --text-muted: #7d7060; /* Bege terroso fosco */
+      --border: rgba(46, 39, 32, 0.08); /* Borda terrosa sutil */
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -28,7 +28,7 @@
     }
 
     .navbar {
-      background: rgba(15, 23, 42, 0.8);
+      background: rgba(240, 230, 210, 0.8);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
       padding: 1rem 2rem;
@@ -44,22 +44,23 @@
     .logo img { width: 32px; }
 
     .user-profile { display: flex; align-items: center; gap: 1rem; }
-    .logout-link { color: #f87171; text-decoration: none; font-size: 0.875rem; font-weight: 600; }
+    .logout-link { color: #dc2626; text-decoration: none; font-size: 0.875rem; font-weight: 600; }
 
     .container { max-width: 1200px; margin: 0 auto; padding: 2rem; width: 100%; }
 
     .welcome-banner {
-      background: linear-gradient(135deg, var(--secondary) 0%, #121212 100%);
+      background: linear-gradient(135deg, var(--secondary) 0%, #3e3327 100%);
       padding: 3rem;
       border-radius: 32px;
       margin-bottom: 3rem;
       border: 1px solid var(--border);
       position: relative;
       overflow: hidden;
+      color: white;
     }
 
     .welcome-banner h1 { font-size: 2.5rem; font-weight: 800; margin-bottom: 1rem; }
-    .welcome-banner p { color: rgba(255, 255, 255, 0.7); font-size: 1.1rem; max-width: 600px; }
+    .welcome-banner p { color: rgba(255, 255, 255, 0.8); font-size: 1.1rem; max-width: 600px; }
 
     .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem; }
 
@@ -74,14 +75,15 @@
       display: flex;
       flex-direction: column;
       gap: 1.5rem;
+      box-shadow: 0 8px 30px rgba(46, 39, 32, 0.03);
     }
 
-    .section-card:hover { transform: translateY(-8px); border-color: var(--primary); }
+    .section-card:hover { transform: translateY(-8px); border-color: var(--primary); box-shadow: 0 12px 40px rgba(46, 39, 32, 0.06); }
 
     .icon-box {
       width: 56px;
       height: 56px;
-      background: rgba(76, 175, 80, 0.1);
+      background: rgba(46, 125, 50, 0.08);
       border-radius: 16px;
       display: flex;
       align-items: center;
@@ -102,29 +104,34 @@
     }
 
     .btn--primary { background: var(--primary); color: white; }
-    .btn--primary:hover { background: #45a049; }
+    .btn--primary:hover { background: var(--primary-dark); }
 
     /* Modules List */
     .modules-list { margin-top: 4rem; }
     .modules-list h3 { margin-bottom: 1.5rem; font-size: 1.25rem; color: var(--text-muted); }
 
     .module-item {
-      background: rgba(255, 255, 255, 0.03);
+      background: var(--card);
       padding: 1.25rem;
       border-radius: 16px;
       margin-bottom: 1rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border: 1px solid transparent;
+      border: 1px solid var(--border);
+      box-shadow: 0 4px 20px rgba(46, 39, 32, 0.03);
     }
 
-    .module-item:hover { border-color: rgba(255, 255, 255, 0.05); background: rgba(255, 255, 255, 0.05); }
+    .module-item:hover {
+      border-color: rgba(46, 125, 50, 0.2);
+      background: rgba(255, 255, 255, 0.95);
+      box-shadow: 0 8px 30px rgba(46, 39, 32, 0.06);
+    }
     
     .module-info h4 { font-weight: 600; margin-bottom: 0.25rem; }
     .module-info span { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; }
 
-    .badge-locked { background: rgba(255, 255, 255, 0.1); color: var(--text-muted); font-size: 0.75rem; padding: 0.25rem 0.5rem; border-radius: 4px; }
+    .badge-locked { background: rgba(46, 39, 32, 0.08); color: var(--text-muted); font-size: 0.75rem; padding: 0.25rem 0.5rem; border-radius: 4px; }
 
     /* Filter Bar and Category Pills */
     .filter-bar {
@@ -135,7 +142,7 @@
       padding: 0.25rem 0;
     }
     .filter-pill {
-      background: rgba(255, 255, 255, 0.03);
+      background: rgba(46, 39, 32, 0.04);
       border: 1px solid var(--border);
       color: var(--text-muted);
       padding: 0.5rem 1.25rem;
@@ -146,7 +153,7 @@
       transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .filter-pill:hover {
-      background: rgba(255, 255, 255, 0.06);
+      background: rgba(46, 39, 32, 0.08);
       color: var(--text);
       transform: translateY(-1px);
     }
@@ -154,7 +161,7 @@
       background: var(--primary);
       border-color: var(--primary);
       color: white;
-      box-shadow: 0 4px 15px rgba(76, 175, 80, 0.35);
+      box-shadow: 0 4px 15px rgba(46, 125, 50, 0.25);
     }
     
     .module-item {
@@ -297,7 +304,7 @@
             <h4>${m.title}</h4>
             <p style="font-size: 0.85rem; color: var(--text-muted);">${m.description || ''}</p>
           </div>
-          <a href="${m.file_path}" target="_blank" class="btn" style="background: rgba(255,255,255,0.05); color: white;">Ver PDF</a>
+          <a href="${m.file_path}" target="_blank" class="btn btn--primary">Ver PDF</a>
         `;
         container.appendChild(div);
         

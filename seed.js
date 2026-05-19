@@ -7,13 +7,14 @@ const seed = async () => {
   const name = 'Jonas';
   const email = 'jonas@gmail.com';
   const password = 'jonas260778';
+  const role = 'admin';
   const hashedPassword = await bcrypt.hash(password, 10);
 
   try {
-    // Inserir ou atualizar o usuário admin, incluindo o campo 'name' exigido pelo schema do banco compartilhado
+    // Inserir ou atualizar o usuário admin, incluindo o campo 'name' e definindo a role como 'admin'
     await pool.query(
-      'INSERT INTO users (name, email, password) VALUES ($1, $2, $3) ON CONFLICT (email) DO UPDATE SET name = $1, password = $3',
-      [name, email, hashedPassword]
+      'INSERT INTO users (name, email, password, role) VALUES ($1, $2, $3, $4) ON CONFLICT (email) DO UPDATE SET name = $1, password = $3, role = $4',
+      [name, email, hashedPassword, role]
     );
 
     console.log(`✅ Admin padrão criado/atualizado com sucesso: ${email}`);

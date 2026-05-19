@@ -2,8 +2,15 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
+const fs = require('fs');
 const apiRoutes = require('./src/routes/api');
 const pool = require('./src/config/db');
+
+// Ensure uploads directory exists for Multer
+const uploadsDir = path.join(__dirname, 'uploads');
+if (!fs.existsSync(uploadsDir)) {
+  fs.mkdirSync(uploadsDir, { recursive: true });
+}
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -51,6 +58,8 @@ const initDb = async () => {
         category TEXT,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       );
+
+      ALTER TABLE materials ADD COLUMN IF NOT EXISTS category TEXT;
     `);
     
     // Seed default categories if table is empty
