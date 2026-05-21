@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Módulos de Aula — Ondas do Conhecimento</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #2e7d32;
+      --secondary: #1b5e20;
+      --bg: #faf6ee;
+      --card: rgba(255,255,255,0.85);
+      --text: #2e2720;
+      --text-muted: #7d7060;
+      --border: rgba(46,39,32,0.08);
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-height:100vh;display:flex;flex-direction:column}
+    .navbar{background:rgba(240,230,210,0.8);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:1rem 2rem;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100}
+    .logo{display:flex;align-items:center;gap:0.75rem;font-weight:800;font-size:1.25rem}
+    .logo img{width:32px}
+    .user-profile{display:flex;align-items:center;gap:1rem}
+    .logout-link{color:#dc2626;text-decoration:none;font-size:0.875rem;font-weight:600}
+    .container{max-width:1200px;margin:0 auto;padding:2rem;width:100%}
+    .header{background:linear-gradient(135deg,var(--secondary)0%,#3e3327 100%);padding:3rem;border-radius:32px;margin-bottom:3rem;border:1px solid var(--border);color:white;position:relative;overflow:hidden}
+    .header h1{font-size:2.5rem;font-weight:800;margin-bottom:1rem}
+    .header p{color:rgba(255,255,255,0.8);font-size:1.1rem;max-width:600px}
+    .filter-bar{display:flex;flex-wrap:wrap;gap:0.75rem;margin-bottom:2rem;padding:0.25rem 0}
+    .filter-pill{background:rgba(46,39,32,0.04);border:1px solid var(--border);color:var(--text-muted);padding:0.5rem 1.25rem;border-radius:99px;font-size:0.85rem;font-weight:600;cursor:pointer;transition:all .3s cubic-bezier(.16,1,.3,1)}
+    .filter-pill:hover{background:rgba(46,39,32,0.08);color:var(--text);transform:translateY(-1px)}
+    .filter-pill.active{background:var(--primary);border-color:var(--primary);color:white;box-shadow:0 4px 15px rgba(46,125,50,.25)}
+    .module-item{background:var(--card);padding:1.25rem;border-radius:16px;margin-bottom:1rem;display:flex;justify-content:space-between;align-items:center;border:1px solid var(--border);box-shadow:0 4px 20px rgba(46,39,32,.03);transition:all .3s}
+    .module-item:hover{border-color:rgba(46,125,50,.2);background:rgba(255,255,255,.95);box-shadow:0 8px 30px rgba(46,39,32,.06)}
+    .module-info h4{font-weight:600;margin-bottom:.25rem}
+    .module-info span{font-size:.75rem;color:var(--text-muted);text-transform:uppercase}
+    .badge-locked{background:rgba(46,39,32,.08);color:var(--text-muted);font-size:.75rem;padding:.25rem .5rem;border-radius:4px}
+    .btn{padding:.75rem 1.5rem;border-radius:12px;font-weight:600;text-align:center;text-decoration:none;transition:all .2s}
+    .btn--primary{background:var(--primary);color:white}
+    .btn--primary:hover{background:#1b5e20}
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="logo">
+      <img src="assets/img/logo-projeto.png" alt="Logo">
+      <span>Ondas do Conhecimento</span>
+    </div>
+    <div class="user-profile">
+      <span id="user-name" style="font-weight:600;">Participante</span>
+      <a href="#" onclick="logout()" class="logout-link">Sair</a>
+    </div>
+  </nav>
+
+  <main class="container">
+    <div class="header">
+      <h1>Olá, <span id="welcome-name">Participante</span>! 🎧</h1>
+      <p>Aqui você encontra todos os módulos de aula disponíveis. Filtre por categoria para focar no que precisa estudar.</p>
+    </div>
+
+    <div class="filter-bar" id="category-filters-container">
+      <!-- filled by JS -->
+    </div>
+
+    <div id="modules-container">
+      <!-- Filled by JS -->
+    </div>
+  </main>
+
+  <script>
+    const token = localStorage.getItem('token');
+    const user = JSON.parse(localStorage.getItem('user')||'{}');
+    if(!token || String(user.role).toLowerCase()!=='participant'){
+      window.location.href='login.html';
+    }
+    document.getElementById('user-name').innerText=user.name||'Participante';
+    document.getElementById('welcome-name').innerText=(user.name||'Participante').split(' ')[0];
+
+    let allMaterials = [];
+    let currentFilter = 'all';
+
+    async function loadCategories(){
+      try{
+        const r = await fetch('/api/categories');
+        const cats = await r.json();
+        const cont = document.getElementById('category-filters-container');
+        cont.innerHTML='';
+        const allPill = document.createElement('button');
+        allPill.className='filter-pill active';
+        allPill.innerText='Todos';
+        allPill.onclick=()=>setFilter('all',allPill);
+        cont.appendChild(allPill);
+        cats.forEach(c=>{const p=document.createElement('button');p.className='filter-pill';p.innerText=c.name;p.onclick=()=>setFilter(c.name,p);cont.appendChild(p);});
+      }catch(e){console.error('Erro categorias',e);}
+    }
+
+    function setFilter(cat,elem){
+      currentFilter=cat;
+      document.querySelectorAll('.filter-pill').forEach(b=>b.classList.remove('active'));
+      elem.classList.add('active');
+      renderModules();
+    }
+
+    async function loadMaterials(){
+      try{
+        const r = await fetch('/api/materials');
+        allMaterials = await r.json();
+        renderModules();
+      }catch(e){
+        console.error('Erro materiais',e);
+        document.getElementById('modules-container').innerHTML='<p style="color:var(--text-muted);">Erro ao carregar materiais.</p>';
+      }
+    }
+
+    function renderModules(){
+      const cont=document.getElementById('modules-container');
+      cont.innerHTML='';
+      const filtered = currentFilter==='all'? allMaterials : allMaterials.filter(m=>String(m.category).toLowerCase()===String(currentFilter).toLowerCase());
+      if(filtered.length===0){cont.innerHTML='<p style="color:var(--text-muted);">Nenhum módulo encontrado.</p>';return;}
+      filtered.forEach((m,i)=>{
+        const div=document.createElement('div');
+        div.className='module-item';
+        div.style.opacity='0';
+        div.style.transform='translateY(12px)';
+        div.innerHTML=`
+          <div class="module-info">
+            <span style="font-size:0.72rem;color:var(--primary);font-weight:700;background:rgba(76,175,80,0.12);padding:0.25rem 0.5rem;border-radius:6px;margin-bottom:0.5rem;display:inline-block;">${m.category}</span>
+            <h4>${m.title}</h4>
+            <p style="font-size:0.85rem;color:var(--text-muted);">${m.description||''}</p>
+          </div>
+          <a href="${m.file_path}" target="_blank" class="btn btn--primary">Ver PDF</a>
+        `;
+        cont.appendChild(div);
+        setTimeout(()=>{div.style.opacity='1';div.style.transform='translateY(0)';},50*i);
+      });
+    }
+
+    function logout(){
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      window.location.href='login.html';
+    }
+
+    // Initialize
+    loadCategories().then(loadMaterials);
+  </script>
+</body>
+</html>
