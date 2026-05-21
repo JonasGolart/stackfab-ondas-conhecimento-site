@@ -4,15 +4,36 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Simulado de Radioamador — Ondas do Conhecimento</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <meta name="description" content="Prepare-se para o exame da ANATEL com simulados focados em Legislação, Técnica e Ética, e Eletrônica.">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
     :root {
       --primary: #2e7d32;
+      --primary-light: rgba(46, 125, 50, 0.12);
+      --primary-glow: rgba(46, 125, 50, 0.35);
       --bg: #faf6ee;
       --card: rgba(255, 255, 255, 0.85);
       --text: #2e2720;
       --text-muted: #7d7060;
-      --border: rgba(46, 39, 32, 0.15);
+      --border: rgba(46, 39, 32, 0.12);
+      --shadow: 0 8px 32px rgba(46, 39, 32, 0.08);
+      --radius-xl: 28px;
+      --radius-lg: 18px;
+      --radius-md: 12px;
+
+      /* Category colors */
+      --leg-color: #1565C0;
+      --leg-bg: rgba(21, 101, 192, 0.08);
+      --leg-border: rgba(21, 101, 192, 0.25);
+      --tec-color: #2e7d32;
+      --tec-bg: rgba(46, 125, 50, 0.08);
+      --tec-border: rgba(46, 125, 50, 0.25);
+      --elt-color: #E65100;
+      --elt-bg: rgba(230, 81, 0, 0.08);
+      --elt-border: rgba(230, 81, 0, 0.25);
+      --all-color: #6A1B9A;
+      --all-bg: rgba(106, 27, 154, 0.08);
+      --all-border: rgba(106, 27, 154, 0.25);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -22,16 +43,249 @@
       color: var(--text);
       font-family: 'Inter', sans-serif;
       min-height: 100vh;
-      padding: 2rem;
+      padding: 2rem 1rem;
     }
 
-    .container { max-width: 800px; margin: 0 auto; }
+    .container { max-width: 820px; margin: 0 auto; }
+
+    /* ======================================
+       TELA DE SELEÇÃO
+    ====================================== */
+    #selection-screen { animation: fadeUp 0.5s ease both; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .sel-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .sel-back {
+      color: var(--text-muted);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+    .sel-back:hover { color: var(--text); }
+
+    .sel-hero {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .sel-badge {
+      display: inline-block;
+      background: var(--primary-light);
+      color: var(--primary);
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 0.35rem 1rem;
+      border-radius: 99px;
+      margin-bottom: 1rem;
+    }
+
+    .sel-title {
+      font-size: clamp(1.8rem, 5vw, 2.5rem);
+      font-weight: 900;
+      line-height: 1.2;
+      margin-bottom: 0.75rem;
+    }
+
+    .sel-sub {
+      color: var(--text-muted);
+      font-size: 1rem;
+      max-width: 480px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    .modes-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.25rem;
+      margin-bottom: 2rem;
+    }
+
+    @media (max-width: 540px) {
+      .modes-grid { grid-template-columns: 1fr; }
+    }
+
+    .mode-card {
+      background: var(--card);
+      border: 2px solid var(--border);
+      border-radius: var(--radius-xl);
+      padding: 2rem 1.75rem;
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(.4,0,.2,1);
+      position: relative;
+      overflow: hidden;
+      text-align: left;
+    }
+
+    .mode-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 0.25s;
+    }
+
+    .mode-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.1);
+    }
+
+    .mode-card.mode--leg { --mc: var(--leg-color); --mc-bg: var(--leg-bg); --mc-border: var(--leg-border); }
+    .mode-card.mode--tec { --mc: var(--tec-color); --mc-bg: var(--tec-bg); --mc-border: var(--tec-border); }
+    .mode-card.mode--elt { --mc: var(--elt-color); --mc-bg: var(--elt-bg); --mc-border: var(--elt-border); }
+    .mode-card.mode--all { --mc: var(--all-color); --mc-bg: var(--all-bg); --mc-border: var(--all-border); }
+
+    .mode-card:hover { border-color: var(--mc-border); background: var(--mc-bg); }
+
+    .mode-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: var(--radius-md);
+      background: var(--mc-bg);
+      border: 1.5px solid var(--mc-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .mode-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--mc);
+      margin-bottom: 0.4rem;
+    }
+
+    .mode-title {
+      font-size: 1.2rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+    }
+
+    .mode-desc {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-bottom: 1.25rem;
+    }
+
+    .mode-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .mode-count {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--mc);
+      background: var(--mc-bg);
+      border: 1px solid var(--mc-border);
+      padding: 0.3rem 0.75rem;
+      border-radius: 99px;
+    }
+
+    .mode-arrow {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: var(--mc-bg);
+      border: 1.5px solid var(--mc-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--mc);
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .mode-card:hover .mode-arrow {
+      background: var(--mc);
+      color: white;
+      transform: translateX(3px);
+    }
+
+    /* NUM QUESTÕES custom */
+    .quantity-bar {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1.25rem 1.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .quantity-label {
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+
+    .quantity-label span {
+      display: block;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      font-weight: 500;
+      margin-top: 2px;
+    }
+
+    .quantity-options {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .qty-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: var(--radius-md);
+      border: 1.5px solid var(--border);
+      background: transparent;
+      font-weight: 700;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      color: var(--text);
+    }
+
+    .qty-btn:hover { border-color: var(--primary); color: var(--primary); }
+    .qty-btn.active {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: white;
+    }
+
+    /* ======================================
+       TELA DO QUIZ
+    ====================================== */
+    #quiz-screen { display: none; animation: fadeUp 0.4s ease both; }
 
     .quiz-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 2rem;
+      margin-bottom: 1.5rem;
     }
 
     .back-btn {
@@ -41,14 +295,35 @@
       align-items: center;
       gap: 0.5rem;
       font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      background: none;
+      border: none;
     }
+
+    .quiz-meta {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .mode-pill {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 0.3rem 0.8rem;
+      border-radius: 99px;
+    }
+
+    #quiz-counter { font-size: 0.9rem; font-weight: 700; color: var(--text-muted); }
 
     .progress-bar {
       width: 100%;
-      height: 8px;
+      height: 6px;
       background: var(--border);
-      border-radius: 4px;
-      margin-bottom: 3rem;
+      border-radius: 99px;
+      margin-bottom: 2rem;
       overflow: hidden;
     }
 
@@ -56,7 +331,7 @@
       height: 100%;
       background: var(--primary);
       width: 0%;
-      transition: width 0.3s ease;
+      transition: width 0.4s cubic-bezier(.4,0,.2,1);
     }
 
     .question-card {
@@ -64,12 +339,13 @@
       backdrop-filter: blur(10px);
       border: 1px solid var(--border);
       padding: 2.5rem;
-      border-radius: 32px;
-      margin-bottom: 2rem;
+      border-radius: var(--radius-xl);
+      margin-bottom: 1.5rem;
+      box-shadow: var(--shadow);
     }
 
     .question-category {
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       text-transform: uppercase;
       letter-spacing: 0.1em;
       color: var(--primary);
@@ -78,181 +354,411 @@
       display: block;
     }
 
-    .question-text { font-size: 1.5rem; font-weight: 700; line-height: 1.4; margin-bottom: 2rem; }
+    .question-text { font-size: 1.35rem; font-weight: 700; line-height: 1.5; margin-bottom: 2rem; }
 
-    .options { display: flex; flex-direction: column; gap: 1rem; }
+    .options { display: flex; flex-direction: column; gap: 0.85rem; }
 
     .option {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid var(--border);
-      padding: 1.25rem 1.5rem;
-      border-radius: 16px;
+      background: transparent;
+      border: 1.5px solid var(--border);
+      padding: 1.1rem 1.35rem;
+      border-radius: var(--radius-lg);
       cursor: pointer;
       transition: all 0.2s;
       display: flex;
       align-items: center;
       gap: 1rem;
       font-weight: 500;
+      font-size: 0.95rem;
     }
 
-    .option:hover { background: rgba(46, 39, 32, 0.04); border-color: rgba(46, 39, 32, 0.2); }
-    .option.selected { border-color: var(--primary); background: rgba(46, 125, 50, 0.1); color: var(--primary); }
+    .option:hover { background: rgba(46, 39, 32, 0.04); border-color: rgba(46, 39, 32, 0.22); }
+    .option.selected { border-color: var(--primary); background: var(--primary-light); color: var(--primary); }
+    .option.selected .option-letter { background: var(--primary); color: white; }
 
     .option-letter {
-      width: 32px;
+      min-width: 32px;
       height: 32px;
-      background: rgba(46, 39, 32, 0.05);
+      background: rgba(46, 39, 32, 0.06);
       border-radius: 8px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-weight: 700;
-      font-size: 0.875rem;
+      font-weight: 800;
+      font-size: 0.8rem;
+      transition: all 0.2s;
     }
 
-    .nav-btns { display: flex; justify-content: space-between; margin-top: 2rem; }
+    .nav-btns { display: flex; justify-content: space-between; }
 
     .btn {
-      padding: 1rem 2rem;
-      border-radius: 12px;
+      padding: 0.9rem 1.75rem;
+      border-radius: var(--radius-md);
       font-weight: 700;
       cursor: pointer;
       border: none;
       transition: all 0.2s;
+      font-size: 0.95rem;
     }
 
-    .btn--primary { background: var(--primary); color: white; }
-    .btn--outline { background: transparent; color: var(--text-muted); border: 1px solid var(--border); }
+    .btn--primary { background: var(--primary); color: white; box-shadow: 0 4px 16px var(--primary-glow); }
+    .btn--primary:hover { background: #1b5e20; transform: translateY(-1px); }
+    .btn--outline { background: transparent; color: var(--text-muted); border: 1.5px solid var(--border); }
+    .btn--outline:hover { border-color: rgba(46,39,32,0.3); color: var(--text); }
 
-    /* Results */
-    #results { text-align: center; display: none; }
-    .score-circle {
-      width: 150px;
-      height: 150px;
+    /* ======================================
+       TELA DE RESULTADOS
+    ====================================== */
+    #results-screen { display: none; animation: fadeUp 0.5s ease both; }
+
+    .results-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 3rem 2.5rem;
+      border-radius: var(--radius-xl);
+      text-align: center;
+      box-shadow: var(--shadow);
+    }
+
+    .score-ring {
+      width: 140px;
+      height: 140px;
       border-radius: 50%;
       border: 8px solid var(--primary);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      margin: 2rem auto;
+      margin: 1.5rem auto 2rem;
+      box-shadow: 0 0 0 8px var(--primary-light);
     }
-    .score-circle span:first-child { font-size: 3rem; font-weight: 800; }
+
+    .score-ring.score--fail { border-color: #e53935; box-shadow: 0 0 0 8px rgba(229,57,53,0.1); }
+
+    .score-num { font-size: 3rem; font-weight: 900; line-height: 1; }
+    .score-label { font-size: 0.75rem; font-weight: 700; color: var(--text-muted); }
+
+    .score-percent {
+      font-size: 2.5rem;
+      font-weight: 900;
+      margin-bottom: 0.25rem;
+    }
+
+    .score-percent.pass { color: var(--primary); }
+    .score-percent.fail { color: #e53935; }
+
+    .feedback-msg {
+      font-size: 1rem;
+      line-height: 1.6;
+      color: var(--text-muted);
+      max-width: 400px;
+      margin: 0 auto 2rem;
+    }
+
+    .results-stats {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      margin-bottom: 2.5rem;
+      flex-wrap: wrap;
+    }
+
+    .stat-chip {
+      background: rgba(46, 39, 32, 0.05);
+      border: 1px solid var(--border);
+      border-radius: 99px;
+      padding: 0.5rem 1.25rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    .results-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
   </style>
 </head>
 <body>
   <div class="container">
-    <div class="quiz-header">
-      <a href="portal.html" class="back-btn">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <line x1="19" y1="12" x2="5" y2="12"></line>
-          <polyline points="12 19 5 12 12 5"></polyline>
-        </svg>
-        Voltar à Área do Participante
-      </a>
-      <div id="counter">Questão 1 de 5</div>
-    </div>
 
-    <div class="progress-bar">
-      <div class="progress-fill" id="progress"></div>
-    </div>
+    <!-- ============================
+         TELA 1: SELEÇÃO DE MODO
+    ============================= -->
+    <div id="selection-screen">
+      <div class="sel-header">
+        <a href="portal.html" class="sel-back" id="sel-back-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+          Área do Participante
+        </a>
+      </div>
 
-    <div id="quiz-content">
-      <div class="question-card">
-        <span class="question-category" id="category">Legislação</span>
-        <h2 class="question-text" id="question">Qual é a sigla da agência reguladora que fiscaliza o radioamadorismo no Brasil?</h2>
-        
-        <div class="options" id="options">
-          <!-- Opções aqui -->
+      <div class="sel-hero">
+        <span class="sel-badge">📡 Simulado Oficial ANATEL</span>
+        <h1 class="sel-title">Escolha seu<br>modo de treino</h1>
+        <p class="sel-sub">Selecione o tema e o número de questões. Todas as perguntas são extraídas do banco oficial da ANATEL.</p>
+      </div>
+
+      <div class="quantity-bar">
+        <div class="quantity-label">
+          Número de questões
+          <span>Por simulado</span>
+        </div>
+        <div class="quantity-options">
+          <button class="qty-btn" data-qty="10" onclick="setQuantity(10)">10</button>
+          <button class="qty-btn active" data-qty="20" onclick="setQuantity(20)">20</button>
+          <button class="qty-btn" data-qty="30" onclick="setQuantity(30)">30</button>
+          <button class="qty-btn" data-qty="50" onclick="setQuantity(50)">50</button>
         </div>
       </div>
 
-      <div class="nav-btns">
-        <div>
-          <a href="portal.html" class="btn btn--outline" style="text-decoration: none;">Desistir / Voltar</a>
+      <div class="modes-grid">
+
+        <div class="mode-card mode--all" onclick="startQuiz('all')">
+          <div class="mode-icon">🎯</div>
+          <div class="mode-label">Simulado Completo</div>
+          <div class="mode-title">Todos os Temas</div>
+          <div class="mode-desc">Questões mistas de todas as disciplinas, como no exame real da ANATEL.</div>
+          <div class="mode-footer">
+            <span class="mode-count" id="count-all">624 questões</span>
+            <span class="mode-arrow">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </span>
+          </div>
         </div>
-        <div style="display: flex; gap: 1rem;">
-          <button class="btn btn--outline" id="prev-btn" style="visibility: hidden;">Anterior</button>
-          <button class="btn btn--primary" id="next-btn">Próxima</button>
+
+        <div class="mode-card mode--leg" onclick="startQuiz('Legislação')">
+          <div class="mode-icon">⚖️</div>
+          <div class="mode-label">Categoria</div>
+          <div class="mode-title">Legislação</div>
+          <div class="mode-desc">Leis, normas da ANATEL, classes de habilitação, código Q e prefixos.</div>
+          <div class="mode-footer">
+            <span class="mode-count" id="count-leg">173 questões</span>
+            <span class="mode-arrow">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </span>
+          </div>
+        </div>
+
+        <div class="mode-card mode--tec" onclick="startQuiz('Técnica e Ética')">
+          <div class="mode-icon">🎙️</div>
+          <div class="mode-label">Categoria</div>
+          <div class="mode-title">Técnica e Ética</div>
+          <div class="mode-desc">Procedimentos operacionais, ética no rádio, código fonético e boas práticas.</div>
+          <div class="mode-footer">
+            <span class="mode-count" id="count-tec">236 questões</span>
+            <span class="mode-arrow">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </span>
+          </div>
+        </div>
+
+        <div class="mode-card mode--elt" onclick="startQuiz('Eletrônica')">
+          <div class="mode-icon">⚡</div>
+          <div class="mode-label">Categoria</div>
+          <div class="mode-title">Eletrônica</div>
+          <div class="mode-desc">Circuitos, antenas, impedância, potência, componentes e propagação de RF.</div>
+          <div class="mode-footer">
+            <span class="mode-count" id="count-elt">215 questões</span>
+            <span class="mode-arrow">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ============================
+         TELA 2: QUIZ EM SI
+    ============================= -->
+    <div id="quiz-screen">
+      <div class="quiz-header">
+        <button class="back-btn" onclick="goToSelection()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+          Trocar modo
+        </button>
+        <div class="quiz-meta">
+          <span class="mode-pill" id="quiz-mode-pill"></span>
+          <span id="quiz-counter">Questão 1 de 20</span>
+        </div>
+      </div>
+
+      <div class="progress-bar">
+        <div class="progress-fill" id="progress"></div>
+      </div>
+
+      <div id="quiz-content">
+        <div class="question-card">
+          <span class="question-category" id="category"></span>
+          <h2 class="question-text" id="question"></h2>
+          <div class="options" id="options"></div>
+        </div>
+
+        <div class="nav-btns">
+          <div>
+            <button class="btn btn--outline" onclick="goToSelection()">Desistir</button>
+          </div>
+          <div style="display: flex; gap: 0.75rem;">
+            <button class="btn btn--outline" id="prev-btn" style="visibility: hidden;" onclick="prevQuestion()">← Anterior</button>
+            <button class="btn btn--primary" id="next-btn" onclick="nextQuestion()">Próxima →</button>
+          </div>
         </div>
       </div>
     </div>
 
-    <div id="results">
-      <div class="question-card">
-        <h2>Simulado Concluído!</h2>
-        <div class="score-circle">
-          <span id="score">0</span>
-          <span>Acertos</span>
+    <!-- ============================
+         TELA 3: RESULTADOS
+    ============================= -->
+    <div id="results-screen">
+      <div class="results-card">
+        <h2 style="font-size: 1.75rem; font-weight: 900;">Simulado Concluído!</h2>
+        <div class="score-ring" id="score-ring">
+          <span class="score-num" id="score-num">0</span>
+          <span class="score-label" id="score-label">acertos</span>
         </div>
-        <p id="feedback">Bom trabalho! Continue estudando para garantir sua licença.</p>
-        <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 2rem;">
-          <a href="portal.html" class="btn btn--outline" style="text-decoration: none;">Voltar ao Portal</a>
-          <button onclick="location.reload()" class="btn btn--primary">Tentar Novamente</button>
+        <div class="score-percent" id="score-percent"></div>
+        <p class="feedback-msg" id="feedback"></p>
+        <div class="results-stats">
+          <div class="stat-chip" id="stat-mode"></div>
+          <div class="stat-chip" id="stat-total"></div>
+          <div class="stat-chip" id="stat-erros"></div>
+        </div>
+        <div class="results-actions">
+          <button class="btn btn--outline" onclick="goToSelection()">← Escolher outro modo</button>
+          <button class="btn btn--primary" onclick="restartSameMode()">Tentar novamente</button>
         </div>
       </div>
     </div>
+
   </div>
 
   <script>
+    // ============================================================
+    // STATE
+    // ============================================================
+    let allQuestions = [];
     let questions = [];
     let currentIdx = 0;
     let userAnswers = [];
+    let selectedQty = 20;
+    let selectedMode = 'all';
 
-    // Carregar o banco de dados dinamicamente
-    async function initQuiz() {
+    // Category pill styles
+    const modeMeta = {
+      'all':            { label: '🎯 Completo',     color: '#6A1B9A', bg: 'rgba(106,27,154,0.12)' },
+      'Legislação':     { label: '⚖️ Legislação',   color: '#1565C0', bg: 'rgba(21,101,192,0.12)' },
+      'Técnica e Ética':{ label: '🎙️ Técnica/Ética',color: '#2e7d32', bg: 'rgba(46,125,50,0.12)'  },
+      'Eletrônica':     { label: '⚡ Eletrônica',   color: '#E65100', bg: 'rgba(230,81,0,0.12)'   },
+    };
+
+    // ============================================================
+    // BOOTSTRAP: Load JSON and update counters
+    // ============================================================
+    async function bootstrap() {
       try {
-        const response = await fetch('assets/banco_questoes.json');
-        if (!response.ok) throw new Error('Falha ao carregar banco de dados');
-        const data = await response.json();
-        
-        // Selecionar 20 questões aleatórias do banco total (295 questões)
-        questions = data.questions
-          .sort(() => Math.random() - 0.5)
-          .slice(0, 20)
-          .map(q => {
-            // Mapear alternativas do formato objeto {a:.., b:..} para array
-            const options = Object.keys(q.alternativas).sort().map(key => q.alternativas[key]);
-            const answerMap = { 'a': 0, 'b': 1, 'c': 2, 'd': 3, 'e': 4 };
-            
-            return {
-              category: q.nivel,
-              text: q.enunciado,
-              options: options,
-              answer: answerMap[q.resposta_correta]
-            };
-          });
+        const res = await fetch('assets/banco_questoes.json');
+        if (!res.ok) throw new Error('Falha ao carregar banco de questões.');
+        const data = await res.json();
+        allQuestions = data.questions;
 
-        userAnswers = new Array(questions.length).fill(null);
-        loadQuestion();
-      } catch (error) {
-        console.error('Erro:', error);
-        document.getElementById('question').innerText = 'Erro ao carregar o banco de questões. Verifique a conexão.';
+        // Update dynamic counters
+        document.getElementById('count-all').textContent = `${allQuestions.length} questões`;
+        const countByCategory = {};
+        allQuestions.forEach(q => {
+          const cat = q.nivel || 'Sem categoria';
+          countByCategory[cat] = (countByCategory[cat] || 0) + 1;
+        });
+        if (countByCategory['Legislação'])      document.getElementById('count-leg').textContent = `${countByCategory['Legislação']} questões`;
+        if (countByCategory['Técnica e Ética']) document.getElementById('count-tec').textContent = `${countByCategory['Técnica e Ética']} questões`;
+        if (countByCategory['Eletrônica'])      document.getElementById('count-elt').textContent = `${countByCategory['Eletrônica']} questões`;
+      } catch (err) {
+        console.error(err);
       }
     }
 
+    // ============================================================
+    // QUANTITY SELECTOR
+    // ============================================================
+    function setQuantity(qty) {
+      selectedQty = qty;
+      document.querySelectorAll('.qty-btn').forEach(btn => {
+        btn.classList.toggle('active', parseInt(btn.dataset.qty) === qty);
+      });
+    }
+
+    // ============================================================
+    // START QUIZ
+    // ============================================================
+    function startQuiz(mode) {
+      selectedMode = mode;
+
+      let pool = mode === 'all'
+        ? allQuestions
+        : allQuestions.filter(q => q.nivel === mode);
+
+      if (pool.length === 0) {
+        alert('Nenhuma questão encontrada para este modo.');
+        return;
+      }
+
+      // Shuffle and slice
+      const shuffled = [...pool].sort(() => Math.random() - 0.5);
+      const count = Math.min(selectedQty, shuffled.length);
+      questions = shuffled.slice(0, count).map(q => {
+        const letters = Object.keys(q.alternativas).sort();
+        const options = letters.map(k => q.alternativas[k]);
+        const answerIdx = letters.indexOf(q.resposta_correta);
+        return {
+          category: q.nivel,
+          text: q.enunciado,
+          options,
+          answer: answerIdx
+        };
+      });
+
+      userAnswers = new Array(questions.length).fill(null);
+      currentIdx = 0;
+
+      // Update pill
+      const meta = modeMeta[mode] || modeMeta['all'];
+      const pill = document.getElementById('quiz-mode-pill');
+      pill.textContent = meta.label;
+      pill.style.background = meta.bg;
+      pill.style.color = meta.color;
+      pill.style.fontWeight = '700';
+      pill.style.fontSize = '0.72rem';
+      pill.style.letterSpacing = '0.06em';
+      pill.style.padding = '0.3rem 0.8rem';
+      pill.style.borderRadius = '99px';
+
+      showScreen('quiz');
+      loadQuestion();
+    }
+
+    // ============================================================
+    // QUIZ NAVIGATION
+    // ============================================================
     function loadQuestion() {
-      if (questions.length === 0) return;
-      
       const q = questions[currentIdx];
-      document.getElementById('category').innerText = q.category;
-      document.getElementById('question').innerText = q.text;
-      document.getElementById('counter').innerText = `Questão ${currentIdx + 1} de ${questions.length}`;
-      document.getElementById('progress').style.width = `${((currentIdx) / questions.length) * 100}%`;
+      document.getElementById('category').textContent = q.category;
+      document.getElementById('question').textContent = q.text;
+      document.getElementById('quiz-counter').textContent = `Questão ${currentIdx + 1} de ${questions.length}`;
+      document.getElementById('progress').style.width = `${(currentIdx / questions.length) * 100}%`;
 
-      const optionsContainer = document.getElementById('options');
-      optionsContainer.innerHTML = '';
-
+      const optEl = document.getElementById('options');
+      optEl.innerHTML = '';
       q.options.forEach((opt, i) => {
         const div = document.createElement('div');
-        div.className = `option ${userAnswers[currentIdx] === i ? 'selected' : ''}`;
+        div.className = `option${userAnswers[currentIdx] === i ? ' selected' : ''}`;
         div.innerHTML = `<span class="option-letter">${String.fromCharCode(65 + i)}</span> ${opt}`;
         div.onclick = () => selectOption(i);
-        optionsContainer.appendChild(div);
+        optEl.appendChild(div);
       });
 
       document.getElementById('prev-btn').style.visibility = currentIdx === 0 ? 'hidden' : 'visible';
-      document.getElementById('next-btn').innerText = currentIdx === questions.length - 1 ? 'Finalizar' : 'Próxima';
+      document.getElementById('next-btn').textContent = currentIdx === questions.length - 1 ? 'Finalizar ✓' : 'Próxima →';
     }
 
     function selectOption(idx) {
@@ -260,51 +766,72 @@
       loadQuestion();
     }
 
-    document.getElementById('next-btn').onclick = () => {
+    function nextQuestion() {
       if (userAnswers[currentIdx] === null) {
-        alert('Por favor, selecione uma opção.');
+        alert('Selecione uma opção antes de avançar.');
         return;
       }
-
       if (currentIdx < questions.length - 1) {
         currentIdx++;
         loadQuestion();
       } else {
         showResults();
       }
-    };
-
-    document.getElementById('prev-btn').onclick = () => {
-      if (currentIdx > 0) {
-        currentIdx--;
-        loadQuestion();
-      }
-    };
-
-    function showResults() {
-      let score = 0;
-      userAnswers.forEach((ans, i) => {
-        if (ans === questions[i].answer) score++;
-      });
-
-      document.getElementById('quiz-content').style.display = 'none';
-      document.getElementById('results').style.display = 'block';
-      document.getElementById('score').innerText = score;
-      document.getElementById('progress').style.width = '100%';
-
-      // Feedback baseado na aprovação ANATEL (70%)
-      const percent = (score / questions.length) * 100;
-      const feedback = document.getElementById('feedback');
-      if (percent >= 70) {
-        feedback.innerText = "Parabéns! Você atingiu a pontuação mínima para aprovação (70%). Continue assim!";
-        feedback.style.color = "var(--primary)";
-      } else {
-        feedback.innerText = "Você não atingiu os 70% necessários. Revise o material e tente novamente!";
-        feedback.style.color = "#ff4444";
-      }
     }
 
-    initQuiz();
+    function prevQuestion() {
+      if (currentIdx > 0) { currentIdx--; loadQuestion(); }
+    }
+
+    // ============================================================
+    // RESULTS
+    // ============================================================
+    function showResults() {
+      let score = 0;
+      userAnswers.forEach((ans, i) => { if (ans === questions[i].answer) score++; });
+      const pct = Math.round((score / questions.length) * 100);
+      const pass = pct >= 70;
+
+      document.getElementById('score-num').textContent = score;
+      document.getElementById('score-label').textContent = `de ${questions.length} acertos`;
+      document.getElementById('score-percent').textContent = `${pct}%`;
+      document.getElementById('score-percent').className = `score-percent ${pass ? 'pass' : 'fail'}`;
+      document.getElementById('score-ring').className = `score-ring${pass ? '' : ' score--fail'}`;
+
+      const meta = modeMeta[selectedMode] || modeMeta['all'];
+      document.getElementById('stat-mode').textContent = meta.label;
+      document.getElementById('stat-total').textContent = `${questions.length} questões`;
+      document.getElementById('stat-erros').textContent = `${questions.length - score} erros`;
+
+      const fb = document.getElementById('feedback');
+      if (pass) {
+        fb.textContent = '🎉 Parabéns! Você atingiu os 70% necessários para aprovação no exame da ANATEL. Continue assim!';
+      } else {
+        fb.textContent = `📚 Você ficou em ${pct}%. É necessário atingir 70% para ser aprovado. Revise o material e tente novamente!`;
+      }
+
+      document.getElementById('progress').style.width = '100%';
+      showScreen('results');
+    }
+
+    function restartSameMode() { startQuiz(selectedMode); }
+
+    // ============================================================
+    // SCREEN MANAGEMENT
+    // ============================================================
+    function showScreen(screen) {
+      document.getElementById('selection-screen').style.display = screen === 'selection' ? 'block' : 'none';
+      document.getElementById('quiz-screen').style.display     = screen === 'quiz'      ? 'block' : 'none';
+      document.getElementById('results-screen').style.display  = screen === 'results'   ? 'block' : 'none';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function goToSelection() { showScreen('selection'); }
+
+    // ============================================================
+    // INIT
+    // ============================================================
+    bootstrap();
   </script>
 </body>
 </html>
