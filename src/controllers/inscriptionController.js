@@ -42,9 +42,9 @@ exports.getAllIndividualUsers = async (req, res) => {
 };
 
 exports.createIndividualInscription = async (req, res) => {
-  const { nome, email, telefone, grupo_escoteiro } = req.body;
+  const { nome, email, telefone, grupo_escoteiro, cidade, responsavel_menor } = req.body;
 
-  if (!nome || !email || !telefone) {
+  if (!nome || !email || !telefone || !grupo_escoteiro || !cidade) {
     return res.status(400).json({ error: 'Preencha todos os campos obrigatórios.' });
   }
 
@@ -59,16 +59,16 @@ exports.createIndividualInscription = async (req, res) => {
     const accessCode = Math.random().toString(36).substring(2, 8).toUpperCase();
     const hashedPassword = await bcrypt.hash(accessCode, 10);
 
-    // Save user to database with scout_group
+    // Save user to database with scout_group and city
     await pool.query(
-      'INSERT INTO users (name, email, password, role, scout_group) VALUES ($1, $2, $3, $4, $5)',
-      [nome, email, hashedPassword, 'participant', grupo_escoteiro || null]
+      'INSERT INTO users (name, email, password, role, scout_group, city, guardian_name) VALUES ($1, $2, $3, $4, $5, $6, $7)',
+      [nome, email, hashedPassword, 'participant', grupo_escoteiro || null, cidade || null, responsavel_menor || null]
     );
 
     // Also record in inscriptions for auditing
     await pool.query(
-      'INSERT INTO inscriptions (group_name, city, participants_count, responsible_name, email, phone) VALUES ($1, $2, $3, $4, $5, $6)',
-      [grupo_escoteiro || 'Inscrição Individual', 'N/A', 1, nome, email, telefone]
+      'INSERT INTO inscriptions (responsible_name, group_name, city, participants_count, email, phone, guardian_name) VALUES ($1, $2, $3, $4, $5, $6, $7)',
+      [nome, grupo_escoteiro || 'Individual', cidade || 'N/A', 1, email, telefone, responsavel_menor || null]
     );
 
     // Send Email using Resend
@@ -82,7 +82,8 @@ exports.createIndividualInscription = async (req, res) => {
             <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; color: #2e2720;">
               <h2 style="color: #2e7d32;">Olá, ${nome}!</h2>
               <p>Sua inscrição individual foi recebida com sucesso. Bem-vindo(a) ao projeto <strong>Ondas do Conhecimento</strong>!</p>
-              ${grupo_escoteiro ? `<p>Grupo Escoteiro registrado: <strong>${grupo_escoteiro}</strong></p>` : ''}
+              <p>Grupo Escoteiro registrado: <strong>${grupo_escoteiro}</strong></p>
+              ${responsavel_menor ? `<p>Responsável: <strong>${responsavel_menor}</strong></p>` : ''}
               <p>Você já pode acessar nossa Área do Participante e nosso Simulado utilizando suas credenciais exclusivas abaixo:</p>
               <div style="background-color: #faf6ee; padding: 15px; border-radius: 8px; margin: 20px 0;">
                 <p><strong>URL de Acesso:</strong> <a href="https://ondas.stackfab.com.br/login.html">ondas.stackfab.com.br/login</a></p>

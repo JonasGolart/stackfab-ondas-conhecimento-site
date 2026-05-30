@@ -45,6 +45,9 @@ const initDb = async () => {
       ALTER TABLE users ADD COLUMN IF NOT EXISTS reset_token TEXT;
       ALTER TABLE users ADD COLUMN IF NOT EXISTS reset_token_expires TIMESTAMP;
       ALTER TABLE users ADD COLUMN IF NOT EXISTS scout_group TEXT;
+      ALTER TABLE users ADD COLUMN IF NOT EXISTS city TEXT;
+      ALTER TABLE users ADD COLUMN IF NOT EXISTS guardian_name TEXT;
+      ALTER TABLE inscriptions ADD COLUMN IF NOT EXISTS guardian_name TEXT;
 
       CREATE TABLE IF NOT EXISTS categories (
         id SERIAL PRIMARY KEY,
@@ -92,6 +95,28 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Routes
 app.use('/api', apiRoutes);
+
+// Admin utility: reset all inscriptions and participant users (DELETE)
+app.delete('/api/admin/reset-all', async (req, res) => {
+  const authHeader = req.headers['authorization'];
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    return res.status(401).json({ error: 'Não autorizado' });
+  }
+  const jwt = require('jsonwebtoken');
+  try {
+    const token = authHeader.split(' ')[1];
+    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'secret');
+    if (decoded.role !== 'admin' && decoded.role !== 'developer') {
+      return res.status(403).json({ error: 'Acesso negado' });
+    }
+    await pool.query('DELETE FROM inscriptions');
+    await pool.query("DELETE FROM users WHERE role = 'participant'");
+    res.json({ message: 'Inscrições e usuários participantes removidos com sucesso.' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Erro ao resetar dados: ' + err.message });
+  }
+});
 
 // Global Error Handler for Multer & generic exceptions
 app.use((err, req, res, next) => {

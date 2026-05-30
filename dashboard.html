@@ -234,27 +234,33 @@
       <div id="section-inscriptions" class="content-section active">
         <header class="header">
           <h1>Inscrições Recebidas</h1>
-          <div class="user-pill" id="user-info-1">Admin</div>
+          <div style="display:flex;align-items:center;gap:1rem">
+            <button onclick="resetAllInscriptions()" style="background:rgba(220,38,38,0.08);color:#dc2626;border:1px solid rgba(220,38,38,0.2);padding:0.5rem 1rem;border-radius:10px;font-weight:600;font-size:0.82rem;cursor:pointer;display:flex;align-items:center;gap:0.4rem;transition:all 0.2s" onmouseover="this.style.background='rgba(220,38,38,0.15)'" onmouseout="this.style.background='rgba(220,38,38,0.08)'">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+              Zerar Inscrições
+            </button>
+            <div class="user-pill" id="user-info-1">Admin</div>
+          </div>
         </header>
 
         <div class="stats">
           <div class="stat-card">
-            <span>Grupos Inscritos</span>
+            <span>Total de Inscritos</span>
             <h2 id="total-count">—</h2>
             <div class="stat-icon"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
           </div>
           <div class="stat-card">
-            <span>Participantes (Grupos)</span>
-            <h2 id="total-participants">—</h2>
-            <div class="stat-icon"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></div>
-          </div>
-          <div class="stat-card">
-            <span>Inscritos Individuais</span>
-            <h2 id="total-individual">—</h2>
+            <span>Com Responsável</span>
+            <h2 id="total-with-guardian">—</h2>
             <div class="stat-icon"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
           </div>
           <div class="stat-card">
-            <span>Cidades Representadas</span>
+            <span>Grupos Escoteiros</span>
+            <h2 id="total-groups">—</h2>
+            <div class="stat-icon"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg></div>
+          </div>
+          <div class="stat-card">
+            <span>Cidades</span>
             <h2 id="total-cities">—</h2>
             <div class="stat-icon"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
           </div>
@@ -262,26 +268,29 @@
 
         <div class="card-box">
           <div class="card-header">
-            <h3>Lista de Candidatos</h3>
+            <h3>Relação de Inscritos</h3>
             <button onclick="exportToCSV()" class="btn-export">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
               Exportar CSV
             </button>
           </div>
-          <table>
-            <thead>
-              <tr>
-                <th>Grupo / Nome</th>
-                <th>Tipo</th>
-                <th>Responsável</th>
-                <th>Cidade</th>
-                <th>Participantes</th>
-                <th>Data</th>
-                <th>Detalhes</th>
-              </tr>
-            </thead>
-            <tbody id="inscriptions-list"></tbody>
-          </table>
+          <div style="overflow-x:auto">
+            <table>
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Nome do Inscrito</th>
+                  <th>Grupo Escoteiro</th>
+                  <th>Responsável</th>
+                  <th>Cidade</th>
+                  <th>Tel. Contato</th>
+                  <th>E-mail Contato</th>
+                  <th>Data Inscrição</th>
+                </tr>
+              </thead>
+              <tbody id="inscriptions-list"></tbody>
+            </table>
+          </div>
         </div>
       </div>
 
@@ -466,50 +475,86 @@
     let inscriptionsData = [];
 
     async function loadInscriptions() {
+      const list = document.getElementById('inscriptions-list');
+      list.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:2rem;color:var(--text-muted)">Carregando...</td></tr>';
       try {
-        const [insRes, usersRes] = await Promise.all([
-          fetch('/api/admin/inscriptions', { headers: { 'Authorization': `Bearer ${token}` } }),
-          fetch('/api/admin/users', { headers: { 'Authorization': `Bearer ${token}` } })
-        ]);
-
-        if (!insRes.ok) throw new Error('Não autorizado');
-        const data = await insRes.json();
-        const users = usersRes.ok ? await usersRes.json() : [];
+        const res = await fetch('/api/admin/inscriptions', { headers: { 'Authorization': `Bearer ${token}` } });
+        if (!res.ok) throw new Error('Não autorizado');
+        const data = await res.json();
         inscriptionsData = data;
-
-        const list = document.getElementById('inscriptions-list');
         list.innerHTML = '';
 
-        let groupParts = 0;
-        const cities = new Set();
+        if (data.length === 0) {
+          list.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:2.5rem;color:var(--text-muted)">Nenhuma inscrição registrada ainda.</td></tr>';
+          document.getElementById('total-count').innerText = '0';
+          document.getElementById('total-with-guardian').innerText = '0';
+          document.getElementById('total-groups').innerText = '0';
+          document.getElementById('total-cities').innerText = '0';
+          return;
+        }
 
-        data.forEach(ins => {
-          groupParts += parseInt(ins.participants_count || 0);
+        const cities = new Set();
+        const groups = new Set();
+        let withGuardian = 0;
+
+        data.forEach((ins, idx) => {
           if (ins.city && ins.city !== 'N/A') cities.add(ins.city);
-          const isIndividual = ins.city === 'N/A';
-          const typeBadge = isIndividual
-            ? `<span class="badge badge-individual">Individual</span>`
-            : `<span class="badge badge-group">Grupo</span>`;
+          if (ins.group_name) groups.add(ins.group_name);
+          if (ins.guardian_name) withGuardian++;
+
           list.innerHTML += `
             <tr>
-              <td><strong>${ins.group_name}</strong></td>
-              <td>${typeBadge}</td>
-              <td>${ins.responsible_name}</td>
-              <td>${isIndividual ? '—' : ins.city}</td>
-              <td style="font-weight:700; color:var(--primary)">${ins.participants_count}</td>
-              <td style="color:var(--text-muted); font-size:0.8rem">${new Date(ins.created_at).toLocaleDateString('pt-BR')}</td>
-              <td><button class="btn-detail" onclick="openDrawer(${ins.id})">Ver detalhes</button></td>
+              <td style="color:var(--text-muted);font-size:0.8rem;font-weight:600">${idx + 1}</td>
+              <td><strong>${ins.responsible_name || '—'}</strong></td>
+              <td>${ins.group_name || '—'}</td>
+              <td>${ins.guardian_name ? `<span style="font-size:0.82rem;color:#7d7060">${ins.guardian_name}</span>` : '<span style="color:rgba(125,112,96,0.4);font-size:0.8rem">—</span>'}</td>
+              <td>${ins.city && ins.city !== 'N/A' ? ins.city : '<span style="color:rgba(125,112,96,0.4);font-size:0.8rem">—</span>'}</td>
+              <td style="font-size:0.85rem">${ins.phone || '—'}</td>
+              <td style="font-size:0.82rem;color:var(--text-muted)">${ins.email || '—'}</td>
+              <td style="font-size:0.8rem;color:var(--text-muted)">${new Date(ins.created_at).toLocaleDateString('pt-BR', {day:'2-digit',month:'2-digit',year:'numeric'})}</td>
             </tr>`;
         });
 
-        document.getElementById('total-count').innerText = data.filter(i => i.city !== 'N/A').length;
-        document.getElementById('total-participants').innerText = groupParts;
-        document.getElementById('total-individual').innerText = users.length;
+        document.getElementById('total-count').innerText = data.length;
+        document.getElementById('total-with-guardian').innerText = withGuardian;
+        document.getElementById('total-groups').innerText = groups.size;
         document.getElementById('total-cities').innerText = cities.size;
 
       } catch (err) {
         console.error(err);
+        list.innerHTML = '<tr><td colspan="8" style="text-align:center;color:#dc2626;padding:1.5rem">Erro ao carregar inscrições.</td></tr>';
         showToast('Erro', 'Não foi possível carregar as inscrições.', 'error');
+      }
+    }
+
+    async function resetAllInscriptions() {
+      const confirmed = await showConfirm(
+        'Zerar todas as inscrições',
+        'Esta ação irá DELETAR permanentemente todos os inscritos e usuários participantes do banco de dados. Esta operação não pode ser desfeita. Tem certeza absoluta?'
+      );
+      if (!confirmed) return;
+
+      // Segunda confirmação
+      const confirmed2 = await showConfirm(
+        '⚠️ Confirmação final',
+        'Última chance: todos os dados serão apagados definitivamente. Confirma o reset?'
+      );
+      if (!confirmed2) return;
+
+      try {
+        const res = await fetch('/api/admin/reset-all', {
+          method: 'DELETE',
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        const data = await res.json();
+        if (res.ok) {
+          showToast('Reset concluído', 'Todas as inscrições foram removidas.', 'success');
+          await loadInscriptions();
+        } else {
+          showToast('Erro', data.error || 'Não foi possível zerar.', 'error');
+        }
+      } catch (err) {
+        showToast('Erro', 'Falha na conexão com o servidor.', 'error');
       }
     }
 
@@ -610,18 +655,26 @@
         showToast('Erro', 'Nenhuma inscrição para exportar!', 'error');
         return;
       }
-      const headers = ['Grupo/Nome', 'Tipo', 'Cidade', 'Participantes', 'Responsável', 'E-mail', 'Telefone', 'Observações', 'Data'];
+      const headers = ['#', 'Nome do Inscrito', 'Grupo Escoteiro', 'Responsável (se menor)', 'Cidade', 'Tel. Contato', 'E-mail Contato', 'Data Inscrição'];
       const rows = [headers.join(';')];
-      inscriptionsData.forEach(ins => {
-        const tipo = ins.city === 'N/A' ? 'Individual' : 'Grupo';
-        const vals = [ins.group_name, tipo, ins.city === 'N/A' ? '' : ins.city, ins.participants_count, ins.responsible_name, ins.email, ins.phone || '', (ins.observations || '').replace(/[\r\n]+/g, ' '), new Date(ins.created_at).toLocaleDateString('pt-BR')];
+      inscriptionsData.forEach((ins, idx) => {
+        const vals = [
+          idx + 1,
+          ins.responsible_name || '',
+          ins.group_name || '',
+          ins.guardian_name || '',
+          (ins.city === 'N/A' ? '' : ins.city) || '',
+          ins.phone || '',
+          ins.email || '',
+          new Date(ins.created_at).toLocaleDateString('pt-BR')
+        ];
         rows.push(vals.map(v => `"${String(v).replace(/"/g, '""')}"`).join(';'));
       });
       const content = '\uFEFF' + rows.join('\n');
       const blob = new Blob([content], { type: 'text/csv;charset=utf-8;' });
       const link = document.createElement('a');
       link.href = URL.createObjectURL(blob);
-      link.download = `inscricoes_ondas_${new Date().toISOString().slice(0,10)}.csv`;
+      link.download = `inscritos_ondas_${new Date().toISOString().slice(0,10)}.csv`;
       link.style.display = 'none';
       document.body.appendChild(link);
       link.click();

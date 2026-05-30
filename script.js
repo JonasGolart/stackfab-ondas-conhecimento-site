@@ -286,22 +286,24 @@ function initIndividualForm() {
   if (!form) return;
 
   const fields = {
-    'ind-nome': { required: true, minLength: 3, errorMsg: 'Nome é obrigatório.' },
-    'ind-email': { required: true, pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, errorMsg: 'E-mail inválido.' },
-    'ind-telefone': { required: true, pattern: /^\(?\d{2}\)?\s?\d{4,5}-?\d{4}$/, errorMsg: 'Telefone inválido.' },
-    'ind-grupo-escoteiro': { required: true, minLength: 3, errorMsg: 'Informe o nome do seu Grupo Escoteiro.' }
+    'ind-nome':            { required: true, minLength: 3, errorMsg: 'Nome do inscrito é obrigatório.' },
+    'ind-grupo-escoteiro': { required: true, minLength: 3, errorMsg: 'Informe o Grupo Escoteiro.' },
+    'ind-cidade':          { required: true, minLength: 2, errorMsg: 'Informe a cidade.' },
+    'ind-telefone':        { required: true, pattern: /^\(?\d{2}\)?\s?\d{4,5}-?\d{4}$/, errorMsg: 'Telefone inválido. Ex: (41) 99999-9999' },
+    'ind-email':           { required: true, pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, errorMsg: 'E-mail inválido.' }
+    // ind-responsavel é opcional — sem validação obrigatória
   };
 
   Object.keys(fields).forEach(name => {
     const input = document.getElementById(name);
     if (!input) return;
-
     input.addEventListener('blur', () => validateField(name, input, fields[name]));
     input.addEventListener('input', () => {
       if (input.classList.contains('error')) validateField(name, input, fields[name]);
     });
   });
 
+  // Máscara de telefone
   const phoneInput = document.getElementById('ind-telefone');
   if (phoneInput) {
     phoneInput.addEventListener('input', (e) => {
@@ -321,18 +323,23 @@ function initIndividualForm() {
       const input = document.getElementById(name);
       if (!validateField(name, input, fields[name])) isValid = false;
     });
-
-    if (!isValid) return;
+    if (!isValid) {
+      const firstError = form.querySelector('.form__input.error');
+      if (firstError) { firstError.focus(); firstError.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
+      return;
+    }
 
     const btn = document.getElementById('btn-enviar-individual');
     btn.disabled = true;
-    btn.innerHTML = `Enviando...`;
+    btn.innerHTML = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="spin"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg> Enviando...`;
 
     const data = {
-      nome: document.getElementById('ind-nome').value,
-      email: document.getElementById('ind-email').value,
-      telefone: document.getElementById('ind-telefone').value,
-      grupo_escoteiro: document.getElementById('ind-grupo-escoteiro').value
+      nome:              document.getElementById('ind-nome').value.trim(),
+      grupo_escoteiro:   document.getElementById('ind-grupo-escoteiro').value.trim(),
+      responsavel_menor: (document.getElementById('ind-responsavel')?.value || '').trim(),
+      cidade:            document.getElementById('ind-cidade').value.trim(),
+      telefone:          document.getElementById('ind-telefone').value.trim(),
+      email:             document.getElementById('ind-email').value.trim()
     };
 
     fetch('/api/inscriptions/individual', {
@@ -343,11 +350,9 @@ function initIndividualForm() {
     .then(async response => {
       const resData = await response.json();
       if (!response.ok) throw new Error(resData.error || 'Erro ao enviar');
-      
       form.reset();
       form.querySelectorAll('.form__input').forEach(i => i.classList.remove('success', 'error'));
-      
-      alert(resData.message);
+      showToast();
     })
     .catch(error => alert(error.message))
     .finally(() => {
@@ -356,8 +361,7 @@ function initIndividualForm() {
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
           <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
         </svg>
-        Garantir Acesso Imediato
-      `;
+        Garantir Acesso Imediato`;
     });
   });
 }

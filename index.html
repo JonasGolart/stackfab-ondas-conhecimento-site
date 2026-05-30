@@ -395,29 +395,47 @@
       <!-- FORMULÁRIO INDIVIDUAL -->
       <form class="form" id="form-inscricao-individual" novalidate data-delay="200">
         <div class="form__grid">
+          <!-- Nome do Inscrito -->
           <div class="form__group form__group--full">
-            <label for="ind-nome" class="form__label">Nome Completo <span class="form__required">*</span></label>
-            <input type="text" id="ind-nome" name="nome" class="form__input" placeholder="Seu nome completo" required>
+            <label for="ind-nome" class="form__label">Nome do Inscrito <span class="form__required">*</span></label>
+            <input type="text" id="ind-nome" name="nome" class="form__input" placeholder="Nome completo do participante" required>
             <span class="form__error" id="ind-nome-error"></span>
           </div>
 
-          <div class="form__group">
-            <label for="ind-email" class="form__label">E-mail <span class="form__required">*</span></label>
-            <input type="email" id="ind-email" name="email" class="form__input" placeholder="email@exemplo.com" required>
-            <span class="form__error" id="ind-email-error"></span>
-          </div>
-
-          <div class="form__group">
-            <label for="ind-telefone" class="form__label">WhatsApp <span class="form__required">*</span></label>
-            <input type="tel" id="ind-telefone" name="telefone" class="form__input" placeholder="(41) 99999-9999" required>
-            <span class="form__error" id="ind-telefone-error"></span>
-          </div>
-
+          <!-- Grupo Escoteiro -->
           <div class="form__group form__group--full">
             <label for="ind-grupo-escoteiro" class="form__label">Grupo Escoteiro <span class="form__required">*</span></label>
             <input type="text" id="ind-grupo-escoteiro" name="grupo_escoteiro" class="form__input"
               placeholder="Ex: Grupo Escoteiro Duque de Caxias — Curitiba" required>
             <span class="form__error" id="ind-grupo-escoteiro-error"></span>
+          </div>
+
+          <!-- Responsável (se menor de idade) -->
+          <div class="form__group form__group--full">
+            <label for="ind-responsavel" class="form__label">Responsável <span style="font-size:0.8rem;color:#7d7060;font-weight:400">(obrigatório se menor de idade)</span></label>
+            <input type="text" id="ind-responsavel" name="responsavel_menor" class="form__input" placeholder="Nome do responsável legal (pai, mãe ou tutor)">
+            <span class="form__error" id="ind-responsavel-error"></span>
+          </div>
+
+          <!-- Cidade -->
+          <div class="form__group">
+            <label for="ind-cidade" class="form__label">Cidade <span class="form__required">*</span></label>
+            <input type="text" id="ind-cidade" name="cidade" class="form__input" placeholder="Ex: Curitiba" required>
+            <span class="form__error" id="ind-cidade-error"></span>
+          </div>
+
+          <!-- Telefone -->
+          <div class="form__group">
+            <label for="ind-telefone" class="form__label">WhatsApp / Telefone <span class="form__required">*</span></label>
+            <input type="tel" id="ind-telefone" name="telefone" class="form__input" placeholder="(41) 99999-9999" required>
+            <span class="form__error" id="ind-telefone-error"></span>
+          </div>
+
+          <!-- Email -->
+          <div class="form__group form__group--full">
+            <label for="ind-email" class="form__label">E-mail <span class="form__required">*</span></label>
+            <input type="email" id="ind-email" name="email" class="form__input" placeholder="email@exemplo.com" required>
+            <span class="form__error" id="ind-email-error"></span>
           </div>
         </div>
 
@@ -429,6 +447,7 @@
           Garantir Acesso Imediato
         </button>
       </form>
+
 
       <!-- FORMULÁRIO DE GRUPO (Oculto por Padrão) -->
       <form class="form" id="form-inscricao-grupo" novalidate data-delay="200" style="display: none;">
