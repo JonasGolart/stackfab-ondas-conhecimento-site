@@ -91,7 +91,29 @@ function emailConfirmacaoGrupo({ grupo, cidade, responsavel, participantes }) {
 }
 
 /**
- * E-mail 2: Boas-vindas com código de acesso — Inscrição INDIVIDUAL
+ * E-mail 2: Confirmação de recebimento — Inscrição INDIVIDUAL
+ */
+function emailRecebimentoIndividual({ nome }) {
+  return emailWrapper(`
+    <h2 style="color:#2e7d32;font-size:22px;font-weight:800;margin:0 0 8px 0;">Solicitação Recebida! 🎉</h2>
+    <p style="color:#7d7060;font-size:14px;margin:0 0 28px 0;">Sua inscrição está em análise.</p>
+
+    <p style="color:#2e2720;font-size:16px;line-height:1.7;margin:0 0 24px 0;">
+      Olá, <strong>${nome}</strong>!<br><br>
+      Recebemos sua solicitação de inscrição individual no projeto <strong>Ondas do Conhecimento</strong>.
+    </p>
+    
+    <p style="color:#2e2720;font-size:15px;line-height:1.7;margin:0 0 28px 0;">
+      Sua inscrição passará por uma rápida revisão. Assim que for aprovada, você receberá um novo e-mail contendo seu Código de Acesso exclusivo para o Portal do Participante.
+    </p>
+
+    <p style="color:#2e2720;font-size:15px;font-weight:600;margin:0;">Aguarde e 73! 📻</p>
+    <p style="color:#7d7060;font-size:14px;margin:4px 0 0 0;">Equipe Ondas do Conhecimento</p>
+  `);
+}
+
+/**
+ * E-mail 3: Boas-vindas com código de acesso — Inscrição INDIVIDUAL (Pós Aprovação)
  */
 function emailBoasVindasIndividual({ nome, email, grupoEscoteiro, responsavelMenor, accessCode }) {
   const menorSection = responsavelMenor ? `
@@ -254,33 +276,26 @@ exports.createIndividualInscription = async (req, res) => {
       return res.status(400).json({ error: 'Este e-mail já está cadastrado no sistema.' });
     }
 
-    // Gerar código de acesso de 6 caracteres alfanumérico maiúsculo
-    const accessCode = Math.random().toString(36).substring(2, 8).toUpperCase();
-    const hashedPassword = await bcrypt.hash(accessCode, 10);
+    // Senha temporária, pois a real será gerada na aprovação
+    const hashedPassword = await bcrypt.hash('PENDING_' + Date.now(), 10);
 
     // Salvar usuário
     await pool.query(
-      'INSERT INTO users (name, email, password, role, scout_group, city, guardian_name) VALUES ($1, $2, $3, $4, $5, $6, $7)',
-      [nome, email, hashedPassword, 'participant', grupo_escoteiro || null, cidade || null, responsavel_menor || null]
+      'INSERT INTO users (name, email, password, role, scout_group, city, guardian_name, status) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)',
+      [nome, email, hashedPassword, 'participant', grupo_escoteiro || null, cidade || null, responsavel_menor || null, 'pending']
     );
 
     // Registrar na tabela inscriptions (auditoria)
     await pool.query(
-      'INSERT INTO inscriptions (responsible_name, group_name, city, participants_count, email, phone, guardian_name) VALUES ($1, $2, $3, $4, $5, $6, $7)',
-      [nome, grupo_escoteiro || 'Individual', cidade || 'N/A', 1, email, telefone, responsavel_menor || null]
+      'INSERT INTO inscriptions (responsible_name, group_name, city, participants_count, email, phone, guardian_name, status) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)',
+      [nome, grupo_escoteiro || 'Individual', cidade || 'N/A', 1, email, telefone, responsavel_menor || null, 'pending']
     );
 
-    // ── E-mail de boas-vindas com código de acesso ──
-    const htmlEmail = emailBoasVindasIndividual({
-      nome,
-      email,
-      grupoEscoteiro: grupo_escoteiro,
-      responsavelMenor: responsavel_menor,
-      accessCode
-    });
+    // ── E-mail de recebimento (em análise) ──
+    const htmlEmail = emailRecebimentoIndividual({ nome });
     await emailService.sendEmail(
       email,
-      '🔑 Seu acesso ao Portal Ondas do Conhecimento',
+      '⏳ Inscrição Recebida — Ondas do Conhecimento',
       htmlEmail
     );
 
@@ -295,14 +310,98 @@ exports.createIndividualInscription = async (req, res) => {
     });
 
     res.status(201).json({
-      message: 'Inscrição realizada! Verifique seu e-mail para acessar o portal.',
-      // Retorna o código apenas em ambiente sem Resend configurado (desenvolvimento)
-      accessCode: process.env.RESEND_API_KEY ? null : accessCode
+      message: 'Inscrição realizada! Ela está em análise, você receberá um e-mail quando for aprovada.'
     });
 
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Erro ao processar inscrição individual' });
+  }
+};
+
+/**
+ * PUT /api/admin/inscriptions/:id/approve — Aprova uma inscrição
+ */
+exports.approveInscription = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const inscriptionCheck = await pool.query('SELECT * FROM inscriptions WHERE id = $1', [id]);
+    if (inscriptionCheck.rows.length === 0) {
+      return res.status(404).json({ error: 'Inscrição não encontrada' });
+    }
+
+    const insc = inscriptionCheck.rows[0];
+    if (insc.status === 'approved') {
+      return res.status(400).json({ error: 'Esta inscrição já está aprovada' });
+    }
+
+    // Aprova a inscrição
+    await pool.query('UPDATE inscriptions SET status = $1 WHERE id = $2', ['approved', id]);
+
+    // Se for individual, precisamos aprovar o user e mandar o e-mail com a senha
+    if (insc.email) {
+      const userCheck = await pool.query('SELECT * FROM users WHERE email = $1', [insc.email]);
+      
+      if (userCheck.rows.length > 0) {
+        const user = userCheck.rows[0];
+        // Gera o token de acesso
+        const accessCode = Math.random().toString(36).substring(2, 8).toUpperCase();
+        const hashedPassword = await bcrypt.hash(accessCode, 10);
+
+        await pool.query(
+          'UPDATE users SET password = $1, status = $2 WHERE id = $3',
+          [hashedPassword, 'approved', user.id]
+        );
+
+        // Dispara e-mail de Boas-vindas
+        const htmlEmail = emailBoasVindasIndividual({
+          nome: user.name,
+          email: user.email,
+          grupoEscoteiro: user.scout_group || insc.group_name,
+          responsavelMenor: user.guardian_name,
+          accessCode
+        });
+        
+        await emailService.sendEmail(
+          user.email,
+          '🔑 Inscrição Aprovada: Seu acesso ao Portal Ondas do Conhecimento',
+          htmlEmail
+        );
+      }
+    }
+
+    res.json({ message: 'Inscrição aprovada com sucesso!' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Erro ao aprovar a inscrição' });
+  }
+};
+
+/**
+ * DELETE /api/admin/inscriptions/:id — Recusa/Exclui silenciosamente uma inscrição
+ */
+exports.deleteInscription = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const inscriptionCheck = await pool.query('SELECT * FROM inscriptions WHERE id = $1', [id]);
+    if (inscriptionCheck.rows.length === 0) {
+      return res.status(404).json({ error: 'Inscrição não encontrada' });
+    }
+
+    const insc = inscriptionCheck.rows[0];
+
+    // Se for individual e tiver e-mail, deleta também da tabela users
+    if (insc.email) {
+      await pool.query('DELETE FROM users WHERE email = $1', [insc.email]);
+    }
+
+    await pool.query('DELETE FROM inscriptions WHERE id = $1', [id]);
+
+    res.json({ message: 'Inscrição excluída com sucesso!' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Erro ao excluir a inscrição' });
   }
 };
 

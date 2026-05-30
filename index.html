@@ -387,12 +387,7 @@
         <p class="section-header__desc">Escolha sua modalidade abaixo e junte-se ao Ondas do Conhecimento</p>
       </div>
 
-      <div class="tabs-container" data-animate="fade-up" style="display: flex; justify-content: center; gap: 1rem; margin-bottom: 2rem;">
-        <button class="btn btn--primary" id="tab-individual" onclick="showTab('individual')" style="flex: 1; max-width: 250px;">Inscrição Individual</button>
-        <button class="btn btn--outline" id="tab-grupo" onclick="showTab('grupo')" style="flex: 1; max-width: 250px; background: white;">Inscrever Grupo</button>
-      </div>
-
-      <!-- FORMULÁRIO INDIVIDUAL -->
+      <!-- FORMULÁRIO DE INSCRIÇÃO -->
       <form class="form" id="form-inscricao-individual" novalidate data-delay="200">
         <div class="form__grid">
           <!-- Nome do Inscrito -->
@@ -449,73 +444,7 @@
       </form>
 
 
-      <!-- FORMULÁRIO DE GRUPO (Oculto por Padrão) -->
-      <form class="form" id="form-inscricao-grupo" novalidate data-delay="200" style="display: none;">
-        <div class="form__grid">
-          <!-- Nome do Grupo -->
-          <div class="form__group form__group--full">
-            <label for="grupo" class="form__label">Nome do Grupo Escoteiro <span class="form__required">*</span></label>
-            <input type="text" id="grupo" name="grupo" class="form__input"
-              placeholder="Ex: Grupo Escoteiro Duque de Caxias" required>
-            <span class="form__error" id="grupo-error"></span>
-          </div>
 
-          <!-- Cidade -->
-          <div class="form__group">
-            <label for="cidade" class="form__label">Cidade <span class="form__required">*</span></label>
-            <input type="text" id="cidade" name="cidade" class="form__input" placeholder="Ex: Curitiba" required>
-            <span class="form__error" id="cidade-error"></span>
-          </div>
-
-          <!-- Nº de Participantes -->
-          <div class="form__group">
-            <label for="participantes" class="form__label">Nº de Participantes <span
-                class="form__required">*</span></label>
-            <input type="number" id="participantes" name="participantes" class="form__input" placeholder="Ex: 25"
-              min="1" required>
-            <span class="form__error" id="participantes-error"></span>
-          </div>
-
-          <!-- Nome do Responsável -->
-          <div class="form__group">
-            <label for="responsavel" class="form__label">Nome do Responsável <span
-                class="form__required">*</span></label>
-            <input type="text" id="responsavel" name="responsavel" class="form__input" placeholder="Nome completo"
-              required>
-            <span class="form__error" id="responsavel-error"></span>
-          </div>
-
-          <!-- Email -->
-          <div class="form__group">
-            <label for="email" class="form__label">E-mail <span class="form__required">*</span></label>
-            <input type="email" id="email" name="email" class="form__input" placeholder="email@exemplo.com" required>
-            <span class="form__error" id="email-error"></span>
-          </div>
-
-          <!-- Telefone -->
-          <div class="form__group">
-            <label for="telefone" class="form__label">Telefone / WhatsApp <span class="form__required">*</span></label>
-            <input type="tel" id="telefone" name="telefone" class="form__input" placeholder="(41) 99999-9999" required>
-            <span class="form__error" id="telefone-error"></span>
-          </div>
-
-          <!-- Observações -->
-          <div class="form__group form__group--full">
-            <label for="observacoes" class="form__label">Observações</label>
-            <textarea id="observacoes" name="observacoes" class="form__input form__textarea"
-              placeholder="Algo que gostaria de compartilhar? (opcional)" rows="4"></textarea>
-          </div>
-        </div>
-
-        <button type="submit" class="btn btn--primary btn--lg form__submit" id="btn-enviar">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-            stroke-linecap="round">
-            <line x1="22" y1="2" x2="11" y2="13" />
-            <polygon points="22 2 15 22 11 13 2 9 22 2" />
-          </svg>
-          Enviar Inscrição
-        </button>
-      </form>
     </div>
   </section>
 
@@ -681,29 +610,7 @@
     </div>
   </div>
 
-  <script>
-    function showTab(tabName) {
-      const formInd = document.getElementById('form-inscricao-individual');
-      const formGrp = document.getElementById('form-inscricao-grupo');
-      const btnInd = document.getElementById('tab-individual');
-      const btnGrp = document.getElementById('tab-grupo');
 
-      if (tabName === 'individual') {
-        formInd.style.display = 'block';
-        formGrp.style.display = 'none';
-        btnInd.className = 'btn btn--primary';
-        btnGrp.className = 'btn btn--outline';
-        btnGrp.style.background = 'white';
-      } else {
-        formInd.style.display = 'none';
-        formGrp.style.display = 'block';
-        btnGrp.className = 'btn btn--primary';
-        btnGrp.style.background = '';
-        btnInd.className = 'btn btn--outline';
-        btnInd.style.background = 'white';
-      }
-    }
-  </script>
   <script src="script.js"></script>
 </body>
 

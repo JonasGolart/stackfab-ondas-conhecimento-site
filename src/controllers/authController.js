@@ -14,6 +14,10 @@ exports.login = async (req, res) => {
     const user = result.rows[0];
 
     if (user && await bcrypt.compare(password, user.password)) {
+      if (user.status === 'pending') {
+        return res.status(403).json({ error: 'Sua inscrição está em análise. Você receberá um e-mail quando for aprovada.' });
+      }
+
       const token = jwt.sign(
         { userId: user.id, email: user.email, role: user.role }, 
         process.env.JWT_SECRET, 
@@ -68,6 +72,10 @@ exports.forgotPassword = async (req, res) => {
     if (!user) {
       // Retornar sucesso fictício para evitar enumeração de e-mails (melhor prática de segurança)
       return res.json({ message: 'Se o e-mail estiver cadastrado, um link de recuperação será enviado.' });
+    }
+
+    if (user.status === 'pending') {
+      return res.status(403).json({ error: 'Sua inscrição ainda está em análise.' });
     }
 
     // Gerar token de redefinição

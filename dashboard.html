@@ -286,6 +286,7 @@
                   <th>Tel. Contato</th>
                   <th>E-mail Contato</th>
                   <th>Data Inscrição</th>
+                  <th>Status</th>
                 </tr>
               </thead>
               <tbody id="inscriptions-list"></tbody>
@@ -512,6 +513,12 @@
               <td style="font-size:0.85rem">${ins.phone || '—'}</td>
               <td style="font-size:0.82rem;color:var(--text-muted)">${ins.email || '—'}</td>
               <td style="font-size:0.8rem;color:var(--text-muted)">${new Date(ins.created_at).toLocaleDateString('pt-BR', {day:'2-digit',month:'2-digit',year:'numeric'})}</td>
+              <td>
+                ${ins.status === 'pending' 
+                  ? `<div style="display:flex;gap:0.5rem;"><button onclick="approveInscription(${ins.id})" class="btn-detail" style="background:rgba(245,158,11,0.15);color:#d97706;border:1px solid rgba(245,158,11,0.3);">Aprovar</button><button onclick="rejectInscription(${ins.id})" class="btn-detail" style="background:rgba(220,38,38,0.1);color:#dc2626;border:1px solid rgba(220,38,38,0.2);">Recusar</button></div>`
+                  : `<span style="color:var(--primary);font-weight:600;font-size:0.8rem;">Aprovado</span>`
+                }
+              </td>
             </tr>`;
         });
 
@@ -522,8 +529,56 @@
 
       } catch (err) {
         console.error(err);
-        list.innerHTML = '<tr><td colspan="8" style="text-align:center;color:#dc2626;padding:1.5rem">Erro ao carregar inscrições.</td></tr>';
+        list.innerHTML = '<tr><td colspan="9" style="text-align:center;color:#dc2626;padding:1.5rem">Erro ao carregar inscrições.</td></tr>';
         showToast('Erro', 'Não foi possível carregar as inscrições.', 'error');
+      }
+    }
+
+    async function approveInscription(id) {
+      const confirmed = await showConfirm(
+        'Aprovar Inscrição',
+        'Tem certeza que deseja aprovar esta inscrição? Se for individual, um e-mail com a senha de acesso será disparado.'
+      );
+      if (!confirmed) return;
+
+      try {
+        const res = await fetch(`/api/admin/inscriptions/${id}/approve`, {
+          method: 'PUT',
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        const data = await res.json();
+        if (res.ok) {
+          showToast('Aprovado!', data.message, 'success');
+          loadInscriptions();
+        } else {
+          showToast('Erro', data.error, 'error');
+        }
+      } catch (err) {
+        showToast('Erro', 'Falha na requisição.', 'error');
+      }
+    }
+
+    async function rejectInscription(id) {
+      const confirmed = await showConfirm(
+        'Recusar Inscrição',
+        'Tem certeza que deseja recusar e excluir silenciosamente esta inscrição? Esta ação não envia e-mail ao usuário e é irreversível.'
+      );
+      if (!confirmed) return;
+
+      try {
+        const res = await fetch(\`/api/admin/inscriptions/\${id}\`, {
+          method: 'DELETE',
+          headers: { 'Authorization': \`Bearer \${token}\` }
+        });
+        const data = await res.json();
+        if (res.ok) {
+          showToast('Excluído', 'A inscrição foi recusada e removida.', 'success');
+          loadInscriptions();
+        } else {
+          showToast('Erro', data.error, 'error');
+        }
+      } catch (err) {
+        showToast('Erro', 'Falha na requisição.', 'error');
       }
     }
 
@@ -655,7 +710,7 @@
         showToast('Erro', 'Nenhuma inscrição para exportar!', 'error');
         return;
       }
-      const headers = ['#', 'Nome do Inscrito', 'Grupo Escoteiro', 'Responsável (se menor)', 'Cidade', 'Tel. Contato', 'E-mail Contato', 'Data Inscrição'];
+      const headers = ['#', 'Nome do Inscrito', 'Grupo Escoteiro', 'Responsável (se menor)', 'Cidade', 'Tel. Contato', 'E-mail Contato', 'Data Inscrição', 'Status'];
       const rows = [headers.join(';')];
       inscriptionsData.forEach((ins, idx) => {
         const vals = [
@@ -666,7 +721,8 @@
           (ins.city === 'N/A' ? '' : ins.city) || '',
           ins.phone || '',
           ins.email || '',
-          new Date(ins.created_at).toLocaleDateString('pt-BR')
+          new Date(ins.created_at).toLocaleDateString('pt-BR'),
+          ins.status === 'pending' ? 'Pendente' : 'Aprovado'
         ];
         rows.push(vals.map(v => `"${String(v).replace(/"/g, '""')}"`).join(';'));
       });

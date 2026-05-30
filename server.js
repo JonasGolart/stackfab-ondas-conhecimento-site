@@ -47,7 +47,14 @@ const initDb = async () => {
       ALTER TABLE users ADD COLUMN IF NOT EXISTS scout_group TEXT;
       ALTER TABLE users ADD COLUMN IF NOT EXISTS city TEXT;
       ALTER TABLE users ADD COLUMN IF NOT EXISTS guardian_name TEXT;
+      ALTER TABLE users ADD COLUMN IF NOT EXISTS status TEXT DEFAULT 'pending';
+      
       ALTER TABLE inscriptions ADD COLUMN IF NOT EXISTS guardian_name TEXT;
+      ALTER TABLE inscriptions ADD COLUMN IF NOT EXISTS status TEXT DEFAULT 'pending';
+      
+      -- Garante que admin e usuários já existentes não fiquem bloqueados
+      UPDATE users SET status = 'approved' WHERE status = 'pending' AND role = 'admin';
+      UPDATE users SET status = 'approved' WHERE status = 'pending' AND role = 'developer';
 
       CREATE TABLE IF NOT EXISTS categories (
         id SERIAL PRIMARY KEY,
