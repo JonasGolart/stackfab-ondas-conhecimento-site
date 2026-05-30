@@ -9,7 +9,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initScrollAnimations();
   initCounter();
   initForm();
-  initAuth();
   initCurrentYear();
 });
 
@@ -223,123 +222,6 @@ function initIndividualForm() {
 }
 
 
-/* ══════════════════════════════════════════════════
-   AUTHENTICATION & DASHBOARD
-   ══════════════════════════════════════════════════ */
-function initAuth() {
-  const loginTrigger = document.getElementById('login-trigger');
-  const loginModal = document.getElementById('login-modal');
-  const modalClose = document.getElementById('modal-close');
-  const modalOverlay = document.getElementById('modal-overlay');
-  
-  const loginForm = document.getElementById('login-form');
-  const dashboardModal = document.getElementById('dashboard-modal');
-  const dashboardClose = document.getElementById('dashboard-close');
-  const dashboardOverlay = document.getElementById('dashboard-overlay');
-  const btnLogout = document.getElementById('btn-logout');
-
-  // Toggle Login Modal
-  loginTrigger.addEventListener('click', () => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      showDashboard();
-    } else {
-      loginModal.classList.add('show');
-    }
-  });
-
-  [modalClose, modalOverlay].forEach(el => {
-    el.addEventListener('click', () => loginModal.classList.remove('show'));
-  });
-
-  [dashboardClose, dashboardOverlay].forEach(el => {
-    el.addEventListener('click', () => dashboardModal.classList.remove('show'));
-  });
-
-  // Login Form Submission
-  loginForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const email = document.getElementById('login-email').value;
-    const password = document.getElementById('login-password').value;
-    const btn = document.getElementById('btn-login');
-
-    btn.disabled = true;
-    btn.textContent = 'Autenticando...';
-
-    try {
-      const response = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password })
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        localStorage.setItem('token', data.token);
-        loginModal.classList.remove('show');
-        showDashboard();
-      } else {
-        alert(data.error || 'Erro no login');
-      }
-    } catch (err) {
-      alert('Erro de conexão com o servidor');
-    } finally {
-      btn.disabled = false;
-      btn.textContent = 'Entrar';
-    }
-  });
-
-  // Logout
-  btnLogout.addEventListener('click', () => {
-    localStorage.removeItem('token');
-    dashboardModal.classList.remove('show');
-  });
-}
-
-async function showDashboard() {
-  const dashboardModal = document.getElementById('dashboard-modal');
-  const inscriptionsList = document.getElementById('inscriptions-list');
-  const totalEl = document.getElementById('total-inscriptions');
-  const token = localStorage.getItem('token');
-
-  if (!token) return;
-
-  dashboardModal.classList.add('show');
-  inscriptionsList.innerHTML = '<tr><td colspan="5" style="text-align:center">Carregando...</td></tr>';
-
-  try {
-    const response = await fetch('/api/admin/inscriptions', {
-      headers: { 'Authorization': `Bearer ${token}` }
-    });
-
-    if (response.status === 401) {
-      localStorage.removeItem('token');
-      dashboardModal.classList.remove('show');
-      alert('Sessão expirada. Faça login novamente.');
-      return;
-    }
-
-    const data = await response.json();
-    totalEl.textContent = data.length;
-
-    inscriptionsList.innerHTML = data.map(item => `
-      <tr>
-        <td>${new Date(item.created_at).toLocaleDateString('pt-BR')}</td>
-        <td><strong>${item.group_name}</strong></td>
-        <td>${item.city}</td>
-        <td>${item.responsible_name}</td>
-        <td>
-          <div style="font-size: 0.8rem">${item.email}</div>
-          <div style="font-size: 0.8rem">${item.phone}</div>
-        </td>
-      </tr>
-    `).join('') || '<tr><td colspan="5" style="text-align:center">Nenhuma inscrição encontrada.</td></tr>';
-
-  } catch (err) {
-    inscriptionsList.innerHTML = '<tr><td colspan="5" style="text-align:center; color:red">Erro ao carregar dados.</td></tr>';
-  }
-}
 
 function validateField(name, input, rules) {
   const errorEl = document.getElementById(`${name}-error`);
