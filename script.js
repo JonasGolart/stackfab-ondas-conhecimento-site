@@ -288,7 +288,8 @@ function initIndividualForm() {
   const fields = {
     'ind-nome': { required: true, minLength: 3, errorMsg: 'Nome é obrigatório.' },
     'ind-email': { required: true, pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, errorMsg: 'E-mail inválido.' },
-    'ind-telefone': { required: true, pattern: /^\(?\d{2}\)?\s?\d{4,5}-?\d{4}$/, errorMsg: 'Telefone inválido.' }
+    'ind-telefone': { required: true, pattern: /^\(?\d{2}\)?\s?\d{4,5}-?\d{4}$/, errorMsg: 'Telefone inválido.' },
+    'ind-grupo-escoteiro': { required: true, minLength: 3, errorMsg: 'Informe o nome do seu Grupo Escoteiro.' }
   };
 
   Object.keys(fields).forEach(name => {
@@ -330,7 +331,8 @@ function initIndividualForm() {
     const data = {
       nome: document.getElementById('ind-nome').value,
       email: document.getElementById('ind-email').value,
-      telefone: document.getElementById('ind-telefone').value
+      telefone: document.getElementById('ind-telefone').value,
+      grupo_escoteiro: document.getElementById('ind-grupo-escoteiro').value
     };
 
     fetch('/api/inscriptions/individual', {
@@ -359,6 +361,7 @@ function initIndividualForm() {
     });
   });
 }
+
 
 /* ══════════════════════════════════════════════════
    AUTHENTICATION & DASHBOARD

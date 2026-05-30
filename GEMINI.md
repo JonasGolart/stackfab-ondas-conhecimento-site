@@ -26,3 +26,9 @@
 [MESSAGES / HANDOVER]: Refatoração visual completa da Área de Membros, Login, Portal e Redefinição de Senha para o novo tema claro premium baseado em Bege Linho, Areia Claro e Marrom Terroso, com destaques elegantes em verde esmeralda. Corrigido de forma definitiva o bug de gravação física de materiais no servidor alterando o Multer para usar caminhos absolutos robustos com __dirname e adicionando a criação dinâmica resiliente da coluna "category" na inicialização da tabela. O seed administrativo agora configura explicitamente o papel de 'admin' para jonas@gmail.com, resolvendo redirecionamentos impróprios. Tudo homologado com sucesso absoluto localmente e sincronizado no GitHub remoto!
 
 **[Update - 2026-05-20]**: Incorporadas 329 novas questões (oriundas do simulado extraído do FalconsDX) ao arquivo `assets/banco_questoes.json`. Todas as categorias foram normalizadas e separadas rigorosamente em `Legislação`, `Técnica e Ética` e `Eletrônica`. Alterações submetidas no Github.
+
+**[Update - 2026-05-30]**: Implementadas melhorias completas no painel admin e formulário de inscrição:
+1. **Campo "Grupo Escoteiro" (texto livre)** adicionado à ficha de inscrição individual em `index.html` e `script.js` — campo obrigatório, capturado no backend e salvo na coluna `scout_group` (TEXT) da tabela `users` (migration segura com `IF NOT EXISTS` em `server.js`).
+2. **Dashboard Admin reescrito** (`dashboard.html`): 4 KPI cards (grupos, participantes, individuais, cidades), tabela de inscrições com badges Grupo/Individual e botão "Ver detalhes", Drawer lateral de detalhes com dados completos + lista de usuários individuais vinculados.
+3. **Seção de Estatísticas** com 4 gráficos Chart.js (CDN, sem npm): pizza de distribuição, barras top grupos, barras horizontais por cidade, linha de evolução temporal.
+4. **Backend**: novos endpoints `GET /api/admin/inscriptions/stats` e `GET /api/admin/users` em `inscriptionController.js` e `api.js`.

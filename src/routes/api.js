@@ -34,6 +34,8 @@ router.get('/categories', categoryController.getAllCategories); // Público para
 
 // Protected routes (Admin only)
 router.get('/admin/inscriptions', authMiddleware, inscriptionController.getAllInscriptions);
+router.get('/admin/inscriptions/stats', authMiddleware, inscriptionController.getInscriptionStats);
+router.get('/admin/users', authMiddleware, inscriptionController.getAllIndividualUsers);
 router.post('/admin/materials', authMiddleware, upload.single('file'), materialController.createMaterial);
 router.delete('/admin/materials/:id', authMiddleware, materialController.deleteMaterial);
 router.post('/admin/categories', authMiddleware, categoryController.createCategory);

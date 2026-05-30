@@ -44,6 +44,7 @@ const initDb = async () => {
 
       ALTER TABLE users ADD COLUMN IF NOT EXISTS reset_token TEXT;
       ALTER TABLE users ADD COLUMN IF NOT EXISTS reset_token_expires TIMESTAMP;
+      ALTER TABLE users ADD COLUMN IF NOT EXISTS scout_group TEXT;
 
       CREATE TABLE IF NOT EXISTS categories (
         id SERIAL PRIMARY KEY,

@@ -5,16 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Dashboard — Ondas do Conhecimento</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <style>
     :root {
-      --primary: #2e7d32; /* Verde floresta/esmeralda elegante */
+      --primary: #2e7d32;
       --primary-dark: #1b5e20;
-      --bg: #faf6ee; /* Areia bem claro e acolhedor */
-      --sidebar: #f0e6d2; /* Bege suave (como linho natural) */
-      --card: rgba(255, 255, 255, 0.85); /* Vidro claro translúcido */
-      --text: #2e2720; /* Marrom terroso bem escuro e legível */
-      --text-muted: #7d7060; /* Bege terroso fosco */
-      --border: rgba(46, 39, 32, 0.08); /* Borda terrosa super sutil */
+      --primary-light: rgba(46, 125, 50, 0.1);
+      --bg: #faf6ee;
+      --sidebar: #f0e6d2;
+      --card: rgba(255, 255, 255, 0.92);
+      --text: #2e2720;
+      --text-muted: #7d7060;
+      --border: rgba(46, 39, 32, 0.08);
+      --shadow: 0 8px 24px rgba(46, 39, 32, 0.06);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -23,361 +26,180 @@
     .dashboard { display: flex; height: 100vh; width: 100vw; }
 
     /* Sidebar */
-    .sidebar { width: 280px; background: var(--sidebar); border-right: 1px solid var(--border); padding: 2rem 1.5rem; display: flex; flex-direction: column; z-index: 10; }
+    .sidebar { width: 280px; background: var(--sidebar); border-right: 1px solid var(--border); padding: 2rem 1.5rem; display: flex; flex-direction: column; z-index: 10; flex-shrink: 0; }
     .sidebar-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 3rem; padding: 0 0.5rem; }
     .sidebar-header img { width: 40px; height: 40px; object-fit: contain; }
     .sidebar-header span { font-weight: 700; font-size: 1.1rem; letter-spacing: -0.02em; }
     .nav-item { display: flex; align-items: center; gap: 0.75rem; padding: 0.875rem 1rem; border-radius: 12px; color: var(--text-muted); text-decoration: none; transition: all 0.2s; margin-bottom: 0.5rem; font-weight: 500; cursor: pointer; }
-    .nav-item:hover, .nav-item.active { background: rgba(46, 39, 32, 0.04); color: var(--primary); }
+    .nav-item:hover, .nav-item.active { background: rgba(46, 125, 50, 0.08); color: var(--primary); }
+    .nav-item.active { font-weight: 600; }
 
     .logout-btn { margin-top: auto; background: rgba(239, 68, 68, 0.05); color: #dc2626; border: 1px solid rgba(239, 68, 68, 0.15); padding: 0.875rem; border-radius: 12px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.5rem; font-weight: 600; transition: all 0.2s; }
     .logout-btn:hover { background: rgba(239, 68, 68, 0.1); }
 
-    /* Main Content */
-    .main { flex: 1; display: flex; flex-direction: column; background: radial-gradient(circle at top right, rgba(46, 39, 32, 0.03), transparent); overflow-y: auto; padding: 2rem 3rem; }
+    /* Main */
+    .main { flex: 1; display: flex; flex-direction: column; overflow-y: auto; padding: 2rem 3rem; }
     .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2.5rem; }
     .header h1 { font-size: 1.75rem; font-weight: 800; }
+    .user-pill { background: var(--primary-light); color: var(--primary); padding: 0.5rem 1rem; border-radius: 100px; font-size: 0.85rem; font-weight: 600; }
 
     .content-section { display: none; }
     .content-section.active { display: block; }
 
-    /* Stats */
-    .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; margin-bottom: 2.5rem; }
-    .stat-card { background: var(--card); backdrop-filter: blur(10px); border: 1px solid var(--border); padding: 1.75rem; border-radius: 24px; }
-    .stat-card span { display: block; color: var(--text-muted); font-size: 0.875rem; margin-bottom: 0.75rem; }
-    .stat-card h2 { font-size: 2.5rem; font-weight: 800; color: var(--primary); }
+    /* KPI Stats Grid */
+    .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.25rem; margin-bottom: 2rem; }
+    .stat-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 1.5rem;
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.2s;
+    }
+    .stat-card:hover { transform: translateY(-2px); }
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 4px; height: 100%;
+      background: var(--primary);
+      border-radius: 4px 0 0 4px;
+    }
+    .stat-card span { display: block; color: var(--text-muted); font-size: 0.8rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; }
+    .stat-card h2 { font-size: 2.25rem; font-weight: 800; color: var(--primary); line-height: 1; }
+    .stat-card .stat-icon { position: absolute; bottom: 1rem; right: 1rem; opacity: 0.08; }
 
     /* Tables */
-    .card-box { background: var(--card); backdrop-filter: blur(10px); border: 1px solid var(--border); border-radius: 24px; overflow: hidden; margin-bottom: 2rem; }
-    .card-box.glass { box-shadow: 0 10px 30px rgba(46, 39, 32, 0.03); }
-    .card-header { padding: 1.5rem; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+    .card-box { background: var(--card); border: 1px solid var(--border); border-radius: 20px; overflow: hidden; margin-bottom: 2rem; box-shadow: var(--shadow); }
+    .card-header { padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+    .card-header h3 { font-weight: 700; font-size: 1rem; }
     table { width: 100%; border-collapse: collapse; text-align: left; }
-    th { padding: 1rem 1.5rem; background: rgba(46, 39, 32, 0.03); font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; }
-    td { padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--border); font-size: 0.9rem; }
+    th { padding: 0.875rem 1.5rem; background: rgba(46, 39, 32, 0.02); font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; }
+    td { padding: 1rem 1.5rem; border-bottom: 1px solid var(--border); font-size: 0.875rem; }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: rgba(46, 125, 50, 0.02); }
 
-    /* Form */
+    /* Materials form */
     .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; padding: 1.5rem; }
     .input-group { display: flex; flex-direction: column; gap: 0.5rem; }
-    input, select, textarea { background: #ffffff; border: 1px solid var(--border); padding: 0.75rem; border-radius: 8px; color: var(--text); }
+    .input-group label { font-size: 0.85rem; font-weight: 600; color: var(--text-muted); }
+    input, select, textarea { background: #fff; border: 1px solid var(--border); padding: 0.7rem 0.875rem; border-radius: 10px; color: var(--text); font-size: 0.875rem; font-family: 'Inter', sans-serif; }
     input:focus, select:focus, textarea:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.1); }
-    .btn-submit { background: var(--primary); color: white; border: none; padding: 0.75rem; border-radius: 8px; font-weight: 700; cursor: pointer; }
-
+    .btn-submit { background: var(--primary); color: white; border: none; padding: 0.75rem; border-radius: 10px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.6rem; transition: all 0.2s; font-size: 0.9rem; }
+    .btn-submit:hover { background: var(--primary-dark); transform: translateY(-1px); }
+    .btn-submit:disabled { background: rgba(46, 125, 50, 0.35); cursor: not-allowed; transform: none; }
     .delete-btn { color: #dc2626; cursor: pointer; background: none; border: none; font-weight: 600; }
 
     .btn-export {
       background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-      color: white;
-      border: none;
-      padding: 0.5rem 1.25rem;
-      border-radius: 12px;
-      font-weight: 600;
-      cursor: pointer;
-      font-size: 0.85rem;
-      transition: all 0.2s ease;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      box-shadow: 0 4px 12px rgba(46, 125, 50, 0.15);
+      color: white; border: none; padding: 0.5rem 1.1rem; border-radius: 10px;
+      font-weight: 600; cursor: pointer; font-size: 0.82rem; transition: all 0.2s;
+      display: flex; align-items: center; gap: 0.4rem;
+      box-shadow: 0 4px 12px rgba(46, 125, 50, 0.2);
     }
-    .btn-export:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 16px rgba(46, 125, 50, 0.3);
-    }
-    .btn-export:active {
-      transform: translateY(0);
-    }
+    .btn-export:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(46, 125, 50, 0.3); }
 
-    /* Materials Bento Grid Layout */
-    .materials-grid {
-      display: grid;
-      grid-template-columns: 1.2fr 0.8fr;
-      gap: 1.5rem;
-      margin-bottom: 2rem;
+    .btn-detail {
+      background: var(--primary-light); color: var(--primary); border: 1px solid rgba(46,125,50,0.2);
+      padding: 0.35rem 0.75rem; border-radius: 8px; font-size: 0.78rem; font-weight: 600;
+      cursor: pointer; transition: all 0.2s; white-space: nowrap;
     }
-    @media (max-width: 1024px) {
-      .materials-grid {
-        grid-template-columns: 1fr;
-      }
-    }
+    .btn-detail:hover { background: rgba(46,125,50,0.18); transform: translateX(2px); }
 
-    /* Category Manager List */
-    .category-manager-container {
-      padding: 1.5rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-      max-height: 230px;
-      overflow-y: auto;
-      flex: 1;
-    }
-    .category-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: #ffffff;
-      border: 1px solid var(--border);
-      padding: 0.6rem 0.875rem;
-      border-radius: 12px;
-      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    .category-item:hover {
-      background: rgba(46, 125, 50, 0.05);
-      border-color: rgba(46, 125, 50, 0.25);
-      transform: translateX(4px);
-    }
-    .category-name {
-      font-weight: 500;
-      font-size: 0.875rem;
-      color: var(--text);
-    }
-    .category-action {
-      background: none;
-      border: none;
-      color: #dc2626;
-      cursor: pointer;
-      opacity: 0.6;
-      transition: all 0.2s ease;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0.25rem;
-      border-radius: 6px;
-    }
-    .category-action:hover {
-      opacity: 1;
-      background: rgba(220, 38, 38, 0.1);
-      transform: scale(1.1);
-    }
-    .category-add-form {
-      display: flex;
-      gap: 0.5rem;
-      padding: 1.25rem 1.5rem;
-      border-top: 1px solid var(--border);
-      background: rgba(46, 39, 32, 0.01);
-    }
-    .category-add-input {
-      flex: 1;
-      background: #ffffff;
-      border: 1px solid var(--border);
-      padding: 0.6rem 0.875rem;
-      border-radius: 10px;
-      color: var(--text);
-      font-size: 0.85rem;
-      transition: border-color 0.2s;
-    }
-    .category-add-input:focus {
-      outline: none;
-      border-color: var(--primary);
-    }
-    .category-add-btn {
-      background: var(--primary);
-      color: white;
-      border: none;
-      padding: 0.6rem 1.25rem;
-      border-radius: 10px;
-      font-weight: 600;
-      cursor: pointer;
-      font-size: 0.85rem;
-      transition: all 0.2s ease;
-    }
-    .category-add-btn:hover {
-      background: var(--primary-dark);
-      transform: translateY(-1px);
-    }
+    /* Materials Bento */
+    .materials-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 1.5rem; margin-bottom: 2rem; }
+    @media (max-width: 1100px) { .materials-grid { grid-template-columns: 1fr; } }
 
-    /* Loader Spin Animation */
-    .btn-submit {
-      position: relative;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.6rem;
-      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    .btn-submit:disabled {
-      background: rgba(46, 125, 50, 0.35);
-      cursor: not-allowed;
-    }
-    .spinner {
-      width: 18px;
-      height: 18px;
-      border: 2.5px solid rgba(255, 255, 255, 0.3);
-      border-radius: 50%;
-      border-top-color: white;
-      animation: spin 0.8s linear infinite;
-      display: none;
-    }
-    .btn-submit.loading .spinner {
-      display: block;
-    }
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
+    /* Category Manager */
+    .category-manager-container { padding: 1.25rem 1.5rem; display: flex; flex-direction: column; gap: 0.625rem; max-height: 220px; overflow-y: auto; flex: 1; }
+    .category-item { display: flex; justify-content: space-between; align-items: center; background: #fff; border: 1px solid var(--border); padding: 0.55rem 0.875rem; border-radius: 10px; transition: all 0.25s; }
+    .category-item:hover { background: var(--primary-light); border-color: rgba(46,125,50,0.25); transform: translateX(3px); }
+    .category-name { font-weight: 500; font-size: 0.85rem; }
+    .category-action { background: none; border: none; color: #dc2626; cursor: pointer; opacity: 0.55; transition: all 0.2s; padding: 0.2rem; border-radius: 6px; }
+    .category-action:hover { opacity: 1; background: rgba(220,38,38,0.1); }
+    .category-add-form { display: flex; gap: 0.5rem; padding: 1rem 1.5rem; border-top: 1px solid var(--border); }
+    .category-add-input { flex: 1; background: #fff; border: 1px solid var(--border); padding: 0.55rem 0.875rem; border-radius: 10px; color: var(--text); font-size: 0.85rem; }
+    .category-add-input:focus { outline: none; border-color: var(--primary); }
+    .category-add-btn { background: var(--primary); color: white; border: none; padding: 0.55rem 1rem; border-radius: 10px; font-weight: 600; cursor: pointer; font-size: 0.85rem; transition: all 0.2s; }
+    .category-add-btn:hover { background: var(--primary-dark); }
 
-    /* Elegant Toast System */
-    #toast-container {
-      position: fixed;
-      bottom: 2rem;
-      right: 2rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-      z-index: 9999;
-    }
-    .toast {
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(12px);
-      border: 1px solid var(--border);
-      padding: 1rem 1.25rem;
-      border-radius: 16px;
-      color: var(--text);
-      display: flex;
-      align-items: flex-start;
-      gap: 0.875rem;
-      box-shadow: 0 20px 40px -15px rgba(46, 39, 32, 0.15);
-      transform: translateX(120%);
-      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-      min-width: 320px;
-      max-width: 400px;
-      position: relative;
-      overflow: hidden;
-    }
-    .toast.show {
-      transform: translateX(0);
-    }
-    .toast-success {
-      border-left: 4px solid var(--primary);
-    }
-    .toast-error {
-      border-left: 4px solid #dc2626;
-    }
-    .toast-icon {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 22px;
-      height: 22px;
-      border-radius: 50%;
-      margin-top: 0.1rem;
-      flex-shrink: 0;
-    }
-    .toast-success .toast-icon {
-      background: rgba(46, 125, 50, 0.12);
-      color: var(--primary);
-    }
-    .toast-error .toast-icon {
-      background: rgba(220, 38, 38, 0.12);
-      color: #dc2626;
-    }
-    .toast-content {
-      flex: 1;
-    }
-    .toast-title {
-      font-weight: 700;
-      font-size: 0.9rem;
-      margin-bottom: 0.2rem;
-      color: var(--text);
-    }
-    .toast-message {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      line-height: 1.4;
-    }
-    .toast-progress {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      height: 3px;
-      background: var(--primary);
-      width: 100%;
-    }
-    .toast-error .toast-progress {
-      background: #dc2626;
-    }
+    /* Spinner */
+    .spinner { width: 18px; height: 18px; border: 2.5px solid rgba(255,255,255,0.3); border-radius: 50%; border-top-color: white; animation: spin 0.8s linear infinite; display: none; }
+    .btn-submit.loading .spinner { display: block; }
+    @keyframes spin { to { transform: rotate(360deg); } }
 
-    /* Custom Confirm Modal System */
-    .modal-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(46, 39, 32, 0.35);
-      backdrop-filter: blur(8px);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 9998;
-      opacity: 0;
-      pointer-events: none;
-      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .modal-overlay.active {
-      opacity: 1;
-      pointer-events: auto;
-    }
-    .modal-card {
-      background: #ffffff;
-      border: 1px solid var(--border);
-      border-radius: 24px;
-      padding: 2rem;
-      width: 90%;
-      max-width: 440px;
-      box-shadow: 0 30px 60px -15px rgba(46, 39, 32, 0.2);
-      transform: scale(0.9);
-      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-      display: flex;
-      flex-direction: column;
-      gap: 1.25rem;
-    }
-    .modal-overlay.active .modal-card {
-      transform: scale(1);
-    }
-    .modal-title {
-      font-size: 1.25rem;
-      font-weight: 800;
-      color: var(--text);
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-    }
-    .modal-desc {
-      font-size: 0.925rem;
-      color: var(--text-muted);
-      line-height: 1.6;
-    }
-    .modal-actions {
-      display: flex;
-      justify-content: flex-end;
-      gap: 0.75rem;
-      margin-top: 0.5rem;
-    }
-    .modal-btn {
-      padding: 0.65rem 1.25rem;
-      border-radius: 12px;
-      font-weight: 600;
-      font-size: 0.875rem;
-      cursor: pointer;
-      border: none;
-      transition: all 0.2s ease;
-    }
-    .modal-btn-cancel {
-      background: rgba(46, 39, 32, 0.05);
-      color: var(--text);
-      border: 1px solid var(--border);
-    }
-    .modal-btn-cancel:hover {
-      background: rgba(46, 39, 32, 0.1);
-    }
-    .modal-btn-confirm {
-      background: #dc2626;
-      color: white;
-    }
-    .modal-btn-confirm:hover {
-      background: #b91c1c;
-      transform: translateY(-1px);
-    }
+    /* Toast */
+    #toast-container { position: fixed; bottom: 2rem; right: 2rem; display: flex; flex-direction: column; gap: 0.75rem; z-index: 9999; }
+    .toast { background: rgba(255,255,255,0.97); backdrop-filter: blur(12px); border: 1px solid var(--border); padding: 1rem 1.25rem; border-radius: 16px; color: var(--text); display: flex; align-items: flex-start; gap: 0.875rem; box-shadow: 0 20px 40px -15px rgba(46,39,32,0.18); transform: translateX(120%); transition: all 0.4s cubic-bezier(0.16,1,0.3,1); min-width: 300px; max-width: 400px; position: relative; overflow: hidden; }
+    .toast.show { transform: translateX(0); }
+    .toast-success { border-left: 4px solid var(--primary); }
+    .toast-error { border-left: 4px solid #dc2626; }
+    .toast-icon { display: flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; margin-top: 0.1rem; flex-shrink: 0; }
+    .toast-success .toast-icon { background: rgba(46,125,50,0.12); color: var(--primary); }
+    .toast-error .toast-icon { background: rgba(220,38,38,0.12); color: #dc2626; }
+    .toast-content { flex: 1; }
+    .toast-title { font-weight: 700; font-size: 0.875rem; margin-bottom: 0.15rem; }
+    .toast-message { font-size: 0.78rem; color: var(--text-muted); line-height: 1.4; }
+    .toast-progress { position: absolute; bottom: 0; left: 0; height: 3px; background: var(--primary); width: 100%; }
+    .toast-error .toast-progress { background: #dc2626; }
+
+    /* Confirm Modal */
+    .modal-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(46,39,32,0.35); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; z-index: 9998; opacity: 0; pointer-events: none; transition: all 0.3s; }
+    .modal-overlay.active { opacity: 1; pointer-events: auto; }
+    .modal-card { background: #fff; border: 1px solid var(--border); border-radius: 24px; padding: 2rem; width: 90%; max-width: 440px; box-shadow: 0 30px 60px -15px rgba(46,39,32,0.2); transform: scale(0.9); transition: all 0.35s cubic-bezier(0.16,1,0.3,1); display: flex; flex-direction: column; gap: 1.25rem; }
+    .modal-overlay.active .modal-card { transform: scale(1); }
+    .modal-title { font-size: 1.2rem; font-weight: 800; display: flex; align-items: center; gap: 0.6rem; }
+    .modal-desc { font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; }
+    .modal-actions { display: flex; justify-content: flex-end; gap: 0.75rem; margin-top: 0.5rem; }
+    .modal-btn { padding: 0.65rem 1.25rem; border-radius: 12px; font-weight: 600; font-size: 0.875rem; cursor: pointer; border: none; transition: all 0.2s; }
+    .modal-btn-cancel { background: rgba(46,39,32,0.05); color: var(--text); border: 1px solid var(--border); }
+    .modal-btn-cancel:hover { background: rgba(46,39,32,0.1); }
+    .modal-btn-confirm { background: #dc2626; color: white; }
+    .modal-btn-confirm:hover { background: #b91c1c; transform: translateY(-1px); }
+
+    /* ─── DETAIL DRAWER ─── */
+    .drawer-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(46,39,32,0.25); backdrop-filter: blur(4px); z-index: 8000; opacity: 0; pointer-events: none; transition: opacity 0.35s; }
+    .drawer-overlay.active { opacity: 1; pointer-events: auto; }
+    .drawer { position: fixed; top: 0; right: 0; width: 480px; max-width: 95vw; height: 100vh; background: #fff; box-shadow: -20px 0 60px rgba(46,39,32,0.12); z-index: 8001; transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.16,1,0.3,1); display: flex; flex-direction: column; overflow: hidden; }
+    .drawer.active { transform: translateX(0); }
+    .drawer-header { padding: 1.5rem 2rem; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; background: var(--sidebar); flex-shrink: 0; }
+    .drawer-title { font-size: 1.1rem; font-weight: 700; }
+    .drawer-close { background: none; border: none; cursor: pointer; color: var(--text-muted); padding: 0.4rem; border-radius: 8px; transition: all 0.2s; display: flex; align-items: center; }
+    .drawer-close:hover { background: rgba(46,39,32,0.08); color: var(--text); }
+    .drawer-body { flex: 1; overflow-y: auto; padding: 1.75rem 2rem; display: flex; flex-direction: column; gap: 1.5rem; }
+    .drawer-section-title { font-size: 0.72rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.75rem; }
+    .drawer-field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.875rem; }
+    .drawer-field { display: flex; flex-direction: column; gap: 0.25rem; }
+    .drawer-field label { font-size: 0.72rem; color: var(--text-muted); font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; }
+    .drawer-field span { font-size: 0.9rem; font-weight: 600; color: var(--text); }
+    .drawer-field span.full-width { grid-column: span 2; }
+    .drawer-tag { display: inline-block; padding: 0.2rem 0.6rem; border-radius: 6px; font-size: 0.78rem; font-weight: 600; background: var(--primary-light); color: var(--primary); }
+    .drawer-users-list { display: flex; flex-direction: column; gap: 0.5rem; }
+    .drawer-user-item { display: flex; align-items: center; gap: 0.875rem; padding: 0.75rem 1rem; background: #faf6ee; border-radius: 12px; border: 1px solid var(--border); }
+    .drawer-user-avatar { width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 0.9rem; flex-shrink: 0; }
+    .drawer-user-info { flex: 1; }
+    .drawer-user-name { font-weight: 600; font-size: 0.875rem; }
+    .drawer-user-email { font-size: 0.78rem; color: var(--text-muted); }
+    .drawer-user-group { font-size: 0.72rem; color: var(--primary); font-weight: 600; }
+    .drawer-empty { color: var(--text-muted); font-size: 0.85rem; text-align: center; padding: 1.5rem; background: #faf6ee; border-radius: 12px; border: 1px dashed var(--border); }
+    .drawer-divider { height: 1px; background: var(--border); }
+
+    /* ─── STATISTICS SECTION ─── */
+    .stats-bento { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem; }
+    .stats-bento .chart-card { background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 1.5rem; box-shadow: var(--shadow); }
+    .stats-bento .chart-card.wide { grid-column: span 2; }
+    @media (max-width: 1100px) { .stats-bento { grid-template-columns: 1fr; } .stats-bento .chart-card.wide { grid-column: span 1; } }
+    .chart-card-title { font-size: 0.9rem; font-weight: 700; margin-bottom: 0.25rem; }
+    .chart-card-subtitle { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 1.25rem; }
+    .chart-wrapper { position: relative; height: 240px; }
+    .chart-wrapper.tall { height: 300px; }
+
+    /* Badge */
+    .badge { display: inline-flex; align-items: center; padding: 0.2rem 0.625rem; border-radius: 6px; font-size: 0.75rem; font-weight: 600; }
+    .badge-group { background: rgba(46,125,50,0.1); color: var(--primary); }
+    .badge-individual { background: rgba(59,130,246,0.1); color: #3b82f6; }
   </style>
 </head>
 <body>
@@ -388,75 +210,154 @@
         <span>Ondas Admin</span>
       </div>
       <nav class="sidebar-nav">
-        <div class="nav-item active" onclick="showSection('inscriptions')">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+        <div class="nav-item active" id="nav-inscriptions" onclick="showSection('inscriptions', this)">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
           <span>Inscrições</span>
         </div>
-        <div class="nav-item" onclick="showSection('materials')">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+        <div class="nav-item" id="nav-stats" onclick="showSection('stats', this)">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><line x1="2" y1="20" x2="22" y2="20"/></svg>
+          <span>Estatísticas</span>
+        </div>
+        <div class="nav-item" id="nav-materials" onclick="showSection('materials', this)">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
           <span>Materiais</span>
         </div>
       </nav>
-      <button onclick="logout()" class="logout-btn">Sair do Painel</button>
+      <button onclick="logout()" class="logout-btn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        Sair do Painel
+      </button>
     </aside>
 
     <main class="main">
-      <!-- SEÇÃO INSCRIÇÕES -->
+      <!-- ═══ SEÇÃO: INSCRIÇÕES ═══ -->
       <div id="section-inscriptions" class="content-section active">
         <header class="header">
           <h1>Inscrições Recebidas</h1>
           <div class="user-pill" id="user-info-1">Admin</div>
         </header>
+
         <div class="stats">
-          <div class="stat-card"><span>Total de Grupos</span><h2 id="total-count">0</h2></div>
-          <div class="stat-card"><span>Participantes Totais</span><h2 id="total-participants">0</h2></div>
+          <div class="stat-card">
+            <span>Grupos Inscritos</span>
+            <h2 id="total-count">—</h2>
+            <div class="stat-icon"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+          </div>
+          <div class="stat-card">
+            <span>Participantes (Grupos)</span>
+            <h2 id="total-participants">—</h2>
+            <div class="stat-icon"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></div>
+          </div>
+          <div class="stat-card">
+            <span>Inscritos Individuais</span>
+            <h2 id="total-individual">—</h2>
+            <div class="stat-icon"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+          </div>
+          <div class="stat-card">
+            <span>Cidades Representadas</span>
+            <h2 id="total-cities">—</h2>
+            <div class="stat-icon"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+          </div>
         </div>
+
         <div class="card-box">
           <div class="card-header">
             <h3>Lista de Candidatos</h3>
             <button onclick="exportToCSV()" class="btn-export">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
               Exportar CSV
             </button>
           </div>
           <table>
-            <thead><tr><th>Grupo</th><th>Responsável</th><th>E-mail</th><th>Participantes</th><th>Data</th></tr></thead>
+            <thead>
+              <tr>
+                <th>Grupo / Nome</th>
+                <th>Tipo</th>
+                <th>Responsável</th>
+                <th>Cidade</th>
+                <th>Participantes</th>
+                <th>Data</th>
+                <th>Detalhes</th>
+              </tr>
+            </thead>
             <tbody id="inscriptions-list"></tbody>
           </table>
         </div>
       </div>
 
-      <!-- SEÇÃO MATERIAIS -->
+      <!-- ═══ SEÇÃO: ESTATÍSTICAS ═══ -->
+      <div id="section-stats" class="content-section">
+        <header class="header">
+          <h1>Estatísticas & Analytics</h1>
+          <div class="user-pill" id="user-info-stats">Admin</div>
+        </header>
+
+        <!-- KPI Cards (replicados aqui também) -->
+        <div class="stats" id="stats-kpis">
+          <div class="stat-card"><span>Grupos Inscritos</span><h2 id="s-total-count">—</h2></div>
+          <div class="stat-card"><span>Participantes (Grupos)</span><h2 id="s-total-participants">—</h2></div>
+          <div class="stat-card"><span>Inscritos Individuais</span><h2 id="s-total-individual">—</h2></div>
+          <div class="stat-card"><span>Cidades Representadas</span><h2 id="s-total-cities">—</h2></div>
+        </div>
+
+        <!-- Charts Bento -->
+        <div class="stats-bento">
+          <!-- Pizza: Tipo de Inscrição -->
+          <div class="chart-card">
+            <div class="chart-card-title">Distribuição por Tipo</div>
+            <div class="chart-card-subtitle">Inscrições em grupo vs. individuais</div>
+            <div class="chart-wrapper"><canvas id="chart-distribution"></canvas></div>
+          </div>
+
+          <!-- Barras: Top Grupos por Participantes -->
+          <div class="chart-card">
+            <div class="chart-card-title">Top Grupos por Participantes</div>
+            <div class="chart-card-subtitle">Grupos com maior número declarado</div>
+            <div class="chart-wrapper"><canvas id="chart-top-groups"></canvas></div>
+          </div>
+
+          <!-- Barras Horizontais: Participantes por Cidade -->
+          <div class="chart-card wide">
+            <div class="chart-card-title">Participantes por Cidade</div>
+            <div class="chart-card-subtitle">Alcance geográfico do projeto — soma de participantes por município</div>
+            <div class="chart-wrapper tall"><canvas id="chart-by-city"></canvas></div>
+          </div>
+
+          <!-- Linha: Evolução das Inscrições -->
+          <div class="chart-card wide">
+            <div class="chart-card-title">Evolução das Inscrições (30 dias)</div>
+            <div class="chart-card-subtitle">Número de novas inscrições por dia nos últimos 30 dias</div>
+            <div class="chart-wrapper"><canvas id="chart-over-time"></canvas></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ SEÇÃO: MATERIAIS ═══ -->
       <div id="section-materials" class="content-section">
         <header class="header">
           <h1>Gerenciar Materiais</h1>
           <div class="user-pill" id="user-info-2">Admin</div>
         </header>
-        
+
         <div class="materials-grid">
-          <!-- Card de Adicionar PDF -->
           <div class="card-box" style="margin-bottom: 0;">
             <div class="card-header"><h3>Adicionar Novo PDF</h3></div>
             <form id="material-form" class="form-grid">
               <div class="input-group"><label>Título</label><input type="text" name="title" required placeholder="Ex: Manual de Radiotransmissão"></div>
-              <div class="input-group"><label>Categoria</label><select name="category" id="material-category-select" required><option value="" disabled selected>Carregando categorias...</option></select></div>
-              <div class="input-group" style="grid-column: span 2;"><label>Descrição</label><textarea name="description" rows="2" placeholder="Digite uma breve descrição deste conteúdo de estudo..."></textarea></div>
+              <div class="input-group"><label>Categoria</label><select name="category" id="material-category-select" required><option value="" disabled selected>Carregando...</option></select></div>
+              <div class="input-group" style="grid-column: span 2;"><label>Descrição</label><textarea name="description" rows="2" placeholder="Breve descrição do conteúdo..."></textarea></div>
               <div class="input-group" style="grid-column: span 2;"><label>Arquivo PDF</label><input type="file" name="file" accept=".pdf" required></div>
               <button type="submit" id="material-submit-btn" class="btn-submit" style="grid-column: span 2;">
-                <div class="spinner"></div>
-                <span>Salvar Material</span>
+                <div class="spinner"></div><span>Salvar Material</span>
               </button>
             </form>
           </div>
 
-          <!-- Card de Gerenciar Categorias -->
           <div class="card-box" style="margin-bottom: 0; display: flex; flex-direction: column;">
             <div class="card-header"><h3>Categorias Disponíveis</h3></div>
-            <div class="category-manager-container" id="category-manager-list">
-              <!-- Inserido dinamicamente via JS -->
-            </div>
+            <div class="category-manager-container" id="category-manager-list"></div>
             <form id="category-add-form" class="category-add-form">
-              <input type="text" id="category-add-input" class="category-add-input" required placeholder="Nova categoria (ex: Simulados)...">
+              <input type="text" id="category-add-input" class="category-add-input" required placeholder="Nova categoria...">
               <button type="submit" class="category-add-btn">Adicionar</button>
             </form>
           </div>
@@ -464,7 +365,7 @@
 
         <div class="card-box">
           <div class="card-header"><h3>Materiais Publicados</h3></div>
-          <table style="min-width: 100%;">
+          <table>
             <thead><tr><th>Título</th><th>Categoria</th><th>Data</th><th>Ações</th></tr></thead>
             <tbody id="materials-list"></tbody>
           </table>
@@ -473,15 +374,27 @@
     </main>
   </div>
 
+  <!-- ═══ DRAWER DE DETALHE ═══ -->
+  <div id="drawer-overlay" class="drawer-overlay" onclick="closeDrawer()"></div>
+  <div id="detail-drawer" class="drawer">
+    <div class="drawer-header">
+      <span class="drawer-title" id="drawer-title">Detalhes da Inscrição</span>
+      <button class="drawer-close" onclick="closeDrawer()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="drawer-body" id="drawer-body">
+      <!-- preenchido dinamicamente -->
+    </div>
+  </div>
+
   <!-- Toast Container -->
   <div id="toast-container"></div>
 
-  <!-- Custom Confirm Modal -->
+  <!-- Confirm Modal -->
   <div id="confirm-modal" class="modal-overlay">
     <div class="modal-card">
-      <h3 class="modal-title" id="confirm-modal-title">
-        <!-- SVG dynamic -->
-      </h3>
+      <h3 class="modal-title" id="confirm-modal-title"></h3>
       <p class="modal-desc" id="confirm-modal-desc"></p>
       <div class="modal-actions">
         <button class="modal-btn modal-btn-cancel" id="confirm-modal-cancel">Cancelar</button>
@@ -494,187 +407,430 @@
     const token = localStorage.getItem('token');
     const user = JSON.parse(localStorage.getItem('user') || '{}');
 
-    if (!token || (user.role !== 'admin' && user.role !== 'developer')) window.location.href = 'login.html';
+    if (!token || (user.role !== 'admin' && user.role !== 'developer')) {
+      window.location.href = 'login.html';
+    }
 
     document.getElementById('user-info-1').innerText = user.name || 'Admin';
     document.getElementById('user-info-2').innerText = user.name || 'Admin';
+    document.getElementById('user-info-stats').innerText = user.name || 'Admin';
 
-    // Toast Notification helper
+    /* ─────────────── TOAST ─────────────── */
     function showToast(title, message, type = 'success') {
       const container = document.getElementById('toast-container');
       const toast = document.createElement('div');
       toast.className = `toast toast-${type}`;
-      
-      const iconSvg = type === 'success' 
-        ? `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>`
-        : `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>`;
-
+      const iconSvg = type === 'success'
+        ? `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>`
+        : `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>`;
       toast.innerHTML = `
         <div class="toast-icon">${iconSvg}</div>
         <div class="toast-content">
           <div class="toast-title">${title}</div>
           <div class="toast-message">${message}</div>
         </div>
-        <div class="toast-progress"></div>
-      `;
-      
+        <div class="toast-progress"></div>`;
       container.appendChild(toast);
-      
-      // Trigger reflow/animation
       setTimeout(() => toast.classList.add('show'), 10);
-      
-      // Progress bar animation
-      const progressBar = toast.querySelector('.toast-progress');
-      progressBar.style.transition = 'width 4000ms linear';
-      setTimeout(() => progressBar.style.width = '0%', 20);
-
-      setTimeout(() => {
-        toast.classList.remove('show');
-        setTimeout(() => toast.remove(), 400);
-      }, 4000);
+      const pb = toast.querySelector('.toast-progress');
+      pb.style.transition = 'width 4000ms linear';
+      setTimeout(() => pb.style.width = '0%', 20);
+      setTimeout(() => { toast.classList.remove('show'); setTimeout(() => toast.remove(), 400); }, 4000);
     }
 
-    // Custom Confirm Modal Helper
+    /* ─────────────── CONFIRM MODAL ─────────────── */
     let confirmResolve = null;
     function showConfirm(title, desc) {
       document.getElementById('confirm-modal-title').innerHTML = `
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
-        ${title}
-      `;
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        ${title}`;
       document.getElementById('confirm-modal-desc').innerText = desc;
-      const modal = document.getElementById('confirm-modal');
-      modal.classList.add('active');
-      
-      return new Promise((resolve) => {
-        confirmResolve = resolve;
-      });
+      document.getElementById('confirm-modal').classList.add('active');
+      return new Promise(resolve => { confirmResolve = resolve; });
     }
-    
-    document.getElementById('confirm-modal-cancel').onclick = () => {
-      document.getElementById('confirm-modal').classList.remove('active');
-      if (confirmResolve) confirmResolve(false);
-    };
-    
-    document.getElementById('confirm-modal-confirm').onclick = () => {
-      document.getElementById('confirm-modal').classList.remove('active');
-      if (confirmResolve) confirmResolve(true);
-    };
+    document.getElementById('confirm-modal-cancel').onclick = () => { document.getElementById('confirm-modal').classList.remove('active'); if (confirmResolve) confirmResolve(false); };
+    document.getElementById('confirm-modal-confirm').onclick = () => { document.getElementById('confirm-modal').classList.remove('active'); if (confirmResolve) confirmResolve(true); };
 
-    function showSection(id) {
+    /* ─────────────── NAVIGATION ─────────────── */
+    function showSection(id, navEl) {
       document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
       document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
       document.getElementById(`section-${id}`).classList.add('active');
-      event.currentTarget.classList.add('active');
-      if(id === 'inscriptions') loadInscriptions();
-      if(id === 'materials') {
-        loadMaterials();
-        loadCategories();
-      }
+      (navEl || document.getElementById(`nav-${id}`)).classList.add('active');
+      if (id === 'inscriptions') loadInscriptions();
+      if (id === 'stats') loadStats();
+      if (id === 'materials') { loadMaterials(); loadCategories(); }
     }
 
+    /* ─────────────── INSCRIPTIONS ─────────────── */
     let inscriptionsData = [];
 
     async function loadInscriptions() {
       try {
-        const res = await fetch('/api/admin/inscriptions', { headers: { 'Authorization': `Bearer ${token}` } });
-        if (!res.ok) throw new Error('Não autorizado');
-        const data = await res.json();
+        const [insRes, usersRes] = await Promise.all([
+          fetch('/api/admin/inscriptions', { headers: { 'Authorization': `Bearer ${token}` } }),
+          fetch('/api/admin/users', { headers: { 'Authorization': `Bearer ${token}` } })
+        ]);
+
+        if (!insRes.ok) throw new Error('Não autorizado');
+        const data = await insRes.json();
+        const users = usersRes.ok ? await usersRes.json() : [];
         inscriptionsData = data;
+
         const list = document.getElementById('inscriptions-list');
         list.innerHTML = '';
-        let parts = 0;
+
+        let groupParts = 0;
+        const cities = new Set();
+
         data.forEach(ins => {
-          parts += parseInt(ins.participants_count || 0);
-          list.innerHTML += `<tr><td>${ins.group_name}</td><td>${ins.responsible_name}</td><td>${ins.email}</td><td>${ins.participants_count}</td><td>${new Date(ins.created_at).toLocaleDateString('pt-BR')}</td></tr>`;
+          groupParts += parseInt(ins.participants_count || 0);
+          if (ins.city && ins.city !== 'N/A') cities.add(ins.city);
+          const isIndividual = ins.city === 'N/A';
+          const typeBadge = isIndividual
+            ? `<span class="badge badge-individual">Individual</span>`
+            : `<span class="badge badge-group">Grupo</span>`;
+          list.innerHTML += `
+            <tr>
+              <td><strong>${ins.group_name}</strong></td>
+              <td>${typeBadge}</td>
+              <td>${ins.responsible_name}</td>
+              <td>${isIndividual ? '—' : ins.city}</td>
+              <td style="font-weight:700; color:var(--primary)">${ins.participants_count}</td>
+              <td style="color:var(--text-muted); font-size:0.8rem">${new Date(ins.created_at).toLocaleDateString('pt-BR')}</td>
+              <td><button class="btn-detail" onclick="openDrawer(${ins.id})">Ver detalhes</button></td>
+            </tr>`;
         });
-        document.getElementById('total-count').innerText = data.length;
-        document.getElementById('total-participants').innerText = parts;
+
+        document.getElementById('total-count').innerText = data.filter(i => i.city !== 'N/A').length;
+        document.getElementById('total-participants').innerText = groupParts;
+        document.getElementById('total-individual').innerText = users.length;
+        document.getElementById('total-cities').innerText = cities.size;
+
       } catch (err) {
         console.error(err);
-        showToast('Erro', 'Não foi possível carregar a lista de inscrições.', 'error');
+        showToast('Erro', 'Não foi possível carregar as inscrições.', 'error');
       }
     }
 
+    /* ─────────────── DRAWER ─────────────── */
+    async function openDrawer(id) {
+      const ins = inscriptionsData.find(i => i.id === id);
+      if (!ins) return;
+
+      document.getElementById('drawer-title').innerText = ins.group_name;
+      document.getElementById('drawer-body').innerHTML = `
+        <div>
+          <div class="drawer-section-title">Informações do Grupo / Inscrição</div>
+          <div class="drawer-field-grid">
+            <div class="drawer-field">
+              <label>Nome</label>
+              <span>${ins.group_name}</span>
+            </div>
+            <div class="drawer-field">
+              <label>Cidade</label>
+              <span>${ins.city === 'N/A' ? '—' : ins.city}</span>
+            </div>
+            <div class="drawer-field">
+              <label>Responsável</label>
+              <span>${ins.responsible_name}</span>
+            </div>
+            <div class="drawer-field">
+              <label>Participantes declarados</label>
+              <span style="color:var(--primary); font-size:1.2rem">${ins.participants_count}</span>
+            </div>
+            <div class="drawer-field">
+              <label>E-mail</label>
+              <span>${ins.email}</span>
+            </div>
+            <div class="drawer-field">
+              <label>Telefone</label>
+              <span>${ins.phone || '—'}</span>
+            </div>
+            <div class="drawer-field" style="grid-column: span 2;">
+              <label>Data de Inscrição</label>
+              <span>${new Date(ins.created_at).toLocaleDateString('pt-BR', { weekday:'long', year:'numeric', month:'long', day:'numeric' })}</span>
+            </div>
+            ${ins.observations ? `
+            <div class="drawer-field" style="grid-column: span 2;">
+              <label>Observações</label>
+              <span style="white-space: pre-wrap; font-size:0.85rem; font-weight:400; line-height:1.5">${ins.observations}</span>
+            </div>` : ''}
+          </div>
+        </div>
+
+        <div class="drawer-divider"></div>
+
+        <div>
+          <div class="drawer-section-title">Usuários Individuais Vinculados</div>
+          <div id="drawer-users-container">
+            <div class="drawer-empty">Carregando usuários...</div>
+          </div>
+        </div>`;
+
+      document.getElementById('detail-drawer').classList.add('active');
+      document.getElementById('drawer-overlay').classList.add('active');
+
+      // Carrega usuários vinculados a este grupo
+      try {
+        const usersRes = await fetch('/api/admin/users', { headers: { 'Authorization': `Bearer ${token}` } });
+        const allUsers = usersRes.ok ? await usersRes.json() : [];
+        const groupName = ins.group_name.toLowerCase().trim();
+        const linked = allUsers.filter(u =>
+          u.scout_group && u.scout_group.toLowerCase().trim().includes(groupName.substring(0, 10))
+        );
+
+        const container = document.getElementById('drawer-users-container');
+        if (linked.length === 0) {
+          container.innerHTML = `<div class="drawer-empty">Nenhum usuário individual encontrado vinculado a este grupo.<br><small style="color:var(--text-muted)">Usuários individuais precisam informar o nome do grupo no cadastro.</small></div>`;
+        } else {
+          container.innerHTML = `<div class="drawer-users-list">${linked.map(u => `
+            <div class="drawer-user-item">
+              <div class="drawer-user-avatar">${u.name ? u.name[0].toUpperCase() : '?'}</div>
+              <div class="drawer-user-info">
+                <div class="drawer-user-name">${u.name}</div>
+                <div class="drawer-user-email">${u.email}</div>
+                ${u.scout_group ? `<div class="drawer-user-group">${u.scout_group}</div>` : ''}
+              </div>
+            </div>`).join('')}</div>`;
+        }
+      } catch {
+        document.getElementById('drawer-users-container').innerHTML = `<div class="drawer-empty">Não foi possível carregar os usuários.</div>`;
+      }
+    }
+
+    function closeDrawer() {
+      document.getElementById('detail-drawer').classList.remove('active');
+      document.getElementById('drawer-overlay').classList.remove('active');
+    }
+
+    /* ─────────────── CSV EXPORT ─────────────── */
     function exportToCSV() {
       if (!inscriptionsData || inscriptionsData.length === 0) {
         showToast('Erro', 'Nenhuma inscrição para exportar!', 'error');
         return;
       }
-
-      // Definir as colunas em português
-      const headers = ['Grupo', 'Cidade', 'Participantes', 'Responsável', 'E-mail', 'Telefone', 'Observações', 'Data de Inscrição'];
-      
-      const csvRows = [];
-      // Adicionar o cabeçalho
-      csvRows.push(headers.join(';'));
-
-      // Adicionar as linhas de dados
+      const headers = ['Grupo/Nome', 'Tipo', 'Cidade', 'Participantes', 'Responsável', 'E-mail', 'Telefone', 'Observações', 'Data'];
+      const rows = [headers.join(';')];
       inscriptionsData.forEach(ins => {
-        const values = [
-          ins.group_name || '',
-          ins.city || '',
-          ins.participants_count || '0',
-          ins.responsible_name || '',
-          ins.email || '',
-          ins.phone || '',
-          (ins.observations || '').replace(/[\r\n]+/g, ' '),
-          new Date(ins.created_at).toLocaleDateString('pt-BR')
-        ];
-        
-        const escapedValues = values.map(val => {
-          const formatted = String(val).replace(/"/g, '""');
-          return `"${formatted}"`;
-        });
-        
-        csvRows.push(escapedValues.join(';'));
+        const tipo = ins.city === 'N/A' ? 'Individual' : 'Grupo';
+        const vals = [ins.group_name, tipo, ins.city === 'N/A' ? '' : ins.city, ins.participants_count, ins.responsible_name, ins.email, ins.phone || '', (ins.observations || '').replace(/[\r\n]+/g, ' '), new Date(ins.created_at).toLocaleDateString('pt-BR')];
+        rows.push(vals.map(v => `"${String(v).replace(/"/g, '""')}"`).join(';'));
       });
-
-      // Gerar o arquivo CSV com o BOM de UTF-8 (essencial para acentuação correta no Excel em português)
-      const csvContent = '\uFEFF' + csvRows.join('\n');
-      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-      
+      const content = '\uFEFF' + rows.join('\n');
+      const blob = new Blob([content], { type: 'text/csv;charset=utf-8;' });
       const link = document.createElement('a');
-      const url = URL.createObjectURL(blob);
-      link.setAttribute('href', url);
-      
-      const dateStr = new Date().toISOString().slice(0, 10);
-      link.setAttribute('download', `inscricoes_ondas_conhecimento_${dateStr}.csv`);
-      link.style.visibility = 'hidden';
+      link.href = URL.createObjectURL(blob);
+      link.download = `inscricoes_ondas_${new Date().toISOString().slice(0,10)}.csv`;
+      link.style.display = 'none';
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
-      showToast('Exportação concluída', 'O arquivo CSV foi gerado com sucesso.', 'success');
+      showToast('Exportação concluída', 'CSV gerado com sucesso!', 'success');
     }
 
+    /* ─────────────── STATISTICS ─────────────── */
+    let chartsInitialized = false;
+    let chartInstances = {};
+
+    const CHART_COLORS = {
+      green: 'rgba(46, 125, 50, 0.85)',
+      greenLight: 'rgba(46, 125, 50, 0.15)',
+      greenBorder: 'rgba(46, 125, 50, 1)',
+      blue: 'rgba(59, 130, 246, 0.85)',
+      blueLight: 'rgba(59, 130, 246, 0.15)',
+      amber: 'rgba(245, 158, 11, 0.85)',
+      rose: 'rgba(244, 63, 94, 0.85)',
+      palette: [
+        'rgba(46,125,50,0.8)', 'rgba(59,130,246,0.8)', 'rgba(245,158,11,0.8)',
+        'rgba(244,63,94,0.8)', 'rgba(168,85,247,0.8)', 'rgba(20,184,166,0.8)',
+        'rgba(251,146,60,0.8)', 'rgba(99,102,241,0.8)', 'rgba(236,72,153,0.8)',
+        'rgba(34,197,94,0.8)'
+      ]
+    };
+
+    const CHART_DEFAULTS = {
+      font: { family: 'Inter, sans-serif', size: 12 },
+      color: '#7d7060',
+      plugins: {
+        legend: { labels: { font: { family: 'Inter, sans-serif', size: 12 }, color: '#2e2720' } },
+        tooltip: { bodyFont: { family: 'Inter, sans-serif' }, titleFont: { family: 'Inter, sans-serif', weight: 'bold' } }
+      }
+    };
+
+    Chart.defaults.font.family = 'Inter, sans-serif';
+    Chart.defaults.color = '#7d7060';
+
+    async function loadStats() {
+      try {
+        // Also update KPI cards
+        const [insRes, usersRes] = await Promise.all([
+          fetch('/api/admin/inscriptions', { headers: { 'Authorization': `Bearer ${token}` } }),
+          fetch('/api/admin/users', { headers: { 'Authorization': `Bearer ${token}` } })
+        ]);
+        const insData = insRes.ok ? await insRes.json() : [];
+        const users = usersRes.ok ? await usersRes.json() : [];
+
+        const groupParts = insData.reduce((s, i) => s + parseInt(i.participants_count || 0), 0);
+        const cities = new Set(insData.filter(i => i.city !== 'N/A').map(i => i.city));
+        document.getElementById('s-total-count').innerText = insData.filter(i => i.city !== 'N/A').length;
+        document.getElementById('s-total-participants').innerText = groupParts;
+        document.getElementById('s-total-individual').innerText = users.length;
+        document.getElementById('s-total-cities').innerText = cities.size;
+
+        const res = await fetch('/api/admin/inscriptions/stats', { headers: { 'Authorization': `Bearer ${token}` } });
+        if (!res.ok) throw new Error('Erro ao buscar stats');
+        const stats = await res.json();
+
+        renderDistributionChart(stats.distribution);
+        renderTopGroupsChart(stats.topGroups);
+        renderByCityChart(stats.byCity);
+        renderOverTimeChart(stats.overTime);
+        chartsInitialized = true;
+
+      } catch (err) {
+        console.error(err);
+        showToast('Erro', 'Não foi possível carregar as estatísticas.', 'error');
+      }
+    }
+
+    function destroyChart(id) {
+      if (chartInstances[id]) { chartInstances[id].destroy(); delete chartInstances[id]; }
+    }
+
+    function renderDistributionChart(dist) {
+      destroyChart('distribution');
+      const ctx = document.getElementById('chart-distribution').getContext('2d');
+      const groupTotal = dist.groupParticipants || 0;
+      const indTotal = dist.individuals || 0;
+      chartInstances['distribution'] = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          labels: [`Participantes de Grupos (${groupTotal})`, `Inscritos Individuais (${indTotal})`],
+          datasets: [{ data: [groupTotal, indTotal], backgroundColor: [CHART_COLORS.green, CHART_COLORS.blue], borderWidth: 0, hoverOffset: 8 }]
+        },
+        options: {
+          responsive: true, maintainAspectRatio: false,
+          plugins: { ...CHART_DEFAULTS.plugins, legend: { position: 'bottom', labels: { padding: 16, font: { family:'Inter', size:12 } } } },
+          cutout: '62%'
+        }
+      });
+    }
+
+    function renderTopGroupsChart(topGroups) {
+      destroyChart('top-groups');
+      if (!topGroups || topGroups.length === 0) return;
+      const ctx = document.getElementById('chart-top-groups').getContext('2d');
+      chartInstances['top-groups'] = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: topGroups.map(g => g.group_name.length > 20 ? g.group_name.substring(0,18)+'…' : g.group_name),
+          datasets: [{
+            label: 'Participantes',
+            data: topGroups.map(g => g.participants_count),
+            backgroundColor: CHART_COLORS.palette,
+            borderRadius: 8,
+            borderSkipped: false
+          }]
+        },
+        options: {
+          responsive: true, maintainAspectRatio: false,
+          plugins: { ...CHART_DEFAULTS.plugins, legend: { display: false } },
+          scales: {
+            x: { grid: { display: false }, ticks: { font: { size:10 }, maxRotation: 30 } },
+            y: { grid: { color: 'rgba(46,39,32,0.06)' }, ticks: { stepSize: 5 }, beginAtZero: true }
+          }
+        }
+      });
+    }
+
+    function renderByCityChart(byCity) {
+      destroyChart('by-city');
+      if (!byCity || byCity.length === 0) return;
+      const ctx = document.getElementById('chart-by-city').getContext('2d');
+      chartInstances['by-city'] = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: byCity.map(c => c.city),
+          datasets: [{
+            label: 'Participantes',
+            data: byCity.map(c => parseInt(c.total)),
+            backgroundColor: CHART_COLORS.green,
+            borderColor: CHART_COLORS.greenBorder,
+            borderWidth: 0,
+            borderRadius: 8,
+            borderSkipped: false
+          }]
+        },
+        options: {
+          indexAxis: 'y',
+          responsive: true, maintainAspectRatio: false,
+          plugins: { ...CHART_DEFAULTS.plugins, legend: { display: false } },
+          scales: {
+            x: { grid: { color: 'rgba(46,39,32,0.06)' }, beginAtZero: true },
+            y: { grid: { display: false }, ticks: { font: { size: 12 } } }
+          }
+        }
+      });
+    }
+
+    function renderOverTimeChart(overTime) {
+      destroyChart('over-time');
+      if (!overTime || overTime.length === 0) return;
+      const ctx = document.getElementById('chart-over-time').getContext('2d');
+      chartInstances['over-time'] = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: overTime.map(d => new Date(d.date).toLocaleDateString('pt-BR', { day:'2-digit', month:'2-digit' })),
+          datasets: [{
+            label: 'Inscrições recebidas',
+            data: overTime.map(d => parseInt(d.count)),
+            fill: true,
+            backgroundColor: CHART_COLORS.greenLight,
+            borderColor: CHART_COLORS.greenBorder,
+            borderWidth: 2.5,
+            tension: 0.4,
+            pointBackgroundColor: CHART_COLORS.greenBorder,
+            pointRadius: 4,
+            pointHoverRadius: 6
+          }]
+        },
+        options: {
+          responsive: true, maintainAspectRatio: false,
+          plugins: { ...CHART_DEFAULTS.plugins, legend: { display: false } },
+          scales: {
+            x: { grid: { display: false }, ticks: { font: { size:11 } } },
+            y: { grid: { color: 'rgba(46,39,32,0.06)' }, beginAtZero: true, ticks: { stepSize: 1 } }
+          }
+        }
+      });
+    }
+
+    /* ─────────────── MATERIALS ─────────────── */
     async function loadMaterials() {
       try {
         const res = await fetch('/api/materials');
         const data = await res.json();
         const list = document.getElementById('materials-list');
-        list.innerHTML = '';
-        
         if (data.length === 0) {
-          list.innerHTML = '<tr><td colspan="4" style="text-align: center; color: var(--text-muted); padding: 1.5rem 0;">Nenhum material publicado.</td></tr>';
+          list.innerHTML = '<tr><td colspan="4" style="text-align:center;color:var(--text-muted);padding:1.5rem">Nenhum material publicado.</td></tr>';
           return;
         }
-
-        data.forEach(m => {
-          list.innerHTML += `<tr>
+        list.innerHTML = data.map(m => `
+          <tr>
             <td>${m.title}</td>
-            <td><span class="user-pill" style="font-size: 0.75rem; background: rgba(76, 175, 80, 0.15); color: var(--primary); padding: 0.25rem 0.5rem; border-radius: 8px;">${m.category}</span></td>
-            <td>${new Date(m.created_at).toLocaleDateString('pt-BR')}</td>
+            <td><span class="badge badge-group" style="font-size:0.75rem">${m.category}</span></td>
+            <td style="color:var(--text-muted)">${new Date(m.created_at).toLocaleDateString('pt-BR')}</td>
             <td>
-              <div style="display: flex; gap: 0.5rem;">
-                <a href="${m.file_path}" target="_blank" class="btn-export" style="text-decoration: none; padding: 0.4rem 0.8rem; font-size: 0.75rem;">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg> Baixar
+              <div style="display:flex;gap:0.5rem">
+                <a href="${m.file_path}" target="_blank" class="btn-export" style="text-decoration:none;padding:0.35rem 0.75rem;font-size:0.75rem">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Baixar
                 </a>
-                <button class="delete-btn" style="padding: 0.4rem 0.8rem; background: rgba(220,38,38,0.1); border-radius: 8px;" onclick="deleteMaterial(${m.id})">Remover</button>
+                <button class="delete-btn" style="padding:0.35rem 0.75rem;background:rgba(220,38,38,0.08);border-radius:8px" onclick="deleteMaterial(${m.id})">Remover</button>
               </div>
             </td>
-          </tr>`;
-        });
+          </tr>`).join('');
       } catch (err) {
-        console.error(err);
         showToast('Erro', 'Não foi possível carregar os materiais.', 'error');
       }
     }
@@ -683,156 +839,94 @@
       try {
         const res = await fetch('/api/categories');
         const categories = await res.json();
-        
-        // Populate Form Select dropdown
         const select = document.getElementById('material-category-select');
         select.innerHTML = '<option value="" disabled selected>Selecione uma categoria...</option>';
-        categories.forEach(cat => {
-          select.innerHTML += `<option value="${cat.name}">${cat.name}</option>`;
-        });
-        
-        // Populate Category Manager List
+        categories.forEach(cat => { select.innerHTML += `<option value="${cat.name}">${cat.name}</option>`; });
+
         const listContainer = document.getElementById('category-manager-list');
-        listContainer.innerHTML = '';
-        
         if (categories.length === 0) {
-          listContainer.innerHTML = '<div style="color: var(--text-muted); font-size: 0.85rem; text-align: center; padding: 1.5rem 0;">Nenhuma categoria disponível.</div>';
+          listContainer.innerHTML = '<div style="color:var(--text-muted);font-size:0.85rem;text-align:center;padding:1rem">Nenhuma categoria.</div>';
           return;
         }
-        
-        categories.forEach(cat => {
-          listContainer.innerHTML += `
-            <div class="category-item">
-              <span class="category-name">${cat.name}</span>
-              <button class="category-action" onclick="deleteCategory(${cat.id}, '${cat.name}')">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
-              </button>
-            </div>
-          `;
-        });
+        listContainer.innerHTML = categories.map(cat => `
+          <div class="category-item">
+            <span class="category-name">${cat.name}</span>
+            <button class="category-action" onclick="deleteCategory(${cat.id}, '${cat.name}')">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+            </button>
+          </div>`).join('');
       } catch (err) {
-        console.error('Erro ao carregar categorias:', err);
         showToast('Erro', 'Não foi possível carregar as categorias.', 'error');
       }
     }
 
-    // Inline category creation
     document.getElementById('category-add-form').onsubmit = async (e) => {
       e.preventDefault();
       const input = document.getElementById('category-add-input');
       const name = input.value;
-      
       try {
         const res = await fetch('/api/admin/categories', {
           method: 'POST',
-          headers: { 
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}` 
-          },
+          headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
           body: JSON.stringify({ name })
         });
-        
-        if (res.ok) {
-          showToast('Categoria Criada', `Categoria "${name}" criada com sucesso!`, 'success');
-          input.value = '';
-          await loadCategories();
-        } else {
-          const data = await res.json();
-          showToast('Erro ao Criar', data.error || 'Erro desconhecido', 'error');
-        }
-      } catch (err) {
-        console.error(err);
-        showToast('Erro', 'Erro de conexão com o servidor', 'error');
-      }
+        if (res.ok) { showToast('Categoria Criada', `"${name}" adicionada!`, 'success'); input.value = ''; await loadCategories(); }
+        else { const d = await res.json(); showToast('Erro', d.error || 'Erro desconhecido', 'error'); }
+      } catch { showToast('Erro', 'Erro de conexão', 'error'); }
     };
 
     async function deleteCategory(id, name) {
-      const confirmed = await showConfirm('Remover Categoria', `Deseja realmente remover a categoria "${name}"? Os materiais sob ela não serão removidos.`);
+      const confirmed = await showConfirm('Remover Categoria', `Deseja remover a categoria "${name}"?`);
       if (!confirmed) return;
-      
       try {
-        const res = await fetch(`/api/admin/categories/${id}`, {
-          method: 'DELETE',
-          headers: { 'Authorization': `Bearer ${token}` }
-        });
-        
-        if (res.ok) {
-          showToast('Categoria Removida', 'Categoria excluída com sucesso!', 'success');
-          await loadCategories();
-        } else {
-          showToast('Erro', 'Não foi possível remover a categoria', 'error');
-        }
-      } catch (err) {
-        console.error(err);
-        showToast('Erro', 'Erro de conexão com o servidor', 'error');
-      }
+        const res = await fetch(`/api/admin/categories/${id}`, { method: 'DELETE', headers: { 'Authorization': `Bearer ${token}` } });
+        if (res.ok) { showToast('Removida', 'Categoria excluída!', 'success'); await loadCategories(); }
+        else showToast('Erro', 'Não foi possível remover.', 'error');
+      } catch { showToast('Erro', 'Erro de conexão', 'error'); }
     }
 
     document.getElementById('material-form').onsubmit = async (e) => {
       e.preventDefault();
-      
       const btn = document.getElementById('material-submit-btn');
-      btn.classList.add('loading');
-      btn.disabled = true;
-      
+      btn.classList.add('loading'); btn.disabled = true;
       const formData = new FormData(e.target);
-      
       try {
         const res = await fetch('/api/admin/materials', {
           method: 'POST',
           headers: { 'Authorization': `Bearer ${token}` },
           body: formData
         });
-        
         if (res.ok) {
-          showToast('Material Salvo', 'O arquivo PDF foi publicado com sucesso!', 'success');
+          showToast('Material Salvo', 'PDF publicado com sucesso!', 'success');
           e.target.reset();
-          // Reset dropdown
           document.getElementById('material-category-select').selectedIndex = 0;
           await loadMaterials();
         } else {
-          const data = await res.json();
-          showToast('Falha no Upload', data.error || 'Não foi possível salvar o material.', 'error');
+          const d = await res.json();
+          showToast('Falha no Upload', d.error || 'Erro desconhecido', 'error');
         }
-      } catch (err) {
-        console.error(err);
-        showToast('Erro', 'Ocorreu um erro de rede durante o envio.', 'error');
-      } finally {
-        btn.classList.remove('loading');
-        btn.disabled = false;
-      }
+      } catch { showToast('Erro', 'Erro de rede durante o envio.', 'error'); }
+      finally { btn.classList.remove('loading'); btn.disabled = false; }
     };
 
     async function deleteMaterial(id) {
-      const confirmed = await showConfirm('Excluir Material', 'Deseja realmente remover este material? Esta ação não pode ser desfeita.');
+      const confirmed = await showConfirm('Excluir Material', 'Deseja remover este material? Esta ação não pode ser desfeita.');
       if (!confirmed) return;
-      
       try {
-        const res = await fetch(`/api/admin/materials/${id}`, { 
-          method: 'DELETE', 
-          headers: { 'Authorization': `Bearer ${token}` } 
-        });
-        
-        if (res.ok) {
-          showToast('Material Excluído', 'O material foi removido com sucesso!', 'success');
-          await loadMaterials();
-        } else {
-          showToast('Erro', 'Não foi possível excluir o material.', 'error');
-        }
-      } catch (err) {
-        console.error(err);
-        showToast('Erro', 'Erro de conexão com o servidor', 'error');
-      }
+        const res = await fetch(`/api/admin/materials/${id}`, { method: 'DELETE', headers: { 'Authorization': `Bearer ${token}` } });
+        if (res.ok) { showToast('Material Excluído', 'Removido com sucesso!', 'success'); await loadMaterials(); }
+        else showToast('Erro', 'Não foi possível excluir.', 'error');
+      } catch { showToast('Erro', 'Erro de conexão', 'error'); }
     }
 
-    function logout() { 
-      localStorage.removeItem('token'); 
+    function logout() {
+      localStorage.removeItem('token');
       localStorage.removeItem('user');
-      window.location.href = 'login.html'; 
+      window.location.href = 'login.html';
     }
 
+    // Inicialização
     loadInscriptions();
   </script>
-
 </body>
 </html>
