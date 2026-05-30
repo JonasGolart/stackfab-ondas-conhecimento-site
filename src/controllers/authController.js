@@ -3,6 +3,8 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 const emailService = require('../utils/emailService');
+const telegram = require('../utils/telegramService');
+
 
 exports.login = async (req, res) => {
   const { email, password } = req.body;
@@ -108,6 +110,14 @@ exports.forgotPassword = async (req, res) => {
 
     // Enviar e-mail usando Resend
     const emailSent = await emailService.sendEmail(email, 'Ondas do Conhecimento - Recuperação de Senha', emailHtml);
+
+    // Notificar admin via Telegram
+    await telegram.sendTelegramMessage(
+      `🔑 <b>Solicitação de Recuperação de Senha</b>\n\n` +
+      `📧 <b>E-mail:</b> ${email}\n` +
+      `👤 <b>Usuário:</b> ${user.name || 'Sem nome'}\n` +
+      `⏱️ Token válido por: 1 hora`
+    );
 
     if (emailSent) {
       res.json({ message: 'Se o e-mail estiver cadastrado, um link de recuperação será enviado.' });
