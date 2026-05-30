@@ -29,6 +29,11 @@
 - [x] Correção de contraste e legibilidade do botão "Ver PDF" do Portal do Participante
 - [x] Correção definitiva do upload de arquivos de materiais com caminhos absolutos do Multer, criação de pastas e resiliência de banco
 - [x] Correção do seed administrativo garantindo a role 'admin' de jonas@gmail.com para controle de acesso
+- [x] Implementação do Workflow de Aprovação de Inscrições: Status de aprovação, envio condicional do Token de Acesso apenas após aprovação do admin
+- [x] Integração com Telegram Bot para Notificações ao Admin de novas solicitações
+- [x] Botões de Aprovar e Recusar/Excluir inscrições silenciosamente no Dashboard
+- [x] Ocultar/Excluir aba de inscrição por grupos, mantendo apenas fluxo unificado de inscrição individual
+- [x] Bloqueio de login e reset de senha para usuários com status 'pending'
 
 ### 📋 Próximos Passos
 1. Acompanhar a sincronização do deploy contínuo automático no painel do Coolify.
