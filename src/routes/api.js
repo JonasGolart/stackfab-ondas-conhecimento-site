@@ -45,5 +45,6 @@ router.post('/admin/categories', authMiddleware, categoryController.createCatego
 router.delete('/admin/categories/:id', authMiddleware, categoryController.deleteCategory);
 router.post('/admin/access-tokens/send', authMiddleware, accessTokenController.sendAccessTokensByEmail);
 router.get('/admin/access-tokens', authMiddleware, accessTokenController.listAccessTokenDispatches);
+router.post('/admin/access-tokens/:id/resend', authMiddleware, accessTokenController.resendAccessTokenDispatch);
 
 module.exports = router;

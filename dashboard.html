@@ -1105,6 +1105,10 @@
           : blocked
             ? '<span class="badge" style="background:rgba(245,158,11,0.12);color:#b45309;">Bloqueado</span>'
             : '<span class="badge" style="background:rgba(220,38,38,0.12);color:#dc2626;">Falhou</span>';
+        const canResend = item.status === 'failed' && !!item.id;
+        const resendBtn = canResend
+          ? `<button class="btn-detail" style="margin-left:0.5rem;padding:0.2rem 0.6rem" onclick="resendTokenEmail(${item.id})">Reenviar</button>`
+          : '';
         const detail = item.error || item.error_message || (ok ? 'Token enviado com sucesso' : 'Falha no envio');
         const tokenCode = item.token || item.code || '—';
         const sentAtRaw = item.sent_at || item.sentAt;
@@ -1115,11 +1119,36 @@
           <tr>
             <td>${item.email}</td>
             <td><span style="font-family:monospace;font-weight:700;letter-spacing:0.04em">${tokenCode}</span></td>
-            <td>${statusHtml}</td>
+            <td>${statusHtml}${resendBtn}</td>
             <td style="color:var(--text-muted)">${sentAt}</td>
             <td style="color:var(--text-muted)">${detail}</td>
           </tr>`;
       }).join('');
+    }
+
+    async function resendTokenEmail(dispatchId) {
+      const confirmed = await showConfirm(
+        'Reenviar Token',
+        'Deseja reenviar este token para o e-mail do registro selecionado?'
+      );
+      if (!confirmed) return;
+
+      try {
+        const res = await fetch(`/api/admin/access-tokens/${dispatchId}/resend`, {
+          method: 'POST',
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        const data = await res.json();
+        if (!res.ok) {
+          showToast('Erro', data.error || 'Não foi possível reenviar o token.', 'error');
+          return;
+        }
+
+        await loadTokenEmailHistory();
+        showToast('Reenviado', 'Token reenviado com sucesso.', 'success');
+      } catch (err) {
+        showToast('Erro', 'Falha de conexão ao reenviar token.', 'error');
+      }
     }
 
     async function loadTokenEmailHistory() {

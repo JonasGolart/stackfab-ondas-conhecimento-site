@@ -276,3 +276,100 @@ exports.listAccessTokenDispatches = async (req, res) => {
     return res.status(500).json({ error: 'Erro ao buscar histórico de envios.' });
   }
 };
+
+exports.resendAccessTokenDispatch = async (req, res) => {
+  const requesterRole = String(req.user?.role || '').toLowerCase();
+  if (requesterRole !== 'admin' && requesterRole !== 'developer') {
+    return res.status(403).json({ error: 'Acesso negado' });
+  }
+
+  const id = Number(req.params?.id);
+  if (!Number.isInteger(id) || id <= 0) {
+    return res.status(400).json({ error: 'ID de envio invalido.' });
+  }
+
+  try {
+    const dispatchResult = await pool.query(
+      'SELECT id, code, email, user_id, status, expires_at FROM email_access_tokens WHERE id = $1',
+      [id]
+    );
+
+    if (dispatchResult.rows.length === 0) {
+      return res.status(404).json({ error: 'Registro de envio nao encontrado.' });
+    }
+
+    const dispatch = dispatchResult.rows[0];
+    if (dispatch.status === 'blocked') {
+      return res.status(400).json({ error: 'Este registro foi bloqueado e nao pode ser reenviado.' });
+    }
+
+    const email = normalizeEmail(dispatch.email);
+    const accessCode = String(dispatch.code || '').trim();
+    if (!email || !accessCode) {
+      return res.status(400).json({ error: 'Registro invalido para reenvio.' });
+    }
+
+    const userLookup = await pool.query('SELECT id, role FROM users WHERE LOWER(email) = $1', [email]);
+    let userId = dispatch.user_id || null;
+
+    if (userLookup.rows.length > 0) {
+      const existing = userLookup.rows[0];
+      const existingRole = String(existing.role || '').toLowerCase();
+      if (existingRole === 'admin' || existingRole === 'developer') {
+        await pool.query(
+          'UPDATE email_access_tokens SET status = $1, error_message = $2 WHERE id = $3',
+          ['blocked', 'Nao e permitido sobrescrever credenciais de administrador.', id]
+        );
+        return res.status(400).json({ error: 'Nao e permitido reenviar token para administrador.' });
+      }
+
+      const hashedPassword = await bcrypt.hash(accessCode, 10);
+      await pool.query(
+        'UPDATE users SET password = $1, status = $2, updated_at = NOW() WHERE id = $3',
+        [hashedPassword, 'approved', existing.id]
+      );
+      userId = existing.id;
+    } else {
+      const defaultName = email.split('@')[0];
+      const hashedPassword = await bcrypt.hash(accessCode, 10);
+      const created = await pool.query(
+        'INSERT INTO users (name, email, password, role, status) VALUES ($1, $2, $3, $4, $5) RETURNING id',
+        [defaultName, email, hashedPassword, 'participant', 'approved']
+      );
+      userId = created.rows[0].id;
+    }
+
+    const protocol = req.protocol || 'https';
+    const host = req.get('host');
+    const portalUrl = `${protocol}://${host}/login.html`;
+    const html = buildTokenEmailHtml({
+      tokenCode: accessCode,
+      portalUrl,
+      expiresAt: dispatch.expires_at,
+      customMessage: 'Reenvio solicitado pelo administrador.'
+    });
+
+    const sendResult = await emailService.sendEmailDetailed(
+      email,
+      'Token de acesso - Ondas do Conhecimento (Reenvio)',
+      html
+    );
+
+    if (!sendResult.ok) {
+      await pool.query(
+        'UPDATE email_access_tokens SET status = $1, error_message = $2, user_id = $3 WHERE id = $4',
+        ['failed', sendResult.error || 'Falha ao enviar e-mail.', userId, id]
+      );
+      return res.status(400).json({ error: sendResult.error || 'Falha ao reenviar e-mail.' });
+    }
+
+    await pool.query(
+      'UPDATE email_access_tokens SET status = $1, sent_at = NOW(), error_message = NULL, user_id = $2 WHERE id = $3',
+      ['sent', userId, id]
+    );
+
+    return res.json({ message: 'Token reenviado com sucesso.', id, email, token: accessCode });
+  } catch (err) {
+    return res.status(500).json({ error: 'Erro interno ao reenviar token.' });
+  }
+};
