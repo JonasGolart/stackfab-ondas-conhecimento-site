@@ -2,7 +2,7 @@ const pool = require('./src/config/db');
 
 async function testLogin() {
   try {
-    const result = await pool.query('SELECT id, email, role, name FROM users WHERE email = $1', ['jonasjonas@gmail.com']);
+    const result = await pool.query('SELECT id, email, role, name FROM users WHERE LOWER(email) = $1', ['jonasjonas@golart']);
     console.log('--- DADOS DO USUÁRIO ---');
     console.log(JSON.stringify(result.rows[0], null, 2));
     

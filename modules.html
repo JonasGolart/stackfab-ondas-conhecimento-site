@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Módulos de Aula — Ondas do Conhecimento</title>
+  <link rel="icon" type="image/png" href="assets/img/favicon.png">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -70,7 +71,8 @@
   <script>
     const token = localStorage.getItem('token');
     const user = JSON.parse(localStorage.getItem('user')||'{}');
-    if(!token || String(user.role).toLowerCase()!=='participant'){
+    const normalizedRole = String(user.role || '').trim().toLowerCase();
+    if(!token || normalizedRole !== 'participant'){
       window.location.href='login.html';
     }
     document.getElementById('user-name').innerText=user.name||'Participante';

@@ -13,7 +13,7 @@ const seed = async () => {
   try {
     // Inserir ou atualizar o usuário admin, incluindo o campo 'name' e definindo a role como 'admin'
     await pool.query(
-      'INSERT INTO users (name, email, password, role) VALUES ($1, $2, $3, $4) ON CONFLICT (email) DO UPDATE SET name = $1, password = $3, role = $4',
+      "INSERT INTO users (name, email, password, role, status) VALUES ($1, $2, $3, $4, 'approved') ON CONFLICT (email) DO UPDATE SET name = $1, password = $3, role = $4, status = 'approved'",
       [name, email, hashedPassword, role]
     );
 

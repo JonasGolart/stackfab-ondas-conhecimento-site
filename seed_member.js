@@ -3,13 +3,13 @@ const bcrypt = require('bcryptjs');
 
 async function seed() {
   const name = 'Escoteiro Teste';
-  const email = 'jonasjonas@gmail.com';
+  const email = 'jonasjonas@golart';
   const password = '260778';
   const hashedPassword = await bcrypt.hash(password, 10);
 
   try {
     await pool.query(
-      'INSERT INTO users (name, email, password) VALUES ($1, $2, $3) ON CONFLICT (email) DO UPDATE SET password = $3, name = $1',
+      "INSERT INTO users (name, email, password, role, status) VALUES ($1, $2, $3, 'participant', 'approved') ON CONFLICT (email) DO UPDATE SET password = $3, name = $1, role = 'participant', status = 'approved'",
       [name, email, hashedPassword]
     );
     console.log(`✅ Usuário ${email} criado/atualizado com sucesso!`);

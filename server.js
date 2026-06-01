@@ -71,6 +71,19 @@ const initDb = async () => {
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       );
 
+      CREATE TABLE IF NOT EXISTS email_access_tokens (
+        id SERIAL PRIMARY KEY,
+        code TEXT UNIQUE NOT NULL,
+        email TEXT NOT NULL,
+        user_id INTEGER REFERENCES users(id) ON DELETE SET NULL,
+        created_by INTEGER REFERENCES users(id) ON DELETE SET NULL,
+        status TEXT DEFAULT 'active',
+        expires_at TIMESTAMP NOT NULL,
+        sent_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        used_at TIMESTAMP,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      );
+
       ALTER TABLE materials ADD COLUMN IF NOT EXISTS category TEXT;
     `);
     

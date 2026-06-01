@@ -264,14 +264,15 @@ exports.getAllIndividualUsers = async (req, res) => {
  */
 exports.createIndividualInscription = async (req, res) => {
   const { nome, email, telefone, grupo_escoteiro, cidade, responsavel_menor } = req.body;
+  const normalizedEmail = String(email || '').trim().toLowerCase();
 
-  if (!nome || !email || !telefone || !grupo_escoteiro || !cidade) {
+  if (!nome || !normalizedEmail || !telefone || !grupo_escoteiro || !cidade) {
     return res.status(400).json({ error: 'Preencha todos os campos obrigatórios.' });
   }
 
   try {
     // Verificar duplicidade
-    const userCheck = await pool.query('SELECT id FROM users WHERE email = $1', [email]);
+    const userCheck = await pool.query('SELECT id FROM users WHERE LOWER(email) = $1', [normalizedEmail]);
     if (userCheck.rows.length > 0) {
       return res.status(400).json({ error: 'Este e-mail já está cadastrado no sistema.' });
     }
@@ -282,19 +283,19 @@ exports.createIndividualInscription = async (req, res) => {
     // Salvar usuário
     await pool.query(
       'INSERT INTO users (name, email, password, role, scout_group, city, guardian_name, status) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)',
-      [nome, email, hashedPassword, 'participant', grupo_escoteiro || null, cidade || null, responsavel_menor || null, 'pending']
+      [nome, normalizedEmail, hashedPassword, 'participant', grupo_escoteiro || null, cidade || null, responsavel_menor || null, 'pending']
     );
 
     // Registrar na tabela inscriptions (auditoria)
     await pool.query(
       'INSERT INTO inscriptions (responsible_name, group_name, city, participants_count, email, phone, guardian_name, status) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)',
-      [nome, grupo_escoteiro || 'Individual', cidade || 'N/A', 1, email, telefone, responsavel_menor || null, 'pending']
+      [nome, grupo_escoteiro || 'Individual', cidade || 'N/A', 1, normalizedEmail, telefone, responsavel_menor || null, 'pending']
     );
 
     // ── E-mail de recebimento (em análise) ──
     const htmlEmail = emailRecebimentoIndividual({ nome });
     await emailService.sendEmail(
-      email,
+      normalizedEmail,
       '⏳ Inscrição Recebida — Ondas do Conhecimento',
       htmlEmail
     );
@@ -305,7 +306,7 @@ exports.createIndividualInscription = async (req, res) => {
       grupoEscoteiro: grupo_escoteiro,
       cidade,
       telefone,
-      email,
+      email: normalizedEmail,
       responsavelMenor: responsavel_menor
     });
 

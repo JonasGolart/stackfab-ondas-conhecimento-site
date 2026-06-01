@@ -8,9 +8,10 @@ const telegram = require('../utils/telegramService');
 
 exports.login = async (req, res) => {
   const { email, password } = req.body;
+  const normalizedEmail = String(email || '').trim().toLowerCase();
 
   try {
-    const result = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
+    const result = await pool.query('SELECT * FROM users WHERE LOWER(email) = $1', [normalizedEmail]);
     const user = result.rows[0];
 
     if (user && await bcrypt.compare(password, user.password)) {
@@ -43,12 +44,13 @@ exports.login = async (req, res) => {
 
 exports.register = async (req, res) => {
   const { email, password } = req.body;
+  const normalizedEmail = String(email || '').trim().toLowerCase();
   const hashedPassword = await bcrypt.hash(password, 10);
 
   try {
     const result = await pool.query(
       'INSERT INTO users (email, password) VALUES ($1, $2) RETURNING id, email',
-      [email, hashedPassword]
+      [normalizedEmail, hashedPassword]
     );
     res.status(201).json(result.rows[0]);
   } catch (err) {
@@ -59,14 +61,15 @@ exports.register = async (req, res) => {
 
 exports.forgotPassword = async (req, res) => {
   const { email } = req.body;
+  const normalizedEmail = String(email || '').trim().toLowerCase();
 
-  if (!email) {
+  if (!normalizedEmail) {
     return res.status(400).json({ error: 'E-mail é obrigatório' });
   }
 
   try {
     // Verificar se o usuário existe
-    const userResult = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
+    const userResult = await pool.query('SELECT * FROM users WHERE LOWER(email) = $1', [normalizedEmail]);
     const user = userResult.rows[0];
 
     if (!user) {
@@ -117,12 +120,12 @@ exports.forgotPassword = async (req, res) => {
     `;
 
     // Enviar e-mail usando Resend
-    const emailSent = await emailService.sendEmail(email, 'Ondas do Conhecimento - Recuperação de Senha', emailHtml);
+    const emailSent = await emailService.sendEmail(normalizedEmail, 'Ondas do Conhecimento - Recuperação de Senha', emailHtml);
 
     // Notificar admin via Telegram
     await telegram.sendTelegramMessage(
       `🔑 <b>Solicitação de Recuperação de Senha</b>\n\n` +
-      `📧 <b>E-mail:</b> ${email}\n` +
+      `📧 <b>E-mail:</b> ${normalizedEmail}\n` +
       `👤 <b>Usuário:</b> ${user.name || 'Sem nome'}\n` +
       `⏱️ Token válido por: 1 hora`
     );

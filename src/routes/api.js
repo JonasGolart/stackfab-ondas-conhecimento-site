@@ -6,6 +6,7 @@ const inscriptionController = require('../controllers/inscriptionController');
 const authController = require('../controllers/authController');
 const materialController = require('../controllers/materialController');
 const categoryController = require('../controllers/categoryController');
+const accessTokenController = require('../controllers/accessTokenController');
 const authMiddleware = require('../middlewares/authMiddleware');
 
 // Configuração do Multer para Uploads
@@ -42,5 +43,6 @@ router.post('/admin/materials', authMiddleware, upload.single('file'), materialC
 router.delete('/admin/materials/:id', authMiddleware, materialController.deleteMaterial);
 router.post('/admin/categories', authMiddleware, categoryController.createCategory);
 router.delete('/admin/categories/:id', authMiddleware, categoryController.deleteCategory);
+router.post('/admin/access-tokens/send', authMiddleware, accessTokenController.sendAccessTokensByEmail);
 
 module.exports = router;

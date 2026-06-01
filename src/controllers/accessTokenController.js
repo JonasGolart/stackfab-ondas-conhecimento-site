@@ -1,0 +1,212 @@
+const pool = require('../config/db');
+const bcrypt = require('bcryptjs');
+const emailService = require('../utils/emailService');
+
+function normalizeEmail(email) {
+  return String(email || '').trim().toLowerCase();
+}
+
+function generateAccessCode(size = 8) {
+  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  let out = '';
+  for (let i = 0; i < size; i++) {
+    out += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return out;
+}
+
+function buildTokenEmailHtml({ tokenCode, portalUrl, expiresAt, customMessage }) {
+  const expiresDate = new Date(expiresAt).toLocaleDateString('pt-BR', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric'
+  });
+
+  return `
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body style="margin:0;padding:0;font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background-color:#f0f4f8;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="max-width:600px;margin:0 auto;background-color:#ffffff;">
+    <tr>
+      <td style="background:linear-gradient(135deg,#1e40af,#3b82f6);padding:2rem;text-align:center;">
+        <h1 style="color:#ffffff;margin:0;font-size:1.4rem;font-weight:700;">Ondas do Conhecimento</h1>
+        <p style="color:rgba(255,255,255,0.85);margin:0.5rem 0 0 0;font-size:0.88rem;">Token de acesso enviado pelo administrador</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td style="padding:2rem 2rem 1rem 2rem;">
+        <h2 style="color:#1e293b;margin:0 0 0.6rem 0;font-size:1.2rem;">Seu acesso foi liberado</h2>
+        <p style="color:#64748b;margin:0;line-height:1.6;">
+          Use o token abaixo para entrar no portal. Esse codigo funciona como sua senha de primeiro acesso.
+        </p>
+      </td>
+    </tr>
+
+    <tr>
+      <td style="padding:0 2rem;">
+        <table width="100%" cellpadding="0" cellspacing="0" style="background:linear-gradient(135deg,#eff6ff,#dbeafe);border:2px dashed #3b82f6;border-radius:12px;margin:1rem 0;">
+          <tr>
+            <td style="padding:1.5rem;text-align:center;">
+              <p style="color:#1e40af;margin:0 0 0.5rem 0;font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;">Token de Acesso</p>
+              <p style="color:#1e3a8a;margin:0;font-size:2rem;font-weight:800;letter-spacing:0.14em;font-family:'Courier New',monospace;">${tokenCode}</p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr>
+      <td style="padding:0 2rem 1rem 2rem;">
+        <table width="100%" cellpadding="0" cellspacing="0" style="border:1px solid #e2e8f0;border-radius:12px;overflow:hidden;">
+          <tr>
+            <td style="padding:1rem 1.5rem;background-color:#f8fafc;border-bottom:1px solid #e2e8f0;">
+              <p style="color:#64748b;margin:0;font-size:0.75rem;font-weight:600;text-transform:uppercase;">Portal</p>
+              <p style="color:#1e293b;margin:0.25rem 0 0 0;font-size:0.98rem;font-weight:700;">${portalUrl}</p>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:1rem 1.5rem;">
+              <p style="color:#64748b;margin:0;font-size:0.75rem;font-weight:600;text-transform:uppercase;">Validade do token</p>
+              <p style="color:#1e293b;margin:0.25rem 0 0 0;font-weight:600;">${expiresDate}</p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+
+    ${customMessage ? `
+    <tr>
+      <td style="padding:0 2rem 1rem 2rem;">
+        <div style="background-color:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:1rem;">
+          <p style="color:#92400e;margin:0;font-size:0.85rem;font-weight:600;">Mensagem do administrador:</p>
+          <p style="color:#78350f;margin:0.5rem 0 0 0;font-size:0.85rem;line-height:1.5;white-space:pre-wrap;">${customMessage}</p>
+        </div>
+      </td>
+    </tr>
+    ` : ''}
+
+    <tr>
+      <td style="padding:0 2rem 1.5rem 2rem;">
+        <h3 style="color:#1e293b;margin:0 0 0.8rem 0;font-size:1rem;">Como entrar:</h3>
+        <p style="color:#475569;margin:0.2rem 0;font-size:0.9rem;">1. Acesse o portal pelo link acima.</p>
+        <p style="color:#475569;margin:0.2rem 0;font-size:0.9rem;">2. Informe seu e-mail neste mesmo destinatario.</p>
+        <p style="color:#475569;margin:0.2rem 0;font-size:0.9rem;">3. Use o token como senha de acesso.</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td style="background-color:#1e293b;padding:1.4rem 2rem;text-align:center;">
+        <p style="color:#94a3b8;margin:0;font-size:0.75rem;">
+          E-mail automatico do ecossistema StackFAB. Nao responda esta mensagem.
+        </p>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>`.trim();
+}
+
+exports.sendAccessTokensByEmail = async (req, res) => {
+  const requesterRole = String(req.user?.role || '').toLowerCase();
+  if (requesterRole !== 'admin' && requesterRole !== 'developer') {
+    return res.status(403).json({ error: 'Acesso negado' });
+  }
+
+  const rawEmails = Array.isArray(req.body?.emails) ? req.body.emails : [];
+  const expiresInDays = Number(req.body?.expiresInDays || 7);
+  const customMessage = String(req.body?.message || '').trim();
+
+  const dedupedEmails = [...new Set(rawEmails.map(normalizeEmail).filter(Boolean))];
+
+  if (dedupedEmails.length === 0) {
+    return res.status(400).json({ error: 'Informe ao menos um e-mail valido.' });
+  }
+
+  if (dedupedEmails.length > 200) {
+    return res.status(400).json({ error: 'Limite maximo de 200 e-mails por envio.' });
+  }
+
+  if (!Number.isFinite(expiresInDays) || expiresInDays < 1 || expiresInDays > 30) {
+    return res.status(400).json({ error: 'A validade deve estar entre 1 e 30 dias.' });
+  }
+
+  const protocol = req.protocol || 'https';
+  const host = req.get('host');
+  const portalUrl = `${protocol}://${host}/login.html`;
+
+  const expiresAt = new Date(Date.now() + expiresInDays * 24 * 60 * 60 * 1000);
+  const results = [];
+
+  for (const email of dedupedEmails) {
+    const accessCode = generateAccessCode(8);
+    const hashedPassword = await bcrypt.hash(accessCode, 10);
+
+    try {
+      const userLookup = await pool.query('SELECT id, role FROM users WHERE LOWER(email) = $1', [email]);
+      let userId = null;
+
+      if (userLookup.rows.length > 0) {
+        const existing = userLookup.rows[0];
+        const existingRole = String(existing.role || '').toLowerCase();
+
+        if (existingRole === 'admin' || existingRole === 'developer') {
+          results.push({ email, status: 'failed', error: 'Nao e permitido sobrescrever credenciais de administrador.' });
+          continue;
+        }
+
+        await pool.query(
+          'UPDATE users SET password = $1, status = $2, updated_at = NOW() WHERE id = $3',
+          [hashedPassword, 'approved', existing.id]
+        );
+        userId = existing.id;
+      } else {
+        const defaultName = email.split('@')[0];
+        const created = await pool.query(
+          'INSERT INTO users (name, email, password, role, status) VALUES ($1, $2, $3, $4, $5) RETURNING id',
+          [defaultName, email, hashedPassword, 'participant', 'approved']
+        );
+        userId = created.rows[0].id;
+      }
+
+      await pool.query(
+        'INSERT INTO email_access_tokens (code, email, user_id, created_by, status, expires_at, sent_at) VALUES ($1, $2, $3, $4, $5, $6, NOW())',
+        [accessCode, email, userId, req.user?.userId || null, 'active', expiresAt]
+      );
+
+      const html = buildTokenEmailHtml({ tokenCode: accessCode, portalUrl, expiresAt, customMessage });
+      const sent = await emailService.sendEmail(
+        email,
+        'Token de acesso - Ondas do Conhecimento',
+        html
+      );
+
+      if (!sent) {
+        results.push({ email, status: 'failed', error: 'Falha ao enviar e-mail.' });
+        continue;
+      }
+
+      results.push({ email, status: 'sent', token: accessCode });
+    } catch (err) {
+      results.push({
+        email,
+        status: 'failed',
+        error: err instanceof Error ? err.message : 'Erro interno no envio.'
+      });
+    }
+  }
+
+  const sentCount = results.filter(r => r.status === 'sent').length;
+  const failedCount = results.filter(r => r.status === 'failed').length;
+
+  return res.json({
+    totalEmails: dedupedEmails.length,
+    sent: sentCount,
+    failed: failedCount,
+    details: results
+  });
+};

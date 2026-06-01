@@ -4,11 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Portal do Participante — Ondas do Conhecimento</title>
+  <link rel="icon" type="image/png" href="assets/img/favicon.png">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
       --primary: #2e7d32;
       --secondary: #1b5e20;
+      --primary-dark: #1b5e20;
       --bg: #faf6ee; /* Areia bem claro e acolhedor */
       --card: rgba(255, 255, 255, 0.85); /* Vidro claro translúcido */
       --text: #2e2720; /* Marrom terroso bem escuro e legível */
@@ -189,7 +191,7 @@
 
     <div class="grid">
       <!-- Módulos de Aula -->
-      <div class="section-card">
+      <div class="section-card" data-action-link="#modulos">
         <div class="icon-box">
           <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
@@ -202,7 +204,7 @@
       </div>
 
       <!-- Simulados -->
-      <div class="section-card">
+      <div class="section-card" data-action-link="simulado.html">
         <div class="icon-box">
           <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M9 11l3 3L22 4"></path>
@@ -233,8 +235,9 @@
   <script>
     const token = localStorage.getItem('token');
     const user = JSON.parse(localStorage.getItem('user') || '{}');
+    const normalizedRole = String(user.role || '').trim().toLowerCase();
 
-    if (!token || String(user.role).toLowerCase() !== 'participant') {
+    if (!token || normalizedRole !== 'participant') {
       window.location.href = 'login.html';
     }
 
@@ -334,10 +337,26 @@
       window.location.href = 'login.html';
     }
 
+    function initCardActions() {
+      document.querySelectorAll('.section-card[data-action-link]').forEach((card) => {
+        card.addEventListener('click', (e) => {
+          if (e.target.closest('a')) return;
+          const href = card.getAttribute('data-action-link');
+          if (!href) return;
+          if (href.startsWith('#')) {
+            window.location.hash = href;
+          } else {
+            window.location.href = href;
+          }
+        });
+      });
+    }
+
     // Initialize
     loadCategories().then(() => {
       loadMaterials();
     });
+    initCardActions();
   </script>
 </body>
 </html>
