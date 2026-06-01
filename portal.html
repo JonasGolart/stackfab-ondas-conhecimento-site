@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
@@ -9,13 +9,12 @@
   <style>
     :root {
       --primary: #2e7d32;
-      --secondary: #1b5e20;
       --primary-dark: #1b5e20;
-      --bg: #faf6ee; /* Areia bem claro e acolhedor */
-      --card: rgba(255, 255, 255, 0.85); /* Vidro claro translúcido */
-      --text: #2e2720; /* Marrom terroso bem escuro e legível */
-      --text-muted: #7d7060; /* Bege terroso fosco */
-      --border: rgba(46, 39, 32, 0.08); /* Borda terrosa sutil */
+      --bg: #faf6ee;
+      --card: rgba(255, 255, 255, 0.9);
+      --text: #2e2720;
+      --text-muted: #7d7060;
+      --border: rgba(46, 39, 32, 0.1);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -30,10 +29,10 @@
     }
 
     .navbar {
-      background: rgba(240, 230, 210, 0.8);
+      background: rgba(240, 230, 210, 0.88);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
-      padding: 1rem 2rem;
+      padding: 0.9rem 1.4rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -42,132 +41,204 @@
       z-index: 100;
     }
 
-    .logo { display: flex; align-items: center; gap: 0.75rem; font-weight: 800; font-size: 1.25rem; }
+    .logo { display: flex; align-items: center; gap: 0.65rem; font-weight: 800; font-size: 1.2rem; }
     .logo img { width: 32px; }
 
-    .user-profile { display: flex; align-items: center; gap: 1rem; }
-    .logout-link { color: #dc2626; text-decoration: none; font-size: 0.875rem; font-weight: 600; }
+    .user-profile { display: flex; align-items: center; gap: 0.9rem; }
+    .logout-link { color: #dc2626; text-decoration: none; font-size: 0.9rem; font-weight: 600; }
 
-    .container { max-width: 1200px; margin: 0 auto; padding: 2rem; width: 100%; }
-
-    .welcome-banner {
-      background: linear-gradient(135deg, var(--secondary) 0%, #3e3327 100%);
-      padding: 3rem;
-      border-radius: 32px;
-      margin-bottom: 3rem;
-      border: 1px solid var(--border);
-      position: relative;
-      overflow: hidden;
-      color: white;
+    .app-shell {
+      width: min(1400px, 100%);
+      margin: 1.25rem auto;
+      padding: 0 1rem 1rem;
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: 1rem;
+      flex: 1;
     }
 
-    .welcome-banner h1 { font-size: 2.5rem; font-weight: 800; margin-bottom: 1rem; }
-    .welcome-banner p { color: rgba(255, 255, 255, 0.8); font-size: 1.1rem; max-width: 600px; }
-
-    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem; }
-
-    .section-card {
+    .sidebar {
       background: var(--card);
-      backdrop-filter: blur(10px);
       border: 1px solid var(--border);
-      border-radius: 24px;
-      padding: 2rem;
-      transition: all 0.3s ease;
-      cursor: pointer;
+      border-radius: 22px;
+      padding: 1rem;
       display: flex;
       flex-direction: column;
-      gap: 1.5rem;
-      box-shadow: 0 8px 30px rgba(46, 39, 32, 0.03);
+      gap: 0.85rem;
+      min-height: calc(100vh - 120px);
+      max-height: calc(100vh - 120px);
+      position: sticky;
+      top: 76px;
     }
 
-    .section-card:hover { transform: translateY(-8px); border-color: var(--primary); box-shadow: 0 12px 40px rgba(46, 39, 32, 0.06); }
-
-    .icon-box {
-      width: 56px;
-      height: 56px;
-      background: rgba(46, 125, 50, 0.08);
-      border-radius: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--primary);
+    .sidebar-title {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      font-weight: 700;
+      padding: 0.2rem 0.35rem;
     }
 
-    .section-card h2 { font-size: 1.5rem; font-weight: 700; }
-    .section-card p { color: var(--text-muted); line-height: 1.6; flex: 1; }
-
-    .btn {
-      padding: 0.75rem 1.5rem;
+    .action-btn {
+      width: 100%;
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--text);
       border-radius: 12px;
-      font-weight: 600;
-      text-align: center;
-      text-decoration: none;
+      padding: 0.72rem 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      text-align: left;
       transition: all 0.2s;
     }
 
-    .btn--primary { background: var(--primary); color: white; }
-    .btn--primary:hover { background: var(--primary-dark); }
-
-    /* Modules List */
-    .modules-list { margin-top: 4rem; }
-    .modules-list h3 { margin-bottom: 1.5rem; font-size: 1.25rem; color: var(--text-muted); }
-
-    .module-item {
-      background: var(--card);
-      padding: 1.25rem;
-      border-radius: 16px;
-      margin-bottom: 1rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border: 1px solid var(--border);
-      box-shadow: 0 4px 20px rgba(46, 39, 32, 0.03);
-    }
-
-    .module-item:hover {
-      border-color: rgba(46, 125, 50, 0.2);
-      background: rgba(255, 255, 255, 0.95);
-      box-shadow: 0 8px 30px rgba(46, 39, 32, 0.06);
-    }
-    
-    .module-info h4 { font-weight: 600; margin-bottom: 0.25rem; }
-    .module-info span { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; }
-
-    .badge-locked { background: rgba(46, 39, 32, 0.08); color: var(--text-muted); font-size: 0.75rem; padding: 0.25rem 0.5rem; border-radius: 4px; }
-
-    /* Filter Bar and Category Pills */
-    .filter-bar {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.75rem;
-      margin-bottom: 2rem;
-      padding: 0.25rem 0;
-    }
-    .filter-pill {
-      background: rgba(46, 39, 32, 0.04);
-      border: 1px solid var(--border);
-      color: var(--text-muted);
-      padding: 0.5rem 1.25rem;
-      border-radius: 99px;
-      font-size: 0.85rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .filter-pill:hover {
-      background: rgba(46, 39, 32, 0.08);
-      color: var(--text);
-      transform: translateY(-1px);
-    }
-    .filter-pill.active {
+    .action-btn:hover { border-color: rgba(46, 125, 50, 0.35); }
+    .action-btn.active {
       background: var(--primary);
-      border-color: var(--primary);
       color: white;
-      box-shadow: 0 4px 15px rgba(46, 125, 50, 0.25);
+      border-color: var(--primary);
+      box-shadow: 0 8px 20px rgba(46, 125, 50, 0.22);
     }
-    
-    .module-item {
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    .materials-menu {
+      border-top: 1px solid var(--border);
+      margin-top: 0.25rem;
+      padding-top: 0.75rem;
+      display: none;
+      flex-direction: column;
+      min-height: 0;
+      gap: 0.75rem;
+      flex: 1;
+    }
+
+    .materials-menu.visible { display: flex; }
+
+    .category-filter {
+      width: 100%;
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--text);
+      border-radius: 10px;
+      padding: 0.62rem 0.75rem;
+      font-size: 0.9rem;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .materials-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      overflow-y: auto;
+      padding-right: 0.2rem;
+    }
+
+    .material-item {
+      border: 1px solid var(--border);
+      background: #fff;
+      border-radius: 10px;
+      padding: 0.62rem 0.7rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: left;
+    }
+
+    .material-item:hover { border-color: rgba(46, 125, 50, 0.35); transform: translateX(2px); }
+    .material-item.active { border-color: var(--primary); background: rgba(46, 125, 50, 0.08); }
+
+    .material-item small {
+      display: block;
+      color: var(--text-muted);
+      font-size: 0.72rem;
+      margin-top: 0.25rem;
+    }
+
+    .center-stage {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      min-height: calc(100vh - 120px);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .center-header {
+      padding: 1rem 1.2rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+
+    .center-title { font-size: 1.1rem; font-weight: 800; }
+    .center-subtitle { color: var(--text-muted); font-size: 0.85rem; }
+
+    .download-btn {
+      border: none;
+      background: var(--primary);
+      color: white;
+      border-radius: 10px;
+      padding: 0.6rem 0.9rem;
+      font-weight: 700;
+      text-decoration: none;
+      white-space: nowrap;
+      font-size: 0.85rem;
+    }
+
+    .view-body { flex: 1; min-height: 0; }
+
+    .view {
+      width: 100%;
+      height: 100%;
+      display: none;
+    }
+
+    .view.active { display: block; }
+
+    .welcome-view {
+      padding: 2rem;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: var(--text-muted);
+    }
+
+    .welcome-card {
+      max-width: 560px;
+      border: 1px dashed var(--border);
+      border-radius: 16px;
+      padding: 1.5rem;
+      background: rgba(255, 255, 255, 0.8);
+    }
+
+    .welcome-card h2 { color: var(--text); margin-bottom: 0.5rem; }
+
+    .pdf-frame, .simulado-frame {
+      border: none;
+      width: 100%;
+      height: 100%;
+      min-height: 540px;
+      background: #fff;
+    }
+
+    @media (max-width: 1020px) {
+      .app-shell {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        min-height: auto;
+        max-height: none;
+        position: static;
+      }
+
+      .center-stage {
+        min-height: 74vh;
+      }
     }
   </style>
 </head>
@@ -183,51 +254,46 @@
     </div>
   </nav>
 
-  <main class="container">
-    <div class="welcome-banner">
-      <h1>Olá, <span id="welcome-name">Participante</span>! 📡</h1>
-      <p>Bem-vindo ao seu portal de estudos. Aqui você encontra os materiais das aulas e simulados para se preparar para a prova de rádio.</p>
-    </div>
+  <main class="app-shell">
+    <aside class="sidebar">
+      <div class="sidebar-title">Ações do Portal</div>
+      <button id="action-materials" class="action-btn active">Materiais</button>
+      <button id="action-simulados" class="action-btn">Simulados</button>
 
-    <div class="grid">
-      <!-- Módulos de Aula -->
-      <div class="section-card" data-action-link="#modulos">
-        <div class="icon-box">
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
-            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
-          </svg>
+      <div id="materials-menu" class="materials-menu visible">
+        <select id="sidebar-category-filter" class="category-filter"></select>
+        <div id="sidebar-materials-list" class="materials-list">
+          <div style="color:var(--text-muted);font-size:0.85rem;padding:0.35rem;">Carregando materiais...</div>
         </div>
-        <h2>Módulos de Aula</h2>
-        <p>Acesse as apostilas, apresentações e vídeos das aulas presenciais e online.</p>
-        <a href="#modulos" class="btn btn--primary">Explorar Material</a>
       </div>
+    </aside>
 
-      <!-- Simulados -->
-      <div class="section-card" data-action-link="simulado.html">
-        <div class="icon-box">
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M9 11l3 3L22 4"></path>
-            <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
-          </svg>
+    <section class="center-stage">
+      <div class="center-header">
+        <div>
+          <div id="center-title" class="center-title">Materiais de Estudo</div>
+          <div id="center-subtitle" class="center-subtitle">Selecione um módulo na barra lateral para abrir no centro.</div>
         </div>
-        <h2>Simulados</h2>
-        <p>Treine seus conhecimentos com questões reais da prova de rádio e veja seu progresso.</p>
-        <a href="simulado.html" class="btn btn--primary">Fazer Simulado</a>
-      </div>
-    </div>
-
-    <section class="modules-list" id="modulos">
-      <h3 style="margin-bottom: 0.5rem;">Conteúdos Liberados</h3>
-      <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">Filtre os materiais por categoria para focar nos seus estudos:</p>
-      
-      <!-- Filtro de Categorias -->
-      <div id="category-filters-container" class="filter-bar">
-        <!-- Inserido via JS -->
+        <a id="download-pdf-btn" class="download-btn" href="#" target="_blank" style="display:none;">Baixar PDF</a>
       </div>
 
-      <div id="materials-container">
-        <!-- Inserido via JS -->
+      <div class="view-body">
+        <div id="view-welcome" class="view active">
+          <div class="welcome-view">
+            <div class="welcome-card">
+              <h2>Olá, <span id="welcome-name">Participante</span>!</h2>
+              <p>Use a sidebar para abrir materiais ou iniciar simulados sem sair desta página.</p>
+            </div>
+          </div>
+        </div>
+
+        <div id="view-pdf" class="view">
+          <iframe id="pdf-frame" class="pdf-frame" title="Visualizador de PDF"></iframe>
+        </div>
+
+        <div id="view-simulado" class="view">
+          <iframe id="simulado-frame" class="simulado-frame" title="Simulado" src=""></iframe>
+        </div>
       </div>
     </section>
   </main>
@@ -244,92 +310,26 @@
     document.getElementById('user-name').innerText = user.name || 'Participante';
     document.getElementById('welcome-name').innerText = (user.name || 'Participante').split(' ')[0];
 
-    let allMaterialsData = [];
-    let currentCategoryFilter = 'all';
+    const actionMaterialsBtn = document.getElementById('action-materials');
+    const actionSimuladosBtn = document.getElementById('action-simulados');
+    const materialsMenu = document.getElementById('materials-menu');
+    const categoryFilter = document.getElementById('sidebar-category-filter');
+    const materialsListEl = document.getElementById('sidebar-materials-list');
 
-    async function loadCategories() {
-      try {
-        const response = await fetch('/api/categories');
-        const categories = await response.json();
-        const container = document.getElementById('category-filters-container');
-        container.innerHTML = '';
+    const centerTitle = document.getElementById('center-title');
+    const centerSubtitle = document.getElementById('center-subtitle');
+    const downloadBtn = document.getElementById('download-pdf-btn');
 
-        // Add "All" pill
-        const allPill = document.createElement('button');
-        allPill.className = 'filter-pill active';
-        allPill.innerText = 'Todos os Conteúdos';
-        allPill.onclick = () => selectCategoryFilter('all', allPill);
-        container.appendChild(allPill);
+    const viewWelcome = document.getElementById('view-welcome');
+    const viewPdf = document.getElementById('view-pdf');
+    const viewSimulado = document.getElementById('view-simulado');
 
-        categories.forEach(cat => {
-          const pill = document.createElement('button');
-          pill.className = 'filter-pill';
-          pill.innerText = cat.name;
-          pill.onclick = () => selectCategoryFilter(cat.name, pill);
-          container.appendChild(pill);
-        });
-      } catch (err) {
-        console.error('Erro ao carregar categorias:', err);
-      }
-    }
+    const pdfFrame = document.getElementById('pdf-frame');
+    const simuladoFrame = document.getElementById('simulado-frame');
 
-    function selectCategoryFilter(category, pillElement) {
-      currentCategoryFilter = category;
-      
-      // Update active class
-      document.querySelectorAll('.filter-pill').forEach(btn => btn.classList.remove('active'));
-      pillElement.classList.add('active');
-
-      renderMaterials();
-    }
-
-    function renderMaterials() {
-      const container = document.getElementById('materials-container');
-      container.innerHTML = '';
-
-      const filtered = currentCategoryFilter === 'all'
-        ? allMaterialsData
-        : allMaterialsData.filter(m => String(m.category).toLowerCase() === String(currentCategoryFilter).toLowerCase());
-
-      if (filtered.length === 0) {
-        container.innerHTML = '<p style="color: var(--text-muted); text-align: center; padding: 2.5rem 0; font-size: 0.95rem;">Nenhum material disponível para esta categoria no momento.</p>';
-        return;
-      }
-
-      filtered.forEach((m, index) => {
-        const div = document.createElement('div');
-        div.className = 'module-item';
-        div.style.opacity = '0';
-        div.style.transform = 'translateY(12px)';
-        div.innerHTML = `
-          <div class="module-info">
-            <span style="font-size: 0.72rem; color: var(--primary); font-weight: 700; background: rgba(76, 175, 80, 0.12); padding: 0.25rem 0.5rem; border-radius: 6px; margin-bottom: 0.5rem; display: inline-block;">${m.category}</span>
-            <h4>${m.title}</h4>
-            <p style="font-size: 0.85rem; color: var(--text-muted);">${m.description || ''}</p>
-          </div>
-          <a href="${m.file_path}" target="_blank" class="btn btn--primary">Ver PDF</a>
-        `;
-        container.appendChild(div);
-        
-        // Staggered fade in animation
-        setTimeout(() => {
-          div.style.opacity = '1';
-          div.style.transform = 'translateY(0)';
-        }, 50 * index);
-      });
-    }
-
-    async function loadMaterials() {
-      try {
-        const response = await fetch('/api/materials');
-        allMaterialsData = await response.json();
-        renderMaterials();
-      } catch (err) {
-        console.error('Erro ao carregar materiais:', err);
-        const container = document.getElementById('materials-container');
-        container.innerHTML = '<p style="color: var(--text-muted);">Erro ao carregar os materiais do servidor.</p>';
-      }
-    }
+    let allMaterials = [];
+    let selectedCategory = 'all';
+    let selectedMaterialId = null;
 
     function logout() {
       localStorage.removeItem('token');
@@ -337,26 +337,118 @@
       window.location.href = 'login.html';
     }
 
-    function initCardActions() {
-      document.querySelectorAll('.section-card[data-action-link]').forEach((card) => {
-        card.addEventListener('click', (e) => {
-          if (e.target.closest('a')) return;
-          const href = card.getAttribute('data-action-link');
-          if (!href) return;
-          if (href.startsWith('#')) {
-            window.location.hash = href;
-          } else {
-            window.location.href = href;
-          }
-        });
-      });
+    function setActiveView(view) {
+      [viewWelcome, viewPdf, viewSimulado].forEach(v => v.classList.remove('active'));
+      if (view === 'pdf') viewPdf.classList.add('active');
+      else if (view === 'simulado') viewSimulado.classList.add('active');
+      else viewWelcome.classList.add('active');
     }
 
-    // Initialize
-    loadCategories().then(() => {
-      loadMaterials();
+    function setAction(action) {
+      const isMaterials = action === 'materials';
+      actionMaterialsBtn.classList.toggle('active', isMaterials);
+      actionSimuladosBtn.classList.toggle('active', !isMaterials);
+      materialsMenu.classList.toggle('visible', isMaterials);
+
+      if (isMaterials) {
+        if (selectedMaterialId) {
+          openMaterial(selectedMaterialId);
+        } else {
+          centerTitle.innerText = 'Materiais de Estudo';
+          centerSubtitle.innerText = 'Selecione um módulo na barra lateral para abrir no centro.';
+          downloadBtn.style.display = 'none';
+          setActiveView('welcome');
+        }
+      } else {
+        centerTitle.innerText = 'Simulados';
+        centerSubtitle.innerText = 'O simulado foi aberto no centro do portal.';
+        downloadBtn.style.display = 'none';
+        if (!simuladoFrame.src) {
+          simuladoFrame.src = 'simulado.html';
+        }
+        setActiveView('simulado');
+      }
+    }
+
+    function getFilteredMaterials() {
+      if (selectedCategory === 'all') return allMaterials;
+      return allMaterials.filter(m => String(m.category).toLowerCase() === String(selectedCategory).toLowerCase());
+    }
+
+    function renderCategoryFilter() {
+      const categories = [...new Set(allMaterials.map(m => m.category).filter(Boolean))];
+      categoryFilter.innerHTML = '<option value="all">Todos os módulos</option>' +
+        categories.map(cat => `<option value="${cat}">${cat}</option>`).join('');
+      categoryFilter.value = selectedCategory;
+    }
+
+    function renderMaterialsSidebar() {
+      const filtered = getFilteredMaterials();
+
+      if (filtered.length === 0) {
+        materialsListEl.innerHTML = '<div style="color:var(--text-muted);font-size:0.85rem;padding:0.35rem;">Nenhum material nesta categoria.</div>';
+        return;
+      }
+
+      materialsListEl.innerHTML = filtered.map(m => {
+        const activeClass = m.id === selectedMaterialId ? 'active' : '';
+        return `
+          <button class="material-item ${activeClass}" onclick="openMaterial(${m.id})">
+            <strong>${m.title}</strong>
+            <small>${m.category || 'Sem categoria'}</small>
+          </button>`;
+      }).join('');
+    }
+
+    async function loadMaterials() {
+      try {
+        const response = await fetch('/api/materials');
+        allMaterials = await response.json();
+        renderCategoryFilter();
+        renderMaterialsSidebar();
+      } catch (err) {
+        console.error('Erro ao carregar materiais:', err);
+        materialsListEl.innerHTML = '<div style="color:#dc2626;font-size:0.85rem;padding:0.35rem;">Falha ao carregar materiais.</div>';
+      }
+    }
+
+    function openMaterial(materialId) {
+      const material = allMaterials.find(m => m.id === materialId);
+      if (!material) return;
+
+      selectedMaterialId = materialId;
+      renderMaterialsSidebar();
+
+      actionMaterialsBtn.classList.add('active');
+      actionSimuladosBtn.classList.remove('active');
+      materialsMenu.classList.add('visible');
+
+      centerTitle.innerText = material.title;
+      centerSubtitle.innerText = material.description || (material.category ? `Categoria: ${material.category}` : 'Visualização do material selecionado');
+      downloadBtn.href = material.file_path;
+      downloadBtn.style.display = 'inline-block';
+
+      pdfFrame.src = material.file_path;
+      setActiveView('pdf');
+    }
+
+    categoryFilter.addEventListener('change', (e) => {
+      selectedCategory = e.target.value;
+      selectedMaterialId = null;
+      renderMaterialsSidebar();
+      centerTitle.innerText = 'Materiais de Estudo';
+      centerSubtitle.innerText = 'Selecione um módulo na barra lateral para abrir no centro.';
+      downloadBtn.style.display = 'none';
+      setActiveView('welcome');
     });
-    initCardActions();
+
+    actionMaterialsBtn.addEventListener('click', () => setAction('materials'));
+    actionSimuladosBtn.addEventListener('click', () => setAction('simulados'));
+
+    window.openMaterial = openMaterial;
+
+    loadMaterials();
+    setAction('materials');
   </script>
 </body>
 </html>
