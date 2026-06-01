@@ -111,6 +111,9 @@ function buildTokenEmailHtml({ tokenCode, portalUrl, expiresAt, customMessage })
 </html>`.trim();
 }
 
+exports.generateAccessCode = generateAccessCode;
+exports.buildTokenEmailHtml = buildTokenEmailHtml;
+
 exports.sendAccessTokensByEmail = async (req, res) => {
   const requesterRole = String(req.user?.role || '').toLowerCase();
   if (requesterRole !== 'admin' && requesterRole !== 'developer') {

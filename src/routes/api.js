@@ -38,6 +38,7 @@ router.get('/categories', categoryController.getAllCategories); // Público para
 router.get('/admin/inscriptions', authMiddleware, inscriptionController.getAllInscriptions);
 router.get('/admin/inscriptions/stats', authMiddleware, inscriptionController.getInscriptionStats);
 router.put('/admin/inscriptions/:id/approve', authMiddleware, inscriptionController.approveInscription);
+router.post('/admin/inscriptions/:id/send-token', authMiddleware, inscriptionController.sendTokenFromInscription);
 router.delete('/admin/inscriptions/:id', authMiddleware, inscriptionController.deleteInscription);
 router.get('/admin/users', authMiddleware, inscriptionController.getAllIndividualUsers);
 router.post('/admin/materials', authMiddleware, upload.single('file'), materialController.createMaterial);

@@ -566,7 +566,7 @@
               <td>
                 <div style="display:flex; flex-direction:column; gap:0.5rem; align-items:flex-start;">
                   ${ins.status === 'pending' 
-                    ? `<div style="display:flex;gap:0.5rem;"><button onclick="approveInscription(${ins.id})" class="btn-detail" style="background:rgba(245,158,11,0.15);color:#d97706;border:1px solid rgba(245,158,11,0.3);">Aprovar</button><button onclick="rejectInscription(${ins.id})" class="btn-detail" style="background:rgba(220,38,38,0.1);color:#dc2626;border:1px solid rgba(220,38,38,0.2);">Recusar</button></div>`
+                    ? `<div style="display:flex;gap:0.5rem;">${ins.email ? `<button onclick="sendTokenFromInscription(${ins.id})" class="btn-detail" style="background:rgba(59,130,246,0.12);color:#2563eb;border:1px solid rgba(59,130,246,0.3);">Enviar Token</button>` : `<button onclick="approveInscription(${ins.id})" class="btn-detail" style="background:rgba(245,158,11,0.15);color:#d97706;border:1px solid rgba(245,158,11,0.3);">Aprovar</button>`}<button onclick="rejectInscription(${ins.id})" class="btn-detail" style="background:rgba(220,38,38,0.1);color:#dc2626;border:1px solid rgba(220,38,38,0.2);">Recusar</button></div>`
                     : `<span style="color:var(--primary);font-weight:600;font-size:0.8rem;">Aprovado</span>`
                   }
                   <button onclick="openDrawer(${ins.id})" class="btn-detail">Ver detalhes</button>
@@ -587,10 +587,34 @@
       }
     }
 
+    async function sendTokenFromInscription(id) {
+      const confirmed = await showConfirm(
+        'Enviar Token de Acesso',
+        'Isso aprovará a inscrição e enviará um token por e-mail. No primeiro acesso, o participante criará sua senha definitiva.'
+      );
+      if (!confirmed) return;
+
+      try {
+        const res = await fetch(`/api/admin/inscriptions/${id}/send-token`, {
+          method: 'POST',
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        const data = await res.json();
+        if (res.ok) {
+          showToast('Token enviado!', data.message, 'success');
+          loadInscriptions();
+        } else {
+          showToast('Erro', data.error, 'error');
+        }
+      } catch (err) {
+        showToast('Erro', 'Falha na requisição.', 'error');
+      }
+    }
+
     async function approveInscription(id) {
       const confirmed = await showConfirm(
         'Aprovar Inscrição',
-        'Tem certeza que deseja aprovar esta inscrição? Se for individual, um e-mail com a senha de acesso será disparado.'
+        'Tem certeza que deseja aprovar esta inscrição de grupo?'
       );
       if (!confirmed) return;
 
