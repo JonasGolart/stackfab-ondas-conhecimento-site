@@ -119,13 +119,17 @@ app.use('/api', apiRoutes);
 // Admin utility: reset all inscriptions and participant users (DELETE)
 app.delete('/api/admin/reset-all', async (req, res) => {
   const authHeader = req.headers['authorization'];
+  const jwtSecret = process.env.JWT_SECRET;
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
     return res.status(401).json({ error: 'Não autorizado' });
+  }
+  if (!jwtSecret) {
+    return res.status(500).json({ error: 'Servidor mal configurado: JWT_SECRET ausente.' });
   }
   const jwt = require('jsonwebtoken');
   try {
     const token = authHeader.split(' ')[1];
-    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'secret');
+    const decoded = jwt.verify(token, jwtSecret);
     if (decoded.role !== 'admin' && decoded.role !== 'developer') {
       return res.status(403).json({ error: 'Acesso negado' });
     }

@@ -1,5 +1,3 @@
-const dns = require('dns');
-
 /**
  * Envia um e-mail utilizando a API REST do Resend.
  * Se nenhuma chave RESEND_API_KEY estiver configurada, o e-mail será logado no console para fins de desenvolvimento.

@@ -2,9 +2,6 @@ const pool = require('../config/db');
 
 exports.createMaterial = async (req, res) => {
   const { title, description, category } = req.body;
-  
-  console.log('📂 [MaterialController] Recebida solicitação para criar material:', { title, category });
-  console.log('📂 [MaterialController] Dados do arquivo Multer (req.file):', req.file);
 
   const filePath = req.file ? `/uploads/${req.file.filename}` : null;
 
@@ -14,12 +11,10 @@ exports.createMaterial = async (req, res) => {
   }
 
   try {
-    console.log('💾 [MaterialController] Tentando inserir material no banco de dados...');
     const result = await pool.query(
       'INSERT INTO materials (title, description, file_path, category) VALUES ($1, $2, $3, $4) RETURNING *',
       [title, description, filePath, category]
     );
-    console.log('✅ [MaterialController] Material salvo com sucesso no banco de dados:', result.rows[0]);
     res.status(201).json(result.rows[0]);
   } catch (err) {
     console.error('❌ [MaterialController] Erro ao salvar material no banco de dados:', err);
