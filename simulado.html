@@ -829,10 +829,28 @@
 
     function goToSelection() { showScreen('selection'); }
 
+    function applyPresetFromQuery() {
+      const params = new URLSearchParams(window.location.search);
+      const requestedMode = params.get('modo');
+      const requestedQty = parseInt(params.get('qtd') || '20', 10);
+      const autoStart = params.get('autostart') === '1';
+
+      if ([10, 20, 30, 50].includes(requestedQty)) {
+        setQuantity(requestedQty);
+      }
+
+      const allowedModes = ['all', 'Legislação', 'Técnica e Ética', 'Eletrônica'];
+      const mode = allowedModes.includes(requestedMode) ? requestedMode : 'all';
+
+      if (autoStart) {
+        setTimeout(() => startQuiz(mode), 120);
+      }
+    }
+
     // ============================================================
     // INIT
     // ============================================================
-    bootstrap();
+    bootstrap().then(applyPresetFromQuery);
   </script>
 </body>
 </html>

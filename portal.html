@@ -80,39 +80,33 @@
       padding: 0.2rem 0.35rem;
     }
 
-    .action-btn {
-      width: 100%;
+    .sidebar-group {
       border: 1px solid var(--border);
-      background: #fff;
-      color: var(--text);
-      border-radius: 12px;
-      padding: 0.72rem 0.9rem;
-      font-weight: 700;
-      cursor: pointer;
-      text-align: left;
-      transition: all 0.2s;
-    }
-
-    .action-btn:hover { border-color: rgba(46, 125, 50, 0.35); }
-    .action-btn.active {
-      background: var(--primary);
-      color: white;
-      border-color: var(--primary);
-      box-shadow: 0 8px 20px rgba(46, 125, 50, 0.22);
-    }
-
-    .materials-menu {
-      border-top: 1px solid var(--border);
-      margin-top: 0.25rem;
-      padding-top: 0.75rem;
-      display: none;
+      border-radius: 14px;
+      padding: 0.75rem;
+      background: rgba(255,255,255,0.7);
+      display: flex;
       flex-direction: column;
-      min-height: 0;
-      gap: 0.75rem;
-      flex: 1;
+      gap: 0.6rem;
     }
 
-    .materials-menu.visible { display: flex; }
+    .sidebar-group.active {
+      border-color: rgba(46,125,50,0.45);
+      box-shadow: 0 8px 24px rgba(46,125,50,0.12);
+      background: rgba(46,125,50,0.05);
+    }
+
+    .group-heading {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: var(--text);
+    }
+
+    .group-sub {
+      font-size: 0.76rem;
+      color: var(--text-muted);
+      margin-top: -0.25rem;
+    }
 
     .category-filter {
       width: 100%;
@@ -131,6 +125,7 @@
       gap: 0.5rem;
       overflow-y: auto;
       padding-right: 0.2rem;
+      max-height: 48vh;
     }
 
     .material-item {
@@ -185,6 +180,23 @@
       text-decoration: none;
       white-space: nowrap;
       font-size: 0.85rem;
+    }
+
+    .open-simulado-btn {
+      border: none;
+      background: var(--primary);
+      color: #fff;
+      border-radius: 10px;
+      padding: 0.62rem 0.8rem;
+      font-size: 0.84rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .open-simulado-btn:hover {
+      background: var(--primary-dark);
+      transform: translateY(-1px);
     }
 
     .view-body { flex: 1; min-height: 0; }
@@ -257,14 +269,26 @@
   <main class="app-shell">
     <aside class="sidebar">
       <div class="sidebar-title">Ações do Portal</div>
-      <button id="action-materials" class="action-btn active">Materiais</button>
-      <button id="action-simulados" class="action-btn">Simulados</button>
 
-      <div id="materials-menu" class="materials-menu visible">
+      <div id="materials-group" class="sidebar-group active">
+        <div class="group-heading">Materiais</div>
+        <div class="group-sub">Selecione categoria e módulo</div>
         <select id="sidebar-category-filter" class="category-filter"></select>
         <div id="sidebar-materials-list" class="materials-list">
           <div style="color:var(--text-muted);font-size:0.85rem;padding:0.35rem;">Carregando materiais...</div>
         </div>
+      </div>
+
+      <div id="simulado-group" class="sidebar-group">
+        <div class="group-heading">Simulado</div>
+        <div class="group-sub">Escolha o tipo de simulado</div>
+        <select id="sidebar-simulado-filter" class="category-filter">
+          <option value="all">Simulado Completo</option>
+          <option value="Legislação">Legislação</option>
+          <option value="Técnica e Ética">Técnica e Ética</option>
+          <option value="Eletrônica">Eletrônica</option>
+        </select>
+        <button id="open-simulado-btn" class="open-simulado-btn">Abrir Simulado no Centro</button>
       </div>
     </aside>
 
@@ -310,11 +334,12 @@
     document.getElementById('user-name').innerText = user.name || 'Participante';
     document.getElementById('welcome-name').innerText = (user.name || 'Participante').split(' ')[0];
 
-    const actionMaterialsBtn = document.getElementById('action-materials');
-    const actionSimuladosBtn = document.getElementById('action-simulados');
-    const materialsMenu = document.getElementById('materials-menu');
+    const materialsGroup = document.getElementById('materials-group');
+    const simuladoGroup = document.getElementById('simulado-group');
     const categoryFilter = document.getElementById('sidebar-category-filter');
     const materialsListEl = document.getElementById('sidebar-materials-list');
+    const simuladoFilter = document.getElementById('sidebar-simulado-filter');
+    const openSimuladoBtn = document.getElementById('open-simulado-btn');
 
     const centerTitle = document.getElementById('center-title');
     const centerSubtitle = document.getElementById('center-subtitle');
@@ -346,28 +371,26 @@
 
     function setAction(action) {
       const isMaterials = action === 'materials';
-      actionMaterialsBtn.classList.toggle('active', isMaterials);
-      actionSimuladosBtn.classList.toggle('active', !isMaterials);
-      materialsMenu.classList.toggle('visible', isMaterials);
+      materialsGroup.classList.toggle('active', isMaterials);
+      simuladoGroup.classList.toggle('active', !isMaterials);
 
-      if (isMaterials) {
-        if (selectedMaterialId) {
-          openMaterial(selectedMaterialId);
-        } else {
-          centerTitle.innerText = 'Materiais de Estudo';
-          centerSubtitle.innerText = 'Selecione um módulo na barra lateral para abrir no centro.';
-          downloadBtn.style.display = 'none';
-          setActiveView('welcome');
-        }
-      } else {
-        centerTitle.innerText = 'Simulados';
-        centerSubtitle.innerText = 'O simulado foi aberto no centro do portal.';
+      if (isMaterials && !selectedMaterialId) {
+        centerTitle.innerText = 'Materiais de Estudo';
+        centerSubtitle.innerText = 'Selecione um módulo na barra lateral para abrir no centro.';
         downloadBtn.style.display = 'none';
-        if (!simuladoFrame.src) {
-          simuladoFrame.src = 'simulado.html';
-        }
-        setActiveView('simulado');
+        setActiveView('welcome');
       }
+    }
+
+    function openSimuladoInCenter() {
+      const mode = simuladoFilter.value || 'all';
+      const src = `simulado.html?modo=${encodeURIComponent(mode)}&qtd=20&autostart=1&t=${Date.now()}`;
+      centerTitle.innerText = mode === 'all' ? 'Simulado Completo' : `Simulado: ${mode}`;
+      centerSubtitle.innerText = 'Simulado aberto no centro do portal.';
+      downloadBtn.style.display = 'none';
+      simuladoFrame.src = src;
+      setAction('simulados');
+      setActiveView('simulado');
     }
 
     function getFilteredMaterials() {
@@ -419,9 +442,7 @@
       selectedMaterialId = materialId;
       renderMaterialsSidebar();
 
-      actionMaterialsBtn.classList.add('active');
-      actionSimuladosBtn.classList.remove('active');
-      materialsMenu.classList.add('visible');
+      setAction('materials');
 
       centerTitle.innerText = material.title;
       centerSubtitle.innerText = material.description || (material.category ? `Categoria: ${material.category}` : 'Visualização do material selecionado');
@@ -442,8 +463,8 @@
       setActiveView('welcome');
     });
 
-    actionMaterialsBtn.addEventListener('click', () => setAction('materials'));
-    actionSimuladosBtn.addEventListener('click', () => setAction('simulados'));
+    openSimuladoBtn.addEventListener('click', openSimuladoInCenter);
+    simuladoFilter.addEventListener('change', openSimuladoInCenter);
 
     window.openMaterial = openMaterial;
 
