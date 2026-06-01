@@ -351,7 +351,7 @@ exports.approveInscription = async (req, res) => {
         const hashedPassword = await bcrypt.hash(accessCode, 10);
 
         await pool.query(
-          'UPDATE users SET password = $1, status = $2 WHERE id = $3',
+          'UPDATE users SET password = $1, status = $2, password_setup_required = TRUE, password_setup_completed_at = NULL, first_token_used_at = NULL, updated_at = NOW() WHERE id = $3',
           [hashedPassword, 'approved', user.id]
         );
 

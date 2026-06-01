@@ -556,8 +556,8 @@
           list.innerHTML += `
             <tr>
               <td style="color:var(--text-muted);font-size:0.8rem;font-weight:600">${idx + 1}</td>
-              <td><strong>${ins.responsible_name || '—'}</strong></td>
-              <td>${ins.group_name || '—'}</td>
+              <td><strong>${ins.responsible_name?.trim() || '—'}</strong></td>
+              <td>${ins.group_name?.trim() || '—'}</td>
               <td>${ins.guardian_name ? `<span style="font-size:0.82rem;color:#7d7060">${ins.guardian_name}</span>` : '<span style="color:rgba(125,112,96,0.4);font-size:0.8rem">—</span>'}</td>
               <td>${ins.city && ins.city !== 'N/A' ? ins.city : '<span style="color:rgba(125,112,96,0.4);font-size:0.8rem">—</span>'}</td>
               <td style="font-size:0.85rem">${ins.phone || '—'}</td>
@@ -1106,7 +1106,7 @@
           : blocked
             ? '<span class="badge" style="background:rgba(245,158,11,0.12);color:#b45309;">Bloqueado</span>'
             : '<span class="badge" style="background:rgba(220,38,38,0.12);color:#dc2626;">Falhou</span>';
-        const canResend = item.status === 'failed' && !!item.id;
+        const canResend = (item.status === 'failed' || item.status === 'sent') && !!item.id;
         const resendBtn = canResend
           ? `<button class="btn-detail" style="margin-left:0.5rem;padding:0.2rem 0.6rem" onclick="resendTokenEmail(${item.id})">Reenviar</button>`
           : '';
