@@ -143,9 +143,6 @@ exports.sendAccessTokensByEmail = async (req, res) => {
   const results = [];
 
   for (const email of dedupedEmails) {
-    const accessCode = generateAccessCode(8);
-    const hashedPassword = await bcrypt.hash(accessCode, 10);
-
     try {
       const userLookup = await pool.query('SELECT id, role FROM users WHERE LOWER(email) = $1', [email]);
       let userId = null;
@@ -155,42 +152,88 @@ exports.sendAccessTokensByEmail = async (req, res) => {
         const existingRole = String(existing.role || '').toLowerCase();
 
         if (existingRole === 'admin' || existingRole === 'developer') {
-          results.push({ email, status: 'failed', error: 'Nao e permitido sobrescrever credenciais de administrador.' });
+          const blockedCode = `BLOCKED-${Date.now()}-${Math.floor(Math.random() * 100000)}`;
+          await pool.query(
+            'INSERT INTO email_access_tokens (code, email, user_id, created_by, status, expires_at, sent_at, error_message) VALUES ($1, $2, $3, $4, $5, $6, NULL, $7)',
+            [blockedCode, email, existing.id, req.user?.userId || null, 'blocked', expiresAt, 'Nao e permitido sobrescrever credenciais de administrador.']
+          );
+          results.push({ email, status: 'blocked', error: 'Nao e permitido sobrescrever credenciais de administrador.' });
           continue;
         }
 
+        const accessCode = generateAccessCode(8);
+        const hashedPassword = await bcrypt.hash(accessCode, 10);
         await pool.query(
           'UPDATE users SET password = $1, status = $2, updated_at = NOW() WHERE id = $3',
           [hashedPassword, 'approved', existing.id]
         );
         userId = existing.id;
+
+        const dispatchInsert = await pool.query(
+          'INSERT INTO email_access_tokens (code, email, user_id, created_by, status, expires_at, sent_at) VALUES ($1, $2, $3, $4, $5, $6, NULL) RETURNING id',
+          [accessCode, email, userId, req.user?.userId || null, 'processing', expiresAt]
+        );
+        const dispatchId = dispatchInsert.rows[0].id;
+
+        const html = buildTokenEmailHtml({ tokenCode: accessCode, portalUrl, expiresAt, customMessage });
+        const sendResult = await emailService.sendEmailDetailed(
+          email,
+          'Token de acesso - Ondas do Conhecimento',
+          html
+        );
+
+        if (!sendResult.ok) {
+          await pool.query(
+            'UPDATE email_access_tokens SET status = $1, error_message = $2 WHERE id = $3',
+            ['failed', sendResult.error || 'Falha ao enviar e-mail.', dispatchId]
+          );
+          results.push({ email, token: accessCode, status: 'failed', error: sendResult.error || 'Falha ao enviar e-mail.' });
+          continue;
+        }
+
+        await pool.query(
+          'UPDATE email_access_tokens SET status = $1, sent_at = NOW(), error_message = NULL WHERE id = $2',
+          ['sent', dispatchId]
+        );
+        results.push({ email, token: accessCode, status: 'sent', sent_at: new Date().toISOString() });
       } else {
         const defaultName = email.split('@')[0];
+        const accessCode = generateAccessCode(8);
+        const hashedPassword = await bcrypt.hash(accessCode, 10);
         const created = await pool.query(
           'INSERT INTO users (name, email, password, role, status) VALUES ($1, $2, $3, $4, $5) RETURNING id',
           [defaultName, email, hashedPassword, 'participant', 'approved']
         );
         userId = created.rows[0].id;
+
+        const dispatchInsert = await pool.query(
+          'INSERT INTO email_access_tokens (code, email, user_id, created_by, status, expires_at, sent_at) VALUES ($1, $2, $3, $4, $5, $6, NULL) RETURNING id',
+          [accessCode, email, userId, req.user?.userId || null, 'processing', expiresAt]
+        );
+        const dispatchId = dispatchInsert.rows[0].id;
+
+        const html = buildTokenEmailHtml({ tokenCode: accessCode, portalUrl, expiresAt, customMessage });
+        const sendResult = await emailService.sendEmailDetailed(
+          email,
+          'Token de acesso - Ondas do Conhecimento',
+          html
+        );
+
+        if (!sendResult.ok) {
+          await pool.query(
+            'UPDATE email_access_tokens SET status = $1, error_message = $2 WHERE id = $3',
+            ['failed', sendResult.error || 'Falha ao enviar e-mail.', dispatchId]
+          );
+          results.push({ email, token: accessCode, status: 'failed', error: sendResult.error || 'Falha ao enviar e-mail.' });
+          continue;
+        }
+
+        await pool.query(
+          'UPDATE email_access_tokens SET status = $1, sent_at = NOW(), error_message = NULL WHERE id = $2',
+          ['sent', dispatchId]
+        );
+        results.push({ email, token: accessCode, status: 'sent', sent_at: new Date().toISOString() });
       }
-
-      await pool.query(
-        'INSERT INTO email_access_tokens (code, email, user_id, created_by, status, expires_at, sent_at) VALUES ($1, $2, $3, $4, $5, $6, NOW())',
-        [accessCode, email, userId, req.user?.userId || null, 'active', expiresAt]
-      );
-
-      const html = buildTokenEmailHtml({ tokenCode: accessCode, portalUrl, expiresAt, customMessage });
-      const sent = await emailService.sendEmail(
-        email,
-        'Token de acesso - Ondas do Conhecimento',
-        html
-      );
-
-      if (!sent) {
-        results.push({ email, status: 'failed', error: 'Falha ao enviar e-mail.' });
-        continue;
-      }
-
-      results.push({ email, status: 'sent', token: accessCode });
     } catch (err) {
       results.push({
         email,
@@ -209,4 +252,27 @@ exports.sendAccessTokensByEmail = async (req, res) => {
     failed: failedCount,
     details: results
   });
+};
+
+exports.listAccessTokenDispatches = async (req, res) => {
+  const requesterRole = String(req.user?.role || '').toLowerCase();
+  if (requesterRole !== 'admin' && requesterRole !== 'developer') {
+    return res.status(403).json({ error: 'Acesso negado' });
+  }
+
+  const limitRaw = Number(req.query?.limit || 100);
+  const limit = Number.isFinite(limitRaw) ? Math.min(Math.max(limitRaw, 1), 500) : 100;
+
+  try {
+    const result = await pool.query(
+      `SELECT id, code, email, status, error_message, expires_at, sent_at, created_at
+       FROM email_access_tokens
+       ORDER BY created_at DESC
+       LIMIT $1`,
+      [limit]
+    );
+    return res.json(result.rows);
+  } catch (err) {
+    return res.status(500).json({ error: 'Erro ao buscar histórico de envios.' });
+  }
 };

@@ -418,11 +418,11 @@
         </div>
 
         <div class="card-box">
-          <div class="card-header"><h3>Resultado do Último Envio</h3></div>
+          <div class="card-header"><h3>Histórico de Tokens Gerados e Enviados</h3></div>
           <table>
-            <thead><tr><th>E-mail</th><th>Status</th><th>Detalhe</th></tr></thead>
+            <thead><tr><th>E-mail</th><th>Token</th><th>Status</th><th>Enviado em</th><th>Detalhe</th></tr></thead>
             <tbody id="token-email-results">
-              <tr><td colspan="3" style="text-align:center;color:var(--text-muted);padding:1.5rem">Nenhum envio realizado ainda.</td></tr>
+              <tr><td colspan="5" style="text-align:center;color:var(--text-muted);padding:1.5rem">Nenhum envio realizado ainda.</td></tr>
             </tbody>
           </table>
         </div>
@@ -518,7 +518,7 @@
       if (id === 'inscriptions') loadInscriptions();
       if (id === 'stats') loadStats();
       if (id === 'materials') { loadMaterials(); loadCategories(); }
-      if (id === 'email') setupTokenEmailForm();
+      if (id === 'email') { setupTokenEmailForm(); loadTokenEmailHistory(); }
     }
 
     /* ─────────────── INSCRIPTIONS ─────────────── */
@@ -1090,28 +1090,51 @@
         .filter(Boolean);
     }
 
-    function renderTokenEmailResults(result) {
+    function renderTokenEmailResults(resultRows) {
       const tbody = document.getElementById('token-email-results');
-      if (!result || !Array.isArray(result.details) || result.details.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="3" style="text-align:center;color:var(--text-muted);padding:1.5rem">Nenhum resultado para exibir.</td></tr>';
+      if (!Array.isArray(resultRows) || resultRows.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--text-muted);padding:1.5rem">Nenhum resultado para exibir.</td></tr>';
         return;
       }
 
-      tbody.innerHTML = result.details.map(item => {
+      tbody.innerHTML = resultRows.map(item => {
         const ok = item.status === 'sent';
+        const blocked = item.status === 'blocked';
         const statusHtml = ok
           ? '<span class="badge badge-group">Enviado</span>'
-          : '<span class="badge" style="background:rgba(220,38,38,0.12);color:#dc2626;">Falhou</span>';
-        const detail = ok
-          ? 'Token enviado com sucesso'
-          : (item.error || 'Falha no envio');
+          : blocked
+            ? '<span class="badge" style="background:rgba(245,158,11,0.12);color:#b45309;">Bloqueado</span>'
+            : '<span class="badge" style="background:rgba(220,38,38,0.12);color:#dc2626;">Falhou</span>';
+        const detail = item.error || item.error_message || (ok ? 'Token enviado com sucesso' : 'Falha no envio');
+        const tokenCode = item.token || item.code || '—';
+        const sentAtRaw = item.sent_at || item.sentAt;
+        const sentAt = sentAtRaw
+          ? new Date(sentAtRaw).toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' })
+          : '—';
         return `
           <tr>
             <td>${item.email}</td>
+            <td><span style="font-family:monospace;font-weight:700;letter-spacing:0.04em">${tokenCode}</span></td>
             <td>${statusHtml}</td>
+            <td style="color:var(--text-muted)">${sentAt}</td>
             <td style="color:var(--text-muted)">${detail}</td>
           </tr>`;
       }).join('');
+    }
+
+    async function loadTokenEmailHistory() {
+      try {
+        const res = await fetch('/api/admin/access-tokens?limit=100', {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        const data = await res.json();
+        if (!res.ok) {
+          throw new Error(data.error || 'Falha ao carregar histórico.');
+        }
+        renderTokenEmailResults(data);
+      } catch (err) {
+        showToast('Erro', 'Não foi possível carregar o histórico de envios.', 'error');
+      }
     }
 
     function setupTokenEmailForm() {
@@ -1152,7 +1175,8 @@
             return;
           }
 
-          renderTokenEmailResults(data);
+          renderTokenEmailResults(data.details || []);
+          await loadTokenEmailHistory();
           showToast('Disparo concluído', `${data.sent} enviado(s), ${data.failed} falha(s).`, data.failed > 0 ? 'error' : 'success');
         } catch (err) {
           showToast('Erro', 'Não foi possível concluir o envio.', 'error');

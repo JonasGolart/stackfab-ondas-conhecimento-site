@@ -7,17 +7,23 @@
  * @param {string} html - Conteúdo HTML do e-mail.
  * @returns {Promise<boolean>} Retorna true se enviado com sucesso ou simulado localmente.
  */
-exports.sendEmail = async (to, subject, html) => {
+exports.sendEmailDetailed = async (to, subject, html) => {
   const apiKey = process.env.RESEND_API_KEY;
+  const from = process.env.RESEND_FROM_EMAIL || 'Ondas do Conhecimento <noreply@stackfab.com.br>';
 
   if (!apiKey) {
+    if (process.env.NODE_ENV === 'production') {
+      console.error('❌ [EMAIL SERVICE] RESEND_API_KEY não configurada em produção.');
+      return { ok: false, error: 'RESEND_API_KEY ausente em produção.' };
+    }
+
     console.warn('⚠️ [EMAIL SERVICE] RESEND_API_KEY não configurada no arquivo .env.');
     console.log('------------------ SIMULAÇÃO DE E-MAIL ------------------');
     console.log(`Para: ${to}`);
     console.log(`Assunto: ${subject}`);
     console.log(`Conteúdo:\n${html}`);
     console.log('---------------------------------------------------------');
-    return true;
+    return { ok: true, simulated: true };
   }
 
   try {
@@ -28,7 +34,7 @@ exports.sendEmail = async (to, subject, html) => {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        from: 'Ondas do Conhecimento <noreply@stackfab.com.br>',
+        from,
         to: [to],
         subject: subject,
         html: html
@@ -39,13 +45,18 @@ exports.sendEmail = async (to, subject, html) => {
 
     if (response.ok) {
       console.log(`📧 [EMAIL SERVICE] E-mail enviado com sucesso para ${to}. ID: ${data.id}`);
-      return true;
+      return { ok: true, id: data.id };
     } else {
       console.error('❌ [EMAIL SERVICE] Erro retornado pela API Resend:', data);
-      return false;
+      return { ok: false, error: data?.message || data?.error || 'Erro da API Resend.' };
     }
   } catch (error) {
     console.error('❌ [EMAIL SERVICE] Erro ao tentar conectar com a API Resend:', error);
-    return false;
+    return { ok: false, error: error?.message || 'Falha de conexão com Resend.' };
   }
+};
+
+exports.sendEmail = async (to, subject, html) => {
+  const result = await exports.sendEmailDetailed(to, subject, html);
+  return !!result.ok;
 };

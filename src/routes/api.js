@@ -44,5 +44,6 @@ router.delete('/admin/materials/:id', authMiddleware, materialController.deleteM
 router.post('/admin/categories', authMiddleware, categoryController.createCategory);
 router.delete('/admin/categories/:id', authMiddleware, categoryController.deleteCategory);
 router.post('/admin/access-tokens/send', authMiddleware, accessTokenController.sendAccessTokensByEmail);
+router.get('/admin/access-tokens', authMiddleware, accessTokenController.listAccessTokenDispatches);
 
 module.exports = router;

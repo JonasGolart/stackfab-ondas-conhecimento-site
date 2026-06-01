@@ -81,10 +81,12 @@ const initDb = async () => {
         expires_at TIMESTAMP NOT NULL,
         sent_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         used_at TIMESTAMP,
+        error_message TEXT,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       );
 
       ALTER TABLE materials ADD COLUMN IF NOT EXISTS category TEXT;
+      ALTER TABLE email_access_tokens ADD COLUMN IF NOT EXISTS error_message TEXT;
     `);
     
     // Seed default categories if table is empty
