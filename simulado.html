@@ -376,6 +376,42 @@
     .option:hover { background: rgba(46, 39, 32, 0.04); border-color: rgba(46, 39, 32, 0.22); }
     .option.selected { border-color: var(--primary); background: var(--primary-light); color: var(--primary); }
     .option.selected .option-letter { background: var(--primary); color: white; }
+    .option.correct {
+      border-color: #2e7d32;
+      background: rgba(46, 125, 50, 0.14);
+      color: #1b5e20;
+    }
+    .option.correct .option-letter { background: #2e7d32; color: white; }
+    .option.wrong {
+      border-color: #e53935;
+      background: rgba(229, 57, 53, 0.12);
+      color: #b71c1c;
+    }
+    .option.wrong .option-letter { background: #e53935; color: white; }
+    .option.disabled {
+      cursor: not-allowed;
+      opacity: 0.95;
+    }
+
+    .answer-feedback {
+      margin-top: 1rem;
+      border-radius: 12px;
+      padding: 0.75rem 0.9rem;
+      font-size: 0.88rem;
+      font-weight: 700;
+      display: none;
+    }
+    .answer-feedback.show { display: block; }
+    .answer-feedback.correct {
+      color: #1b5e20;
+      background: rgba(46, 125, 50, 0.14);
+      border: 1px solid rgba(46, 125, 50, 0.26);
+    }
+    .answer-feedback.wrong {
+      color: #b71c1c;
+      background: rgba(229, 57, 53, 0.12);
+      border: 1px solid rgba(229, 57, 53, 0.26);
+    }
 
     .option-letter {
       min-width: 32px;
@@ -595,6 +631,7 @@
           <span class="question-category" id="category"></span>
           <h2 class="question-text" id="question"></h2>
           <div class="options" id="options"></div>
+          <div class="answer-feedback" id="answer-feedback"></div>
         </div>
 
         <div class="nav-btns">
@@ -643,6 +680,7 @@
     let questions = [];
     let currentIdx = 0;
     let userAnswers = [];
+    let lockedAnswers = [];
     let selectedQty = 20;
     let selectedMode = 'all';
 
@@ -720,6 +758,7 @@
       });
 
       userAnswers = new Array(questions.length).fill(null);
+      lockedAnswers = new Array(questions.length).fill(false);
       currentIdx = 0;
 
       // Update pill
@@ -749,21 +788,43 @@
       document.getElementById('progress').style.width = `${(currentIdx / questions.length) * 100}%`;
 
       const optEl = document.getElementById('options');
+      const feedbackEl = document.getElementById('answer-feedback');
+      const selectedAnswer = userAnswers[currentIdx];
+      const isLocked = lockedAnswers[currentIdx];
+
       optEl.innerHTML = '';
       q.options.forEach((opt, i) => {
         const div = document.createElement('div');
-        div.className = `option${userAnswers[currentIdx] === i ? ' selected' : ''}`;
+        const isSelected = selectedAnswer === i;
+        const isCorrect = i === q.answer;
+        const isWrongSelection = isLocked && isSelected && !isCorrect;
+        div.className = `option${isSelected ? ' selected' : ''}${isLocked && isCorrect ? ' correct' : ''}${isWrongSelection ? ' wrong' : ''}${isLocked ? ' disabled' : ''}`;
         div.innerHTML = `<span class="option-letter">${String.fromCharCode(65 + i)}</span> ${opt}`;
         div.onclick = () => selectOption(i);
         optEl.appendChild(div);
       });
+
+      feedbackEl.className = 'answer-feedback';
+      feedbackEl.textContent = '';
+      if (isLocked && selectedAnswer !== null) {
+        const correctLetter = String.fromCharCode(65 + q.answer);
+        if (selectedAnswer === q.answer) {
+          feedbackEl.classList.add('show', 'correct');
+          feedbackEl.textContent = `✅ Correto! Você marcou a alternativa ${correctLetter}.`;
+        } else {
+          feedbackEl.classList.add('show', 'wrong');
+          feedbackEl.textContent = `❌ Você errou. A alternativa correta é ${correctLetter}.`;
+        }
+      }
 
       document.getElementById('prev-btn').style.visibility = currentIdx === 0 ? 'hidden' : 'visible';
       document.getElementById('next-btn').textContent = currentIdx === questions.length - 1 ? 'Finalizar ✓' : 'Próxima →';
     }
 
     function selectOption(idx) {
+      if (lockedAnswers[currentIdx]) return;
       userAnswers[currentIdx] = idx;
+      lockedAnswers[currentIdx] = true;
       loadQuestion();
     }
 
