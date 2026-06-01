@@ -29,6 +29,7 @@ router.post('/inscriptions/individual', inscriptionController.createIndividualIn
 router.post('/auth/login', authController.login);
 router.post('/auth/register', authController.register);
 router.post('/auth/forgot-password', authController.forgotPassword);
+router.post('/auth/complete-first-access', authMiddleware, authController.completeFirstAccessPassword);
 router.post('/auth/reset-password', authController.resetPassword);
 router.get('/materials', materialController.getAllMaterials); // Público para participantes
 router.get('/categories', categoryController.getAllCategories); // Público para participantes/filtros

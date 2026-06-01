@@ -42,7 +42,7 @@ function buildTokenEmailHtml({ tokenCode, portalUrl, expiresAt, customMessage })
       <td style="padding:2rem 2rem 1rem 2rem;">
         <h2 style="color:#1e293b;margin:0 0 0.6rem 0;font-size:1.2rem;">Seu acesso foi liberado</h2>
         <p style="color:#64748b;margin:0;line-height:1.6;">
-          Use o token abaixo para entrar no portal. Esse codigo funciona como sua senha de primeiro acesso.
+          Use o token abaixo para entrar no portal. No primeiro acesso, você precisará criar sua senha definitiva.
         </p>
       </td>
     </tr>
@@ -144,12 +144,14 @@ exports.sendAccessTokensByEmail = async (req, res) => {
 
   for (const email of dedupedEmails) {
     try {
-      const userLookup = await pool.query('SELECT id, role FROM users WHERE LOWER(email) = $1', [email]);
+      const userLookup = await pool.query('SELECT id, role, password_setup_required, password_setup_completed_at, first_token_used_at FROM users WHERE LOWER(email) = $1', [email]);
       let userId = null;
 
       if (userLookup.rows.length > 0) {
         const existing = userLookup.rows[0];
         const existingRole = String(existing.role || '').toLowerCase();
+        const setupCompleted = Boolean(existing.password_setup_completed_at);
+        const firstTokenConsumed = Boolean(existing.first_token_used_at);
 
         if (existingRole === 'admin' || existingRole === 'developer') {
           const blockedCode = `BLOCKED-${Date.now()}-${Math.floor(Math.random() * 100000)}`;
@@ -161,10 +163,30 @@ exports.sendAccessTokensByEmail = async (req, res) => {
           continue;
         }
 
+        if (setupCompleted) {
+          const blockedCode = `BLOCKED-${Date.now()}-${Math.floor(Math.random() * 100000)}`;
+          await pool.query(
+            'INSERT INTO email_access_tokens (code, email, user_id, created_by, status, expires_at, sent_at, error_message) VALUES ($1, $2, $3, $4, $5, $6, NULL, $7)',
+            [blockedCode, email, existing.id, req.user?.userId || null, 'blocked', expiresAt, 'Este usuário já possui senha definitiva. Use a recuperação de senha se precisar redefinir o acesso.']
+          );
+          results.push({ email, status: 'blocked', error: 'Este usuário já possui senha definitiva. Use a recuperação de senha se precisar redefinir o acesso.' });
+          continue;
+        }
+
+        if (firstTokenConsumed) {
+          const blockedCode = `BLOCKED-${Date.now()}-${Math.floor(Math.random() * 100000)}`;
+          await pool.query(
+            'INSERT INTO email_access_tokens (code, email, user_id, created_by, status, expires_at, sent_at, error_message) VALUES ($1, $2, $3, $4, $5, $6, NULL, $7)',
+            [blockedCode, email, existing.id, req.user?.userId || null, 'blocked', expiresAt, 'O token de primeiro acesso já foi consumido e não pode ser reenviado.']
+          );
+          results.push({ email, status: 'blocked', error: 'O token de primeiro acesso já foi consumido e não pode ser reenviado.' });
+          continue;
+        }
+
         const accessCode = generateAccessCode(8);
         const hashedPassword = await bcrypt.hash(accessCode, 10);
         await pool.query(
-          'UPDATE users SET password = $1, status = $2, updated_at = NOW() WHERE id = $3',
+          'UPDATE users SET password = $1, status = $2, password_setup_required = TRUE, password_setup_completed_at = NULL, first_token_used_at = NULL, updated_at = NOW() WHERE id = $3',
           [hashedPassword, 'approved', existing.id]
         );
         userId = existing.id;
@@ -201,7 +223,7 @@ exports.sendAccessTokensByEmail = async (req, res) => {
         const accessCode = generateAccessCode(8);
         const hashedPassword = await bcrypt.hash(accessCode, 10);
         const created = await pool.query(
-          'INSERT INTO users (name, email, password, role, status) VALUES ($1, $2, $3, $4, $5) RETURNING id',
+          'INSERT INTO users (name, email, password, role, status, password_setup_required) VALUES ($1, $2, $3, $4, $5, TRUE) RETURNING id',
           [defaultName, email, hashedPassword, 'participant', 'approved']
         );
         userId = created.rows[0].id;
@@ -309,12 +331,14 @@ exports.resendAccessTokenDispatch = async (req, res) => {
       return res.status(400).json({ error: 'Registro invalido para reenvio.' });
     }
 
-    const userLookup = await pool.query('SELECT id, role FROM users WHERE LOWER(email) = $1', [email]);
+    const userLookup = await pool.query('SELECT id, role, password_setup_required, password_setup_completed_at FROM users WHERE LOWER(email) = $1', [email]);
     let userId = dispatch.user_id || null;
 
     if (userLookup.rows.length > 0) {
       const existing = userLookup.rows[0];
       const existingRole = String(existing.role || '').toLowerCase();
+      const setupCompleted = Boolean(existing.password_setup_completed_at);
+      const firstTokenConsumed = Boolean(existing.first_token_used_at);
       if (existingRole === 'admin' || existingRole === 'developer') {
         await pool.query(
           'UPDATE email_access_tokens SET status = $1, error_message = $2 WHERE id = $3',
@@ -323,9 +347,25 @@ exports.resendAccessTokenDispatch = async (req, res) => {
         return res.status(400).json({ error: 'Nao e permitido reenviar token para administrador.' });
       }
 
+      if (setupCompleted) {
+        await pool.query(
+          'UPDATE email_access_tokens SET status = $1, error_message = $2 WHERE id = $3',
+          ['blocked', 'Este usuário já possui senha definitiva. Use a recuperação de senha se precisar redefinir o acesso.', id]
+        );
+        return res.status(400).json({ error: 'Este usuário já possui senha definitiva. Use a recuperação de senha se precisar redefinir o acesso.' });
+      }
+
+      if (firstTokenConsumed) {
+        await pool.query(
+          'UPDATE email_access_tokens SET status = $1, error_message = $2 WHERE id = $3',
+          ['blocked', 'O token de primeiro acesso já foi consumido e não pode ser reenviado.', id]
+        );
+        return res.status(400).json({ error: 'O token de primeiro acesso já foi consumido e não pode ser reenviado.' });
+      }
+
       const hashedPassword = await bcrypt.hash(accessCode, 10);
       await pool.query(
-        'UPDATE users SET password = $1, status = $2, updated_at = NOW() WHERE id = $3',
+        'UPDATE users SET password = $1, status = $2, password_setup_required = TRUE, password_setup_completed_at = NULL, first_token_used_at = NULL, updated_at = NOW() WHERE id = $3',
         [hashedPassword, 'approved', existing.id]
       );
       userId = existing.id;
@@ -333,7 +373,7 @@ exports.resendAccessTokenDispatch = async (req, res) => {
       const defaultName = email.split('@')[0];
       const hashedPassword = await bcrypt.hash(accessCode, 10);
       const created = await pool.query(
-        'INSERT INTO users (name, email, password, role, status) VALUES ($1, $2, $3, $4, $5) RETURNING id',
+        'INSERT INTO users (name, email, password, role, status, password_setup_required) VALUES ($1, $2, $3, $4, $5, TRUE) RETURNING id',
         [defaultName, email, hashedPassword, 'participant', 'approved']
       );
       userId = created.rows[0].id;

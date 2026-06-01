@@ -14,28 +14,47 @@ exports.login = async (req, res) => {
     const result = await pool.query('SELECT * FROM users WHERE LOWER(email) = $1', [normalizedEmail]);
     const user = result.rows[0];
 
-    if (user && await bcrypt.compare(password, user.password)) {
-      if (user.status === 'pending') {
-        return res.status(403).json({ error: 'Sua inscrição está em análise. Você receberá um e-mail quando for aprovada.' });
+    if (!user || !await bcrypt.compare(password, user.password)) {
+      return res.status(401).json({ error: 'Credenciais inválidas' });
+    }
+
+    if (user.status === 'pending') {
+      return res.status(403).json({ error: 'Sua inscrição está em análise. Você receberá um e-mail quando for aprovada.' });
+    }
+
+    const role = String(user.role || '').toLowerCase();
+    const setupRequired = Boolean(user.password_setup_required) && !user.password_setup_completed_at;
+    const firstTokenAlreadyUsed = Boolean(user.first_token_used_at);
+
+    if (setupRequired) {
+      if (firstTokenAlreadyUsed) {
+        return res.status(403).json({ error: 'Esse token de primeiro acesso já foi utilizado. Entre com a senha cadastrada ou recupere o acesso.' });
       }
 
-      const token = jwt.sign(
-        { userId: user.id, email: user.email, role: user.role }, 
-        process.env.JWT_SECRET, 
-        { expiresIn: '1d' }
+      await pool.query(
+        'UPDATE users SET first_token_used_at = NOW(), updated_at = NOW() WHERE id = $1 AND first_token_used_at IS NULL',
+        [user.id]
       );
-      res.json({ 
-        token, 
-        user: { 
-          id: user.id, 
-          email: user.email, 
-          role: user.role,
-          name: user.name
-        } 
-      });
-    } else {
-      res.status(401).json({ error: 'Credenciais inválidas' });
     }
+
+    const token = jwt.sign(
+      { userId: user.id, email: user.email, role: user.role },
+      process.env.JWT_SECRET,
+      { expiresIn: '1d' }
+    );
+
+    res.json({
+      token,
+      requiresPasswordSetup: setupRequired,
+      user: {
+        id: user.id,
+        email: user.email,
+        role: user.role,
+        name: user.name,
+        passwordSetupRequired: setupRequired,
+        firstTokenUsedAt: user.first_token_used_at || new Date().toISOString()
+      }
+    });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Erro no login' });
@@ -138,6 +157,66 @@ exports.forgotPassword = async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Erro interno ao processar recuperação de senha' });
+  }
+};
+
+exports.completeFirstAccessPassword = async (req, res) => {
+  const userId = req.user?.userId;
+  const { password, confirmPassword } = req.body;
+
+  if (!userId) {
+    return res.status(401).json({ error: 'Não autorizado' });
+  }
+
+  if (!password || !confirmPassword) {
+    return res.status(400).json({ error: 'Senha e confirmação são obrigatórias' });
+  }
+
+  if (password.length < 6) {
+    return res.status(400).json({ error: 'A senha deve ter pelo menos 6 caracteres' });
+  }
+
+  if (password !== confirmPassword) {
+    return res.status(400).json({ error: 'As senhas informadas não conferem' });
+  }
+
+  try {
+    const userResult = await pool.query(
+      'SELECT id, password_setup_required, password_setup_completed_at FROM users WHERE id = $1',
+      [userId]
+    );
+    const user = userResult.rows[0];
+
+    if (!user) {
+      return res.status(404).json({ error: 'Usuário não encontrado' });
+    }
+
+    if (!user.password_setup_required || user.password_setup_completed_at) {
+      return res.status(400).json({ error: 'Não existe um primeiro acesso pendente para este usuário.' });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+    await pool.query(
+      'UPDATE users SET password = $1, password_setup_required = FALSE, password_setup_completed_at = NOW(), updated_at = NOW() WHERE id = $2',
+      [hashedPassword, userId]
+    );
+
+    const refreshedUser = await pool.query('SELECT id, email, role, name FROM users WHERE id = $1', [userId]);
+    const currentUser = refreshedUser.rows[0];
+
+    res.json({
+      message: 'Senha cadastrada com sucesso!',
+      user: {
+        id: currentUser.id,
+        email: currentUser.email,
+        role: currentUser.role,
+        name: currentUser.name,
+        passwordSetupRequired: false
+      }
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Erro interno ao cadastrar a senha inicial' });
   }
 };
 

@@ -166,7 +166,7 @@
         <div class="form-group">
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
             <label for="password" class="form-label" style="margin-bottom: 0;">Senha</label>
-            <a href="#" onclick="toggleView(true)" style="color: #4CAF50; text-decoration: none; font-size: 0.8rem; font-weight: 500; transition: color 0.2s;">Esqueceu sua senha?</a>
+            <a href="#" onclick="toggleView('recovery')" style="color: #4CAF50; text-decoration: none; font-size: 0.8rem; font-weight: 500; transition: color 0.2s;">Esqueceu sua senha?</a>
           </div>
           <input type="password" id="password" name="password" class="form-input" placeholder="••••••••" required>
         </div>
@@ -197,7 +197,36 @@
         <div id="recovery-error-msg" class="error-msg">Erro ao solicitar recuperação. Tente novamente.</div>
       </form>
 
-      <a href="#" onclick="toggleView(false)" class="back-to-site">← Voltar para o login</a>
+      <a href="#" onclick="toggleView('login')" class="back-to-site">← Voltar para o login</a>
+    </div>
+
+    <!-- TELA DE PRIMEIRO ACESSO -->
+    <div id="setup-view" style="display: none; opacity: 0;">
+      <div class="login-header">
+        <img src="assets/img/logo-projeto.png" alt="Ondas do Conhecimento">
+        <h1>Cadastrar Senha</h1>
+        <p>Seu token foi consumido. Crie agora a senha definitiva para os próximos acessos.</p>
+      </div>
+
+      <div id="setup-info" class="success-msg" style="display:block;margin-top:0;margin-bottom:1rem;">
+        Primeiro acesso confirmado. Defina sua senha para continuar.
+      </div>
+
+      <form id="setup-form">
+        <div class="form-group">
+          <label for="setup-password" class="form-label">Nova senha</label>
+          <input type="password" id="setup-password" class="form-input" placeholder="••••••••" minlength="6" required>
+        </div>
+
+        <div class="form-group">
+          <label for="setup-confirm-password" class="form-label">Confirmar nova senha</label>
+          <input type="password" id="setup-confirm-password" class="form-input" placeholder="••••••••" minlength="6" required>
+        </div>
+
+        <button type="submit" class="btn-login" id="btn-salvar-senha">Salvar senha e entrar</button>
+        <div id="setup-success-msg" class="success-msg">Senha criada com sucesso! Entrando no sistema...</div>
+        <div id="setup-error-msg" class="error-msg">Não foi possível cadastrar a senha.</div>
+      </form>
     </div>
 
   </div>
@@ -212,39 +241,54 @@
     const recoveryErrorMsg = document.getElementById('recovery-error-msg');
     const btnRecuperar = document.getElementById('btn-recuperar');
 
-    // Transição suave entre Login e Recuperação
-    function toggleView(showRecovery) {
-      const loginView = document.getElementById('login-view');
-      const recoveryView = document.getElementById('recovery-view');
-      
+    const setupForm = document.getElementById('setup-form');
+    const setupInfo = document.getElementById('setup-info');
+    const setupSuccessMsg = document.getElementById('setup-success-msg');
+    const setupErrorMsg = document.getElementById('setup-error-msg');
+    const btnSalvarSenha = document.getElementById('btn-salvar-senha');
+
+    function hideAllAuthMessages() {
       errorMsg.style.display = 'none';
       recoverySuccessMsg.style.display = 'none';
       recoveryErrorMsg.style.display = 'none';
+      setupSuccessMsg.style.display = 'none';
+      setupErrorMsg.style.display = 'none';
+    }
 
-      if (showRecovery) {
-        loginView.style.opacity = '0';
-        loginView.style.transition = 'opacity 0.2s ease';
-        setTimeout(() => {
-          loginView.style.display = 'none';
-          recoveryView.style.display = 'block';
-          setTimeout(() => {
-            recoveryView.style.opacity = '1';
-            recoveryView.style.transition = 'opacity 0.2s ease';
-          }, 20);
-        }, 200);
+    // Transição suave entre Login, Recuperação e Primeiro Acesso
+    function toggleView(view) {
+      const loginView = document.getElementById('login-view');
+      const recoveryView = document.getElementById('recovery-view');
+      const setupView = document.getElementById('setup-view');
+      const views = { login: loginView, recovery: recoveryView, setup: setupView };
+
+      hideAllAuthMessages();
+
+      Object.entries(views).forEach(([key, element]) => {
+        const shouldShow = key === view;
+        element.style.transition = 'opacity 0.2s ease';
+        element.style.opacity = shouldShow ? '1' : '0';
+        element.style.display = shouldShow ? 'block' : 'none';
+      });
+    }
+
+    function redirectAfterAuth(userData) {
+      const userRole = String(userData?.role || '').toLowerCase();
+      if (userRole === 'admin' || userRole === 'developer') {
+        window.location.href = 'dashboard.html';
       } else {
-        recoveryView.style.opacity = '0';
-        recoveryView.style.transition = 'opacity 0.2s ease';
-        setTimeout(() => {
-          recoveryView.style.display = 'none';
-          loginView.style.display = 'block';
-          setTimeout(() => {
-            loginView.style.opacity = '1';
-            loginView.style.transition = 'opacity 0.2s ease';
-          }, 20);
-        }, 200);
+        window.location.href = 'portal.html';
       }
     }
+
+    function ensureSetupViewIfNeeded() {
+      const currentUser = JSON.parse(localStorage.getItem('user') || 'null');
+      if (currentUser && currentUser.passwordSetupRequired) {
+        toggleView('setup');
+      }
+    }
+
+    ensureSetupViewIfNeeded();
 
     // Fluxo de Login
     loginForm.addEventListener('submit', async (e) => {
@@ -269,11 +313,11 @@
           localStorage.setItem('token', data.token);
           localStorage.setItem('user', JSON.stringify(data.user));
           
-          const userRole = String(data.user.role).toLowerCase();
-          if (userRole === 'admin' || userRole === 'developer') {
-            window.location.href = 'dashboard.html';
+          if (data.requiresPasswordSetup || data.user?.passwordSetupRequired) {
+            setupInfo.innerText = 'Primeiro acesso confirmado. Defina sua senha para continuar.';
+            toggleView('setup');
           } else {
-            window.location.href = 'portal.html';
+            redirectAfterAuth(data.user);
           }
         } else {
           errorMsg.innerText = data.error || 'Usuário ou senha inválidos.';
@@ -287,6 +331,48 @@
         errorMsg.style.display = 'block';
         btnEntrar.innerText = 'Entrar no Painel';
         btnEntrar.disabled = false;
+      }
+    });
+
+    // Fluxo de Primeiro Acesso
+    setupForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      setupSuccessMsg.style.display = 'none';
+      setupErrorMsg.style.display = 'none';
+      btnSalvarSenha.innerText = 'Salvando...';
+      btnSalvarSenha.disabled = true;
+
+      const password = document.getElementById('setup-password').value;
+      const confirmPassword = document.getElementById('setup-confirm-password').value;
+      const token = localStorage.getItem('token');
+
+      try {
+        const response = await fetch('/api/auth/complete-first-access', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({ password, confirmPassword })
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          setupSuccessMsg.style.display = 'block';
+          localStorage.setItem('user', JSON.stringify(data.user));
+          setTimeout(() => redirectAfterAuth(data.user), 700);
+        } else {
+          setupErrorMsg.innerText = data.error || 'Não foi possível cadastrar a senha.';
+          setupErrorMsg.style.display = 'block';
+        }
+      } catch (err) {
+        console.error('Erro ao cadastrar senha inicial:', err);
+        setupErrorMsg.innerText = 'Erro de conexão com o servidor.';
+        setupErrorMsg.style.display = 'block';
+      } finally {
+        btnSalvarSenha.innerText = 'Salvar senha e entrar';
+        btnSalvarSenha.disabled = false;
       }
     });
 

@@ -326,8 +326,9 @@
     const token = localStorage.getItem('token');
     const user = JSON.parse(localStorage.getItem('user') || '{}');
     const normalizedRole = String(user.role || '').trim().toLowerCase();
+    const setupRequired = Boolean(user.passwordSetupRequired);
 
-    if (!token || normalizedRole !== 'participant') {
+    if (!token || setupRequired || normalizedRole !== 'participant') {
       window.location.href = 'login.html';
     }
 

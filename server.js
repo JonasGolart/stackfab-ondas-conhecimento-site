@@ -48,6 +48,9 @@ const initDb = async () => {
       ALTER TABLE users ADD COLUMN IF NOT EXISTS city TEXT;
       ALTER TABLE users ADD COLUMN IF NOT EXISTS guardian_name TEXT;
       ALTER TABLE users ADD COLUMN IF NOT EXISTS status TEXT DEFAULT 'pending';
+      ALTER TABLE users ADD COLUMN IF NOT EXISTS password_setup_required BOOLEAN DEFAULT FALSE;
+      ALTER TABLE users ADD COLUMN IF NOT EXISTS password_setup_completed_at TIMESTAMP;
+      ALTER TABLE users ADD COLUMN IF NOT EXISTS first_token_used_at TIMESTAMP;
       
       ALTER TABLE inscriptions ADD COLUMN IF NOT EXISTS guardian_name TEXT;
       ALTER TABLE inscriptions ADD COLUMN IF NOT EXISTS status TEXT DEFAULT 'pending';
@@ -55,6 +58,10 @@ const initDb = async () => {
       -- Garante que admin e usuários já existentes não fiquem bloqueados
       UPDATE users SET status = 'approved' WHERE status = 'pending' AND role = 'admin';
       UPDATE users SET status = 'approved' WHERE status = 'pending' AND role = 'developer';
+      UPDATE users SET password_setup_required = TRUE
+        WHERE role = 'participant'
+          AND password_setup_completed_at IS NULL
+          AND id IN (SELECT DISTINCT user_id FROM email_access_tokens WHERE user_id IS NOT NULL);
 
       CREATE TABLE IF NOT EXISTS categories (
         id SERIAL PRIMARY KEY,
