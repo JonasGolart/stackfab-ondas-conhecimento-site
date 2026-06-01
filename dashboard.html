@@ -1123,14 +1123,15 @@
       }
 
       tbody.innerHTML = resultRows.map(item => {
-        const ok = item.status === 'sent';
-        const blocked = item.status === 'blocked';
+        const normalizedStatus = String(item.status || '').trim().toLowerCase();
+        const ok = normalizedStatus === 'sent' || normalizedStatus === 'enviado';
+        const blocked = normalizedStatus === 'blocked' || normalizedStatus === 'bloqueado';
         const statusHtml = ok
           ? '<span class="badge badge-group">Enviado</span>'
           : blocked
             ? '<span class="badge" style="background:rgba(245,158,11,0.12);color:#b45309;">Bloqueado</span>'
             : '<span class="badge" style="background:rgba(220,38,38,0.12);color:#dc2626;">Falhou</span>';
-        const canResend = (item.status === 'failed' || item.status === 'sent') && !!item.id;
+        const canResend = !blocked && !!item.id && (normalizedStatus === 'failed' || normalizedStatus === 'falhou' || normalizedStatus === 'sent' || normalizedStatus === 'enviado');
         const resendBtn = canResend
           ? `<button class="btn-detail" style="margin-left:0.5rem;padding:0.2rem 0.6rem" onclick="resendTokenEmail(${item.id})">Reenviar</button>`
           : '';
