@@ -464,7 +464,15 @@
     });
 
     openSimuladoBtn.addEventListener('click', openSimuladoInCenter);
-    simuladoFilter.addEventListener('change', openSimuladoInCenter);
+    simuladoFilter.addEventListener('change', () => {
+      setAction('simulados');
+      centerTitle.innerText = 'Simulado';
+      centerSubtitle.innerText = 'Modo selecionado. Clique em "Abrir Simulado no Centro" para iniciar.';
+      downloadBtn.style.display = 'none';
+      if (!simuladoFrame.src) {
+        setActiveView('welcome');
+      }
+    });
 
     window.openMaterial = openMaterial;
 
