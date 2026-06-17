@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs');
 
 async function seed() {
   const name = 'Escoteiro Teste';
-  const email = 'jonasjonas@golart';
+  const email = 'jonasjonas@gmail.com';
   const password = '260778';
   const hashedPassword = await bcrypt.hash(password, 10);
 
