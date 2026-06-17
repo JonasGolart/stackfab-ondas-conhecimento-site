@@ -54,7 +54,7 @@
   --ff-heading: 'Outfit', system-ui, sans-serif;
   --ff-body:    'Inter', system-ui, sans-serif;
 
-  --fs-hero:  clamp(2.8rem, 6vw, 5rem);
+  --fs-hero:  clamp(2.2rem, 8vw, 5rem);
   --fs-h2:    clamp(1.8rem, 3.5vw, 2.8rem);
   --fs-h3:    clamp(1.2rem, 2vw, 1.5rem);
   --fs-body:  1rem;
@@ -1253,6 +1253,12 @@ button {
    RESPONSIVE
    ══════════════════════════════════════════════════ */
 @media (max-width: 968px) {
+  :root {
+    --sp-3xl: 6rem;
+    --sp-2xl: 4.5rem;
+    --sp-xl: 3rem;
+  }
+
   .sobre__grid {
     grid-template-columns: 1fr;
     gap: var(--sp-lg);
@@ -1304,6 +1310,10 @@ button {
 @media (max-width: 768px) {
   :root {
     --header-h: 64px;
+    --sp-3xl: 4.5rem;
+    --sp-2xl: 3.5rem;
+    --sp-xl: 2.5rem;
+    --sp-lg: 1.8rem;
   }
 
   .header__hamburger {
@@ -1344,9 +1354,22 @@ button {
     gap: var(--sp-sm);
     padding: var(--sp-md);
   }
+  
+  .hero__waves {
+    height: 80px;
+  }
+  
+  .wave-divider svg,
+  .footer__wave svg {
+    height: 50px;
+  }
 
   .form__grid {
     grid-template-columns: 1fr;
+  }
+  
+  .form {
+    padding: var(--sp-lg);
   }
 
   .objetivos__bento {
@@ -1365,6 +1388,14 @@ button {
 }
 
 @media (max-width: 480px) {
+  :root {
+    --sp-3xl: 3.5rem;
+    --sp-2xl: 2.5rem;
+    --sp-xl: 2rem;
+    --sp-lg: 1.5rem;
+    --fs-hero: clamp(2rem, 10vw, 2.8rem);
+  }
+
   .hero__actions {
     flex-direction: column;
   }
@@ -1372,6 +1403,19 @@ button {
   .btn--lg {
     width: 100%;
     justify-content: center;
+  }
+  
+  .hero__title {
+    word-break: break-word;
+  }
+  
+  .hero__waves {
+    height: 50px;
+  }
+  
+  .wave-divider svg,
+  .footer__wave svg {
+    height: 35px;
   }
 
   .parceiros__grid {
@@ -1381,7 +1425,18 @@ button {
 
   .parceiro-card {
     width: 100%;
-    max-width: 320px;
+    max-width: 100%;
+    min-width: 0;
+  }
+  
+  .form {
+    padding: var(--sp-md);
+  }
+  
+  .toast {
+    bottom: 1rem;
+    right: 1rem;
+    left: 1rem;
   }
 }
 

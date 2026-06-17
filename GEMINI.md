@@ -32,3 +32,5 @@
 2. **Dashboard Admin reescrito** (`dashboard.html`): 4 KPI cards (grupos, participantes, individuais, cidades), tabela de inscrições com badges Grupo/Individual e botão "Ver detalhes", Drawer lateral de detalhes com dados completos + lista de usuários individuais vinculados.
 3. **Seção de Estatísticas** com 4 gráficos Chart.js (CDN, sem npm): pizza de distribuição, barras top grupos, barras horizontais por cidade, linha de evolução temporal.
 4. **Backend**: novos endpoints `GET /api/admin/inscriptions/stats` e `GET /api/admin/users` em `inscriptionController.js` e `api.js`.
+
+**[Update - 2026-06-17]**: Implementados ajustes e correções avançadas na responsividade da Landing Page (`index.html` / `styles.css`) para dispositivos móveis e tablets, melhorando o enquadramento de textos longos (clamp font-size), otimizando o espaçamento da tela (paddings variáveis no `:root`) e reduzindo a altura das animações SVG para melhor navegação. Alterações "commitadas" e enviadas ao Github.
