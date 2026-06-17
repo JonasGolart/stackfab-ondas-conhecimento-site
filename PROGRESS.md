@@ -35,6 +35,7 @@
 - [x] Ocultar/Excluir aba de inscrição por grupos, mantendo apenas fluxo unificado de inscrição individual
 - [x] Bloqueio de login e reset de senha para usuários com status 'pending'
 - [x] Ajustes avançados e correções na responsividade da Landing Page para celulares e tablets (enquadramento e paddings)
+- [x] Correção de layout e usabilidade da sidebar na Área de Membros (dashboard.html e portal.html) para dispositivos móveis com menu hamburguer e overlay.
 
 ### 📋 Próximos Passos
 1. Acompanhar a sincronização do deploy contínuo automático no painel do Coolify.

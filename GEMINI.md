@@ -34,3 +34,5 @@
 4. **Backend**: novos endpoints `GET /api/admin/inscriptions/stats` e `GET /api/admin/users` em `inscriptionController.js` e `api.js`.
 
 **[Update - 2026-06-17]**: Implementados ajustes e correções avançadas na responsividade da Landing Page (`index.html` / `styles.css`) para dispositivos móveis e tablets, melhorando o enquadramento de textos longos (clamp font-size), otimizando o espaçamento da tela (paddings variáveis no `:root`) e reduzindo a altura das animações SVG para melhor navegação. Alterações "commitadas" e enviadas ao Github.
+
+**[Update - 2026-06-17] (Part 2)**: Corrigido o bug da responsividade na "Área de Membros" (dashboard.html e portal.html) onde a sidebar estava sobrepondo ou quebrando o layout em dispositivos móveis. Adicionado menu hamburguer (drawer off-canvas) com animação suave e overlay de escurecimento, fechando automaticamente ao realizar alguma ação na tela. Alterações "commitadas" e enviadas ao Github.

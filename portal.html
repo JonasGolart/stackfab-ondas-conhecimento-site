@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
@@ -237,28 +237,61 @@
       background: #fff;
     }
 
+    .hamburger-portal { display: none; background: none; border: none; cursor: pointer; color: var(--text); padding: 0.2rem; }
+    .sidebar-overlay { display: none; }
+
     @media (max-width: 1020px) {
       .app-shell {
         grid-template-columns: 1fr;
+        margin-top: 0.5rem;
       }
+
+      .hamburger-portal { display: flex; align-items: center; justify-content: center; }
 
       .sidebar {
-        min-height: auto;
-        max-height: none;
-        position: static;
+        position: fixed;
+        left: 0;
+        top: 0;
+        height: 100vh;
+        width: 320px;
+        max-width: 85vw;
+        max-height: 100vh;
+        z-index: 1000;
+        border-radius: 0;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+        background: var(--bg);
+        overflow-y: auto;
       }
 
+      .sidebar.open { transform: translateX(0); }
+
+      .sidebar-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(46,39,32,0.4);
+        z-index: 999;
+        backdrop-filter: blur(2px);
+      }
+      .sidebar-overlay.open { display: block; }
+
       .center-stage {
-        min-height: 74vh;
+        min-height: 80vh;
       }
     }
   </style>
 </head>
 <body>
   <nav class="navbar">
-    <div class="logo">
-      <img src="assets/img/logo-projeto.png" alt="Logo">
-      <span>Ondas do Conhecimento</span>
+    <div style="display:flex;align-items:center;gap:0.75rem;">
+      <button class="hamburger-portal" onclick="toggleSidebar()">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <div class="logo">
+        <img src="assets/img/logo-projeto.png" alt="Logo">
+        <span>Ondas do Conhecimento</span>
+      </div>
     </div>
     <div class="user-profile">
       <span id="user-name" style="font-weight: 600;">Participante</span>
@@ -267,8 +300,15 @@
   </nav>
 
   <main class="app-shell">
-    <aside class="sidebar">
-      <div class="sidebar-title">Ações do Portal</div>
+    <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
+    
+    <aside class="sidebar" id="sidebar">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 0.5rem;">
+        <div class="sidebar-title" style="padding:0;">Ações do Portal</div>
+        <button class="hamburger-portal" onclick="toggleSidebar()" style="display:none; /* only show on mobile via CSS but handled by media query, wait, let's just show it via class */" id="close-sidebar-btn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
 
       <div id="materials-group" class="sidebar-group active">
         <div class="group-heading">Materiais</div>
@@ -383,6 +423,21 @@
       }
     }
 
+    function toggleSidebar() {
+      document.getElementById('sidebar').classList.toggle('open');
+      document.getElementById('sidebar-overlay').classList.toggle('open');
+    }
+
+    function closeSidebarOnMobile() {
+      if (window.innerWidth <= 1020) {
+        document.getElementById('sidebar').classList.remove('open');
+        document.getElementById('sidebar-overlay').classList.remove('open');
+      }
+    }
+
+    // Adiciona listener no botão de fechar interno da sidebar
+    document.getElementById('close-sidebar-btn').addEventListener('click', closeSidebarOnMobile);
+
     function openSimuladoInCenter() {
       const mode = simuladoFilter.value || 'all';
       const src = `simulado.html?modo=${encodeURIComponent(mode)}&qtd=20&autostart=1&t=${Date.now()}`;
@@ -392,6 +447,7 @@
       simuladoFrame.src = src;
       setAction('simulados');
       setActiveView('simulado');
+      closeSidebarOnMobile();
     }
 
     function getFilteredMaterials() {
@@ -452,6 +508,7 @@
 
       pdfFrame.src = material.file_path;
       setActiveView('pdf');
+      closeSidebarOnMobile();
     }
 
     categoryFilter.addEventListener('change', (e) => {
