@@ -1,23 +1,27 @@
 /**
- * Envia um e-mail utilizando a API REST do Resend.
- * Se nenhuma chave RESEND_API_KEY estiver configurada, o e-mail será logado no console para fins de desenvolvimento.
+ * Envia um e-mail utilizando a API SMTP do Hostinger.
+ * Se nenhuma configuração SMTP estiver configurada, o e-mail será logado no console para fins de desenvolvimento.
  * 
  * @param {string} to - E-mail do destinatário.
  * @param {string} subject - Assunto do e-mail.
  * @param {string} html - Conteúdo HTML do e-mail.
- * @returns {Promise<boolean>} Retorna true se enviado com sucesso ou simulado localmente.
+ * @returns {Promise<Object>} Retorna {ok: boolean, simulated?: boolean, error?: string}.
  */
 exports.sendEmailDetailed = async (to, subject, html) => {
-  const apiKey = process.env.RESEND_API_KEY;
-  const from = process.env.RESEND_FROM_EMAIL || 'Ondas do Conhecimento <noreply@stackfab.com.br>';
+  const host = process.env.EMAIL_HOST;
+  const port = process.env.EMAIL_PORT;
+  const secure = process.env.EMAIL_SECURE === 'true';
+  const user = process.env.EMAIL_USER;
+  const pass = process.env.EMAIL_PASS;
+  const from = process.env.EMAIL_FROM || user;
 
-  if (!apiKey) {
+  if (!host || !port || !user || !pass) {
     if (process.env.NODE_ENV === 'production') {
-      console.error('❌ [EMAIL SERVICE] RESEND_API_KEY não configurada em produção.');
-      return { ok: false, error: 'RESEND_API_KEY ausente em produção.' };
+      console.error('❌ [EMAIL SERVICE] Configuração SMTP ausente em produção.');
+      return { ok: false, error: 'Configuração SMTP ausente em produção.' };
     }
 
-    console.warn('⚠️ [EMAIL SERVICE] RESEND_API_KEY não configurada no arquivo .env.');
+    console.warn('⚠️ [EMAIL SERVICE] Configuração SMTP ausente no arquivo .env.');
     console.log('------------------ SIMULAÇÃO DE E-MAIL ------------------');
     console.log(`Para: ${to}`);
     console.log(`Assunto: ${subject}`);
@@ -27,32 +31,35 @@ exports.sendEmailDetailed = async (to, subject, html) => {
   }
 
   try {
-    const response = await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${apiKey}`,
-        'Content-Type': 'application/json'
+    const nodemailer = require('nodemailer');
+
+    const transporter = nodemailer.createTransport({
+      host,
+      port: parseInt(port),
+      secure,
+      auth: {
+        user,
+        pass
       },
-      body: JSON.stringify({
-        from,
-        to: [to],
-        subject: subject,
-        html: html
-      })
+      tls: {
+        rejectUnauthorized: false
+      }
     });
 
-    const data = await response.json();
+    const mailOptions = {
+      from,
+      to,
+      subject,
+      html
+    };
 
-    if (response.ok) {
-      console.log(`📧 [EMAIL SERVICE] E-mail enviado com sucesso para ${to}. ID: ${data.id}`);
-      return { ok: true, id: data.id };
-    } else {
-      console.error('❌ [EMAIL SERVICE] Erro retornado pela API Resend:', data);
-      return { ok: false, error: data?.message || data?.error || 'Erro da API Resend.' };
-    }
+    const info = await transporter.sendMail(mailOptions);
+
+    console.log(`📧 [EMAIL SERVICE] E-mail enviado com sucesso para ${to}. ID: ${info.messageId}`);
+    return { ok: true, id: info.messageId };
   } catch (error) {
-    console.error('❌ [EMAIL SERVICE] Erro ao tentar conectar com a API Resend:', error);
-    return { ok: false, error: error?.message || 'Falha de conexão com Resend.' };
+    console.error('❌ [EMAIL SERVICE] Erro ao tentar enviar e-mail via Hostinger SMTP:', error);
+    return { ok: false, error: error?.message || 'Falha ao enviar e-mail via Hostinger SMTP.' };
   }
 };
 
