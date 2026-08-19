@@ -1,6 +1,6 @@
 # 📝 Progresso do Projeto: Ondas do Conhecimento
 
-## 🗓️ Última Atualização: 2026-05-19
+## 🗓️ Última Atualização: 2026-08-19
 **Responsável**: Antigravity AI
 
 ---
@@ -36,6 +36,8 @@
 - [x] Bloqueio de login e reset de senha para usuários com status 'pending'
 - [x] Ajustes avançados e correções na responsividade da Landing Page para celulares e tablets (enquadramento e paddings)
 - [x] Correção de layout e usabilidade da sidebar na Área de Membros (dashboard.html e portal.html) para dispositivos móveis com menu hamburguer e overlay.
+- [x] Quadro de Notas e Ranking do Simulado com pontuação persistida, classificação geral nos portais e painel administrativo
+
 
 ### 📋 Próximos Passos
 1. Acompanhar a sincronização do deploy contínuo automático no painel do Coolify.

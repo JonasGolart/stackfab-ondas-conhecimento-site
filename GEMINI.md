@@ -36,3 +36,12 @@
 **[Update - 2026-06-17]**: Implementados ajustes e correções avançadas na responsividade da Landing Page (`index.html` / `styles.css`) para dispositivos móveis e tablets, melhorando o enquadramento de textos longos (clamp font-size), otimizando o espaçamento da tela (paddings variáveis no `:root`) e reduzindo a altura das animações SVG para melhor navegação. Alterações "commitadas" e enviadas ao Github.
 
 **[Update - 2026-06-17] (Part 2)**: Corrigido o bug da responsividade na "Área de Membros" (dashboard.html e portal.html) onde a sidebar estava sobrepondo ou quebrando o layout em dispositivos móveis. Adicionado menu hamburguer (drawer off-canvas) com animação suave e overlay de escurecimento, fechando automaticamente ao realizar alguma ação na tela. Alterações "commitadas" e enviadas ao Github.
+
+**[Update - 2026-08-19]**: Implementada a funcionalidade de Quadro de Notas e classificação geral (ranking):
+1. **Banco de Dados**: Nova tabela `simulado_scores` adicionada à inicialização em `server.js`.
+2. **Backend/API**: Criado controller `src/controllers/simuladoController.js` e adicionados endpoints `POST /api/simulado/scores` (salvar score) e `GET /api/simulado/ranking` (buscar ranking).
+3. **Interfaces**:
+   - `simulado.html`: Modificado para enviar o score automaticamente à API ao concluir.
+   - `portal.html`: Inserido o painel "Quadro de Notas" na sidebar e a view de classificação na tela central para os alunos.
+   - `dashboard.html`: Adicionado "Quadro de Notas" na sidebar do admin e tabela correspondente de notas gerais.
+Todas as alterações foram submetidas ao repositório GitHub.
