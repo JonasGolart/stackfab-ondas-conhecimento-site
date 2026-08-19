@@ -92,6 +92,15 @@ const initDb = async () => {
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       );
 
+      CREATE TABLE IF NOT EXISTS simulado_scores (
+        id SERIAL PRIMARY KEY,
+        user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+        mode TEXT NOT NULL,
+        questions_count INTEGER NOT NULL,
+        score INTEGER NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      );
+
       ALTER TABLE materials ADD COLUMN IF NOT EXISTS category TEXT;
       ALTER TABLE email_access_tokens ADD COLUMN IF NOT EXISTS error_message TEXT;
     `);

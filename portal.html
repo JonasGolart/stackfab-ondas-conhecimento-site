@@ -280,6 +280,16 @@
         min-height: 80vh;
       }
     }
+
+    /* Ranking styles */
+    .card-box {
+      margin-bottom: 2rem;
+    }
+    table { width: 100%; border-collapse: collapse; text-align: left; }
+    th { padding: 0.875rem 1.5rem; background: rgba(46, 39, 32, 0.02); font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; }
+    td { padding: 1rem 1.5rem; border-bottom: 1px solid var(--border); font-size: 0.875rem; }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: rgba(46, 125, 50, 0.02); }
   </style>
 </head>
 <body>
@@ -330,6 +340,12 @@
         </select>
         <button id="open-simulado-btn" class="open-simulado-btn">Abrir Simulado no Centro</button>
       </div>
+
+      <div id="ranking-group" class="sidebar-group">
+        <div class="group-heading">Quadro de Notas</div>
+        <div class="group-sub">Ranking de melhores notas</div>
+        <button id="open-ranking-btn" class="open-simulado-btn">Abrir Quadro de Notas</button>
+      </div>
     </aside>
 
     <section class="center-stage">
@@ -358,6 +374,35 @@
         <div id="view-simulado" class="view">
           <iframe id="simulado-frame" class="simulado-frame" title="Simulado" src=""></iframe>
         </div>
+
+        <div id="view-ranking" class="view" style="padding: 1.5rem; overflow-y: auto; height: 100%;">
+          <div class="card-box" style="background: #fff; border: 1px solid var(--border); border-radius: 16px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.03);">
+            <div style="padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; background: rgba(240, 230, 210, 0.4);">
+              <h3 style="font-weight: 800; font-size: 1.1rem; display: flex; align-items: center; gap: 0.5rem;">
+                🏆 Classificação Geral (Ranking)
+              </h3>
+            </div>
+            <div style="overflow-x:auto">
+              <table style="width: 100%; border-collapse: collapse; text-align: left;">
+                <thead>
+                  <tr style="background: rgba(46, 39, 32, 0.02); border-bottom: 1px solid var(--border);">
+                    <th style="padding: 0.875rem 1.5rem; font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600;">Posição</th>
+                    <th style="padding: 0.875rem 1.5rem; font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600;">Participante</th>
+                    <th style="padding: 0.875rem 1.5rem; font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600;">Grupo Escoteiro</th>
+                    <th style="padding: 0.875rem 1.5rem; font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600;">Modo</th>
+                    <th style="padding: 0.875rem 1.5rem; font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; text-align: center;">Qtd Questões</th>
+                    <th style="padding: 0.875rem 1.5rem; font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; text-align: center;">Acertos</th>
+                    <th style="padding: 0.875rem 1.5rem; font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; text-align: center;">Aproveitamento</th>
+                    <th style="padding: 0.875rem 1.5rem; font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600;">Data</th>
+                  </tr>
+                </thead>
+                <tbody id="ranking-list-body">
+                  <tr><td colspan="8" style="text-align:center;color:var(--text-muted);padding:2rem">Carregando classificação...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   </main>
@@ -377,6 +422,7 @@
 
     const materialsGroup = document.getElementById('materials-group');
     const simuladoGroup = document.getElementById('simulado-group');
+    const rankingGroup = document.getElementById('ranking-group');
     const categoryFilter = document.getElementById('sidebar-category-filter');
     const materialsListEl = document.getElementById('sidebar-materials-list');
     const simuladoFilter = document.getElementById('sidebar-simulado-filter');
@@ -389,6 +435,7 @@
     const viewWelcome = document.getElementById('view-welcome');
     const viewPdf = document.getElementById('view-pdf');
     const viewSimulado = document.getElementById('view-simulado');
+    const viewRanking = document.getElementById('view-ranking');
 
     const pdfFrame = document.getElementById('pdf-frame');
     const simuladoFrame = document.getElementById('simulado-frame');
@@ -404,16 +451,19 @@
     }
 
     function setActiveView(view) {
-      [viewWelcome, viewPdf, viewSimulado].forEach(v => v.classList.remove('active'));
+      [viewWelcome, viewPdf, viewSimulado, viewRanking].forEach(v => v.classList.remove('active'));
       if (view === 'pdf') viewPdf.classList.add('active');
       else if (view === 'simulado') viewSimulado.classList.add('active');
+      else if (view === 'ranking') viewRanking.classList.add('active');
       else viewWelcome.classList.add('active');
     }
 
     function setAction(action) {
       const isMaterials = action === 'materials';
+      const isRanking = action === 'ranking';
       materialsGroup.classList.toggle('active', isMaterials);
-      simuladoGroup.classList.toggle('active', !isMaterials);
+      simuladoGroup.classList.toggle('active', !isMaterials && !isRanking);
+      rankingGroup.classList.toggle('active', isRanking);
 
       if (isMaterials && !selectedMaterialId) {
         centerTitle.innerText = 'Materiais de Estudo';
@@ -530,6 +580,69 @@
       if (!simuladoFrame.src) {
         setActiveView('welcome');
       }
+    });
+
+    async function loadRanking() {
+      const body = document.getElementById('ranking-list-body');
+      body.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:2rem;color:var(--text-muted)">Carregando classificação...</td></tr>';
+      try {
+        const response = await fetch('/api/simulado/ranking', {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+        if (!response.ok) throw new Error('Erro ao buscar dados');
+        const data = await response.json();
+        
+        if (data.length === 0) {
+          body.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:2rem;color:var(--text-muted)">Nenhum simulado realizado ainda. Seja o primeiro!</td></tr>';
+          return;
+        }
+
+        body.innerHTML = data.map((row, idx) => {
+          const dateStr = new Date(row.createdAt).toLocaleDateString('pt-BR', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+          });
+
+          const badgeClass = row.percentage >= 70 ? 'color: #2e7d32; font-weight: 700;' : 'color: #dc2626; font-weight: 700;';
+          
+          let medal = idx + 1;
+          if (idx === 0) medal = '🥇';
+          else if (idx === 1) medal = '🥈';
+          else if (idx === 2) medal = '🥉';
+
+          return `
+            <tr style="border-bottom: 1px solid var(--border);">
+              <td style="padding: 1rem 1.5rem; font-weight: 700; text-align: center;">${medal}</td>
+              <td style="padding: 1rem 1.5rem; font-weight: 600;">${row.userName}</td>
+              <td style="padding: 1rem 1.5rem; color: var(--text-muted);">${row.scoutGroup}</td>
+              <td style="padding: 1rem 1.5rem;">${row.mode === 'all' ? '🎯 Completo' : row.mode}</td>
+              <td style="padding: 1rem 1.5rem; text-align: center;">${row.questionsCount}</td>
+              <td style="padding: 1rem 1.5rem; text-align: center;">${row.score}</td>
+              <td style="padding: 1rem 1.5rem; text-align: center; ${badgeClass}">${row.percentage}%</td>
+              <td style="padding: 1rem 1.5rem; font-size: 0.8rem; color: var(--text-muted);">${dateStr}</td>
+            </tr>
+          `;
+        }).join('');
+      } catch (err) {
+        console.error(err);
+        body.innerHTML = '<tr><td colspan="8" style="text-align:center;color:#dc2626;padding:2rem">Falha ao carregar classificação.</td></tr>';
+      }
+    }
+
+    const openRankingBtn = document.getElementById('open-ranking-btn');
+    openRankingBtn.addEventListener('click', () => {
+      centerTitle.innerText = 'Quadro de Notas & Ranking';
+      centerSubtitle.innerText = 'Confira os melhores desempenhos nos simulados do Ondas do Conhecimento.';
+      downloadBtn.style.display = 'none';
+      setAction('ranking');
+      setActiveView('ranking');
+      loadRanking();
+      closeSidebarOnMobile();
     });
 
     window.openMaterial = openMaterial;

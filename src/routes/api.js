@@ -7,6 +7,7 @@ const authController = require('../controllers/authController');
 const materialController = require('../controllers/materialController');
 const categoryController = require('../controllers/categoryController');
 const accessTokenController = require('../controllers/accessTokenController');
+const simuladoController = require('../controllers/simuladoController');
 const authMiddleware = require('../middlewares/authMiddleware');
 
 // Configuração do Multer para Uploads
@@ -33,6 +34,10 @@ router.post('/auth/complete-first-access', authMiddleware, authController.comple
 router.post('/auth/reset-password', authController.resetPassword);
 router.get('/materials', materialController.getAllMaterials); // Público para participantes
 router.get('/categories', categoryController.getAllCategories); // Público para participantes/filtros
+
+// Simulado routes (Authenticated)
+router.post('/simulado/scores', authMiddleware, simuladoController.saveScore);
+router.get('/simulado/ranking', authMiddleware, simuladoController.getRanking);
 
 // Protected routes (Admin only)
 router.get('/admin/inscriptions', authMiddleware, inscriptionController.getAllInscriptions);

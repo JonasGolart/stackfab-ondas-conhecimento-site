@@ -673,6 +673,7 @@
   </div>
 
   <script>
+    const token = localStorage.getItem('token');
     // ============================================================
     // STATE
     // ============================================================
@@ -874,6 +875,28 @@
 
       document.getElementById('progress').style.width = '100%';
       showScreen('results');
+
+      if (token) {
+        saveSimuladoScore(selectedMode, questions.length, score);
+      }
+    }
+
+    async function saveSimuladoScore(mode, questionsCount, score) {
+      try {
+        const response = await fetch('/api/simulado/scores', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({ mode, questionsCount, score })
+        });
+        if (!response.ok) {
+          console.error('Falha ao salvar a pontuação do simulado.');
+        }
+      } catch (err) {
+        console.error('Erro ao conectar à API para salvar pontuação:', err);
+      }
     }
 
     function restartSameMode() { startQuiz(selectedMode); }
