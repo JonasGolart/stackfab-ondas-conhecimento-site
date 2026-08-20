@@ -1,0 +1,212 @@
+[
+  {
+    "enunciado": "O ganho de RF (RF Gain) ajusta a sensibilidade do receptor.",
+    "alternativas": {
+      "a": "Certo",
+      "b": "Errado"
+    },
+    "resposta_correta": "a",
+    "nivel": "Legislação"
+  },
+  {
+    "enunciado": "O código Q, pelo qual os radioamadores se comunicam, divide-se em seções, em séries de quantas letras?",
+    "alternativas": {
+      "a": "2 (duas)",
+      "b": "3 (três)",
+      "c": "4 (quatro)",
+      "d": "5 (cinco)",
+      "e": "6 (seis)"
+    },
+    "resposta_correta": "b",
+    "nivel": "Legislação"
+  },
+  {
+    "enunciado": "Campos magnéticos variáveis:",
+    "alternativas": {
+      "a": "são gerados por imãs naturais",
+      "b": "são gerados por corrente contínua",
+      "c": "induzem corrente elétrica em condutores próximos",
+      "d": "induzem corrente elétrica somente em isolantes elétricos",
+      "e": "não existem"
+    },
+    "resposta_correta": "c",
+    "nivel": "Eletrônica"
+  },
+  {
+    "enunciado": "Os radioamadores das classes B e C poderão requerer licença de funcionamento de 4 (quatro) tipos de estação, sendo- lhes negada a licença de funcionamento para:",
+    "alternativas": {
+      "a": "repetidora",
+      "b": "móvel",
+      "c": "portátil",
+      "d": "de domicílio principal",
+      "e": "de domicílio adicional"
+    },
+    "resposta_correta": "a",
+    "nivel": "Legislação"
+  },
+  {
+    "enunciado": "O prefixo PP8 identifica o estado do Amazonas.",
+    "alternativas": {
+      "a": "Certo",
+      "b": "Errado"
+    },
+    "resposta_correta": "a",
+    "nivel": "Técnica e Ética"
+  },
+  {
+    "enunciado": "O uso de 'Break' deve ser reservado para pedidos de entrada urgente ou situações de emergência em uma conversa.",
+    "alternativas": {
+      "a": "Certo",
+      "b": "Errado"
+    },
+    "resposta_correta": "a",
+    "nivel": "Técnica e Ética"
+  },
+  {
+    "enunciado": "Quais são os tipos de estação de radioamador?",
+    "alternativas": {
+      "a": "fixa, móvel ou portátil",
+      "b": "fixa tipo 01, portátil e repetidora",
+      "c": "móvel, fixa tipo 02, portátil",
+      "d": "repetidora tipo 04, móvel",
+      "e": "fixa, móvel ou portátil e repetidora"
+    },
+    "resposta_correta": "e",
+    "nivel": "Legislação"
+  },
+  {
+    "enunciado": "A polarização vertical é a mais comum para comunicações em repetidoras de VHF.",
+    "alternativas": {
+      "a": "Certo",
+      "b": "Errado"
+    },
+    "resposta_correta": "a",
+    "nivel": "Técnica e Ética"
+  },
+  {
+    "enunciado": "QTI significa 'Qual é o seu destino?'.",
+    "alternativas": {
+      "a": "Certo",
+      "b": "Errado"
+    },
+    "resposta_correta": "a",
+    "nivel": "Técnica e Ética"
+  },
+  {
+    "enunciado": "A perda em cabos coaxiais aumenta conforme a frequência de operação aumenta.",
+    "alternativas": {
+      "a": "Certo",
+      "b": "Errado"
+    },
+    "resposta_correta": "a",
+    "nivel": "Eletrônica"
+  },
+  {
+    "enunciado": "O capacitor é um elemento que:",
+    "alternativas": {
+      "a": "gera energia",
+      "b": "consome energia",
+      "c": "armazena energia",
+      "d": "transforma energia",
+      "e": "gera calor"
+    },
+    "resposta_correta": "c",
+    "nivel": "Eletrônica"
+  },
+  {
+    "enunciado": "A variação de corrente em uma bobina induz corrente em uma bobina próxima. Este fenômeno chama-se:",
+    "alternativas": {
+      "a": "capacitância",
+      "b": "indutância",
+      "c": "indutância mutua",
+      "d": "auto-indutância",
+      "e": "reatância indutiva"
+    },
+    "resposta_correta": "c",
+    "nivel": "Eletrônica"
+  },
+  {
+    "enunciado": "O serviço de radioamador tem entre seus objetivos:",
+    "alternativas": {
+      "a": "obtenção de lucros",
+      "b": "divulgação de sucessos musicais",
+      "c": "comunicação técnica",
+      "d": "treinamento de empresas",
+      "e": "promoção de comércio"
+    },
+    "resposta_correta": "c",
+    "nivel": "Legislação"
+  },
+  {
+    "enunciado": "O valor da ROE ideal é 1.0.",
+    "alternativas": {
+      "a": "Certo",
+      "b": "Errado"
+    },
+    "resposta_correta": "a",
+    "nivel": "Técnica e Ética"
+  },
+  {
+    "enunciado": "A palavra oscar, representa, no código fonético internacional, a letra:",
+    "alternativas": {
+      "a": "a",
+      "b": "e",
+      "c": "i",
+      "d": "o",
+      "e": "u"
+    },
+    "resposta_correta": "d",
+    "nivel": "Legislação"
+  },
+  {
+    "enunciado": "A palavra echo, representa, no código fonético internacional, a letra:",
+    "alternativas": {
+      "a": "A",
+      "b": "E",
+      "c": "I",
+      "d": "O",
+      "e": "J"
+    },
+    "resposta_correta": "b",
+    "nivel": "Legislação"
+  },
+  {
+    "enunciado": "O rádio amador pode receber remuneração por serviços prestados através do rádio.",
+    "alternativas": {
+      "a": "Certo",
+      "b": "Errado"
+    },
+    "resposta_correta": "b",
+    "nivel": "Técnica e Ética"
+  },
+  {
+    "enunciado": "A associação série de 3 resistores de 20 ohm cada um equivale a uma resistência de:",
+    "alternativas": {
+      "a": "6,67 ohm",
+      "b": "10 ohm",
+      "c": "15 ohm",
+      "d": "20 ohm",
+      "e": "60 ohm"
+    },
+    "resposta_correta": "e",
+    "nivel": "Eletrônica"
+  },
+  {
+    "enunciado": "Um transceptor é um equipamento que reúne transmissor e receptor em um único conjunto.",
+    "alternativas": {
+      "a": "Certo",
+      "b": "Errado"
+    },
+    "resposta_correta": "a",
+    "nivel": "Eletrônica"
+  },
+  {
+    "enunciado": "O modo digital FT8 permite contatos com sinais extremamente fracos, abaixo do nível de ruído.",
+    "alternativas": {
+      "a": "Certo",
+      "b": "Errado"
+    },
+    "resposta_correta": "a",
+    "nivel": "Técnica e Ética"
+  }
+]

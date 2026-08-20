@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Simulado Especial de Fim de Curso — Livreto Oficial</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Outfit:wght@600;700;800;900&display=swap');
+
+    @page {
+      size: A4 landscape;
+      margin: 0;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      color: #2e2720;
+      background: #ffffff;
+      line-height: 1.35;
+      font-size: 10pt;
+    }
+
+    /* FOLHA A4 PAISAGEM (297mm x 210mm) COM 2 PÁGINAS A5 (148.5mm x 210mm) */
+    .sheet {
+      width: 297mm;
+      height: 210mm;
+      display: flex;
+      page-break-after: always;
+      position: relative;
+      overflow: hidden;
+      background: #ffffff;
+    }
+
+    .a5-page {
+      width: 148.5mm;
+      height: 210mm;
+      position: relative;
+      padding: 13mm 14mm 12mm 14mm;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+    }
+
+    .a5-page.left-page {
+      border-right: 1px dashed rgba(0,0,0,0.06);
+    }
+
+    /* ══════════════════════════════════════════
+       CAPA OFICIAL (DIREITA DA FOLHA 1 - PÁG 1)
+    ══════════════════════════════════════════ */
+    .cover-page {
+      background-color: #6da234;
+      background-image: url('assets/modulo_imgs/p1_img0_Im1.png');
+      background-position: left center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      color: #ffffff;
+      padding: 0;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+    }
+
+    .cover-header-badge {
+      display: flex;
+      justify-content: center;
+      padding-top: 14mm;
+      z-index: 2;
+    }
+
+    .cover-header-badge img {
+      width: 26mm;
+      height: auto;
+      filter: drop-shadow(0 4px 10px rgba(0,0,0,0.15));
+    }
+
+    .cover-boy-art {
+      position: absolute;
+      top: 26mm;
+      right: 0;
+      width: 82mm;
+      height: auto;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .cover-bottom-container {
+      position: relative;
+      z-index: 3;
+      padding: 0 10mm 8mm 10mm;
+      margin-top: auto;
+    }
+
+    .cover-title-box {
+      background: #c86828; /* Faixa laranja/terracota dos módulos */
+      border-radius: 999px;
+      padding: 5mm 7mm;
+      text-align: center;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.18);
+      margin-bottom: 4mm;
+    }
+
+    .cover-main-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 15pt;
+      font-weight: 900;
+      color: #ffffff;
+      letter-spacing: -0.01em;
+      line-height: 1.1;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .cover-sub-title {
+      font-family: 'Inter', sans-serif;
+      font-size: 9.5pt;
+      font-weight: 800;
+      color: #ffe6a3;
+      margin-top: 1.5mm;
+      letter-spacing: 0.02em;
+    }
+
+    .cover-module-badge {
+      text-align: center;
+      margin-bottom: 4mm;
+    }
+
+    .cover-module-badge h2 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 22pt;
+      font-weight: 900;
+      color: #1e3a10;
+      letter-spacing: -0.02em;
+    }
+
+    .cover-logos-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2mm;
+    }
+
+    .cover-logos-row img {
+      height: 11mm;
+      width: auto;
+      object-fit: contain;
+    }
+
+    .cover-page-number {
+      position: absolute;
+      bottom: 3mm;
+      right: 5mm;
+      font-size: 8pt;
+      font-weight: 800;
+      color: rgba(255,255,255,0.7);
+    }
+
+    /* ══════════════════════════════════════════
+       PÁGINAS INTERNAS DE CONTEÚDO
+    ══════════════════════════════════════════ */
+    .page-header {
+      border-bottom: 2px solid #2e7d32;
+      padding-bottom: 2.5mm;
+      margin-bottom: 3.5mm;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    .page-header-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 11pt;
+      font-weight: 800;
+      color: #1b5e20;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .page-header-sub {
+      font-size: 7.5pt;
+      font-weight: 600;
+      color: #7d7060;
+    }
+
+    .page-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 3mm;
+    }
+
+    /* Caixa de Introdução / Alerta */
+    .info-callout {
+      background: rgba(46, 125, 50, 0.07);
+      border: 1px solid rgba(46, 125, 50, 0.25);
+      border-radius: 8px;
+      padding: 3mm 4mm;
+      font-size: 8pt;
+      color: #2e2720;
+      line-height: 1.35;
+      margin-bottom: 2mm;
+    }
+
+    /* Cartão de Questão */
+    .question-block {
+      background: #ffffff;
+      border: 1px solid rgba(46, 39, 32, 0.12);
+      border-radius: 8px;
+      padding: 2.8mm 3.5mm;
+      position: relative;
+    }
+
+    .question-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5mm;
+    }
+
+    .q-number {
+      font-family: 'Outfit', sans-serif;
+      font-size: 9pt;
+      font-weight: 800;
+      color: #1b5e20;
+    }
+
+    .q-category-tag {
+      font-size: 6.8pt;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 0.6mm 2.2mm;
+      border-radius: 4px;
+      letter-spacing: 0.04em;
+    }
+
+    .tag-leg { background: rgba(21,101,192,0.12); color: #1565C0; }
+    .tag-tec { background: rgba(46,125,50,0.12); color: #2e7d32; }
+    .tag-elt { background: rgba(230,81,0,0.12); color: #E65100; }
+
+    .q-text {
+      font-size: 8.4pt;
+      font-weight: 600;
+      color: #2e2720;
+      line-height: 1.3;
+      margin-bottom: 2mm;
+    }
+
+    .q-options {
+      display: flex;
+      flex-direction: column;
+      gap: 1mm;
+    }
+
+    .q-opt {
+      display: flex;
+      align-items: flex-start;
+      gap: 2mm;
+      font-size: 7.8pt;
+      line-height: 1.25;
+      color: #42382e;
+    }
+
+    .q-bubble {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 4.2mm;
+      height: 4.2mm;
+      border: 1px solid #7d7060;
+      border-radius: 50%;
+      font-size: 6.8pt;
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 0.3mm;
+    }
+
+    .page-footer {
+      border-top: 1px solid rgba(46, 39, 32, 0.1);
+      padding-top: 2mm;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 7pt;
+      color: #7d7060;
+      font-weight: 600;
+    }
+
+    .page-num {
+      font-family: 'Outfit', sans-serif;
+      font-size: 8.5pt;
+      font-weight: 800;
+      color: #1b5e20;
+    }
+
+    /* ══════════════════════════════════════════
+       CARTÃO RESPOSTA (PÁGINA 7)
+    ══════════════════════════════════════════ */
+    .answer-card-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1.5mm;
+      font-size: 7.2pt;
+    }
+
+    .answer-card-table th {
+      background: #2e7d32;
+      color: #fff;
+      padding: 1.5mm;
+      font-weight: 700;
+      text-align: center;
+      border: 1px solid #1b5e20;
+    }
+
+    .answer-card-table td {
+      border: 1px solid rgba(46, 39, 32, 0.18);
+      padding: 1.2mm 1mm;
+      text-align: center;
+    }
+
+    .grid-bubble {
+      display: inline-block;
+      width: 3.8mm;
+      height: 3.8mm;
+      border: 1px solid #555;
+      border-radius: 50%;
+      margin: 0 0.8mm;
+      font-size: 6.2pt;
+      line-height: 3.8mm;
+      text-align: center;
+    }
+
+    /* ══════════════════════════════════════════
+       CONTRACAPA / RESUMO (PÁGINA 8)
+    ══════════════════════════════════════════ */
+    .backcover-box {
+      background: #faf6ee;
+      border: 1px dashed rgba(46, 125, 50, 0.35);
+      border-radius: 10px;
+      padding: 4mm 5mm;
+      display: flex;
+      flex-direction: column;
+      gap: 3mm;
+      flex: 1;
+    }
+
+    .backcover-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 11pt;
+      font-weight: 800;
+      color: #1b5e20;
+      text-align: center;
+    }
+
+    .backcover-text {
+      font-size: 7.8pt;
+      line-height: 1.4;
+      color: #42382e;
+    }
+
+    .backcover-signatures {
+      margin-top: auto;
+      display: flex;
+      justify-content: space-between;
+      gap: 4mm;
+      padding-top: 3mm;
+    }
+
+    .sig-line {
+      flex: 1;
+      border-top: 1px solid #7d7060;
+      padding-top: 1.5mm;
+      text-align: center;
+      font-size: 6.8pt;
+      font-weight: 700;
+      color: #2e2720;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ════════════════════════════════════════════════════════════
+       FOLHA 1 (EXTERNA): PÁGINA 8 (CONTRACAPA) + PÁGINA 1 (CAPA)
+  ════════════════════════════════════════════════════════════ -->
+  <div class="sheet">
+    
+    <!-- PÁGINA 8 (ESQUERDA DA FOLHA 1) -->
+    <div class="a5-page left-page">
+      <div class="page-header">
+        <span class="page-header-title">Ondas do Conhecimento</span>
+        <span class="page-header-sub">Simulado Especial Oficial</span>
+      </div>
+
+      <div class="page-content">
+        <div class="backcover-box">
+          <div class="backcover-title">🏆 Conclusão da Avaliação Oficial</div>
+          <p class="backcover-text">
+            Parabéns pela realização do <strong>Simulado Especial de Fim de Curso</strong>! Este livreto consolida a formação teórica e prática realizada no projeto <em>Ondas do Conhecimento</em>, preparando jovens e membros escoteiros para a obtenção do <strong>COER (Certificado de Operador de Estação de Radioamador)</strong> perante a ANATEL.
+          </p>
+          
+          <div style="background:#fff; border:1px solid rgba(46,39,32,0.12); border-radius:6px; padding:2.5mm 3.5mm;">
+            <div style="font-size:7.5pt; font-weight:800; color:#1b5e20; margin-bottom:1mm;">Quadro Resumo da Prova:</div>
+            <ul style="font-size:7.2pt; padding-left:4mm; line-height:1.4; color:#42382e;">
+              <li><strong>Legislação:</strong> 7 Questões oficiais</li>
+              <li><strong>Técnica e Ética Operacional:</strong> 7 Questões oficiais</li>
+              <li><strong>Eletrônica e Eletricidade:</strong> 6 Questões oficiais</li>
+              <li><strong>Critério de Aprovação:</strong> 70% de acertos (14 questões)</li>
+            </ul>
+          </div>
+
+          <p class="backcover-text" style="font-size:7.2pt; color:#7d7060;">
+            Realização conjunta entre a <strong>Universidade Tecnológica Federal do Paraná (UTFPR)</strong>, <strong>Escoteiros do Brasil</strong> e parceiros da comunidade de radioamadores (ARIPA/LABRE).
+          </p>
+
+          <div class="backcover-signatures">
+            <div class="sig-line">
+              Assinatura do Participante
+            </div>
+            <div class="sig-line">
+              Visto do Instrutor / Avaliador
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="page-footer">
+        <span>Ondas do Conhecimento — UTFPR & Escoteiros do Brasil</span>
+        <span class="page-num">8</span>
+      </div>
+    </div>
+
+    <!-- PÁGINA 1 (DIREITA DA FOLHA 1 - CAPA OFICIAL) -->
+    <div class="a5-page cover-page">
+      <div class="cover-header-badge">
+        <img src="assets/modulo_imgs/p1_img3_Im4.png" alt="Emblema Radioamadorismo">
+      </div>
+
+      <img src="assets/modulo_imgs/p1_img1_Im2.png" alt="Escoteiro Radioamador" class="cover-boy-art">
+
+      <div class="cover-bottom-container">
+        <div class="cover-title-box">
+          <div class="cover-main-title">A Voz do Mundo:</div>
+          <div class="cover-sub-title">Desvendando o Radioamadorismo!</div>
+        </div>
+
+        <div class="cover-module-badge">
+          <h2>Simulado Especial</h2>
+          <div style="font-size: 9pt; font-weight:800; color:#1e3a10; text-transform:uppercase; letter-spacing:0.08em; margin-top:1mm;">
+            Avaliação Oficial de Fim de Curso
+          </div>
+        </div>
+
+        <div class="cover-logos-row">
+          <img src="assets/modulo_imgs/p1_img5_Im6.png" alt="ARIPA">
+          <img src="assets/modulo_imgs/p1_img2_Im3.png" alt="UTFPR" style="height:10mm;">
+          <img src="assets/modulo_imgs/p1_img4_Im5.png" alt="Escoteiros do Brasil">
+        </div>
+      </div>
+
+      <div class="cover-page-number">1</div>
+    </div>
+
+  </div>
+
+
+  <!-- ════════════════════════════════════════════════════════════
+       FOLHA 2 (INTERNA 1): PÁGINA 2 + PÁGINA 7
+  ════════════════════════════════════════════════════════════ -->
+  <div class="sheet">
+    
+    <!-- PÁGINA 2 (ESQUERDA DA FOLHA 2) -->
+    <div class="a5-page left-page">
+      <div class="page-header">
+        <span class="page-header-title">Orientações & Prova</span>
+        <span class="page-header-sub">Simulado Especial Oficial</span>
+      </div>
+
+      <div class="page-content">
+        <div class="info-callout">
+          <strong>Instruções ao Candidato:</strong> Leia atentamente cada questão. O exame é composto por 20 questões extraídas do banco oficial. Marque suas respostas a caneta no Cartão Resposta na página 7.
+        </div>
+
+        <!-- Questão 1 -->
+        <div class="question-block">
+          <div class="question-head">
+            <span class="q-number">Questão 01</span>
+            <span class="q-category-tag tag-leg">Legislação</span>
+          </div>
+          <div class="q-text">O ganho de RF (RF Gain) ajusta a sensibilidade do receptor.</div>
+          <div class="q-options">
+            <div class="q-opt"><span class="q-bubble">A</span> Certo</div>
+            <div class="q-opt"><span class="q-bubble">B</span> Errado</div>
+          </div>
+        </div>
+
+        <!-- Questão 2 -->
+        <div class="question-block">
+          <div class="question-head">
+            <span class="q-number">Questão 02</span>
+            <span class="q-category-tag tag-leg">Legislação</span>
+          </div>
+          <div class="q-text">O código Q, pelo qual os radioamadores se comunicam, divide-se em seções, em séries de quantas letras?</div>
+          <div class="q-options">
+            <div class="q-opt"><span class="q-bubble">A</span> 2 (duas)</div>
+            <div class="q-opt"><span class="q-bubble">B</span> 3 (três)</div>
+            <div class="q-opt"><span class="q-bubble">C</span> 4 (quatro)</div>
+            <div class="q-opt"><span class="q-bubble">D</span> 5 (cinco)</div>
+            <div class="q-opt"><span class="q-bubble">E</span> 6 (seis)</div>
+          </div>
+        </div>
+
+        <!-- Questão 3 -->
+        <div class="question-block">
+          <div class="question-head">
+            <span class="q-number">Questão 03</span>
+            <span class="q-category-tag tag-elt">Eletrônica</span>
+          </div>
+          <div class="q-text">Campos magnéticos variáveis:</div>
+          <div class="q-options">
+            <div class="q-opt"><span class="q-bubble">A</span> são gerados por imãs naturais</div>
+            <div class="q-opt"><span class="q-bubble">B</span> são gerados por corrente contínua</div>
+            <div class="q-opt"><span class="q-bubble">C</span> induzem corrente elétrica em condutores próximos</div>
+            <div class="q-opt"><span class="q-bubble">D</span> induzem corrente elétrica somente em isolantes elétricos</div>
+            <div class="q-opt"><span class="q-bubble">E</span> não existem</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="page-footer">
+        <span>Ondas do Conhecimento — Simulado Especial</span>
+        <span class="page-num">2</span>
+      </div>
+    </div>
+
+    <!-- PÁGINA 7 (DIREITA DA FOLHA 2) -->
+    <div class="a5-page">
+      <div class="page-header">
+        <span class="page-header-title">Questão Final & Cartão Resposta</span>
+        <span class="page-header-sub">Simulado Especial Oficial</span>
+      </div>
+
+      <div class="page-content">
+        <!-- Questão 20 -->
+        <div class="question-block" style="margin-bottom: 2mm;">
+          <div class="question-head">
+            <span class="q-number">Questão 20</span>
+            <span class="q-category-tag tag-tec">Técnica e Ética</span>
+          </div>
+          <div class="q-text">O modo digital FT8 permite contatos com sinais extremamente fracos, abaixo do nível de ruído.</div>
+          <div class="q-options">
+            <div class="q-opt"><span class="q-bubble">A</span> Certo</div>
+            <div class="q-opt"><span class="q-bubble">B</span> Errado</div>
+          </div>
+        </div>
+
+        <!-- CARTÃO RESPOSTA OFICIAL -->
+        <div style="background:#faf6ee; border:1px solid #2e7d32; border-radius:8px; padding:3mm 3.5mm; margin-top:1mm;">
+          <div style="text-align:center; font-family:'Outfit',sans-serif; font-size:9.5pt; font-weight:800; color:#1b5e20; margin-bottom:1mm;">
+            📝 CARTÃO RESPOSTA OFICIAL
+          </div>
+          <div style="font-size:7pt; color:#7d7060; text-align:center; margin-bottom:2mm;">
+            Preencha completamente o círculo da alternativa escolhida para cada questão.
+          </div>
+
+          <table class="answer-card-table">
+            <thead>
+              <tr>
+                <th>Q.</th><th>Opções</th>
+                <th>Q.</th><th>Opções</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>01</strong></td><td><span class="grid-bubble">A</span><span class="grid-bubble">B</span></td>
+                <td><strong>11</strong></td><td><span class="grid-bubble">A</span><span class="grid-bubble">B</span><span class="grid-bubble">C</span><span class="grid-bubble">D</span><span class="grid-bubble">E</span></td>
+              </tr>
+              <tr>
+                <td><strong>02</strong></td><td><span class="grid-bubble">A</span><span class="grid-bubble">B</span><span class="grid-bubble">C</span><span class="grid-bubble">D</span><span class="grid-bubble">E</span></td>
+                <td><strong>12</strong></td><td><span class="grid-bubble">A</span><span class="grid-bubble">B</span><span class="grid-bubble">C</span><span class="grid-bubble">D</span><span class="grid-bubble">E</span></td>
+              </tr>
+              <tr>
+                <td><strong>03</strong></td><td><span class="grid-bubble">A</span><span class="grid-bubble">B</span><span class="grid-bubble">C</span><span class="grid-bubble">D</span><span class="grid-bubble">E</span></td>
+                <td><strong>13</strong></td><td><span class="grid-bubble">A</span><span class="grid-bubble">B</span><span class="grid-bubble">C</span><span class="grid-bubble">D</span><span class="grid-bubble">E</span></td>
+              </tr>
+              <tr>
+                <td><strong>04</strong></td><td><span class="grid-bubble">A</span><span class="grid-bubble">B</span><span class="grid-bubble">C</span><span class="grid-bubble">D</span><span class="grid-bubble">E</span></td>
+                <td><strong>14</strong></td><td><span class="grid-bubble">A</span><span class="grid-bubble">B</span></td>
+              </tr>
+              <tr>
+                <td><strong>05</strong></td><td><span class="grid-bubble">A</span><span class="grid-bubble">B</span></td>
+                <td><strong>15</strong></td><td><span class="grid-bubble">A</span><span class="grid-bubble">B</span><span class="grid-bubble">C</span><span class="grid-bubble">D</span><span class="grid-bubble">E</span></td>
+              </tr>
+              <tr>
+                <td><strong>06</strong></td><td><span class="grid-bubble">A</span><span class="grid-bubble">B</span></td>
+                <td><strong>16</strong></td><td><span class="grid-bubble">A</span><span class="grid-bubble">B</span><span class="grid-bubble">C</span><span class="grid-bubble">D</span><span class="grid-bubble">E</span></td>
+              </tr>
+              <tr>
+                <td><strong>07</strong></td><td><span class="grid-bubble">A</span><span class="grid-bubble">B</span><span class="grid-bubble">C</span><span class="grid-bubble">D</span><span class="grid-bubble">E</span></td>
+                <td><strong>17</strong></td><td><span class="grid-bubble">A</span><span class="grid-bubble">B</span></td>
+              </tr>
+              <tr>
+                <td><strong>08</strong></td><td><span class="grid-bubble">A</span><span class="grid-bubble">B</span></td>
+                <td><strong>18</strong></td><td><span class="grid-bubble">A</span><span class="grid-bubble">B</span><span class="grid-bubble">C</span><span class="grid-bubble">D</span><span class="grid-bubble">E</span></td>
+              </tr>
+              <tr>
+                <td><strong>09</strong></td><td><span class="grid-bubble">A</span><span class="grid-bubble">B</span></td>
+                <td><strong>19</strong></td><td><span class="grid-bubble">A</span><span class="grid-bubble">B</span></td>
+              </tr>
+              <tr>
+                <td><strong>10</strong></td><td><span class="grid-bubble">A</span><span class="grid-bubble">B</span></td>
+                <td><strong>20</strong></td><td><span class="grid-bubble">A</span><span class="grid-bubble">B</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="page-footer">
+        <span>Ondas do Conhecimento — Simulado Especial</span>
+        <span class="page-num">7</span>
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- ════════════════════════════════════════════════════════════
+       FOLHA 3 (INTERNA 2): PÁGINA 3 + PÁGINA 6
+  ════════════════════════════════════════════════════════════ -->
+  <div class="sheet">
+    
+    <!-- PÁGINA 3 (ESQUERDA DA FOLHA 3) -->
+    <div class="a5-page left-page">
+      <div class="page-header">
+        <span class="page-header-title">Caderno de Questões</span>
+        <span class="page-header-sub">Página 3 de 8</span>
+      </div>
+
+      <div class="page-content">
+        <!-- Questão 4 -->
+        <div class="question-block">
+          <div class="question-head">
+            <span class="q-number">Questão 04</span>
+            <span class="q-category-tag tag-leg">Legislação</span>
+          </div>
+          <div class="q-text">Os radioamadores das classes B e C poderão requerer licença de funcionamento de 4 (quatro) tipos de estação, sendo-lhes negada a licença de funcionamento para:</div>
+          <div class="q-options">
+            <div class="q-opt"><span class="q-bubble">A</span> repetidora</div>
+            <div class="q-opt"><span class="q-bubble">B</span> móvel</div>
+            <div class="q-opt"><span class="q-bubble">C</span> portátil</div>
+            <div class="q-opt"><span class="q-bubble">D</span> de domicílio principal</div>
+            <div class="q-opt"><span class="q-bubble">E</span> de domicílio adicional</div>
+          </div>
+        </div>
+
+        <!-- Questão 5 -->
+        <div class="question-block">
+          <div class="question-head">
+            <span class="q-number">Questão 05</span>
+            <span class="q-category-tag tag-tec">Técnica e Ética</span>
+          </div>
+          <div class="q-text">O prefixo PP8 identifica o estado do Amazonas.</div>
+          <div class="q-options">
+            <div class="q-opt"><span class="q-bubble">A</span> Certo</div>
+            <div class="q-opt"><span class="q-bubble">B</span> Errado</div>
+          </div>
+        </div>
+
+        <!-- Questão 6 -->
+        <div class="question-block">
+          <div class="question-head">
+            <span class="q-number">Questão 06</span>
+            <span class="q-category-tag tag-tec">Técnica e Ética</span>
+          </div>
+          <div class="q-text">O uso de 'Break' deve ser reservado para pedidos de entrada urgente ou situações de emergência em uma conversa.</div>
+          <div class="q-options">
+            <div class="q-opt"><span class="q-bubble">A</span> Certo</div>
+            <div class="q-opt"><span class="q-bubble">B</span> Errado</div>
+          </div>
+        </div>
+
+        <!-- Questão 7 -->
+        <div class="question-block">
+          <div class="question-head">
+            <span class="q-number">Questão 07</span>
+            <span class="q-category-tag tag-leg">Legislação</span>
+          </div>
+          <div class="q-text">Quais são os tipos de estação de radioamador?</div>
+          <div class="q-options">
+            <div class="q-opt"><span class="q-bubble">A</span> fixa, móvel ou portátil</div>
+            <div class="q-opt"><span class="q-bubble">B</span> fixa tipo 01, portátil e repetidora</div>
+            <div class="q-opt"><span class="q-bubble">C</span> móvel, fixa tipo 02, portátil</div>
+            <div class="q-opt"><span class="q-bubble">D</span> repetidora tipo 04, móvel</div>
+            <div class="q-opt"><span class="q-bubble">E</span> fixa, móvel ou portátil e repetidora</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="page-footer">
+        <span>Ondas do Conhecimento — Simulado Especial</span>
+        <span class="page-num">3</span>
+      </div>
+    </div>
+
+    <!-- PÁGINA 6 (DIREITA DA FOLHA 3) -->
+    <div class="a5-page">
+      <div class="page-header">
+        <span class="page-header-title">Caderno de Questões</span>
+        <span class="page-header-sub">Página 6 de 8</span>
+      </div>
+
+      <div class="page-content">
+        <!-- Questão 16 -->
+        <div class="question-block">
+          <div class="question-head">
+            <span class="q-number">Questão 16</span>
+            <span class="q-category-tag tag-leg">Legislação</span>
+          </div>
+          <div class="q-text">A palavra echo, representa, no código fonético internacional, a letra:</div>
+          <div class="q-options">
+            <div class="q-opt"><span class="q-bubble">A</span> A</div>
+            <div class="q-opt"><span class="q-bubble">B</span> E</div>
+            <div class="q-opt"><span class="q-bubble">C</span> I</div>
+            <div class="q-opt"><span class="q-bubble">D</span> O</div>
+            <div class="q-opt"><span class="q-bubble">E</span> J</div>
+          </div>
+        </div>
+
+        <!-- Questão 17 -->
+        <div class="question-block">
+          <div class="question-head">
+            <span class="q-number">Questão 17</span>
+            <span class="q-category-tag tag-tec">Técnica e Ética</span>
+          </div>
+          <div class="q-text">O rádio amador pode receber remuneração por serviços prestados através do rádio.</div>
+          <div class="q-options">
+            <div class="q-opt"><span class="q-bubble">A</span> Certo</div>
+            <div class="q-opt"><span class="q-bubble">B</span> Errado</div>
+          </div>
+        </div>
+
+        <!-- Questão 18 -->
+        <div class="question-block">
+          <div class="question-head">
+            <span class="q-number">Questão 18</span>
+            <span class="q-category-tag tag-elt">Eletrônica</span>
+          </div>
+          <div class="q-text">A associação série de 3 resistores de 20 ohm cada um equivale a uma resistência de:</div>
+          <div class="q-options">
+            <div class="q-opt"><span class="q-bubble">A</span> 6,67 ohm</div>
+            <div class="q-opt"><span class="q-bubble">B</span> 10 ohm</div>
+            <div class="q-opt"><span class="q-bubble">C</span> 15 ohm</div>
+            <div class="q-opt"><span class="q-bubble">D</span> 20 ohm</div>
+            <div class="q-opt"><span class="q-bubble">E</span> 60 ohm</div>
+          </div>
+        </div>
+
+        <!-- Questão 19 -->
+        <div class="question-block">
+          <div class="question-head">
+            <span class="q-number">Questão 19</span>
+            <span class="q-category-tag tag-elt">Eletrônica</span>
+          </div>
+          <div class="q-text">Um transceptor é um equipamento que reúne transmissor e receptor em um único conjunto.</div>
+          <div class="q-options">
+            <div class="q-opt"><span class="q-bubble">A</span> Certo</div>
+            <div class="q-opt"><span class="q-bubble">B</span> Errado</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="page-footer">
+        <span>Ondas do Conhecimento — Simulado Especial</span>
+        <span class="page-num">6</span>
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- ════════════════════════════════════════════════════════════
+       FOLHA 4 (CENTRAL): PÁGINA 4 + PÁGINA 5
+  ════════════════════════════════════════════════════════════ -->
+  <div class="sheet">
+    
+    <!-- PÁGINA 4 (ESQUERDA DA FOLHA 4) -->
+    <div class="a5-page left-page">
+      <div class="page-header">
+        <span class="page-header-title">Caderno de Questões</span>
+        <span class="page-header-sub">Página 4 de 8</span>
+      </div>
+
+      <div class="page-content">
+        <!-- Questão 8 -->
+        <div class="question-block">
+          <div class="question-head">
+            <span class="q-number">Questão 08</span>
+            <span class="q-category-tag tag-tec">Técnica e Ética</span>
+          </div>
+          <div class="q-text">A polarização vertical é a mais comum para comunicações em repetidoras de VHF.</div>
+          <div class="q-options">
+            <div class="q-opt"><span class="q-bubble">A</span> Certo</div>
+            <div class="q-opt"><span class="q-bubble">B</span> Errado</div>
+          </div>
+        </div>
+
+        <!-- Questão 9 -->
+        <div class="question-block">
+          <div class="question-head">
+            <span class="q-number">Questão 09</span>
+            <span class="q-category-tag tag-tec">Técnica e Ética</span>
+          </div>
+          <div class="q-text">QTI significa 'Qual é o seu destino?'.</div>
+          <div class="q-options">
+            <div class="q-opt"><span class="q-bubble">A</span> Certo</div>
+            <div class="q-opt"><span class="q-bubble">B</span> Errado</div>
+          </div>
+        </div>
+
+        <!-- Questão 10 -->
+        <div class="question-block">
+          <div class="question-head">
+            <span class="q-number">Questão 10</span>
+            <span class="q-category-tag tag-elt">Eletrônica</span>
+          </div>
+          <div class="q-text">A perda em cabos coaxiais aumenta conforme a frequência de operação aumenta.</div>
+          <div class="q-options">
+            <div class="q-opt"><span class="q-bubble">A</span> Certo</div>
+            <div class="q-opt"><span class="q-bubble">B</span> Errado</div>
+          </div>
+        </div>
+
+        <!-- Questão 11 -->
+        <div class="question-block">
+          <div class="question-head">
+            <span class="q-number">Questão 11</span>
+            <span class="q-category-tag tag-elt">Eletrônica</span>
+          </div>
+          <div class="q-text">O capacitor é um elemento que:</div>
+          <div class="q-options">
+            <div class="q-opt"><span class="q-bubble">A</span> gera energia</div>
+            <div class="q-opt"><span class="q-bubble">B</span> consome energia</div>
+            <div class="q-opt"><span class="q-bubble">C</span> armazena energia</div>
+            <div class="q-opt"><span class="q-bubble">D</span> transforma energia</div>
+            <div class="q-opt"><span class="q-bubble">E</span> gera calor</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="page-footer">
+        <span>Ondas do Conhecimento — Simulado Especial</span>
+        <span class="page-num">4</span>
+      </div>
+    </div>
+
+    <!-- PÁGINA 5 (DIREITA DA FOLHA 4) -->
+    <div class="a5-page">
+      <div class="page-header">
+        <span class="page-header-title">Caderno de Questões</span>
+        <span class="page-header-sub">Página 5 de 8</span>
+      </div>
+
+      <div class="page-content">
+        <!-- Questão 12 -->
+        <div class="question-block">
+          <div class="question-head">
+            <span class="q-number">Questão 12</span>
+            <span class="q-category-tag tag-elt">Eletrônica</span>
+          </div>
+          <div class="q-text">A variação de corrente em uma bobina induz corrente em uma bobina próxima. Este fenômeno chama-se:</div>
+          <div class="q-options">
+            <div class="q-opt"><span class="q-bubble">A</span> capacitância</div>
+            <div class="q-opt"><span class="q-bubble">B</span> indutância</div>
+            <div class="q-opt"><span class="q-bubble">C</span> indutância mútua</div>
+            <div class="q-opt"><span class="q-bubble">D</span> auto-indutância</div>
+            <div class="q-opt"><span class="q-bubble">E</span> reatância indutiva</div>
+          </div>
+        </div>
+
+        <!-- Questão 13 -->
+        <div class="question-block">
+          <div class="question-head">
+            <span class="q-number">Questão 13</span>
+            <span class="q-category-tag tag-leg">Legislação</span>
+          </div>
+          <div class="q-text">O serviço de radioamador tem entre seus objetivos:</div>
+          <div class="q-options">
+            <div class="q-opt"><span class="q-bubble">A</span> obtenção de lucros</div>
+            <div class="q-opt"><span class="q-bubble">B</span> divulgação de sucessos musicais</div>
+            <div class="q-opt"><span class="q-bubble">C</span> comunicação técnica</div>
+            <div class="q-opt"><span class="q-bubble">D</span> treinamento de empresas</div>
+            <div class="q-opt"><span class="q-bubble">E</span> promoção de comércio</div>
+          </div>
+        </div>
+
+        <!-- Questão 14 -->
+        <div class="question-block">
+          <div class="question-head">
+            <span class="q-number">Questão 14</span>
+            <span class="q-category-tag tag-tec">Técnica e Ética</span>
+          </div>
+          <div class="q-text">O valor da ROE ideal é 1.0.</div>
+          <div class="q-options">
+            <div class="q-opt"><span class="q-bubble">A</span> Certo</div>
+            <div class="q-opt"><span class="q-bubble">B</span> Errado</div>
+          </div>
+        </div>
+
+        <!-- Questão 15 -->
+        <div class="question-block">
+          <div class="question-head">
+            <span class="q-number">Questão 15</span>
+            <span class="q-category-tag tag-leg">Legislação</span>
+          </div>
+          <div class="q-text">A palavra oscar, representa, no código fonético internacional, a letra:</div>
+          <div class="q-options">
+            <div class="q-opt"><span class="q-bubble">A</span> a</div>
+            <div class="q-opt"><span class="q-bubble">B</span> e</div>
+            <div class="q-opt"><span class="q-bubble">C</span> i</div>
+            <div class="q-opt"><span class="q-bubble">D</span> o</div>
+            <div class="q-opt"><span class="q-bubble">E</span> u</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="page-footer">
+        <span>Ondas do Conhecimento — Simulado Especial</span>
+        <span class="page-num">5</span>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>
