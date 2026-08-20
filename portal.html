@@ -237,17 +237,48 @@
       background: #fff;
     }
 
-    .simulado-special-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      background: linear-gradient(135deg, rgba(46,125,50,0.15) 0%, rgba(46,125,50,0.05) 100%);
-      border: 1px solid rgba(46,125,50,0.3);
-      color: var(--primary);
-      padding: 0.35rem 0.75rem;
-      border-radius: 99px;
-      font-size: 0.8rem;
-      font-weight: 700;
+    .hamburger-portal { display: none; background: none; border: none; cursor: pointer; color: var(--text); padding: 0.2rem; }
+    .sidebar-overlay { display: none; }
+
+    @media (max-width: 1020px) {
+      .app-shell {
+        grid-template-columns: 1fr;
+        margin-top: 0.5rem;
+      }
+
+      .hamburger-portal { display: flex; align-items: center; justify-content: center; }
+
+      .sidebar {
+        position: fixed;
+        left: 0;
+        top: 0;
+        height: 100vh;
+        width: 320px;
+        max-width: 85vw;
+        max-height: 100vh;
+        z-index: 1000;
+        border-radius: 0;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+        background: var(--bg);
+        overflow-y: auto;
+      }
+
+      .sidebar.open { transform: translateX(0); }
+
+      .sidebar-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(46,39,32,0.4);
+        z-index: 999;
+        backdrop-filter: blur(2px);
+      }
+      .sidebar-overlay.open { display: block; }
+
+      .center-stage {
+        min-height: 80vh;
+      }
     }
 
     /* Modal do Simulado Especial */
