@@ -664,8 +664,8 @@
           <div class="stat-chip" id="stat-erros"></div>
         </div>
         <div class="results-actions">
-          <button class="btn btn--outline" onclick="goToSelection()">← Escolher outro modo</button>
-          <button class="btn btn--primary" onclick="restartSameMode()">Tentar novamente</button>
+          <button id="btn-choose-mode" class="btn btn--outline" onclick="goToSelection()">← Escolher outro modo</button>
+          <button id="btn-retry-simulado" class="btn btn--primary" onclick="restartSameMode()">Tentar novamente</button>
         </div>
       </div>
     </div>
@@ -949,6 +949,17 @@
         fb.textContent = `🎉 Parabéns! Você atingiu ${pct}% de aproveitamento (${score} acertos de ${questions.length}) e foi aprovado no Simulado Especial de Fim de Curso!`;
       } else {
         fb.textContent = `📚 Você obteve ${pct}% de aproveitamento (${score} acertos). Para aprovação no exame oficial é necessário atingir 70%. Continue revisando os módulos!`;
+      }
+
+      const retryBtn = document.getElementById('btn-retry-simulado');
+      const chooseModeBtn = document.getElementById('btn-choose-mode');
+
+      if (isSpecialMode) {
+        if (retryBtn) retryBtn.style.display = 'none';
+        if (chooseModeBtn) chooseModeBtn.textContent = '← Voltar ao Portal';
+      } else {
+        if (retryBtn) retryBtn.style.display = 'inline-flex';
+        if (chooseModeBtn) chooseModeBtn.textContent = '← Escolher outro modo';
       }
 
       // Se for modo especial e houver usuário autenticado, envia a nota para o backend
