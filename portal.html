@@ -253,17 +253,23 @@
     /* Modal do Simulado Especial */
     .special-modal-overlay {
       position: fixed;
-      inset: 0;
-      background: rgba(46, 39, 32, 0.45);
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(46, 39, 32, 0.65);
       backdrop-filter: blur(8px);
-      z-index: 2000;
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 99999;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 1rem;
+      padding: 1.5rem;
       opacity: 0;
       pointer-events: none;
-      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: opacity 0.3s ease;
     }
 
     .special-modal-overlay.active {
@@ -432,7 +438,7 @@
       </div>
 
       <div id="simulado-group" class="sidebar-group">
-        <div class="group-heading">Simulados de Treino</div>
+        <div class="group-heading">Simulado</div>
         <div class="group-sub">Escolha o tipo de simulado</div>
         <select id="sidebar-simulado-filter" class="category-filter">
           <option value="all">Simulado Completo</option>
@@ -441,14 +447,6 @@
           <option value="Eletrônica">Eletrônica</option>
         </select>
         <button id="open-simulado-btn" class="open-simulado-btn">Abrir Simulado no Centro</button>
-      </div>
-
-      <div id="special-exam-group" class="sidebar-group" style="background:rgba(46,125,50,0.06); border-color:rgba(46,125,50,0.3);">
-        <div class="group-heading" style="color:var(--primary);display:flex;align-items:center;gap:0.35rem;">
-          <span>🏆 Simulado Especial</span>
-        </div>
-        <div class="group-sub">Avaliação Oficial de Fim de Curso (20 questões)</div>
-        <button id="open-special-exam-btn" class="open-simulado-btn" style="background:var(--primary);">Iniciar Avaliação Oficial</button>
       </div>
     </aside>
 
@@ -547,7 +545,6 @@
     const materialsListEl = document.getElementById('sidebar-materials-list');
     const simuladoFilter = document.getElementById('sidebar-simulado-filter');
     const openSimuladoBtn = document.getElementById('open-simulado-btn');
-    const openSpecialExamBtn = document.getElementById('open-special-exam-btn');
 
     const centerTitle = document.getElementById('center-title');
     const centerSubtitle = document.getElementById('center-subtitle');
@@ -580,8 +577,7 @@
     function setAction(action) {
       const isMaterials = action === 'materials';
       materialsGroup.classList.toggle('active', isMaterials);
-      simuladoGroup.classList.toggle('active', action === 'simulados');
-      document.getElementById('special-exam-group').classList.toggle('active', action === 'special');
+      simuladoGroup.classList.toggle('active', action === 'simulados' || action === 'special');
 
       if (isMaterials && !selectedMaterialId) {
         centerTitle.innerText = 'Materiais de Estudo';
@@ -750,7 +746,6 @@
     });
 
     openSimuladoBtn.addEventListener('click', openSimuladoInCenter);
-    openSpecialExamBtn.addEventListener('click', openSpecialSimuladoInCenter);
 
     simuladoFilter.addEventListener('change', () => {
       setAction('simulados');
