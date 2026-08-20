@@ -667,19 +667,14 @@
 
     /* ─────────────── VERIFICAÇÃO DE DATA DO SIMULADO ESPECIAL (DESATIVADO TEMPORARIAMENTE PARA TESTES) ─────────────── */
     function checkSpecialExamWindow() {
-      // Dispositivo de data/horário desativado temporariamente a pedido do usuário para testes em produção.
-      // (Em produção com data ativa: 22 de Agosto das 01:00 às 23:59)
-      const isWindowActive = true;
-
-      if (isWindowActive) {
-        const modalDismissed = sessionStorage.getItem('special_modal_dismissed');
-        if (!modalDismissed) {
-          setTimeout(() => {
-            document.getElementById('special-modal-overlay').classList.add('active');
-            sessionStorage.setItem('special_modal_dismissed', '1');
-          }, 800);
+      // Dispositivo de data/horário e flag de sessão desativados temporariamente para testes em produção.
+      // O modal sempre abrirá para permitir testar a qualquer momento.
+      setTimeout(() => {
+        const modal = document.getElementById('special-modal-overlay');
+        if (modal) {
+          modal.classList.add('active');
         }
-      }
+      }, 400);
     }
 
     async function loadMyGrade() {
