@@ -39,6 +39,7 @@
 - [x] Implementação do Simulado Especial de Fim de Curso no Portal do Participante com 20 questões oficiais (7 Ética, 7 Legislação, 6 Eletrônica), gabarito detalhado apenas no final e modal informativo restrito à janela de 22 de Agosto de 2026 (01:00 às 23:59).
 - [x] Criação do Quadro de Notas no Dashboard Admin com KPIs de aprovação, listagem detalhada por aluno e exportação em formato CSV.
 - [x] Criação da tabela `simulado_grades` e endpoints autenticados `/api/simulados/submit`, `/api/simulados/my-grade` e `/api/admin/simulados/grades`.
+- [x] Restauração da janela de data e horário do Simulado Especial (22 de Agosto de 2026 das 01:00 às 23:59:59), mantendo os demais modos de simulados (Legislação, Técnica/Ética, Eletrônica e Completo) permanentemente abertos para treino.
 
 ### 📋 Próximos Passos
 1. Acompanhar a sincronização do deploy contínuo automático no painel do Coolify.
