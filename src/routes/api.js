@@ -35,9 +35,9 @@ router.post('/auth/reset-password', authController.resetPassword);
 router.get('/materials', materialController.getAllMaterials); // Público para participantes
 router.get('/categories', categoryController.getAllCategories); // Público para participantes/filtros
 
-// Simulado routes (Authenticated)
-router.post('/simulado/scores', authMiddleware, simuladoController.saveScore);
-router.get('/simulado/ranking', authMiddleware, simuladoController.getRanking);
+// Participante - Simulado Especial
+router.post('/simulados/submit', authMiddleware, simuladoController.submitSimulado);
+router.get('/simulados/my-grade', authMiddleware, simuladoController.getMyGrade);
 
 // Protected routes (Admin only)
 router.get('/admin/inscriptions', authMiddleware, inscriptionController.getAllInscriptions);
@@ -53,5 +53,7 @@ router.delete('/admin/categories/:id', authMiddleware, categoryController.delete
 router.post('/admin/access-tokens/send', authMiddleware, accessTokenController.sendAccessTokensByEmail);
 router.get('/admin/access-tokens', authMiddleware, accessTokenController.listAccessTokenDispatches);
 router.post('/admin/access-tokens/:id/resend', authMiddleware, accessTokenController.resendAccessTokenDispatch);
+router.get('/admin/simulados/grades', authMiddleware, simuladoController.getAllGrades);
 
 module.exports = router;
+

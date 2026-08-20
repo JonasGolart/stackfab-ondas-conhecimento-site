@@ -1,6 +1,6 @@
 # 📝 Progresso do Projeto: Ondas do Conhecimento
 
-## 🗓️ Última Atualização: 2026-08-19
+## 🗓️ Última Atualização: 2026-05-19
 **Responsável**: Antigravity AI
 
 ---
@@ -36,12 +36,13 @@
 - [x] Bloqueio de login e reset de senha para usuários com status 'pending'
 - [x] Ajustes avançados e correções na responsividade da Landing Page para celulares e tablets (enquadramento e paddings)
 - [x] Correção de layout e usabilidade da sidebar na Área de Membros (dashboard.html e portal.html) para dispositivos móveis com menu hamburguer e overlay.
-- [x] Quadro de Notas e Ranking do Simulado com pontuação persistida, classificação geral nos portais e painel administrativo
-
+- [x] Implementação do Simulado Especial de Fim de Curso no Portal do Participante com 20 questões oficiais (7 Ética, 7 Legislação, 6 Eletrônica), gabarito detalhado apenas no final e modal informativo restrito à janela de 22 de Agosto de 2026 (01:00 às 23:59).
+- [x] Criação do Quadro de Notas no Dashboard Admin com KPIs de aprovação, listagem detalhada por aluno e exportação em formato CSV.
+- [x] Criação da tabela `simulado_grades` e endpoints autenticados `/api/simulados/submit`, `/api/simulados/my-grade` e `/api/admin/simulados/grades`.
 
 ### 📋 Próximos Passos
 1. Acompanhar a sincronização do deploy contínuo automático no painel do Coolify.
-2. Monitorar logs de produção e novos uploads.
+2. Monitorar o envio das notas do simulado especial pelos alunos.
 
 ---
 *Log gerado automaticamente conforme padrões StackFAB.*

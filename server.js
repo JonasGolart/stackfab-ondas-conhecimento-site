@@ -92,17 +92,20 @@ const initDb = async () => {
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       );
 
-      CREATE TABLE IF NOT EXISTS simulado_scores (
-        id SERIAL PRIMARY KEY,
-        user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-        mode TEXT NOT NULL,
-        questions_count INTEGER NOT NULL,
-        score INTEGER NOT NULL,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-      );
-
       ALTER TABLE materials ADD COLUMN IF NOT EXISTS category TEXT;
       ALTER TABLE email_access_tokens ADD COLUMN IF NOT EXISTS error_message TEXT;
+
+      CREATE TABLE IF NOT EXISTS simulado_grades (
+        id SERIAL PRIMARY KEY,
+        user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+        score INTEGER NOT NULL,
+        total_questions INTEGER DEFAULT 20,
+        percentage NUMERIC(5,2) NOT NULL,
+        passed BOOLEAN NOT NULL,
+        details JSONB,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      );
+      CREATE INDEX IF NOT EXISTS idx_simulado_grades_user ON simulado_grades(user_id);
     `);
     
     // Seed default categories if table is empty

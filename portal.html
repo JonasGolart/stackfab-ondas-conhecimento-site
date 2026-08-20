@@ -237,59 +237,160 @@
       background: #fff;
     }
 
-    .hamburger-portal { display: none; background: none; border: none; cursor: pointer; color: var(--text); padding: 0.2rem; }
-    .sidebar-overlay { display: none; }
-
-    @media (max-width: 1020px) {
-      .app-shell {
-        grid-template-columns: 1fr;
-        margin-top: 0.5rem;
-      }
-
-      .hamburger-portal { display: flex; align-items: center; justify-content: center; }
-
-      .sidebar {
-        position: fixed;
-        left: 0;
-        top: 0;
-        height: 100vh;
-        width: 320px;
-        max-width: 85vw;
-        max-height: 100vh;
-        z-index: 1000;
-        border-radius: 0;
-        transform: translateX(-100%);
-        transition: transform 0.3s ease;
-        background: var(--bg);
-        overflow-y: auto;
-      }
-
-      .sidebar.open { transform: translateX(0); }
-
-      .sidebar-overlay {
-        display: none;
-        position: fixed;
-        inset: 0;
-        background: rgba(46,39,32,0.4);
-        z-index: 999;
-        backdrop-filter: blur(2px);
-      }
-      .sidebar-overlay.open { display: block; }
-
-      .center-stage {
-        min-height: 80vh;
-      }
+    .simulado-special-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: linear-gradient(135deg, rgba(46,125,50,0.15) 0%, rgba(46,125,50,0.05) 100%);
+      border: 1px solid rgba(46,125,50,0.3);
+      color: var(--primary);
+      padding: 0.35rem 0.75rem;
+      border-radius: 99px;
+      font-size: 0.8rem;
+      font-weight: 700;
     }
 
-    /* Ranking styles */
-    .card-box {
-      margin-bottom: 2rem;
+    /* Modal do Simulado Especial */
+    .special-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(46, 39, 32, 0.45);
+      backdrop-filter: blur(8px);
+      z-index: 2000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
     }
-    table { width: 100%; border-collapse: collapse; text-align: left; }
-    th { padding: 0.875rem 1.5rem; background: rgba(46, 39, 32, 0.02); font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; }
-    td { padding: 1rem 1.5rem; border-bottom: 1px solid var(--border); font-size: 0.875rem; }
-    tr:last-child td { border-bottom: none; }
-    tr:hover td { background: rgba(46, 125, 50, 0.02); }
+
+    .special-modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .special-modal-card {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      max-width: 520px;
+      width: 100%;
+      padding: 2.2rem;
+      box-shadow: 0 25px 60px rgba(46, 39, 32, 0.18);
+      transform: scale(0.92);
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+    }
+
+    .special-modal-overlay.active .special-modal-card {
+      transform: scale(1);
+    }
+
+    .special-modal-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .special-modal-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      background: rgba(46, 125, 50, 0.12);
+      border: 1px solid rgba(46, 125, 50, 0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      flex-shrink: 0;
+    }
+
+    .special-modal-title {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--text);
+      line-height: 1.2;
+    }
+
+    .special-modal-body {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin-bottom: 1.75rem;
+    }
+
+    .special-modal-breakdown {
+      background: #faf6ee;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1rem;
+      margin: 1rem 0;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.5rem;
+      text-align: center;
+    }
+
+    .breakdown-item span {
+      display: block;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-bottom: 0.2rem;
+    }
+
+    .breakdown-item strong {
+      font-size: 1.1rem;
+      color: var(--primary);
+      font-weight: 800;
+    }
+
+    .special-modal-actions {
+      display: flex;
+      gap: 0.75rem;
+      justify-content: flex-end;
+    }
+
+    .btn-later {
+      background: rgba(46, 39, 32, 0.06);
+      color: var(--text);
+      border: 1px solid var(--border);
+      padding: 0.75rem 1.25rem;
+      border-radius: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: all 0.2s;
+    }
+
+    .btn-later:hover {
+      background: rgba(46, 39, 32, 0.1);
+    }
+
+    .btn-start-special {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: white;
+      border: none;
+      padding: 0.75rem 1.4rem;
+      border-radius: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      box-shadow: 0 4px 16px rgba(46,125,50,0.25);
+      transition: all 0.2s;
+    }
+
+    .btn-start-special:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(46,125,50,0.35);
+    }
   </style>
 </head>
 <body>
@@ -304,6 +405,7 @@
       </div>
     </div>
     <div class="user-profile">
+      <div id="user-grade-badge" style="display:none;" class="simulado-special-badge"></div>
       <span id="user-name" style="font-weight: 600;">Participante</span>
       <a href="#" onclick="logout()" class="logout-link">Sair</a>
     </div>
@@ -315,7 +417,7 @@
     <aside class="sidebar" id="sidebar">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 0.5rem;">
         <div class="sidebar-title" style="padding:0;">Ações do Portal</div>
-        <button class="hamburger-portal" onclick="toggleSidebar()" style="display:none; /* only show on mobile via CSS but handled by media query, wait, let's just show it via class */" id="close-sidebar-btn">
+        <button class="hamburger-portal" onclick="toggleSidebar()" style="display:none;" id="close-sidebar-btn">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
         </button>
       </div>
@@ -330,7 +432,7 @@
       </div>
 
       <div id="simulado-group" class="sidebar-group">
-        <div class="group-heading">Simulado</div>
+        <div class="group-heading">Simulados de Treino</div>
         <div class="group-sub">Escolha o tipo de simulado</div>
         <select id="sidebar-simulado-filter" class="category-filter">
           <option value="all">Simulado Completo</option>
@@ -341,10 +443,12 @@
         <button id="open-simulado-btn" class="open-simulado-btn">Abrir Simulado no Centro</button>
       </div>
 
-      <div id="ranking-group" class="sidebar-group">
-        <div class="group-heading">Quadro de Notas</div>
-        <div class="group-sub">Ranking de melhores notas</div>
-        <button id="open-ranking-btn" class="open-simulado-btn">Abrir Quadro de Notas</button>
+      <div id="special-exam-group" class="sidebar-group" style="background:rgba(46,125,50,0.06); border-color:rgba(46,125,50,0.3);">
+        <div class="group-heading" style="color:var(--primary);display:flex;align-items:center;gap:0.35rem;">
+          <span>🏆 Simulado Especial</span>
+        </div>
+        <div class="group-sub">Avaliação Oficial de Fim de Curso (20 questões)</div>
+        <button id="open-special-exam-btn" class="open-simulado-btn" style="background:var(--primary);">Iniciar Avaliação Oficial</button>
       </div>
     </aside>
 
@@ -363,6 +467,10 @@
             <div class="welcome-card">
               <h2>Olá, <span id="welcome-name">Participante</span>!</h2>
               <p>Use a sidebar para abrir materiais ou iniciar simulados sem sair desta página.</p>
+              <div id="welcome-grade-box" style="margin-top:1.25rem; display:none; padding:1rem; border-radius:12px; background:rgba(46,125,50,0.08); border:1px solid rgba(46,125,50,0.2);">
+                <div style="font-weight:700; color:var(--primary); font-size:0.95rem; margin-bottom:0.25rem;" id="welcome-grade-title">Simulado Especial Concluído</div>
+                <div style="font-size:0.85rem; color:var(--text);" id="welcome-grade-desc"></div>
+              </div>
             </div>
           </div>
         </div>
@@ -374,38 +482,51 @@
         <div id="view-simulado" class="view">
           <iframe id="simulado-frame" class="simulado-frame" title="Simulado" src=""></iframe>
         </div>
-
-        <div id="view-ranking" class="view" style="padding: 1.5rem; overflow-y: auto; height: 100%;">
-          <div class="card-box" style="background: #fff; border: 1px solid var(--border); border-radius: 16px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.03);">
-            <div style="padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; background: rgba(240, 230, 210, 0.4);">
-              <h3 style="font-weight: 800; font-size: 1.1rem; display: flex; align-items: center; gap: 0.5rem;">
-                🏆 Classificação Geral (Ranking)
-              </h3>
-            </div>
-            <div style="overflow-x:auto">
-              <table style="width: 100%; border-collapse: collapse; text-align: left;">
-                <thead>
-                  <tr style="background: rgba(46, 39, 32, 0.02); border-bottom: 1px solid var(--border);">
-                    <th style="padding: 0.875rem 1.5rem; font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600;">Posição</th>
-                    <th style="padding: 0.875rem 1.5rem; font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600;">Participante</th>
-                    <th style="padding: 0.875rem 1.5rem; font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600;">Grupo Escoteiro</th>
-                    <th style="padding: 0.875rem 1.5rem; font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600;">Modo</th>
-                    <th style="padding: 0.875rem 1.5rem; font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; text-align: center;">Qtd Questões</th>
-                    <th style="padding: 0.875rem 1.5rem; font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; text-align: center;">Acertos</th>
-                    <th style="padding: 0.875rem 1.5rem; font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; text-align: center;">Aproveitamento</th>
-                    <th style="padding: 0.875rem 1.5rem; font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600;">Data</th>
-                  </tr>
-                </thead>
-                <tbody id="ranking-list-body">
-                  <tr><td colspan="8" style="text-align:center;color:var(--text-muted);padding:2rem">Carregando classificação...</td></tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
       </div>
     </section>
   </main>
+
+  <!-- ═══ MODAL INFORMATIVO DO SIMULADO ESPECIAL ═══ -->
+  <div id="special-modal-overlay" class="special-modal-overlay">
+    <div class="special-modal-card">
+      <div class="special-modal-header">
+        <div class="special-modal-icon">🏆</div>
+        <div>
+          <div class="special-modal-title">Simulado Especial de Fim de Curso</div>
+          <div style="font-size:0.8rem; color:var(--primary); font-weight:700; text-transform:uppercase; letter-spacing:0.05em; margin-top:2px;">Disponível hoje (22 de Agosto)</div>
+        </div>
+      </div>
+      <div class="special-modal-body">
+        <p>Você tem um <strong>Simulado Oficial de Fim de Curso</strong> pronto para ser realizado! Esta avaliação possui <strong>20 questões padrão</strong> para todos os participantes:</p>
+        
+        <div class="special-modal-breakdown">
+          <div class="breakdown-item">
+            <span>Ética</span>
+            <strong>7 q.</strong>
+          </div>
+          <div class="breakdown-item">
+            <span>Legislação</span>
+            <strong>7 q.</strong>
+          </div>
+          <div class="breakdown-item">
+            <span>Eletrônica</span>
+            <strong>6 q.</strong>
+          </div>
+        </div>
+
+        <p style="font-size:0.85rem; color:var(--text-muted);">
+          ⚠️ <em>Importante:</em> O gabarito não será mostrado durante as questões. Sua pontuação e gabarito final serão revelados ao terminar e contabilizados no Quadro de Notas oficial.
+        </p>
+      </div>
+      <div class="special-modal-actions">
+        <button class="btn-later" onclick="closeSpecialModal()">Fazer Mais Tarde</button>
+        <button class="btn-start-special" onclick="startSpecialExamFromModal()">
+          <span>Iniciar Simulado</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
 
   <script>
     const token = localStorage.getItem('token');
@@ -422,11 +543,11 @@
 
     const materialsGroup = document.getElementById('materials-group');
     const simuladoGroup = document.getElementById('simulado-group');
-    const rankingGroup = document.getElementById('ranking-group');
     const categoryFilter = document.getElementById('sidebar-category-filter');
     const materialsListEl = document.getElementById('sidebar-materials-list');
     const simuladoFilter = document.getElementById('sidebar-simulado-filter');
     const openSimuladoBtn = document.getElementById('open-simulado-btn');
+    const openSpecialExamBtn = document.getElementById('open-special-exam-btn');
 
     const centerTitle = document.getElementById('center-title');
     const centerSubtitle = document.getElementById('center-subtitle');
@@ -435,7 +556,6 @@
     const viewWelcome = document.getElementById('view-welcome');
     const viewPdf = document.getElementById('view-pdf');
     const viewSimulado = document.getElementById('view-simulado');
-    const viewRanking = document.getElementById('view-ranking');
 
     const pdfFrame = document.getElementById('pdf-frame');
     const simuladoFrame = document.getElementById('simulado-frame');
@@ -451,19 +571,17 @@
     }
 
     function setActiveView(view) {
-      [viewWelcome, viewPdf, viewSimulado, viewRanking].forEach(v => v.classList.remove('active'));
+      [viewWelcome, viewPdf, viewSimulado].forEach(v => v.classList.remove('active'));
       if (view === 'pdf') viewPdf.classList.add('active');
       else if (view === 'simulado') viewSimulado.classList.add('active');
-      else if (view === 'ranking') viewRanking.classList.add('active');
       else viewWelcome.classList.add('active');
     }
 
     function setAction(action) {
       const isMaterials = action === 'materials';
-      const isRanking = action === 'ranking';
       materialsGroup.classList.toggle('active', isMaterials);
-      simuladoGroup.classList.toggle('active', !isMaterials && !isRanking);
-      rankingGroup.classList.toggle('active', isRanking);
+      simuladoGroup.classList.toggle('active', action === 'simulados');
+      document.getElementById('special-exam-group').classList.toggle('active', action === 'special');
 
       if (isMaterials && !selectedMaterialId) {
         centerTitle.innerText = 'Materiais de Estudo';
@@ -490,7 +608,7 @@
 
     function openSimuladoInCenter() {
       const mode = simuladoFilter.value || 'all';
-      const src = `simulado.html?modo=${encodeURIComponent(mode)}&qtd=20&autostart=1&t=${Date.now()}`;
+      const src = `simulado.html?modo=${encodeURIComponent(mode)}&qtd=20&autostart=1&token=${encodeURIComponent(token)}&t=${Date.now()}`;
       centerTitle.innerText = mode === 'all' ? 'Simulado Completo' : `Simulado: ${mode}`;
       centerSubtitle.innerText = 'Simulado aberto no centro do portal.';
       downloadBtn.style.display = 'none';
@@ -498,6 +616,70 @@
       setAction('simulados');
       setActiveView('simulado');
       closeSidebarOnMobile();
+    }
+
+    function openSpecialSimuladoInCenter() {
+      const src = `simulado.html?modo=special&special=1&token=${encodeURIComponent(token)}&t=${Date.now()}`;
+      centerTitle.innerText = '🏆 Simulado Oficial de Fim de Curso';
+      centerSubtitle.innerText = 'Avaliação padrão oficial (20 questões: 7 ética, 7 legislação, 6 eletrônica).';
+      downloadBtn.style.display = 'none';
+      simuladoFrame.src = src;
+      setAction('special');
+      setActiveView('simulado');
+      closeSidebarOnMobile();
+    }
+
+    function closeSpecialModal() {
+      document.getElementById('special-modal-overlay').classList.remove('active');
+    }
+
+    function startSpecialExamFromModal() {
+      closeSpecialModal();
+      openSpecialSimuladoInCenter();
+    }
+
+    /* ─────────────── VERIFICAÇÃO DE DATA DO SIMULADO ESPECIAL ─────────────── */
+    function checkSpecialExamWindow() {
+      const now = new Date();
+      // Janela: 22 de Agosto de 2026 das 01:00 às 23:59:59 (Horário de Brasília UTC-3)
+      const examStart = new Date('2026-08-22T01:00:00-03:00');
+      const examEnd = new Date('2026-08-22T23:59:59-03:00');
+
+      const isWindowActive = now >= examStart && now <= examEnd;
+
+      // Se estiver dentro da janela de 22 de agosto e o participante ainda não tiver concluído ou fechado na sessão
+      if (isWindowActive) {
+        const modalDismissed = sessionStorage.getItem('special_modal_dismissed');
+        if (!modalDismissed) {
+          setTimeout(() => {
+            document.getElementById('special-modal-overlay').classList.add('active');
+            sessionStorage.setItem('special_modal_dismissed', '1');
+          }, 800);
+        }
+      }
+    }
+
+    async function loadMyGrade() {
+      try {
+        const res = await fetch('/api/simulados/my-grade', {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        if (res.ok) {
+          const data = await res.json();
+          if (data.grade) {
+            const g = data.grade;
+            const badge = document.getElementById('user-grade-badge');
+            badge.style.display = 'inline-flex';
+            badge.innerHTML = `🏆 Nota: <strong>${g.score}/${g.total_questions} (${g.percentage}%)</strong> · ${g.passed ? '<span style="color:#1b5e20;">Aprovado</span>' : '<span style="color:#b71c1c;">Em revisão</span>'}`;
+
+            const welcomeBox = document.getElementById('welcome-grade-box');
+            welcomeBox.style.display = 'block';
+            document.getElementById('welcome-grade-desc').innerHTML = `Sua pontuação no Simulado Especial foi de <strong>${g.score} acertos de ${g.total_questions} (${g.percentage}%)</strong>. Status: <strong>${g.passed ? 'Aprovado 🎉' : 'Nota Registrada'}</strong>.`;
+          }
+        }
+      } catch (err) {
+        console.error('Erro ao consultar notas do usuário:', err);
+      }
     }
 
     function getFilteredMaterials() {
@@ -572,6 +754,8 @@
     });
 
     openSimuladoBtn.addEventListener('click', openSimuladoInCenter);
+    openSpecialExamBtn.addEventListener('click', openSpecialSimuladoInCenter);
+
     simuladoFilter.addEventListener('change', () => {
       setAction('simulados');
       centerTitle.innerText = 'Simulado';
@@ -582,72 +766,11 @@
       }
     });
 
-    async function loadRanking() {
-      const body = document.getElementById('ranking-list-body');
-      body.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:2rem;color:var(--text-muted)">Carregando classificação...</td></tr>';
-      try {
-        const response = await fetch('/api/simulado/ranking', {
-          headers: {
-            'Authorization': `Bearer ${token}`
-          }
-        });
-        if (!response.ok) throw new Error('Erro ao buscar dados');
-        const data = await response.json();
-        
-        if (data.length === 0) {
-          body.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:2rem;color:var(--text-muted)">Nenhum simulado realizado ainda. Seja o primeiro!</td></tr>';
-          return;
-        }
-
-        body.innerHTML = data.map((row, idx) => {
-          const dateStr = new Date(row.createdAt).toLocaleDateString('pt-BR', {
-            day: '2-digit',
-            month: '2-digit',
-            year: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit'
-          });
-
-          const badgeClass = row.percentage >= 70 ? 'color: #2e7d32; font-weight: 700;' : 'color: #dc2626; font-weight: 700;';
-          
-          let medal = idx + 1;
-          if (idx === 0) medal = '🥇';
-          else if (idx === 1) medal = '🥈';
-          else if (idx === 2) medal = '🥉';
-
-          return `
-            <tr style="border-bottom: 1px solid var(--border);">
-              <td style="padding: 1rem 1.5rem; font-weight: 700; text-align: center;">${medal}</td>
-              <td style="padding: 1rem 1.5rem; font-weight: 600;">${row.userName}</td>
-              <td style="padding: 1rem 1.5rem; color: var(--text-muted);">${row.scoutGroup}</td>
-              <td style="padding: 1rem 1.5rem;">${row.mode === 'all' ? '🎯 Completo' : row.mode}</td>
-              <td style="padding: 1rem 1.5rem; text-align: center;">${row.questionsCount}</td>
-              <td style="padding: 1rem 1.5rem; text-align: center;">${row.score}</td>
-              <td style="padding: 1rem 1.5rem; text-align: center; ${badgeClass}">${row.percentage}%</td>
-              <td style="padding: 1rem 1.5rem; font-size: 0.8rem; color: var(--text-muted);">${dateStr}</td>
-            </tr>
-          `;
-        }).join('');
-      } catch (err) {
-        console.error(err);
-        body.innerHTML = '<tr><td colspan="8" style="text-align:center;color:#dc2626;padding:2rem">Falha ao carregar classificação.</td></tr>';
-      }
-    }
-
-    const openRankingBtn = document.getElementById('open-ranking-btn');
-    openRankingBtn.addEventListener('click', () => {
-      centerTitle.innerText = 'Quadro de Notas & Ranking';
-      centerSubtitle.innerText = 'Confira os melhores desempenhos nos simulados do Ondas do Conhecimento.';
-      downloadBtn.style.display = 'none';
-      setAction('ranking');
-      setActiveView('ranking');
-      loadRanking();
-      closeSidebarOnMobile();
-    });
-
     window.openMaterial = openMaterial;
 
     loadMaterials();
+    loadMyGrade();
+    checkSpecialExamWindow();
     setAction('materials');
   </script>
 </body>

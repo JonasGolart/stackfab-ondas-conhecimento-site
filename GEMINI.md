@@ -37,11 +37,8 @@
 
 **[Update - 2026-06-17] (Part 2)**: Corrigido o bug da responsividade na "Área de Membros" (dashboard.html e portal.html) onde a sidebar estava sobrepondo ou quebrando o layout em dispositivos móveis. Adicionado menu hamburguer (drawer off-canvas) com animação suave e overlay de escurecimento, fechando automaticamente ao realizar alguma ação na tela. Alterações "commitadas" e enviadas ao Github.
 
-**[Update - 2026-08-19]**: Implementada a funcionalidade de Quadro de Notas e classificação geral (ranking):
-1. **Banco de Dados**: Nova tabela `simulado_scores` adicionada à inicialização em `server.js`.
-2. **Backend/API**: Criado controller `src/controllers/simuladoController.js` e adicionados endpoints `POST /api/simulado/scores` (salvar score) e `GET /api/simulado/ranking` (buscar ranking).
-3. **Interfaces**:
-   - `simulado.html`: Modificado para enviar o score automaticamente à API ao concluir.
-   - `portal.html`: Inserido o painel "Quadro de Notas" na sidebar e a view de classificação na tela central para os alunos.
-   - `dashboard.html`: Adicionado "Quadro de Notas" na sidebar do admin e tabela correspondente de notas gerais.
-Todas as alterações foram submetidas ao repositório GitHub.
+**[Update - 2026-08-20]**: Implementado o Simulado Especial de Fim de Curso e Quadro de Notas:
+1. **Modal Informativo com Agendamento Estrito**: Renderizado no `portal.html` exclusivamente entre a 01:00 AM do dia 22 de Agosto de 2026 e 23:59 do mesmo dia.
+2. **Simulado Especial Padrão Oficial (`simulado.html`)**: Exatamente 20 questões padrão (7 Técnica e Ética, 7 Legislação e 6 Eletrônica) sem revelação de gabarito imediato durante a resolução. O resultado, total de acertos e gabarito detalhado são emitidos após o encerramento.
+3. **Persistência Backend & Tabela `simulado_grades` (`server.js`, `simuladoController.js`, `api.js`)**: Registro das submissões e notas com índice e suporte a auditoria.
+4. **Quadro de Notas no Admin Dashboard (`dashboard.html`)**: Nova seção de gerenciamento com 4 cartões KPI (total de avaliações, aprovados, taxa de aprovação %, média de acertos), tabela dinâmica por participante e exportação completa em CSV.

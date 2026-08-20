@@ -673,7 +673,6 @@
   </div>
 
   <script>
-    const token = localStorage.getItem('token');
     // ============================================================
     // STATE
     // ============================================================
@@ -684,14 +683,33 @@
     let lockedAnswers = [];
     let selectedQty = 20;
     let selectedMode = 'all';
+    let isSpecialMode = false;
+    let userToken = localStorage.getItem('token') || '';
 
     // Category pill styles
     const modeMeta = {
       'all':            { label: '🎯 Completo',     color: '#6A1B9A', bg: 'rgba(106,27,154,0.12)' },
+      'special':        { label: '🏆 Simulado Oficial Especial', color: '#2e7d32', bg: 'rgba(46,125,50,0.15)' },
       'Legislação':     { label: '⚖️ Legislação',   color: '#1565C0', bg: 'rgba(21,101,192,0.12)' },
       'Técnica e Ética':{ label: '🎙️ Técnica/Ética',color: '#2e7d32', bg: 'rgba(46,125,50,0.12)'  },
       'Eletrônica':     { label: '⚡ Eletrônica',   color: '#E65100', bg: 'rgba(230,81,0,0.12)'   },
     };
+
+    // Função pseudo-aleatória determinística por semente (para que todos os membros recebam o mesmo Simulado Especial oficial)
+    function seededRandom(seed) {
+      const x = Math.sin(seed++) * 10000;
+      return x - Math.floor(x);
+    }
+
+    function shuffleWithSeed(array, initialSeed = 42) {
+      const arr = [...array];
+      let seed = initialSeed;
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(seededRandom(seed++) * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
+    }
 
     // ============================================================
     // BOOTSTRAP: Load JSON and update counters
@@ -733,20 +751,40 @@
     // ============================================================
     function startQuiz(mode) {
       selectedMode = mode;
+      isSpecialMode = mode === 'special' || mode === 'oficial';
 
-      let pool = mode === 'all'
-        ? allQuestions
-        : allQuestions.filter(q => q.nivel === mode);
+      let selectedRawQuestions = [];
 
-      if (pool.length === 0) {
-        alert('Nenhuma questão encontrada para este modo.');
-        return;
+      if (isSpecialMode) {
+        // Padrão oficial unificado para todos os membros:
+        // 7 de Técnica e Ética, 7 de Legislação e 6 de Eletrônica
+        const tecPool = allQuestions.filter(q => q.nivel === 'Técnica e Ética');
+        const legPool = allQuestions.filter(q => q.nivel === 'Legislação');
+        const eltPool = allQuestions.filter(q => q.nivel === 'Eletrônica');
+
+        const shuffledTec = shuffleWithSeed(tecPool, 101).slice(0, 7);
+        const shuffledLeg = shuffleWithSeed(legPool, 202).slice(0, 7);
+        const shuffledElt = shuffleWithSeed(eltPool, 303).slice(0, 6);
+
+        // Agrupa e ordena com semente estável
+        selectedRawQuestions = shuffleWithSeed([...shuffledLeg, ...shuffledTec, ...shuffledElt], 404);
+      } else {
+        let pool = mode === 'all'
+          ? allQuestions
+          : allQuestions.filter(q => q.nivel === mode);
+
+        if (pool.length === 0) {
+          alert('Nenhuma questão encontrada para este modo.');
+          return;
+        }
+
+        // Shuffle and slice regular practice
+        const shuffled = [...pool].sort(() => Math.random() - 0.5);
+        const count = Math.min(selectedQty, shuffled.length);
+        selectedRawQuestions = shuffled.slice(0, count);
       }
 
-      // Shuffle and slice
-      const shuffled = [...pool].sort(() => Math.random() - 0.5);
-      const count = Math.min(selectedQty, shuffled.length);
-      questions = shuffled.slice(0, count).map(q => {
+      questions = selectedRawQuestions.map(q => {
         const letters = Object.keys(q.alternativas).sort();
         const options = letters.map(k => q.alternativas[k]);
         const answerIdx = letters.indexOf(q.resposta_correta);
@@ -754,7 +792,8 @@
           category: q.nivel,
           text: q.enunciado,
           options,
-          answer: answerIdx
+          answer: answerIdx,
+          correctLetter: q.resposta_correta ? q.resposta_correta.toUpperCase() : String.fromCharCode(65 + answerIdx)
         };
       });
 
@@ -797,9 +836,17 @@
       q.options.forEach((opt, i) => {
         const div = document.createElement('div');
         const isSelected = selectedAnswer === i;
-        const isCorrect = i === q.answer;
-        const isWrongSelection = isLocked && isSelected && !isCorrect;
-        div.className = `option${isSelected ? ' selected' : ''}${isLocked && isCorrect ? ' correct' : ''}${isWrongSelection ? ' wrong' : ''}${isLocked ? ' disabled' : ''}`;
+
+        if (isSpecialMode) {
+          // No modo Especial de Fim de Curso, NÃO revela certo/errado na hora. Apenas marca a selecionada.
+          div.className = `option${isSelected ? ' selected' : ''}`;
+        } else {
+          // Modo treino padrão
+          const isCorrect = i === q.answer;
+          const isWrongSelection = isLocked && isSelected && !isCorrect;
+          div.className = `option${isSelected ? ' selected' : ''}${isLocked && isCorrect ? ' correct' : ''}${isWrongSelection ? ' wrong' : ''}${isLocked ? ' disabled' : ''}`;
+        }
+
         div.innerHTML = `<span class="option-letter">${String.fromCharCode(65 + i)}</span> ${opt}`;
         div.onclick = () => selectOption(i);
         optEl.appendChild(div);
@@ -807,7 +854,8 @@
 
       feedbackEl.className = 'answer-feedback';
       feedbackEl.textContent = '';
-      if (isLocked && selectedAnswer !== null) {
+
+      if (!isSpecialMode && isLocked && selectedAnswer !== null) {
         const correctLetter = String.fromCharCode(65 + q.answer);
         if (selectedAnswer === q.answer) {
           feedbackEl.classList.add('show', 'correct');
@@ -819,10 +867,17 @@
       }
 
       document.getElementById('prev-btn').style.visibility = currentIdx === 0 ? 'hidden' : 'visible';
-      document.getElementById('next-btn').textContent = currentIdx === questions.length - 1 ? 'Finalizar ✓' : 'Próxima →';
+      document.getElementById('next-btn').textContent = currentIdx === questions.length - 1 ? 'Finalizar Simulado ✓' : 'Próxima →';
     }
 
     function selectOption(idx) {
+      if (isSpecialMode) {
+        // No modo especial, o participante pode alterar a resposta antes de finalizar
+        userAnswers[currentIdx] = idx;
+        loadQuestion();
+        return;
+      }
+
       if (lockedAnswers[currentIdx]) return;
       userAnswers[currentIdx] = idx;
       lockedAnswers[currentIdx] = true;
@@ -847,11 +902,34 @@
     }
 
     // ============================================================
-    // RESULTS
+    // RESULTS & SUBMISSION
     // ============================================================
-    function showResults() {
+    async function showResults() {
       let score = 0;
-      userAnswers.forEach((ans, i) => { if (ans === questions[i].answer) score++; });
+      const categoryStats = {
+        'Legislação': { total: 0, correct: 0 },
+        'Técnica e Ética': { total: 0, correct: 0 },
+        'Eletrônica': { total: 0, correct: 0 }
+      };
+
+      const detailedAnswers = questions.map((q, i) => {
+        const isCorrect = userAnswers[i] === q.answer;
+        if (isCorrect) score++;
+
+        if (categoryStats[q.category]) {
+          categoryStats[q.category].total++;
+          if (isCorrect) categoryStats[q.category].correct++;
+        }
+
+        return {
+          questionIndex: i + 1,
+          category: q.category,
+          userChoice: userAnswers[i] !== null ? String.fromCharCode(65 + userAnswers[i]) : null,
+          correctChoice: String.fromCharCode(65 + q.answer),
+          isCorrect
+        };
+      });
+
       const pct = Math.round((score / questions.length) * 100);
       const pass = pct >= 70;
 
@@ -868,35 +946,68 @@
 
       const fb = document.getElementById('feedback');
       if (pass) {
-        fb.textContent = '🎉 Parabéns! Você atingiu os 70% necessários para aprovação no exame da ANATEL. Continue assim!';
+        fb.textContent = `🎉 Parabéns! Você atingiu ${pct}% de aproveitamento (${score} acertos de ${questions.length}) e foi aprovado no Simulado Especial de Fim de Curso!`;
       } else {
-        fb.textContent = `📚 Você ficou em ${pct}%. É necessário atingir 70% para ser aprovado. Revise o material e tente novamente!`;
+        fb.textContent = `📚 Você obteve ${pct}% de aproveitamento (${score} acertos). Para aprovação no exame oficial é necessário atingir 70%. Continue revisando os módulos!`;
       }
+
+      // Se for modo especial e houver usuário autenticado, envia a nota para o backend
+      if (isSpecialMode && userToken) {
+        try {
+          await fetch('/api/simulados/submit', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${userToken}`
+            },
+            body: JSON.stringify({
+              score,
+              totalQuestions: questions.length,
+              percentage: pct,
+              passed: pass,
+              details: {
+                categoryStats,
+                detailedAnswers
+              }
+            })
+          });
+        } catch (err) {
+          console.error('Erro ao enviar nota do simulado:', err);
+        }
+      }
+
+      // Constrói seção visual do Gabarito Detalhado no final
+      let gabaritoContainer = document.getElementById('gabarito-detalhado-container');
+      if (!gabaritoContainer) {
+        gabaritoContainer = document.createElement('div');
+        gabaritoContainer.id = 'gabarito-detalhado-container';
+        gabaritoContainer.style.marginTop = '2rem';
+        gabaritoContainer.style.textAlign = 'left';
+        document.querySelector('.results-card').appendChild(gabaritoContainer);
+      }
+
+      gabaritoContainer.innerHTML = `
+        <div style="border-top: 1px solid var(--border); padding-top: 1.5rem; margin-top: 1rem;">
+          <h3 style="font-size: 1.15rem; font-weight: 800; margin-bottom: 0.5rem; text-align: center;">📋 Gabarito Oficial Completo</h3>
+          <p style="font-size: 0.85rem; color: var(--text-muted); text-align: center; margin-bottom: 1.5rem;">Confira abaixo o detalhe de cada uma das ${questions.length} questões respondidas:</p>
+          <div style="display: flex; flex-direction: column; gap: 0.75rem; max-height: 380px; overflow-y: auto; padding-right: 0.5rem;">
+            ${detailedAnswers.map(item => `
+              <div style="background: ${item.isCorrect ? 'rgba(46, 125, 50, 0.08)' : 'rgba(229, 57, 53, 0.08)'}; border: 1px solid ${item.isCorrect ? 'rgba(46, 125, 50, 0.25)' : 'rgba(229, 57, 53, 0.25)'}; padding: 0.75rem 1rem; border-radius: 12px; display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                  <div style="font-weight: 700; font-size: 0.88rem; color: var(--text);">Questão ${item.questionIndex} <span style="font-weight: 500; font-size: 0.75rem; color: var(--text-muted); margin-left: 0.35rem;">(${item.category})</span></div>
+                  <div style="font-size: 0.8rem; margin-top: 0.2rem; color: ${item.isCorrect ? '#1b5e20' : '#b71c1c'}; font-weight: 600;">
+                    Sua resposta: <strong>${item.userChoice || 'Não respondida'}</strong> · Gabarito: <strong>${item.correctChoice}</strong>
+                  </div>
+                </div>
+                <div style="font-size: 1.2rem;">${item.isCorrect ? '✅' : '❌'}</div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
 
       document.getElementById('progress').style.width = '100%';
       showScreen('results');
-
-      if (token) {
-        saveSimuladoScore(selectedMode, questions.length, score);
-      }
-    }
-
-    async function saveSimuladoScore(mode, questionsCount, score) {
-      try {
-        const response = await fetch('/api/simulado/scores', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-          },
-          body: JSON.stringify({ mode, questionsCount, score })
-        });
-        if (!response.ok) {
-          console.error('Falha ao salvar a pontuação do simulado.');
-        }
-      } catch (err) {
-        console.error('Erro ao conectar à API para salvar pontuação:', err);
-      }
     }
 
     function restartSameMode() { startQuiz(selectedMode); }
@@ -918,6 +1029,17 @@
       const requestedMode = params.get('modo');
       const requestedQty = parseInt(params.get('qtd') || '20', 10);
       const autoStart = params.get('autostart') === '1';
+      const isSpecial = params.get('special') === '1' || requestedMode === 'special';
+      const queryToken = params.get('token');
+
+      if (queryToken) {
+        userToken = queryToken;
+      }
+
+      if (isSpecial) {
+        setTimeout(() => startQuiz('special'), 120);
+        return;
+      }
 
       if ([10, 20, 30, 50].includes(requestedQty)) {
         setQuantity(requestedQty);

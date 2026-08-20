@@ -265,13 +265,13 @@
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
           <span>Materiais</span>
         </div>
+        <div class="nav-item" id="nav-grades" onclick="showSection('grades', this)">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          <span>Quadro de Notas</span>
+        </div>
         <div class="nav-item" id="nav-email" onclick="showSection('email', this)">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z"/><path d="m22 6-10 7L2 6"/></svg>
           <span>Tokens por E-mail</span>
-        </div>
-        <div class="nav-item" id="nav-scores" onclick="showSection('scores', this)">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-          <span>Quadro de Notas</span>
         </div>
       </nav>
       <button onclick="logout()" class="logout-btn">
@@ -433,6 +433,69 @@
         </div>
       </div>
 
+      <!-- ═══ SEÇÃO: QUADRO DE NOTAS ═══ -->
+      <div id="section-grades" class="content-section">
+        <header class="header">
+          <h1>Quadro de Notas — Simulado Especial</h1>
+          <div class="user-pill" id="user-info-grades">Admin</div>
+        </header>
+
+        <div class="stats">
+          <div class="stat-card">
+            <span>Avaliações Realizadas</span>
+            <h2 id="grades-total">—</h2>
+            <div class="stat-icon"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+          </div>
+          <div class="stat-card">
+            <span>Aprovados (>= 70%)</span>
+            <h2 id="grades-passed" style="color:var(--primary);">—</h2>
+            <div class="stat-icon"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><polyline points="20 6 9 17 4 12"/></svg></div>
+          </div>
+          <div class="stat-card">
+            <span>Taxa de Aprovação</span>
+            <h2 id="grades-pass-rate">—</h2>
+            <div class="stat-icon"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><circle cx="12" cy="12" r="10"/><path d="M16 12l-4-4-4 4"/></svg></div>
+          </div>
+          <div class="stat-card">
+            <span>Média de Acertos</span>
+            <h2 id="grades-avg">—</h2>
+            <div class="stat-icon"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
+          </div>
+        </div>
+
+        <div class="card-box">
+          <div class="card-header">
+            <h3>Desempenho dos Participantes</h3>
+            <div style="display:flex;gap:0.75rem;">
+              <input type="text" id="grades-search" placeholder="Filtrar por nome ou e-mail..." style="padding:0.4rem 0.75rem;font-size:0.82rem;width:240px;" oninput="filterGradesTable()">
+              <button onclick="exportGradesToCSV()" class="btn-export">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                Exportar CSV
+              </button>
+            </div>
+          </div>
+          <div style="overflow-x:auto">
+            <table>
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Participante</th>
+                  <th>Grupo Escoteiro</th>
+                  <th>E-mail</th>
+                  <th>Acertos</th>
+                  <th>Aproveitamento</th>
+                  <th>Status</th>
+                  <th>Data de Conclusão</th>
+                </tr>
+              </thead>
+              <tbody id="grades-list">
+                <tr><td colspan="8" style="text-align:center;padding:1.5rem;color:var(--text-muted)">Carregando quadro de notas...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
       <!-- ═══ SEÇÃO: TOKENS POR E-MAIL ═══ -->
       <div id="section-email" class="content-section">
         <header class="header">
@@ -471,41 +534,6 @@
               <tr><td colspan="5" style="text-align:center;color:var(--text-muted);padding:1.5rem">Nenhum envio realizado ainda.</td></tr>
             </tbody>
           </table>
-        </div>
-      </div>
-
-      <!-- ═══ SEÇÃO: QUADRO DE NOTAS ═══ -->
-      <div id="section-scores" class="content-section">
-        <header class="header">
-          <h1>Quadro de Notas & Ranking</h1>
-          <div style="display:flex;align-items:center;gap:1rem">
-            <div class="user-pill" id="user-info-scores">Admin</div>
-          </div>
-        </header>
-
-        <div class="card-box">
-          <div class="card-header">
-            <h3>Desempenho dos Participantes nos Simulados</h3>
-          </div>
-          <div style="overflow-x:auto">
-            <table>
-              <thead>
-                <tr>
-                  <th style="text-align: center; width: 80px;">Posição</th>
-                  <th>Participante</th>
-                  <th>Grupo Escoteiro</th>
-                  <th>Modo / Disciplina</th>
-                  <th style="text-align: center;">Nº Questões</th>
-                  <th style="text-align: center;">Acertos</th>
-                  <th style="text-align: center;">Aproveitamento</th>
-                  <th>Realizado em</th>
-                </tr>
-              </thead>
-              <tbody id="admin-scores-list">
-                <tr><td colspan="8" style="text-align:center;color:var(--text-muted);padding:1.5rem">Carregando quadro de notas...</td></tr>
-              </tbody>
-            </table>
-          </div>
         </div>
       </div>
     </main>
@@ -554,7 +582,8 @@
     document.getElementById('user-info-2').innerText = user.name || 'Admin';
     document.getElementById('user-info-stats').innerText = user.name || 'Admin';
     document.getElementById('user-info-email').innerText = user.name || 'Admin';
-    document.getElementById('user-info-scores').innerText = user.name || 'Admin';
+    const gradesPill = document.getElementById('user-info-grades');
+    if (gradesPill) gradesPill.innerText = user.name || 'Admin';
 
     /* ─────────────── TOAST ─────────────── */
     function showToast(title, message, type = 'success') {
@@ -612,9 +641,9 @@
 
       if (id === 'inscriptions') loadInscriptions();
       if (id === 'stats') loadStats();
+      if (id === 'grades') loadGrades();
       if (id === 'materials') { loadMaterials(); loadCategories(); }
       if (id === 'email') { setupTokenEmailForm(); loadTokenEmailHistory(); }
-      if (id === 'scores') loadScores();
     }
 
     /* ─────────────── INSCRIPTIONS ─────────────── */
@@ -1337,55 +1366,111 @@
       });
     }
 
-    async function loadScores() {
-      const list = document.getElementById('admin-scores-list');
-      list.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:2rem;color:var(--text-muted)">Carregando...</td></tr>';
+    /* ─────────────── QUADRO DE NOTAS ─────────────── */
+    let gradesData = [];
+
+    async function loadGrades() {
+      const tbody = document.getElementById('grades-list');
+      tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:2rem;color:var(--text-muted)">Carregando quadro de notas...</td></tr>';
       try {
-        const res = await fetch('/api/simulado/ranking', {
+        const res = await fetch('/api/admin/simulados/grades', {
           headers: { 'Authorization': `Bearer ${token}` }
         });
         if (!res.ok) throw new Error('Não autorizado');
         const data = await res.json();
-        list.innerHTML = '';
+        gradesData = data.grades || [];
 
-        if (data.length === 0) {
-          list.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:2.5rem;color:var(--text-muted)">Nenhum simulado registrado no banco ainda.</td></tr>';
-          return;
-        }
+        // Atualiza KPIs
+        document.getElementById('grades-total').innerText = data.kpis.totalTaken;
+        document.getElementById('grades-passed').innerText = data.kpis.passedCount;
+        document.getElementById('grades-pass-rate').innerText = `${data.kpis.passRate}%`;
+        document.getElementById('grades-avg').innerText = `${data.kpis.avgScore}/20`;
 
-        data.forEach((row, idx) => {
-          const dateStr = new Date(row.createdAt).toLocaleDateString('pt-BR', {
-            day: '2-digit',
-            month: '2-digit',
-            year: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit'
-          });
-
-          const pctStyle = row.percentage >= 70 ? 'color: #2e7d32; font-weight: 700;' : 'color: #dc2626; font-weight: 700;';
-
-          let medal = idx + 1;
-          if (idx === 0) medal = '🥇';
-          else if (idx === 1) medal = '🥈';
-          else if (idx === 2) medal = '🥉';
-
-          list.innerHTML += `
-            <tr>
-              <td style="text-align:center; font-weight: 700;">${medal}</td>
-              <td><strong>${row.userName}</strong></td>
-              <td>${row.scoutGroup}</td>
-              <td>${row.mode === 'all' ? '🎯 Completo' : row.mode}</td>
-              <td style="text-align:center;">${row.questionsCount}</td>
-              <td style="text-align:center;">${row.score}</td>
-              <td style="text-align:center; ${pctStyle}">${row.percentage}%</td>
-              <td>${dateStr}</td>
-            </tr>`;
-        });
+        renderGradesTable(gradesData);
       } catch (err) {
-        console.error(err);
-        list.innerHTML = '<tr><td colspan="8" style="text-align:center;color:#dc2626;padding:1.5rem">Erro ao carregar o quadro de notas.</td></tr>';
-        showToast('Erro', 'Não foi possível carregar o quadro de notas.', 'error');
+        console.error('Erro ao carregar quadro de notas:', err);
+        tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:#dc2626;padding:1.5rem">Erro ao carregar notas.</td></tr>';
+        showToast('Erro', 'Não foi possível carregar as notas dos simulados.', 'error');
       }
+    }
+
+    function renderGradesTable(list) {
+      const tbody = document.getElementById('grades-list');
+      if (!list || list.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:2rem;color:var(--text-muted)">Nenhuma avaliação enviada ainda.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = list.map((g, idx) => {
+        const passBadge = g.passed
+          ? '<span class="badge badge-group" style="font-size:0.75rem;">Aprovado</span>'
+          : '<span class="badge" style="background:rgba(220,38,38,0.1);color:#dc2626;font-size:0.75rem;">Reprovado</span>';
+        const dateStr = g.created_at
+          ? new Date(g.created_at).toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' })
+          : '—';
+
+        return `
+          <tr>
+            <td style="color:var(--text-muted);font-size:0.8rem;font-weight:600">${idx + 1}</td>
+            <td><strong>${g.user_name || 'Participante'}</strong></td>
+            <td>${g.scout_group || '<span style="color:var(--text-muted);font-size:0.8rem">—</span>'}</td>
+            <td style="font-size:0.82rem;color:var(--text-muted)">${g.user_email}</td>
+            <td><strong>${g.score}</strong> / ${g.total_questions}</td>
+            <td><strong>${g.percentage}%</strong></td>
+            <td>${passBadge}</td>
+            <td style="font-size:0.8rem;color:var(--text-muted)">${dateStr}</td>
+          </tr>`;
+      }).join('');
+    }
+
+    function filterGradesTable() {
+      const query = (document.getElementById('grades-search').value || '').toLowerCase().trim();
+      if (!query) {
+        renderGradesTable(gradesData);
+        return;
+      }
+      const filtered = gradesData.filter(g => 
+        (g.user_name && g.user_name.toLowerCase().includes(query)) ||
+        (g.user_email && g.user_email.toLowerCase().includes(query)) ||
+        (g.scout_group && g.scout_group.toLowerCase().includes(query))
+      );
+      renderGradesTable(filtered);
+    }
+
+    function exportGradesToCSV() {
+      if (!gradesData || gradesData.length === 0) {
+        showToast('Erro', 'Nenhum registro de nota para exportar!', 'error');
+        return;
+      }
+
+      const headers = ['#', 'Nome do Participante', 'Grupo Escoteiro', 'E-mail', 'Acertos', 'Total Questões', 'Percentual', 'Status', 'Data e Hora'];
+      const rows = [headers.join(';')];
+
+      gradesData.forEach((g, idx) => {
+        const vals = [
+          idx + 1,
+          g.user_name || '',
+          g.scout_group || '',
+          g.user_email || '',
+          g.score,
+          g.total_questions,
+          `${g.percentage}%`,
+          g.passed ? 'Aprovado' : 'Reprovado',
+          g.created_at ? new Date(g.created_at).toLocaleString('pt-BR') : ''
+        ];
+        rows.push(vals.map(v => `"${String(v).replace(/"/g, '""')}"`).join(';'));
+      });
+
+      const content = '\uFEFF' + rows.join('\n');
+      const blob = new Blob([content], { type: 'text/csv;charset=utf-8;' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = `quadro_notas_ondas_${new Date().toISOString().slice(0,10)}.csv`;
+      link.style.display = 'none';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      showToast('Exportação concluída', 'Quadro de notas exportado em CSV!', 'success');
     }
 
     function logout() {
