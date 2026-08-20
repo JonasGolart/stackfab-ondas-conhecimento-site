@@ -493,7 +493,7 @@
         <div class="special-modal-icon">🏆</div>
         <div>
           <div class="special-modal-title">Simulado Especial de Fim de Curso</div>
-          <div style="font-size:0.8rem; color:var(--primary); font-weight:700; text-transform:uppercase; letter-spacing:0.05em; margin-top:2px;">Disponível hoje (22 de Agosto)</div>
+          <div style="font-size:0.8rem; color:var(--primary); font-weight:700; text-transform:uppercase; letter-spacing:0.05em; margin-top:2px;">Disponível para realização</div>
         </div>
       </div>
       <div class="special-modal-body">
@@ -638,16 +638,12 @@
       openSpecialSimuladoInCenter();
     }
 
-    /* ─────────────── VERIFICAÇÃO DE DATA DO SIMULADO ESPECIAL ─────────────── */
+    /* ─────────────── VERIFICAÇÃO DE DATA DO SIMULADO ESPECIAL (DESATIVADO TEMPORARIAMENTE PARA TESTES) ─────────────── */
     function checkSpecialExamWindow() {
-      const now = new Date();
-      // Janela: 22 de Agosto de 2026 das 01:00 às 23:59:59 (Horário de Brasília UTC-3)
-      const examStart = new Date('2026-08-22T01:00:00-03:00');
-      const examEnd = new Date('2026-08-22T23:59:59-03:00');
+      // Dispositivo de data/horário desativado temporariamente a pedido do usuário para testes em produção.
+      // (Em produção com data ativa: 22 de Agosto das 01:00 às 23:59)
+      const isWindowActive = true;
 
-      const isWindowActive = now >= examStart && now <= examEnd;
-
-      // Se estiver dentro da janela de 22 de agosto e o participante ainda não tiver concluído ou fechado na sessão
       if (isWindowActive) {
         const modalDismissed = sessionStorage.getItem('special_modal_dismissed');
         if (!modalDismissed) {
