@@ -665,16 +665,28 @@
       openSpecialSimuladoInCenter();
     }
 
-    /* ─────────────── VERIFICAÇÃO DE DATA DO SIMULADO ESPECIAL (DESATIVADO TEMPORARIAMENTE PARA TESTES) ─────────────── */
+    /* ─────────────── VERIFICAÇÃO DE DATA DO SIMULADO ESPECIAL ─────────────── */
     function checkSpecialExamWindow() {
-      // Dispositivo de data/horário e flag de sessão desativados temporariamente para testes em produção.
-      // O modal sempre abrirá para permitir testar a qualquer momento.
-      setTimeout(() => {
-        const modal = document.getElementById('special-modal-overlay');
-        if (modal) {
-          modal.classList.add('active');
+      const now = new Date();
+      // Janela oficial: 22 de Agosto de 2026 das 01:00 às 23:59:59 (Horário de Brasília UTC-3)
+      const examStart = new Date('2026-08-22T01:00:00-03:00');
+      const examEnd = new Date('2026-08-22T23:59:59-03:00');
+
+      const isWindowActive = now >= examStart && now <= examEnd;
+
+      // Se estiver dentro da data/horário programado e ainda não tiver dispensado nesta sessão
+      if (isWindowActive) {
+        const modalDismissed = sessionStorage.getItem('special_modal_dismissed');
+        if (!modalDismissed) {
+          setTimeout(() => {
+            const modal = document.getElementById('special-modal-overlay');
+            if (modal) {
+              modal.classList.add('active');
+              sessionStorage.setItem('special_modal_dismissed', '1');
+            }
+          }, 800);
         }
-      }, 400);
+      }
     }
 
     async function loadMyGrade() {
