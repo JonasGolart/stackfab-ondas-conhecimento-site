@@ -37,7 +37,9 @@
 
 **[Update - 2026-06-17] (Part 2)**: Corrigido o bug da responsividade na "Área de Membros" (dashboard.html e portal.html) onde a sidebar estava sobrepondo ou quebrando o layout em dispositivos móveis. Adicionado menu hamburguer (drawer off-canvas) com animação suave e overlay de escurecimento, fechando automaticamente ao realizar alguma ação na tela. Alterações "commitadas" e enviadas ao Github.
 
-**[Update - 2026-08-21]**: 
-1. Limpeza de registros antecipados na tabela `simulado_grades` (excluídos simulados realizados em 20/08 por Pedro Menezes e Jonas Silva para liberação limpa no dia oficial).
-2. Reforçada a segurança e integridade das datas: adicionada validação de janela oficial (22/08/2026 das 01:00 às 23:59:59 UTC-3) diretamente no backend (`simuladoController.js -> submitSimulado`) e no frontend (`simulado.html -> startQuiz`), impedindo submissões ou aberturas fora da data oficial.
+**[Update - 2026-08-22]**: 
+1. **Homologação e Inserção Manual de Nota**: Inserida e validada a nota do participante **Mauricio Roberto Lopes** (`user_id: 21`, `mauricio@morolopes.com.br` - 16/20 - 80% - Aprovado).
+2. **Blindagem do Envio do Simulado**: Implementado sistema de resiliência de rede com retentativas automáticas (`AbortController` + timeout de 8s + 3 tentativas), banner dinâmico de status de gravação no servidor ("Nota gravada com sucesso"), detecção de oscilação móvel e botão de reenvio manual caso a conexão falhe.
+3. **Novo Endpoint Administrativo**: Adicionado `POST /api/admin/simulados/insert-grade` em `simuladoController.js` e `api.js` para permitir ao administrador registrar ou homologar notas com comprovação oficial.
+
 
