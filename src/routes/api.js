@@ -54,6 +54,8 @@ router.post('/admin/access-tokens/send', authMiddleware, accessTokenController.s
 router.get('/admin/access-tokens', authMiddleware, accessTokenController.listAccessTokenDispatches);
 router.post('/admin/access-tokens/:id/resend', authMiddleware, accessTokenController.resendAccessTokenDispatch);
 router.get('/admin/simulados/grades', authMiddleware, simuladoController.getAllGrades);
+router.post('/admin/simulados/insert-grade', authMiddleware, simuladoController.adminInsertGrade);
 
 module.exports = router;
+
 

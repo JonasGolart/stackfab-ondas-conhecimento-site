@@ -135,3 +135,49 @@ exports.getAllGrades = async (req, res) => {
     res.status(500).json({ error: 'Erro ao buscar quadro de notas' });
   }
 };
+
+/**
+ * POST /api/admin/simulados/insert-grade
+ * Permite ao Administrador registrar/homologar a nota de um participante manualmente
+ */
+exports.adminInsertGrade = async (req, res) => {
+  const requesterRole = String(req.user?.role || '').toLowerCase();
+  if (requesterRole !== 'admin' && requesterRole !== 'developer') {
+    return res.status(403).json({ error: 'Acesso negado' });
+  }
+
+  const { userId, score, totalQuestions, percentage, passed, details } = req.body;
+
+  if (!userId || typeof score !== 'number') {
+    return res.status(400).json({ error: 'Parâmetros inválidos. userId e score são obrigatórios.' });
+  }
+
+  try {
+    const total = totalQuestions || 20;
+    const pct = typeof percentage === 'number' ? percentage : Math.round((score / total) * 100);
+    const isPassed = passed !== undefined ? Boolean(passed) : pct >= 70;
+
+    const result = await pool.query(
+      `INSERT INTO simulado_grades (user_id, score, total_questions, percentage, passed, details, created_at)
+       VALUES ($1, $2, $3, $4, $5, $6, NOW())
+       RETURNING id, user_id, score, total_questions, percentage, passed, details, created_at`,
+      [
+        userId,
+        score,
+        total,
+        pct,
+        isPassed,
+        details ? JSON.stringify(details) : null
+      ]
+    );
+
+    res.status(201).json({
+      message: 'Nota homologada com sucesso pelo administrador!',
+      grade: result.rows[0]
+    });
+  } catch (err) {
+    console.error('Erro ao inserir nota administrativamente:', err);
+    res.status(500).json({ error: 'Erro ao registrar nota.' });
+  }
+};
+

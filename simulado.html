@@ -973,30 +973,98 @@
         if (chooseModeBtn) chooseModeBtn.textContent = '← Escolher outro modo';
       }
 
-      // Se for modo especial e houver usuário autenticado, envia a nota para o backend
-      if (isSpecialMode && userToken) {
-        try {
-          await fetch('/api/simulados/submit', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${userToken}`
-            },
-            body: JSON.stringify({
-              score,
-              totalQuestions: questions.length,
-              percentage: pct,
-              passed: pass,
-              details: {
-                categoryStats,
-                detailedAnswers
+      // Se for modo especial, garante e envia a nota para o backend com retentativas e feedback
+      if (isSpecialMode) {
+        const effectiveToken = userToken || localStorage.getItem('token') || '';
+        
+        let syncBanner = document.getElementById('sync-status-banner');
+        if (!syncBanner) {
+          syncBanner = document.createElement('div');
+          syncBanner.id = 'sync-status-banner';
+          syncBanner.style.margin = '1rem auto';
+          syncBanner.style.padding = '0.75rem 1.25rem';
+          syncBanner.style.borderRadius = '12px';
+          syncBanner.style.fontSize = '0.88rem';
+          syncBanner.style.fontWeight = '600';
+          syncBanner.style.maxWidth = '420px';
+          document.querySelector('.results-card').insertBefore(syncBanner, document.getElementById('feedback'));
+        }
+
+        if (!effectiveToken) {
+          syncBanner.style.background = 'rgba(230,81,0,0.12)';
+          syncBanner.style.color = '#e65100';
+          syncBanner.style.border = '1px solid rgba(230,81,0,0.3)';
+          syncBanner.innerHTML = '⚠️ Não foi possível identificar sua sessão. Faça login novamente no portal para registrar sua nota oficial.';
+        } else {
+          syncBanner.style.background = 'rgba(46,125,50,0.1)';
+          syncBanner.style.color = '#2e7d32';
+          syncBanner.style.border = '1px solid rgba(46,125,50,0.25)';
+          syncBanner.innerHTML = '⏳ Enviando e gravando sua pontuação oficial no sistema...';
+
+          async function sendGradeWithRetry(retries = 3) {
+            for (let attempt = 1; attempt <= retries; attempt++) {
+              try {
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 8000);
+                
+                const response = await fetch('/api/simulados/submit', {
+                  method: 'POST',
+                  signal: controller.signal,
+                  headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${effectiveToken}`
+                  },
+                  body: JSON.stringify({
+                    score,
+                    totalQuestions: questions.length,
+                    percentage: pct,
+                    passed: pass,
+                    details: {
+                      categoryStats,
+                      detailedAnswers
+                    }
+                  })
+                });
+                clearTimeout(timeoutId);
+
+                if (response.ok) {
+                  syncBanner.style.background = 'rgba(46,125,50,0.12)';
+                  syncBanner.style.color = '#2e7d32';
+                  syncBanner.style.border = '1px solid rgba(46,125,50,0.3)';
+                  syncBanner.innerHTML = '✅ <strong>Nota gravada com sucesso!</strong> Seu resultado já está registrado no sistema da coordenação.';
+                  return true;
+                } else {
+                  const errData = await response.json().catch(() => ({}));
+                  throw new Error(errData.error || `Erro HTTP ${response.status}`);
+                }
+              } catch (err) {
+                console.warn(`Tentativa ${attempt} de salvar nota falhou:`, err);
+                if (attempt < retries) {
+                  syncBanner.innerHTML = `⏳ Oscilação de conexão detectada. Reenviando nota (tentativa ${attempt + 1}/${retries})...`;
+                  await new Promise(r => setTimeout(r, 1500));
+                } else {
+                  syncBanner.style.background = 'rgba(220,38,38,0.1)';
+                  syncBanner.style.color = '#dc2626';
+                  syncBanner.style.border = '1px solid rgba(220,38,38,0.3)';
+                  syncBanner.innerHTML = `
+                    ❌ Houve uma instabilidade de conexão ao salvar sua nota.<br>
+                    <button onclick="window.retrySubmitGrade()" class="btn btn--primary" style="margin-top:0.6rem;padding:0.4rem 1rem;font-size:0.82rem;">🔄 Tentar Salvar Novamente</button>
+                  `;
+                }
               }
-            })
-          });
-        } catch (err) {
-          console.error('Erro ao enviar nota do simulado:', err);
+            }
+            return false;
+          }
+
+          window.retrySubmitGrade = () => {
+            syncBanner.innerHTML = '⏳ Tentando reenviar pontuação...';
+            sendGradeWithRetry(3);
+          };
+
+          sendGradeWithRetry(3);
         }
       }
+
 
       // Constrói seção visual do Gabarito Detalhado no final
       let gabaritoContainer = document.getElementById('gabarito-detalhado-container');
