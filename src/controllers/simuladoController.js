@@ -12,6 +12,18 @@ exports.submitSimulado = async (req, res) => {
     return res.status(401).json({ error: 'Não autorizado' });
   }
 
+  // Validação da janela oficial de realização do Simulado Especial:
+  // 22 de Agosto de 2026 das 01:00 às 23:59:59 (Horário de Brasília UTC-3)
+  const now = new Date();
+  const examStart = new Date('2026-08-22T01:00:00-03:00');
+  const examEnd = new Date('2026-08-22T23:59:59-03:00');
+
+  if (now < examStart || now > examEnd) {
+    return res.status(403).json({
+      error: 'O Simulado Especial Oficial só pode ser realizado e enviado no dia 22/08/2026.'
+    });
+  }
+
   if (typeof score !== 'number' || typeof percentage !== 'number') {
     return res.status(400).json({ error: 'Dados de pontuação inválidos' });
   }

@@ -753,6 +753,17 @@
       selectedMode = mode;
       isSpecialMode = mode === 'special' || mode === 'oficial';
 
+      if (isSpecialMode) {
+        const now = new Date();
+        const examStart = new Date('2026-08-22T01:00:00-03:00');
+        const examEnd = new Date('2026-08-22T23:59:59-03:00');
+        if (now < examStart || now > examEnd) {
+          alert('O Simulado Especial Oficial de Fim de Curso só estará disponível para realização no dia 22/08/2026 das 01:00 às 23:59 (Horário de Brasília).');
+          showScreen('selection');
+          return;
+        }
+      }
+
       let selectedRawQuestions = [];
 
       if (isSpecialMode) {

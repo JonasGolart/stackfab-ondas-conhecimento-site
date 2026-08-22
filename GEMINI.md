@@ -37,8 +37,7 @@
 
 **[Update - 2026-06-17] (Part 2)**: Corrigido o bug da responsividade na "Área de Membros" (dashboard.html e portal.html) onde a sidebar estava sobrepondo ou quebrando o layout em dispositivos móveis. Adicionado menu hamburguer (drawer off-canvas) com animação suave e overlay de escurecimento, fechando automaticamente ao realizar alguma ação na tela. Alterações "commitadas" e enviadas ao Github.
 
-**[Update - 2026-08-20]**: Implementado o Simulado Especial de Fim de Curso e Quadro de Notas:
-1. **Modal Informativo com Agendamento Estrito**: Renderizado no `portal.html` exclusivamente entre a 01:00 AM do dia 22 de Agosto de 2026 e 23:59 do mesmo dia.
-2. **Simulado Especial Padrão Oficial (`simulado.html`)**: Exatamente 20 questões padrão (7 Técnica e Ética, 7 Legislação e 6 Eletrônica) sem revelação de gabarito imediato durante a resolução. O resultado, total de acertos e gabarito detalhado são emitidos após o encerramento.
-3. **Persistência Backend & Tabela `simulado_grades` (`server.js`, `simuladoController.js`, `api.js`)**: Registro das submissões e notas com índice e suporte a auditoria.
-4. **Quadro de Notas no Admin Dashboard (`dashboard.html`)**: Nova seção de gerenciamento com 4 cartões KPI (total de avaliações, aprovados, taxa de aprovação %, média de acertos), tabela dinâmica por participante e exportação completa em CSV.
+**[Update - 2026-08-21]**: 
+1. Limpeza de registros antecipados na tabela `simulado_grades` (excluídos simulados realizados em 20/08 por Pedro Menezes e Jonas Silva para liberação limpa no dia oficial).
+2. Reforçada a segurança e integridade das datas: adicionada validação de janela oficial (22/08/2026 das 01:00 às 23:59:59 UTC-3) diretamente no backend (`simuladoController.js -> submitSimulado`) e no frontend (`simulado.html -> startQuiz`), impedindo submissões ou aberturas fora da data oficial.
+
