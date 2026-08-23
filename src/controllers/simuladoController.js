@@ -107,7 +107,7 @@ exports.getAllGrades = async (req, res) => {
         sg.created_at
        FROM simulado_grades sg
        INNER JOIN users u ON u.id = sg.user_id
-       ORDER BY sg.created_at DESC`
+       ORDER BY sg.score DESC, sg.percentage DESC, sg.created_at ASC`
     );
 
     // Métricas resumidas

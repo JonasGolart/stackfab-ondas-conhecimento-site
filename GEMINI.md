@@ -40,6 +40,9 @@
 **[Update - 2026-08-22]**: 
 1. **Homologação e Inserção Manual de Nota**: Inserida e validada a nota do participante **Mauricio Roberto Lopes** (`user_id: 21`, `mauricio@morolopes.com.br` - 16/20 - 80% - Aprovado).
 2. **Blindagem do Envio do Simulado**: Implementado sistema de resiliência de rede com retentativas automáticas (`AbortController` + timeout de 8s + 3 tentativas), banner dinâmico de status de gravação no servidor ("Nota gravada com sucesso"), detecção de oscilação móvel e botão de reenvio manual caso a conexão falhe.
-3. **Novo Endpoint Administrativo**: Adicionado `POST /api/admin/simulados/insert-grade` em `simuladoController.js` e `api.js` para permitir ao administrador registrar ou homologar notas com comprovação oficial.
+**[Update - 2026-08-23]**:
+1. **Ordenação por Colocação no Quadro de Notas**: A listagem do Quadro de Notas no Dashboard Administrativo (`dashboard.html` e `simuladoController.js`) agora classifica os participantes por ordem decrescente de pontuação/acertos (`ORDER BY sg.score DESC, sg.percentage DESC, sg.created_at ASC`).
+2. **Badges de Pódio e Exportação**: Adicionada estilização visual de pódio com medalhas (🥇 1º Lugar, 🥈 2º Lugar, 🥉 3º Lugar e numeração para os demais) e mantida a consistência de classificação na exportação em CSV.
+
 
 

@@ -478,7 +478,7 @@
             <table>
               <thead>
                 <tr>
-                  <th>#</th>
+                  <th style="width: 100px;">Colocação</th>
                   <th>Participante</th>
                   <th>Grupo Escoteiro</th>
                   <th>E-mail</th>
@@ -1401,7 +1401,26 @@
         return;
       }
 
-      tbody.innerHTML = list.map((g, idx) => {
+      // Garante a ordenação decrescente por nota (maior para menor) e desempate por data/hora mais antiga
+      const sortedList = [...list].sort((a, b) => {
+        const scoreDiff = (Number(b.score) || 0) - (Number(a.score) || 0);
+        if (scoreDiff !== 0) return scoreDiff;
+        const percDiff = (Number(b.percentage) || 0) - (Number(a.percentage) || 0);
+        if (percDiff !== 0) return percDiff;
+        return new Date(a.created_at || 0) - new Date(b.created_at || 0);
+      });
+
+      tbody.innerHTML = sortedList.map((g, idx) => {
+        const rank = idx + 1;
+        let rankBadge = `<span style="display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:rgba(0,0,0,0.05);color:var(--text-muted);font-size:0.8rem;font-weight:700;">${rank}º</span>`;
+        if (rank === 1) {
+          rankBadge = `<span style="display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg, #fbbf24, #d97706);color:#fff;font-size:0.82rem;font-weight:800;box-shadow:0 2px 6px rgba(217,119,6,0.35);" title="1º Lugar">🥇 1º</span>`;
+        } else if (rank === 2) {
+          rankBadge = `<span style="display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg, #94a3b8, #64748b);color:#fff;font-size:0.82rem;font-weight:800;box-shadow:0 2px 6px rgba(100,116,139,0.3);" title="2º Lugar">🥈 2º</span>`;
+        } else if (rank === 3) {
+          rankBadge = `<span style="display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg, #d97706, #b45309);color:#fff;font-size:0.82rem;font-weight:800;box-shadow:0 2px 6px rgba(180,83,9,0.3);" title="3º Lugar">🥉 3º</span>`;
+        }
+
         const passBadge = g.passed
           ? '<span class="badge badge-group" style="font-size:0.75rem;">Aprovado</span>'
           : '<span class="badge" style="background:rgba(220,38,38,0.1);color:#dc2626;font-size:0.75rem;">Reprovado</span>';
@@ -1411,11 +1430,11 @@
 
         return `
           <tr>
-            <td style="color:var(--text-muted);font-size:0.8rem;font-weight:600">${idx + 1}</td>
+            <td>${rankBadge}</td>
             <td><strong>${g.user_name || 'Participante'}</strong></td>
             <td>${g.scout_group || '<span style="color:var(--text-muted);font-size:0.8rem">—</span>'}</td>
             <td style="font-size:0.82rem;color:var(--text-muted)">${g.user_email}</td>
-            <td><strong>${g.score}</strong> / ${g.total_questions}</td>
+            <td><strong style="font-size:1rem;color:var(--accent-color, #1b5e20);">${g.score}</strong> / ${g.total_questions}</td>
             <td><strong>${g.percentage}%</strong></td>
             <td>${passBadge}</td>
             <td style="font-size:0.8rem;color:var(--text-muted)">${dateStr}</td>
@@ -1443,12 +1462,20 @@
         return;
       }
 
-      const headers = ['#', 'Nome do Participante', 'Grupo Escoteiro', 'E-mail', 'Acertos', 'Total Questões', 'Percentual', 'Status', 'Data e Hora'];
+      const headers = ['Colocação', 'Nome do Participante', 'Grupo Escoteiro', 'E-mail', 'Acertos', 'Total Questões', 'Percentual', 'Status', 'Data e Hora'];
       const rows = [headers.join(';')];
 
-      gradesData.forEach((g, idx) => {
+      const sortedGrades = [...gradesData].sort((a, b) => {
+        const scoreDiff = (Number(b.score) || 0) - (Number(a.score) || 0);
+        if (scoreDiff !== 0) return scoreDiff;
+        const percDiff = (Number(b.percentage) || 0) - (Number(a.percentage) || 0);
+        if (percDiff !== 0) return percDiff;
+        return new Date(a.created_at || 0) - new Date(b.created_at || 0);
+      });
+
+      sortedGrades.forEach((g, idx) => {
         const vals = [
-          idx + 1,
+          `${idx + 1}º`,
           g.user_name || '',
           g.scout_group || '',
           g.user_email || '',
