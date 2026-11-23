@@ -352,6 +352,11 @@ exports.approveInscription = async (req, res) => {
  * Aprova inscrição individual e envia token de acesso pelo mesmo fluxo de e-mail
  */
 exports.sendTokenFromInscription = async (req, res) => {
+  const requesterRole = String(req.user?.role || '').toLowerCase();
+  if (requesterRole !== 'admin' && requesterRole !== 'developer') {
+    return res.status(403).json({ error: 'Acesso negado' });
+  }
+
   const { id } = req.params;
 
   try {
@@ -366,8 +371,10 @@ exports.sendTokenFromInscription = async (req, res) => {
     }
 
     const email = String(insc.email).trim().toLowerCase();
+    const participantName = String(insc.responsible_name || insc.name || '').trim();
     const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
-    const protocol = req.protocol || 'https';
+    const forwardedProto = String(req.get('x-forwarded-proto') || '').split(',')[0].trim();
+    const protocol = forwardedProto || req.protocol || 'https';
     const host = req.get('host');
     const portalUrl = `${protocol}://${host}/login.html`;
 
@@ -377,10 +384,9 @@ exports.sendTokenFromInscription = async (req, res) => {
       [email]
     );
 
-    let userId;
+    const existing = userLookup.rows.length > 0 ? userLookup.rows[0] : null;
 
-    if (userLookup.rows.length > 0) {
-      const existing = userLookup.rows[0];
+    if (existing) {
       const existingRole = String(existing.role || '').toLowerCase();
       if (existingRole === 'admin' || existingRole === 'developer') {
         return res.status(403).json({ error: 'Não é permitido sobrescrever credenciais de administrador.' });
@@ -391,68 +397,47 @@ exports.sendTokenFromInscription = async (req, res) => {
       if (existing.first_token_used_at) {
         return res.status(409).json({ error: 'O token de primeiro acesso já foi consumido.' });
       }
+    }
 
-      const accessCode = generateAccessCode(8);
-      const hashedPassword = await bcrypt.hash(accessCode, 10);
+    const accessCode = generateAccessCode(8);
+    const hashedPassword = await bcrypt.hash(accessCode, 10);
+
+    const dispatchInsert = await pool.query(
+      'INSERT INTO email_access_tokens (code, email, user_id, created_by, status, expires_at, sent_at) VALUES ($1, $2, $3, $4, $5, $6, NULL) RETURNING id',
+      [accessCode, email, existing ? existing.id : null, req.user?.userId || null, 'processing', expiresAt]
+    );
+    const dispatchId = dispatchInsert.rows[0].id;
+
+    const html = buildTokenEmailHtml({ tokenCode: accessCode, portalUrl, expiresAt, customMessage: '' });
+    const sendResult = await emailService.sendEmailDetailed(email, 'Token de acesso - Ondas do Conhecimento', html);
+
+    if (!sendResult.ok) {
+      await pool.query(
+        'UPDATE email_access_tokens SET status = $1, error_message = $2 WHERE id = $3',
+        ['failed', sendResult.error || 'Falha ao enviar e-mail.', dispatchId]
+      );
+      return res.status(400).json({ error: sendResult.error || 'Falha ao enviar e-mail.' });
+    }
+
+    let userId;
+    if (existing) {
       await pool.query(
         'UPDATE users SET name = $1, password = $2, status = $3, password_setup_required = TRUE, password_setup_completed_at = NULL, first_token_used_at = NULL, updated_at = NOW() WHERE id = $4',
-        [insc.name || existing.name, hashedPassword, 'approved', existing.id]
+        [participantName || existing.name, hashedPassword, 'approved', existing.id]
       );
       userId = existing.id;
-
-      const dispatchInsert = await pool.query(
-        'INSERT INTO email_access_tokens (code, email, user_id, created_by, status, expires_at, sent_at) VALUES ($1, $2, $3, $4, $5, $6, NULL) RETURNING id',
-        [accessCode, email, userId, req.user?.userId || null, 'processing', expiresAt]
-      );
-      const dispatchId = dispatchInsert.rows[0].id;
-
-      const html = buildTokenEmailHtml({ tokenCode: accessCode, portalUrl, expiresAt, customMessage: '' });
-      const sendResult = await emailService.sendEmailDetailed(email, 'Token de acesso - Ondas do Conhecimento', html);
-
-      if (!sendResult.ok) {
-        await pool.query(
-          'UPDATE email_access_tokens SET status = $1, error_message = $2 WHERE id = $3',
-          ['failed', sendResult.error || 'Falha ao enviar e-mail.', dispatchId]
-        );
-        return res.status(400).json({ error: sendResult.error || 'Falha ao enviar e-mail.' });
-      }
-
-      await pool.query(
-        'UPDATE email_access_tokens SET status = $1, sent_at = NOW(), error_message = NULL WHERE id = $2',
-        ['sent', dispatchId]
-      );
     } else {
-      // Cria novo usuário
-      const accessCode = generateAccessCode(8);
-      const hashedPassword = await bcrypt.hash(accessCode, 10);
       const created = await pool.query(
-        'INSERT INTO users (name, email, password, role, status, password_setup_required) VALUES ($1, $2, $3, $4, $5, TRUE) RETURNING id',
-        [insc.name || email.split('@')[0], email, hashedPassword, 'participant', 'approved']
+        'INSERT INTO users (name, email, password, role, scout_group, city, guardian_name, status, password_setup_required) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, TRUE) RETURNING id',
+        [participantName || email.split('@')[0], email, hashedPassword, 'participant', insc.group_name || null, insc.city || null, insc.guardian_name || null, 'approved']
       );
       userId = created.rows[0].id;
-
-      const dispatchInsert = await pool.query(
-        'INSERT INTO email_access_tokens (code, email, user_id, created_by, status, expires_at, sent_at) VALUES ($1, $2, $3, $4, $5, $6, NULL) RETURNING id',
-        [accessCode, email, userId, req.user?.userId || null, 'processing', expiresAt]
-      );
-      const dispatchId = dispatchInsert.rows[0].id;
-
-      const html = buildTokenEmailHtml({ tokenCode: accessCode, portalUrl, expiresAt, customMessage: '' });
-      const sendResult = await emailService.sendEmailDetailed(email, 'Token de acesso - Ondas do Conhecimento', html);
-
-      if (!sendResult.ok) {
-        await pool.query(
-          'UPDATE email_access_tokens SET status = $1, error_message = $2 WHERE id = $3',
-          ['failed', sendResult.error || 'Falha ao enviar e-mail.', dispatchId]
-        );
-        return res.status(400).json({ error: sendResult.error || 'Falha ao enviar e-mail.' });
-      }
-
-      await pool.query(
-        'UPDATE email_access_tokens SET status = $1, sent_at = NOW(), error_message = NULL WHERE id = $2',
-        ['sent', dispatchId]
-      );
     }
+
+    await pool.query(
+      'UPDATE email_access_tokens SET status = $1, sent_at = NOW(), error_message = NULL, user_id = $2 WHERE id = $3',
+      ['sent', userId, dispatchId]
+    );
 
     // Marca inscrição como aprovada
     await pool.query('UPDATE inscriptions SET status = $1 WHERE id = $2', ['approved', id]);

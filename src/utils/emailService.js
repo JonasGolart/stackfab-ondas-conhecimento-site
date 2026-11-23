@@ -8,14 +8,17 @@
  * @returns {Promise<Object>} Retorna {ok: boolean, simulated?: boolean, error?: string}.
  */
 exports.sendEmailDetailed = async (to, subject, html) => {
-  const host = process.env.EMAIL_HOST;
-  const port = process.env.EMAIL_PORT;
-  const secure = process.env.EMAIL_SECURE === 'true';
-  const user = process.env.EMAIL_USER;
-  const pass = process.env.EMAIL_PASS;
-  const from = process.env.EMAIL_FROM || user;
+  const host = (process.env.EMAIL_HOST || '').trim();
+  const portRaw = (process.env.EMAIL_PORT || '').trim();
+  const port = parseInt(portRaw, 10);
+  const secure = process.env.EMAIL_SECURE !== undefined && String(process.env.EMAIL_SECURE).trim() !== ''
+    ? String(process.env.EMAIL_SECURE).trim().toLowerCase() === 'true'
+    : port === 465;
+  const user = (process.env.EMAIL_USER || '').trim();
+  const pass = (process.env.EMAIL_PASS || '').trim();
+  const from = (process.env.EMAIL_FROM || user).trim();
 
-  if (!host || !port || !user || !pass) {
+  if (!host || !portRaw || !Number.isFinite(port) || !user || !pass) {
     if (process.env.NODE_ENV === 'production') {
       console.error('❌ [EMAIL SERVICE] Configuração SMTP ausente em produção.');
       return { ok: false, error: 'Configuração SMTP ausente em produção.' };
@@ -35,7 +38,7 @@ exports.sendEmailDetailed = async (to, subject, html) => {
 
     const transporter = nodemailer.createTransport({
       host,
-      port: parseInt(port),
+      port,
       secure,
       auth: {
         user,

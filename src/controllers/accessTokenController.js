@@ -334,7 +334,7 @@ exports.resendAccessTokenDispatch = async (req, res) => {
       return res.status(400).json({ error: 'Registro invalido para reenvio.' });
     }
 
-    const userLookup = await pool.query('SELECT id, role, password_setup_required, password_setup_completed_at FROM users WHERE LOWER(email) = $1', [email]);
+    const userLookup = await pool.query('SELECT id, role, password_setup_required, password_setup_completed_at, first_token_used_at FROM users WHERE LOWER(email) = $1', [email]);
     let userId = dispatch.user_id || null;
 
     if (userLookup.rows.length > 0) {
